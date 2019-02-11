@@ -23,7 +23,7 @@
   if(!isset($lCustom["og_description"][$conf["site"]["lang"]])) :
             $lCustom["og_description"][$conf["site"]["lang"]] =       $lCustom["metadescription"][$conf["site"]["lang"]]; endif;
   if(!isset($lCustom["og_image"])) :
-            $lCustom["og_image"] =                                    file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"homepage.png"; endif;
+            $lCustom["og_image"] =                                    file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"homepage.jpg"; endif;
   if(!isset($lCustom["og_image_alt"][$conf["site"]["lang"]])) :
             $lCustom["og_image_alt"][$conf["site"]["lang"]] =         $lCustom["metadescription"][$conf["site"]["lang"]]; endif;
   if(!isset($lCustom["og_site_name"][$conf["site"]["lang"]])) :
