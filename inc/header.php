@@ -129,6 +129,11 @@
   <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed:400,600" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One:400">
 
+
+
+<?php /* TODO: the following libraries must be loaded ONLY when needed, NOT by default */ ?>
+
+
 <!-- Modernizr -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/<?=$conf["version"]["modernizr"];?>/modernizr.min.js"></script>
 
