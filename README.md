@@ -5,7 +5,7 @@ A Content Management System for the brave. Because what could go wrong?
 
 ### Step 1
 
-Download the .zip containing the TRECE files.
+[Download the .zip](https://github.com/quenerapu/TRECE/archive/master.zip "Download the .zip") containing the TRECE files.
 
 ### Step 2
 
