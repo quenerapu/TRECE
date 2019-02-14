@@ -197,6 +197,7 @@
 <!-- Custom CSS -->
 
   <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["styles"];?>styles.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
+  <?=isset($customCSS)?$customCSS:"";?>
 
 </head>
 
