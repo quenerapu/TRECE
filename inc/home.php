@@ -19,6 +19,7 @@ EOD;
 
 
 <?php if(!$app->getUserSignInStatus()) : ?>
+
   <div class="container main-container">
 
     <div class="row">
@@ -28,6 +29,7 @@ EOD;
     </div><!-- row -->
 
   </div>
+
 <?php endif; ?>
 
 
