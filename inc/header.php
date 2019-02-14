@@ -3,45 +3,45 @@
 <?php
 
   if(!isset($lCustom["pagetitle"][LANG])) :
-            $lCustom["pagetitle"][LANG] =            $conf["meta"]["title"][LANG]; endif;
+            $lCustom["pagetitle"][LANG] =             $conf["meta"]["title"][LANG]; endif;
   if(!isset($lCustom["metadescription"][LANG])) :
-            $lCustom["metadescription"][LANG] =      $conf["meta"]["description"][LANG]; endif;
+            $lCustom["metadescription"][LANG] =       $conf["meta"]["description"][LANG]; endif;
   if(!isset($lCustom["charset"])) :
-            $lCustom["charset"] =                                     $conf["site"]["charset"]; endif;
+            $lCustom["charset"] =                     $conf["site"]["charset"]; endif;
   if(!isset($lCustom["x_ua_compatible"])) :
-            $lCustom["x_ua_compatible"] =                             $conf["site"]["x_ua_compatible"]; endif;
+            $lCustom["x_ua_compatible"] =             $conf["site"]["x_ua_compatible"]; endif;
   if(!isset($lCustom["viewport"])) :
-            $lCustom["viewport"] =                                    $conf["site"]["viewport"]; endif;
+            $lCustom["viewport"] =                    $conf["site"]["viewport"]; endif;
   if(!isset($lCustom["generator"])) :
-            $lCustom["generator"] =                                   $conf["site"]["generator"]; endif;
+            $lCustom["generator"] =                   $conf["site"]["generator"]; endif;
   if(!isset($lCustom["robots"])) :
-            $lCustom["robots"] =                                      $conf["site"]["robots"]; endif;
+            $lCustom["robots"] =                      $conf["site"]["robots"]; endif;
   if(!isset($lCustom["og_type"])) :
-            $lCustom["og_type"] =                                     $conf["file"]["homepage"] == $conf["site"]["action"]?"website":"article"; endif;
+            $lCustom["og_type"] =                     $conf["file"]["homepage"] == $conf["site"]["action"]?"website":"article"; endif;
   if(!isset($lCustom["og_title"][LANG])) :
-            $lCustom["og_title"][LANG] =             $lCustom["pagetitle"][LANG]; endif;
+            $lCustom["og_title"][LANG] =              $lCustom["pagetitle"][LANG]; endif;
   if(!isset($lCustom["og_description"][LANG])) :
-            $lCustom["og_description"][LANG] =       $lCustom["metadescription"][LANG]; endif;
+            $lCustom["og_description"][LANG] =        $lCustom["metadescription"][LANG]; endif;
   if(!isset($lCustom["og_image"])) :
-            $lCustom["og_image"] =                                    file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"trece.jpg"; endif;
+            $lCustom["og_image"] =                    file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"trece.jpg"; endif;
   if(!isset($lCustom["og_image_alt"][LANG])) :
-            $lCustom["og_image_alt"][LANG] =         $lCustom["metadescription"][LANG]; endif;
+            $lCustom["og_image_alt"][LANG] =          $lCustom["metadescription"][LANG]; endif;
   if(!isset($lCustom["og_site_name"][LANG])) :
-            $lCustom["og_site_name"][LANG] =         $conf["meta"]["name"][LANG]; endif;
+            $lCustom["og_site_name"][LANG] =          $conf["meta"]["name"][LANG]; endif;
   if(!isset($lCustom["twitter_title"][LANG])) :
-            $lCustom["twitter_title"][LANG] =        $lCustom["pagetitle"][LANG]; endif;
+            $lCustom["twitter_title"][LANG] =         $lCustom["pagetitle"][LANG]; endif;
   if(!isset($lCustom["twitter_image_alt"][LANG])) :
-            $lCustom["twitter_image_alt"][LANG] =    $conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG]; endif;
+            $lCustom["twitter_image_alt"][LANG] =     $conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG]; endif;
   if(!isset($lCustom["twitter_site"])) :
-            $lCustom["twitter_site"] =                                $conf["contact"]["twitter"]; endif;
+            $lCustom["twitter_site"] =                $conf["contact"]["twitter"]; endif;
   if(!isset($lCustom["geo"]["region"])) :
-            $lCustom["geo"]["region"] =                               $conf["contact"]["geo"]["region"]; endif;
+            $lCustom["geo"]["region"] =               $conf["contact"]["geo"]["region"]; endif;
   if(!isset($lCustom["geo"]["latitude"])) :
-            $lCustom["geo"]["latitude"] =                             $conf["contact"]["geo"]["latitude"]; endif;
+            $lCustom["geo"]["latitude"] =             $conf["contact"]["geo"]["latitude"]; endif;
   if(!isset($lCustom["geo"]["longitude"])) :
-            $lCustom["geo"]["longitude"] =                            $conf["contact"]["geo"]["longitude"]; endif;
+            $lCustom["geo"]["longitude"] =            $conf["contact"]["geo"]["longitude"]; endif;
   if(!isset($lCustom["geo"]["placename"])) :
-            $lCustom["geo"]["placename"] =                            $conf["contact"]["geo"]["placename"]; endif;
+            $lCustom["geo"]["placename"] =            $conf["contact"]["geo"]["placename"]; endif;
 
 ?>
 
@@ -126,7 +126,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
 
 <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed:400,600" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin+Condensed:400,600">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One:400">
 
 
@@ -199,22 +199,25 @@
   <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["styles"];?>styles.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
   <?=isset($customCSS)?$customCSS:"";?>
 
+<?php if(NPE) : ?>
+  <style>
+    /* common */
+    .npe{text-align:center;transform:rotate(-45deg);background-color:red;color:white;z-index:9999999;font-weight:bold;letter-spacing:.1em;}
+    /* vertical smartphones */
+    @media screen and (min-width:360px) and (max-width:752px){.npe{position:fixed;width:200px;top:15px;left:-70px;padding:6px;}}
+    /* horizontal smartphones and vertical tablets */
+    @media screen and (min-width:753px) and (max-width:1023px){.npe{position:fixed;width:200px;top:15px;left:-70px;padding:6px;}}
+    /* horizontal tablets and normal desktops */
+    @media screen and (min-width:1024px) and (max-width:1199px){.npe{position:fixed;width:200px;top:25px;left:-50px;padding:12px;}}
+    /* big desktops */
+    @media screen and (min-width:1200px){.npe{position:fixed;width:200px;top:25px;left:-50px;padding:12px;}}
+  </style>
+<?php endif; ?>
+
 </head>
 
 <body>
 
 <?php if(NPE) : ?>
-<style>
-  /* common */
-  .npe{text-align:center;transform:rotate(-45deg);background-color:red;color:white;z-index:9999999;font-weight:bold;letter-spacing:.1em;}
-  /* vertical smartphones */
-  @media screen and (min-width:360px) and (max-width:752px){.npe{position:fixed;width:200px;top:15px;left:-70px;padding:6px;}}
-  /* horizontal smartphones and vertical tablets */
-  @media screen and (min-width:753px) and (max-width:1023px){.npe{position:fixed;width:200px;top:15px;left:-70px;padding:6px;}}
-  /* horizontal tablets and normal desktops */
-  @media screen and (min-width:1024px) and (max-width:1199px){.npe{position:fixed;width:200px;top:25px;left:-50px;padding:12px;}}
-  /* big desktops */
-  @media screen and (min-width:1200px){.npe{position:fixed;width:200px;top:25px;left:-50px;padding:12px;}}
-</style>
-<div class="npe">NPE</div>
+  <div class="npe">NPE</div>
 <?php endif; ?>
