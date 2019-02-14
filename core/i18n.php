@@ -1266,6 +1266,16 @@ return [
     "gal" => "Resetea-la busca",
     "en"  => "Reset search",
     ],
+  "result" => [
+    "es"  => "resultado",
+    "gal" => "resultado",
+    "en"  => "result",
+    ],
+  "results" => [
+    "es"  => "resultados",
+    "gal" => "resultados",
+    "en"  => "results",
+    ],
 
 
 
