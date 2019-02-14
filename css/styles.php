@@ -31,15 +31,25 @@ body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !
 /* NAVBAR */
 .navbar{font-family:'Cabin Condensed',sans-serif!important}.navbar-nav{margin-top:0}.navbar-nav a{font-weight:600;font-size:1.3em}.navbar-brand{padding:0}.navbar-brand>img{height:100%;padding:5px;width:auto}.navbar-brand{margin-top:.2em;height:60px}.nav >li >a{padding-top:25px!important;padding-bottom:20px!important}.navbar-toggle{padding:10px;margin:15px 15px 15px 0}.navbar-default{background-color:{$navbar_color1};border-color:{$navbar_color2}}.navbar-default .navbar-brand{color:{$navbar_color3}}.navbar-default .navbar-brand:hover,.navbar-default .navbar-brand:focus{color:{$navbar_color4}}.navbar-default .navbar-text{color:{$navbar_color3}}.navbar-default .navbar-nav > li > a{color:{$navbar_color3}}.navbar-default .navbar-nav > li > a:hover,.navbar-default .navbar-nav > li > a:focus{color:{$navbar_color4}}.navbar-default .navbar-nav > li > .dropdown-menu{background-color:{$navbar_color1}}.navbar-default .navbar-nav > li > .dropdown-menu > li > a{color:{$navbar_color3}}.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus{color:{$navbar_color4};background-color:{$navbar_color2}}.navbar-default .navbar-nav > li > .dropdown-menu > li.divider{background-color:{$navbar_color2}}.navbar-default .navbar-nav .open .dropdown-menu > .active > a,.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus{color:{$navbar_color4};background-color:{$navbar_color2}}.navbar-default .navbar-nav > .active > a,.navbar-default .navbar-nav > .active > a:hover,.navbar-default .navbar-nav > .active > a:focus{color:{$navbar_color4};background-color:{$navbar_color2}}.navbar-default .navbar-nav > .open > a,.navbar-default .navbar-nav > .open > a:hover,.navbar-default .navbar-nav > .open > a:focus{color:{$navbar_color4};background-color:{$navbar_color2}}.navbar-default .navbar-toggle{border-color:{$navbar_color2}}.navbar-default .navbar-toggle:hover,.navbar-default .navbar-toggle:focus{background-color:{$navbar_color2}}.navbar-default .navbar-toggle .icon-bar{background-color:{$navbar_color3}}.navbar-default .navbar-collapse,.navbar-default .navbar-form{border-color:{$navbar_color3}}.navbar-default .navbar-link{color:{$navbar_color3}}.navbar-default .navbar-link:hover{color:{$navbar_color4}}@media (max-width: 767px){.navbar-default .navbar-nav .open .dropdown-menu > li > a{color:{$navbar_color3}}.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus{color:$navbar_color4}}.navbar-default .navbar-nav .open .dropdown-menu > .active > a,.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus{color:{$navbar_color4};background-color:{$navbar_color2}}
 
-.navbar-brand { padding:0px; }
-.navbar-brand>img { height:100%; padding:15px; width:auto; }
-.navbar-brand { margin-top:.2em; height:60px; }
-.navbar-toggle { padding:10px; margin:15px 15px 15px 0; }
-.navbar-text {color:white !important;margin-top:24px;}
+.navbar-header{padding:0;margin:0;width:100px;}
+.navbar-brand{padding:0 0 0 15px;margin:0;}
+.navbar-brand>img{padding:0;margin:0;}
+.navbar-brand{margin:0;margin:0;width:100px;}
+.navbar-toggle{padding:10px;margin:15px 15px 15px 0;}
+.navbar-text{color:white !important;margin:24px 0 0 0;display:inline-block;}
 .navbar-text a:link {text-decoration:none;color:white !important;}
 .navbar-text a:visited {text-decoration:none;color:white !important;}
 .navbar-text a:hover {text-decoration:none;color:white !important;border-bottom:3px solid white;padding-bottom:6px;}
 .navbar-text a:active {text-decoration:none;color:white !important;}
+
+/* vertical smartphones */
+@media screen and (min-width:360px) and (max-width:752px){.navbar-fixed-top>.container{padding-left:0;}.navbar-text{margin-left:15px;}}
+/* horizontal smartphones and vertical tablets */
+@media screen and (min-width:753px) and (max-width:1023px){}
+/* horizontal tablets and normal desktops */
+@media screen and (min-width:1024px) and (max-width:1199px){}
+/* big desktops */
+@media screen and (min-width:1200px){}
 
 
 
