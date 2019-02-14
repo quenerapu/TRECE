@@ -3,7 +3,7 @@
 
     <div class="container">
       <div style="border-top:1px dotted #ccc;border-left:1px dotted #ccc;background:white;position:absolute;padding:0 .7em .2em .5em;right:0;bottom:0;text-align:right;">
-        <a href="http://trece.io" target="_blank" style="text-decoration:none;"><span style="font-size:1.1em;letter-spacing:-.01em;font-family:Arial,Helvetica,Garuda;color:#c40268;"><small>Crafted with <i class="fa fa-heart" aria-hidden="true"></i> and <img src="data:image/svg+xml;base64,<?=str_replace("[COLOR]",$conf["logo"]["garnet"],$conf["logo"]["img"]);?>" align="center" style="display:inline-block;height:1em;margin:.6em .1em .6em .1em;padding-bottom:.15em;" alt="TRECE"></small></span></a>
+        <a href="http://trece.io" target="_blank" style="text-decoration:none;"><span style="font-size:1.1em;letter-spacing:-.01em;font-family:Arial,Helvetica,Garuda;color:#c40268;"><small>Crafted with <i class="fa fa-heart" aria-hidden="true"></i> and <img src="data:image/svg+xml;base64,<?=str_replace("[COLOR]",$conf["logo"]["garnet"],$conf["logo"]["img"]);?>" style="display:inline-block;height:1em;margin:.6em .1em .6em .1em;padding-bottom:.15em;" alt="TRECE"></small></span></a>
       </div>
 
       <div class="row">
