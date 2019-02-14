@@ -19,9 +19,9 @@
             </a>
           </div>
           <p class="navbar-text pull-left"><small>
-            <a href="https://trece.io/en/">EN</a> |
-            <a href="https://trece.io/es/">ES</a> |
-            <a href="https://trece.io/gal/">GAL</a>
+            <a href="<?=$conf["site"]["realpath"];?>en/">EN</a> |
+            <a href="<?=$conf["site"]["realpath"];?>es/">ES</a> |
+            <a href="<?=$conf["site"]["realpath"];?>gal/">GAL</a>
           </small></p>
           <div id="navbar" class="navbar-collapse collapse">
 <?php if ($app->getUserSignInStatus()) : ?>
