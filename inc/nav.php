@@ -15,8 +15,14 @@
                 (file_exists($conf["dir"]["images"]."logo.png") ?
                 $conf["dir"]["images"]."logo.png" :
                 "data:image/svg+xml;base64,".str_replace("[COLOR]",$conf["logo"]["white"],$conf["logo"]["img"]))
-                ;?>" alt="<?=$conf["meta"]["title"][LANG];?>" class="img-responsive"></a>
+                ;?>" alt="<?=$conf["meta"]["title"][LANG];?>" class="img-responsive">
+            </a>
           </div>
+          <p class="navbar-text pull-left"><small>
+            <a href="https://trece.io/en/">EN</a> |
+            <a href="https://trece.io/es/">ES</a> |
+            <a href="https://trece.io/gal/">GAL</a>
+          </small></p>
           <div id="navbar" class="navbar-collapse collapse">
 <?php if ($app->getUserSignInStatus()) : ?>
             <ul class="nav navbar-nav navbar-right">
@@ -47,6 +53,9 @@
               <li><a href="<?=$conf["site"]["realpathLang"].$conf["file"]["signin"];?>"><?=$lCommon["signin"][LANG];?></a></li>
             </ul>
 <?php endif; ?>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://github.com/quenerapu/TRECE" target="_blank">TRECE on GitHub</a></li>
+            </ul>
           </div>
         </div>
       </nav>
