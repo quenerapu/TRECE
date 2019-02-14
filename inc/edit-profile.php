@@ -116,11 +116,11 @@ $max_thumb    = 120;
 
         $msgType = $trece->wrongUsername + $trece->dupeUsername + $trece->wrongeMail + $trece->dupeeMail > 0 ? "danger" : "success";
         $msgText = $trece->wrongUsername + $trece->dupeUsername + $trece->wrongeMail + $trece->dupeeMail > 0 ?
-                  ($trece->wrongUsername > 0 ? $lCustom["wrong_username"][$conf["site"]["lang"]]     ." " : "") .
-                  ($trece->dupeUsername  > 0 ? $lCustom["duplicated_username"][$conf["site"]["lang"]]." " : "") .
-                  ($trece->wrongeMail    > 0 ? $lCustom["wrong_email"][$conf["site"]["lang"]]        ." " : "") .
-                  ($trece->dupeeMail     > 0 ? $lCustom["duplicated_email"][$conf["site"]["lang"]]   ." " : "") :
-                   $lCommon["general_ok"][$conf["site"]["lang"]];
+                  ($trece->wrongUsername > 0 ? $lCustom["wrong_username"][LANG]     ." " : "") .
+                  ($trece->dupeUsername  > 0 ? $lCustom["duplicated_username"][LANG]." " : "") .
+                  ($trece->wrongeMail    > 0 ? $lCustom["wrong_email"][LANG]        ." " : "") .
+                  ($trece->dupeeMail     > 0 ? $lCustom["duplicated_email"][LANG]   ." " : "") :
+                   $lCommon["general_ok"][LANG];
 
       else :
 
@@ -160,14 +160,14 @@ $max_thumb    = 120;
         endif;
 
         $msgType = "success";
-        $msgText = $lCommon["general_ok"][$conf["site"]["lang"]];
+        $msgText = $lCommon["general_ok"][LANG];
 
       endif;
 
     else :
 
       $msgType = "danger";
-      $msgText = $lCommon["general_error"][$conf["site"]["lang"]];
+      $msgText = $lCommon["general_error"][LANG];
 
     endif;
 
@@ -268,8 +268,8 @@ $max_thumb    = 120;
           boxWidth: "50%",
           useBootstrap: false,
           buttons:{
-            confirm:{text:"<?=$lCommon["accept"][$conf["site"]["lang"]];?>",action:function(){deleteImage(who);}},
-            cancel:{text:"<?=$lCommon["cancel"][$conf["site"]["lang"]];?>",action:function(){}},
+            confirm:{text:"<?=$lCommon["accept"][LANG];?>",action:function(){deleteImage(who);}},
+            cancel:{text:"<?=$lCommon["cancel"][LANG];?>",action:function(){}},
             }
           });
         });
@@ -373,7 +373,7 @@ $max_thumb    = 120;
   echo "</small></pre>";
 */
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCustom["edit"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
@@ -399,9 +399,9 @@ $max_thumb    = 120;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <div class="pull-right"><p>
-            <?=btn($lCommon["change-password"][$conf["site"]["lang"]],"^".$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"]."?m=".$trece->email,"","fa-key");?>
+            <?=btn($lCommon["change-password"][LANG],"^".$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"]."?m=".$trece->email,"","fa-key");?>
           </p></div>
-          <h1><strong><?=$lCustom["pagetitle"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -436,14 +436,14 @@ $max_thumb    = 120;
         <form id="form" class="form-classic" action="" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
-          <label for="name"><?=$lCustom["name"][$conf["site"]["lang"]];?>:</label><br>
+          <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
           <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
         </div>
 
 
 
         <div class="form-group">
-          <label for="surname"><?=$lCustom["surname"][$conf["site"]["lang"]];?>:</label><br>
+          <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
           <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
         </div>
 
@@ -452,15 +452,15 @@ $max_thumb    = 120;
         <div class="row">
           <div class="col-xs-6">
             <div class="form-group<?=$wrongUsername+$dupeUsername>0?" has-error":"";?>">
-              <label for="username"><?=$lCustom["username"][$conf["site"]["lang"]];?>:</label><br>
+              <label for="username"><?=$lCustom["username"][LANG];?>:</label><br>
                <input type="text" id="username" name="username" class="form-control" value="<?=$username;?>" required>
-              <?=($wrongUsername+$dupeUsername>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($wrongUsername>0?$lCustom["wrong_username"][$conf["site"]["lang"]]." ":($dupeUsername>0?$lCustom["duplicated_username"][$conf["site"]["lang"]]." ".$lCommon["it_must_be_unique"][$conf["site"]["lang"]]." ":"")).$lCustom["mandatory_field"][$conf["site"]["lang"]]."</span></span>":"");?>
+              <?=($wrongUsername+$dupeUsername>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($wrongUsername>0?$lCustom["wrong_username"][LANG]." ":($dupeUsername>0?$lCustom["duplicated_username"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"")).$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-group">
-              <label for="ugender"><?=$lCustom["gender"][$conf["site"]["lang"]];?>:</label><br>
-              <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][$conf["site"]["lang"]];?>" data-live-search="true" required>
+              <label for="ugender"><?=$lCustom["gender"][LANG];?>:</label><br>
+              <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
                   require_once($conf["dir"]["includes"]."gender/".$conf["file"]["crud"].".php");
                   $cconfGender = require($conf["dir"]["includes"]."gender/".$conf["file"]["conf"].".php");
@@ -477,15 +477,15 @@ $max_thumb    = 120;
 
 
         <div class="form-group<?=$wrongeMail+$dupeeMail>0?" has-error":"";?>">
-          <label for="email"><?=$lCommon["email"][$conf["site"]["lang"]];?>:</label><br>
-          <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][$conf["site"]["lang"]]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
-          <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][$conf["site"]["lang"]]." ".$lCommon["it_must_be_unique"][$conf["site"]["lang"]]." ":"").$lCustom["mandatory_field"][$conf["site"]["lang"]]."</span></span>":"");?>
+          <label for="email"><?=$lCommon["email"][LANG];?>:</label><br>
+          <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][LANG]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
+          <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"").$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
         </div>
 
 
 
         <div class="form-group">
-          <label for="bio"><?=$lCustom["bio"][$conf["site"]["lang"]];?>:</label>
+          <label for="bio"><?=$lCustom["bio"][LANG];?>:</label>
           <textarea class="form-control tinymce" id="bio" name="bio" placeholder=""><?=htmlspecialchars($trece->bio);?></textarea>
         </div>
 
@@ -495,7 +495,7 @@ $max_thumb    = 120;
           <input type="hidden" id="cropData1" name="cropData1">
           <input type="hidden" id="cropData2" name="cropData2">
           <input type="hidden" id="imagebase64" name="imagebase64">
-          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][$conf["site"]["lang"]];?></button>
+          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
         </div>
 
       </form>
@@ -520,13 +520,13 @@ $max_thumb    = 120;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
-    var thePic="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>";function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][$conf["site"]["lang"]];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][$conf["site"]["lang"]]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][$conf["site"]["lang"]];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
+    var thePic="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>";function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
   </script>
 
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/bootstrap-select.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/i18n/defaults-<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name2"];?>.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/i18n/defaults-<?=$conf["site"]["langs"][LANG]["culture-name2"];?>.js"></script>
   <script>$(".selectpicker").selectpicker({style:"btn-info",size:4});</script>
 
 
