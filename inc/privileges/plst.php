@@ -75,7 +75,7 @@ $intimacy = 2;
 
 //Still here? OK, let's talk.
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCustom["list"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -155,11 +155,11 @@ $intimacy = 2;
         <div class="page-header">
           <?php if($app->getUserHierarchy() == 1) : ?>
           <div class="pull-right"><p>
-            <?=btn($lCommon["admin_list"][$conf["site"]["lang"]],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
+            <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- End row -->
@@ -269,9 +269,9 @@ $intimacy = 2;
 
         <div class="alert alert-danger">
           <?php if($trece->rowcount_absolute > 0) : ?>
-              <?=$lCommon["few_data"][$conf["site"]["lang"]];?>
+              <?=$lCommon["few_data"][LANG];?>
           <?php else : ?>
-              <?=$lCommon["no_data"][$conf["site"]["lang"]];?>
+              <?=$lCommon["no_data"][LANG];?>
           <?php endif; ?>
         </div>
 
