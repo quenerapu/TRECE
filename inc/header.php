@@ -1,5 +1,5 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
-<!doctype html><?=BEGRATEFUL;?>
+<!doctype html>
 <?php
 
   if(!isset($lCustom["pagetitle"][$conf["site"]["lang"]])) :
