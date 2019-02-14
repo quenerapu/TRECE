@@ -12,7 +12,7 @@
 
 
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCommon["forgot-password"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCommon["forgot-password"][LANG];
 
 
 
@@ -26,12 +26,12 @@
     if ( $trece->changePassRequest() ) :
 
       $msgType = "success";
-      $msgText = sprintf($lCommon["we_have_just_sent_an_email_to"][$conf["site"]["lang"]],$trece->email_or_username);
+      $msgText = sprintf($lCommon["we_have_just_sent_an_email_to"][LANG],$trece->email_or_username);
 
     else :
 
       $msgType = "danger";
-      $msgText = $lCommon["unknown_email_or_username"][$conf["site"]["lang"]];
+      $msgText = $lCommon["unknown_email_or_username"][LANG];
 
     endif;
 
@@ -72,11 +72,11 @@
           <?php if (isset($app) && $app->getUserHierarchy()==1) : ?>
           <?php if (strpos($email,"@")===false) : ?>
           <div class="pull-right"><p>
-            <?=btn($lCommon["admin_list"][$conf["site"]["lang"]],"!users/".$conf["file"]["adminlist"],"","fa-list");?>
+            <?=btn($lCommon["admin_list"][LANG],"!users/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
           <?php endif; ?>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -88,15 +88,15 @@
         <form action="" class="form-horizontal form-large" method="post" autocomplete="off" role="form">
 
           <div class="form-group<?=$msg && $msgType=="danger"?" has-error":"";?>">
-            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][$conf["site"]["lang"]];?>:</label>
+            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][LANG];?>:</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon["email_or_username"][$conf["site"]["lang"]];?>" autocomplete="off" value="<?=isset($email)?$email:(isset($_SESSION["username"])?$_SESSION["username"]:"");?>" style="margin-bottom:.5em" required>
+              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon["email_or_username"][LANG];?>" autocomplete="off" value="<?=isset($email)?$email:(isset($_SESSION["username"])?$_SESSION["username"]:"");?>" style="margin-bottom:.5em" required>
             </div>
           </div>
 
           <div class="form-group">
             <div class="col-sm-offset-6 col-sm-6">
-              <button type="submit" name="forgot-password" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["change-password"][$conf["site"]["lang"]];?></button>
+              <button type="submit" name="forgot-password" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["change-password"][LANG];?></button>
             </div>
           </div>
 
