@@ -19,18 +19,18 @@
                 (file_exists($conf["dir"]["images"]."logo.png") ?
                 $conf["dir"]["images"]."logo.png" :
                 "data:image/svg+xml;base64,".str_replace("[COLOR]",$conf["logo"]["garnet"],$conf["logo"]["img"]))
-                ;?>" alt="<?=$conf["meta"]["title"][$conf["site"]["lang"]];?>" class="img-responsive" style="max-width:4em;">
+                ;?>" alt="<?=$conf["meta"]["title"][LANG];?>" class="img-responsive" style="max-width:4em;">
               </div>
 */ ?>
               <div style="float:left;">
                 <div style="padding:0 0 0 1em;">
                   <p style="line-height:.8em;"><small>
-                    <strong><?=$conf["meta"]["title"][$conf["site"]["lang"]];?></strong>
+                    <strong><?=$conf["meta"]["title"][LANG];?></strong>
                   </small></p>
                   <p style="line-height:.9em;"><small>
                     <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> <?=$conf["contact"]["address_line1"];?><br>
                     <span style="color:transparent;"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></span> <?=$conf["contact"]["address_line2"];?><br>
-                    <span style="color:transparent;"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></span> <?=$conf["contact"]["address_line3"][$conf["site"]["lang"]];?><br>
+                    <span style="color:transparent;"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></span> <?=$conf["contact"]["address_line3"][LANG];?><br>
                     <i class="fa fa-phone fa-fw" aria-hidden="true"></i> <?=$conf["contact"]["phone_no"];?><br>
                     <i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <a href="mailto:<?=$conf["contact"]["email"];?>"><?=strrev($conf["contact"]["email"]);?></a>
                   </small></p>
