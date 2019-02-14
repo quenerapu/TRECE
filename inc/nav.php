@@ -19,9 +19,10 @@
             </a>
           </div>
           <p class="navbar-text pull-left"><small>
-            <a href="<?=$conf["site"]["realpath"];?>en/">EN</a> |
-            <a href="<?=$conf["site"]["realpath"];?>es/">ES</a> |
-            <a href="<?=$conf["site"]["realpath"];?>gal/">GAL</a>
+          <?php $i=1; foreach($conf["site"]["langs"] as $language) : ?>
+            <a href="<?=$conf["site"]["realpath"].$language["url-name"];?>"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?>
+            <?php $i++;?>
+          <?php endforeach; ?>
           </small></p>
           <div id="navbar" class="navbar-collapse collapse">
 <?php if ($app->getUserSignInStatus()) : ?>
