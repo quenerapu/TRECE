@@ -5,6 +5,12 @@
   $lCustom["pagetitle"]["gal"] = "TRECE";
   $lCustom["pagetitle"]["en"] = "TRECE";
 
+$customCSS = <<<EOD
+  <style>
+    /* whatever */
+  </style>
+EOD;
+
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
 
@@ -25,7 +31,5 @@
 <?php endif; ?>
 
 
-
-<?php // require_once($conf["dir"]["includes"]."share.php"); ?>
 
 <?php require_once($conf["dir"]["includes"]."footer.php"); ?>
