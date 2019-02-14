@@ -17,12 +17,13 @@ Edit `index.php` and change the word "inconceivable" (line 13) for another word.
 
 ![](https://trece.io/img/step_3.png)
 
-In the same file, find the table formerly known as `inconceivable_users` and replace the fake email address `email@domain.com` with a real email address of your own.
+Open `tables.sql` and replace every occurrence of the word "inconceivable" with the word you chose in the previous step. **Replace. Them. All**.
 
 ### Step 4
 
 ![](https://trece.io/img/step_4.png)
 
+In the same file, find the table formerly known as `inconceivable_users` and replace the fake email address `email@domain.com` with a real email address of your own.
 
 ### Step 5
 
