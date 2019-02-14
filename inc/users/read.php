@@ -100,7 +100,7 @@
         <div style="width:200px;">
 
           <div class="side-corner-tag">
-            <p><span style="background:#<?=$trece->hierarchy_color;?>;?>;width:160px;right:-50px;"></span></p>
+            <p><span style="background:#<?=$trece->hierarchy_color;?>;width:160px;right:-50px;"></span></p>
             <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["site"]["realpath"].$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=User")));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name." ".$trece->surname;?>">
           </div>
 
