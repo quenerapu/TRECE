@@ -173,15 +173,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/js/bootstrap-colorpicker.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/css/bootstrap-colorpicker.min.css">
 
-<!-- HTML5 Shiv & Respond.js -->
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/<?=$conf["version"]["html5shiv"];?>/html5shiv.min.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/<?=$conf["version"]["respond_js"];?>/respond.min.js"></script>
-  <![endif]-->
-
 <!-- reCAPTCHA -->
 
   <script src="https://www.google.com/recaptcha/api.js"></script>
@@ -190,10 +181,18 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/<?=$conf["version"]["sprintf"];?>/sprintf.min.js"></script>
 
-<?php
-# .. END SPRINTF.JS
-# .....................................................................
-?>
+<?php /* END TODO */ ?>
+
+
+
+<!-- HTML5 Shiv & Respond.js -->
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/<?=$conf["version"]["html5shiv"];?>/html5shiv.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/<?=$conf["version"]["respond_js"];?>/respond.min.js"></script>
+  <![endif]-->
 
 <!-- Custom CSS -->
 
