@@ -2,10 +2,10 @@
 <!doctype html>
 <?php
 
-  if(!isset($lCustom["pagetitle"][$conf["site"]["lang"]])) :
-            $lCustom["pagetitle"][$conf["site"]["lang"]] =            $conf["meta"]["title"][$conf["site"]["lang"]]; endif;
-  if(!isset($lCustom["metadescription"][$conf["site"]["lang"]])) :
-            $lCustom["metadescription"][$conf["site"]["lang"]] =      $conf["meta"]["description"][$conf["site"]["lang"]]; endif;
+  if(!isset($lCustom["pagetitle"][LANG])) :
+            $lCustom["pagetitle"][LANG] =            $conf["meta"]["title"][LANG]; endif;
+  if(!isset($lCustom["metadescription"][LANG])) :
+            $lCustom["metadescription"][LANG] =      $conf["meta"]["description"][LANG]; endif;
   if(!isset($lCustom["charset"])) :
             $lCustom["charset"] =                                     $conf["site"]["charset"]; endif;
   if(!isset($lCustom["x_ua_compatible"])) :
@@ -18,20 +18,20 @@
             $lCustom["robots"] =                                      $conf["site"]["robots"]; endif;
   if(!isset($lCustom["og_type"])) :
             $lCustom["og_type"] =                                     $conf["file"]["homepage"] == $conf["site"]["action"]?"website":"article"; endif;
-  if(!isset($lCustom["og_title"][$conf["site"]["lang"]])) :
-            $lCustom["og_title"][$conf["site"]["lang"]] =             $lCustom["pagetitle"][$conf["site"]["lang"]]; endif;
-  if(!isset($lCustom["og_description"][$conf["site"]["lang"]])) :
-            $lCustom["og_description"][$conf["site"]["lang"]] =       $lCustom["metadescription"][$conf["site"]["lang"]]; endif;
+  if(!isset($lCustom["og_title"][LANG])) :
+            $lCustom["og_title"][LANG] =             $lCustom["pagetitle"][LANG]; endif;
+  if(!isset($lCustom["og_description"][LANG])) :
+            $lCustom["og_description"][LANG] =       $lCustom["metadescription"][LANG]; endif;
   if(!isset($lCustom["og_image"])) :
             $lCustom["og_image"] =                                    file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"trece.jpg"; endif;
-  if(!isset($lCustom["og_image_alt"][$conf["site"]["lang"]])) :
-            $lCustom["og_image_alt"][$conf["site"]["lang"]] =         $lCustom["metadescription"][$conf["site"]["lang"]]; endif;
-  if(!isset($lCustom["og_site_name"][$conf["site"]["lang"]])) :
-            $lCustom["og_site_name"][$conf["site"]["lang"]] =         $conf["meta"]["name"][$conf["site"]["lang"]]; endif;
-  if(!isset($lCustom["twitter_title"][$conf["site"]["lang"]])) :
-            $lCustom["twitter_title"][$conf["site"]["lang"]] =        $lCustom["pagetitle"][$conf["site"]["lang"]]; endif;
-  if(!isset($lCustom["twitter_image_alt"][$conf["site"]["lang"]])) :
-            $lCustom["twitter_image_alt"][$conf["site"]["lang"]] =    $conf["meta"]["name"][$conf["site"]["lang"]]." | ".$lCustom["pagetitle"][$conf["site"]["lang"]]; endif;
+  if(!isset($lCustom["og_image_alt"][LANG])) :
+            $lCustom["og_image_alt"][LANG] =         $lCustom["metadescription"][LANG]; endif;
+  if(!isset($lCustom["og_site_name"][LANG])) :
+            $lCustom["og_site_name"][LANG] =         $conf["meta"]["name"][LANG]; endif;
+  if(!isset($lCustom["twitter_title"][LANG])) :
+            $lCustom["twitter_title"][LANG] =        $lCustom["pagetitle"][LANG]; endif;
+  if(!isset($lCustom["twitter_image_alt"][LANG])) :
+            $lCustom["twitter_image_alt"][LANG] =    $conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG]; endif;
   if(!isset($lCustom["twitter_site"])) :
             $lCustom["twitter_site"] =                                $conf["contact"]["twitter"]; endif;
   if(!isset($lCustom["geo"]["region"])) :
@@ -45,22 +45,22 @@
 
 ?>
 
-  <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name1"];?>"> <![endif]-->
-  <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name1"];?>"> <![endif]-->
-  <!--[if IE 8]>         <html class="no-js lt-ie9" lang="<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name1"];?>"> <![endif]-->
-  <!--[if gt IE 8]><!--> <html class="no-js" dir="<?=$conf["site"]["langs"][$conf["site"]["lang"]]["direction"];?>" lang="<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name1"];?>" itemscope itemtype="http://schema.org/LocalBusiness"> <!--<![endif]-->
+  <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>"> <![endif]-->
+  <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>"> <![endif]-->
+  <!--[if IE 8]>         <html class="no-js lt-ie9" lang="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>"> <![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js" dir="<?=$conf["site"]["langs"][LANG]["direction"];?>" lang="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" itemscope itemtype="http://schema.org/LocalBusiness"> <!--<![endif]-->
 
   <head prefix="og: http://ogp.me/ns#">
-  <title><?=$conf["meta"]["name"][$conf["site"]["lang"]]." | ".$lCustom["pagetitle"][$conf["site"]["lang"]];?></title>
+  <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG];?></title>
   <link rel="canonical" href="<?=$conf["site"]["realpath"].$conf["site"]["virtualpath"];?>" />
   <base href="<?=$conf["site"]["realpath"];?>" target="_self" />
   <meta charset="<?=$lCustom["charset"];?>" />
   <meta http-equiv="X-UA-Compatible" content="<?=$lCustom["x_ua_compatible"];?>" />
   <meta name="viewport" content="<?=$lCustom["viewport"];?>" />
-  <meta name="lang" content="<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name1"];?>" />
+  <meta name="lang" content="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" />
   <meta name="generator" content="<?=$lCustom["generator"];?>" />
   <meta name="robots" content="<?=$lCustom["robots"];?>" />
-  <meta name="description" content="<?=$lCustom["og_description"][$conf["site"]["lang"]];?>" />
+  <meta name="description" content="<?=$lCustom["og_description"][LANG];?>" />
 
 <?php if((NPE) || (DEBUG)) : ?>
 <!-- DEBUG MODE -->
@@ -74,16 +74,16 @@
   <meta property="fb:app_id" content="<?=$conf["contact"]["fb_app_id"];?>" />
   <meta property="og:type" content="<?=$lCustom["og_type"];?>" />
   <meta property="og:url" content="<?=$conf["site"]["realpath"].$conf["site"]["virtualpath"];?>" />
-  <meta property="og:title" content="<?=$lCustom["og_title"][$conf["site"]["lang"]];?>" />
+  <meta property="og:title" content="<?=$lCustom["og_title"][LANG];?>" />
   <meta property="og:image" content="<?=$conf["site"]["realpath"].$conf["dir"]["images"]."og/".$lCustom["og_image"];?>" /><!-- 1200x630 px -->
-  <meta property="og:description" content="<?=$lCustom["og_description"][$conf["site"]["lang"]];?>" />
-  <meta property="og:image:alt" content="<?=$lCustom["og_image_alt"][$conf["site"]["lang"]];?>" />
-  <meta property="og:site_name" content="<?=$lCustom["og_site_name"][$conf["site"]["lang"]];?>" />
+  <meta property="og:description" content="<?=$lCustom["og_description"][LANG];?>" />
+  <meta property="og:image:alt" content="<?=$lCustom["og_image_alt"][LANG];?>" />
+  <meta property="og:site_name" content="<?=$lCustom["og_site_name"][LANG];?>" />
 
 <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<?=$lCustom["twitter_title"][$conf["site"]["lang"]];?>">
-  <meta name="twitter:image:alt" content="<?=$lCustom["twitter_image_alt"][$conf["site"]["lang"]];?>">
+  <meta name="twitter:title" content="<?=$lCustom["twitter_title"][LANG];?>">
+  <meta name="twitter:image:alt" content="<?=$lCustom["twitter_image_alt"][LANG];?>">
   <meta name="twitter:site" content="<?=$lCustom["twitter_site"];?>">
 
 <!-- Geo Stuff -->
