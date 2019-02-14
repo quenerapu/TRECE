@@ -14,7 +14,7 @@
 
 //OK. Let's talk.
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCommon["signin"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCommon["signin"][LANG];
 
   $msg = false;
 
@@ -34,7 +34,7 @@
 
     $msg = true;
     $msgType = "danger";
-    $msgText = $lCommon["signin_fail"][$conf["site"]["lang"]];
+    $msgText = $lCommon["signin_fail"][LANG];
 
   endif;
 
@@ -57,7 +57,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -70,14 +70,14 @@
 
 
           <div class="form-group">
-            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][$conf["site"]["lang"]];?>:</label>
+            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][LANG];?>:</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon["email_or_username"][$conf["site"]["lang"]];?>" autocomplete="off" value="" style="margin-bottom:.5em" required>
+              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon["email_or_username"][LANG];?>" autocomplete="off" value="" style="margin-bottom:.5em" required>
             </div>
           </div>
 
           <div class="form-group has-feedback">
-            <label for="password" class="col-sm-6 control-label"><?=$lCommon["password"][$conf["site"]["lang"]];?>:</label>
+            <label for="password" class="col-sm-6 control-label"><?=$lCommon["password"][LANG];?>:</label>
             <div class="col-sm-6">
               <input type="password" name="password" id="password" autocomplete="off" class="form-control" placeholder="" required>
               <span class="showhide glyphicon glyphicon-eye-close form-control-feedback" aria-hidden="true"></span>
@@ -86,8 +86,8 @@
 
           <div class="form-group">
             <div class="col-sm-offset-6 col-sm-6">
-              <button type="submit" name="signin" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["signin"][$conf["site"]["lang"]];?></button>
-              <p style="margin-top:20px;"><span class="help-block"><a href="<?=$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"].$conf["site"]["queryq"];?>"><?=$lCommon["forgot-password"][$conf["site"]["lang"]];?></a></span></p>
+              <button type="submit" name="signin" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["signin"][LANG];?></button>
+              <p style="margin-top:20px;"><span class="help-block"><a href="<?=$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"].$conf["site"]["queryq"];?>"><?=$lCommon["forgot-password"][LANG];?></a></span></p>
             </div>
           </div>
 
