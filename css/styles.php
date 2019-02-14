@@ -35,7 +35,11 @@ body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !
 .navbar-brand>img { height:100%; padding:15px; width:auto; }
 .navbar-brand { margin-top:.2em; height:60px; }
 .navbar-toggle { padding:10px; margin:15px 15px 15px 0; }
-
+.navbar-text {color:white !important;margin-top:24px;}
+.navbar-text a:link {text-decoration:none;color:white !important;}
+.navbar-text a:visited {text-decoration:none;color:white !important;}
+.navbar-text a:hover {text-decoration:none;color:white !important;border-bottom:3px solid white;padding-bottom:6px;}
+.navbar-text a:active {text-decoration:none;color:white !important;}
 
 
 
