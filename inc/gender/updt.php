@@ -135,9 +135,9 @@
 
         $msgType = $trece->dupeName + $trece->dupeLetter > 0 ? "danger" : "success";
         $msgText = $trece->dupeName + $trece->dupeLetter > 0 ?
-                  ($trece->dupeName > 0 ? $lCustom["duplicated_name"][$conf["site"]["lang"]]." " : "") .
-                  ($trece->dupeLetter > 0 ? $lCustom["duplicated_letter"][$conf["site"]["lang"]]   ." " : "") :
-                   $lCommon["general_ok"][$conf["site"]["lang"]];
+                  ($trece->dupeName > 0 ? $lCustom["duplicated_name"][LANG]." " : "") .
+                  ($trece->dupeLetter > 0 ? $lCustom["duplicated_letter"][LANG]   ." " : "") :
+                   $lCommon["general_ok"][LANG];
 
       else :
 
@@ -189,7 +189,7 @@
         else :
 
           $msgType = "success";
-          $msgText = $lCommon["general_ok"][$conf["site"]["lang"]];
+          $msgText = $lCommon["general_ok"][LANG];
 
         endif;
 
@@ -198,7 +198,7 @@
     else :
 
       $msgType = "danger";
-      $msgText = $lCommon["general_error"][$conf["site"]["lang"]];
+      $msgText = $lCommon["general_error"][LANG];
 
     endif;
 
@@ -267,7 +267,7 @@
   echo "</small></pre>";
 */
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCustom["edit"][$conf["site"]["lang"]].": ".$trece->name;
+  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG].": ".$trece->name;
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
@@ -294,9 +294,9 @@
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <div class="pull-right"><p>
-            <?=btn($lCommon["admin_list"][$conf["site"]["lang"]],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
+            <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
-          <h1><strong><?=$lCustom["edit"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["edit"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -327,20 +327,20 @@
       <div class="col-sm-6 col-md-5">
 
         <div class="form-group">
-          <label for="id_status"><?=$lCustom["status"][$conf["site"]["lang"]];?>:</label><br>
-          <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][$conf["site"]["lang"]];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][$conf["site"]["lang"]];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
+          <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
+          <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
         </div>
 
         <div class="form-group<?=$dupeName>0?" has-error":"";?>">
-          <label for="name"><?=$lCustom["name"][$conf["site"]["lang"]];?>:</label><br>
+          <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
           <input type="text" id="name" name="name" class="form-control" placeholder="<?=$trece->name;?>" value="<?=($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)?"":$name;?>" required>
-          <span class="help-block">* <?=($dupeName>0?$lCustom["duplicated_name"][$conf["site"]["lang"]]:" ").$lCommon["it_must_be_unique"][$conf["site"]["lang"]];?></span>
+          <span class="help-block">* <?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></span>
         </div>
 
         <div class="form-group<?=$dupeLetter>0?" has-error":"";?>">
-          <label for="letter"><?=$lCustom["letter"][$conf["site"]["lang"]];?>:</label><br>
+          <label for="letter"><?=$lCustom["letter"][LANG];?>:</label><br>
           <input type="text" id="letter" name="letter" class="form-control" value="<?=$letter;?>" maxlength="1"<?=$dupeName+$dupeLetter==0&&strlen(trim($letter))>0?" readonly":" required";?>>
-          <span class="help-block">* <?=($dupeLetter>0?$lCustom["duplicated_letter"][$conf["site"]["lang"]]:" ").$lCommon["it_must_be_unique"][$conf["site"]["lang"]];?></span>
+          <span class="help-block">* <?=($dupeLetter>0?$lCustom["duplicated_letter"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></span>
         </div>
 
         <div class="row">
@@ -348,14 +348,14 @@
             <input type="hidden" id="cropData1" name="cropData1">
             <input type="hidden" id="cropData2" name="cropData2">
             <input type="hidden" id="imagebase64" name="imagebase64">
-            <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][$conf["site"]["lang"]];?></button>
+            <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
 <?php if(($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)) : ?>
 <?php /*
             <hr>
             <div class="checkbox">
               <label>
                 <input type="checkbox" id="addNew" name="addNew" value="1" checked>
-                <?=$lCommon["and_add_a_new_blank_file"][$conf["site"]["lang"]];?>
+                <?=$lCommon["and_add_a_new_blank_file"][LANG];?>
               </label>
             </div>
 */ ?>
@@ -397,7 +397,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
     var thePic="<?=$trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["viewport_w"]."x".$cconf["img"]["viewport_h"]."/?text=?");?>";
-    function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$("form#form").submit();}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][$conf["site"]["lang"]]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][$conf["site"]["lang"]];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});var form=document.querySelector("form#form");form.addEventListener("submit",function(e){e.preventDefault();},false);var submit_form_btn=document.querySelector(".confirm-image");submit_form_btn.addEventListener("click",function(ev){if(form.checkValidity()){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("form#form").submit();},10);}else{form.querySelector('input[type="submit"]').click();}},false);$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
+    function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$("form#form").submit();}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});var form=document.querySelector("form#form");form.addEventListener("submit",function(e){e.preventDefault();},false);var submit_form_btn=document.querySelector(".confirm-image");submit_form_btn.addEventListener("click",function(ev){if(form.checkValidity()){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("form#form").submit();},10);}else{form.querySelector('input[type="submit"]').click();}},false);$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
   </script>
 
 
