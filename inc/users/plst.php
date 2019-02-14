@@ -75,7 +75,7 @@ $intimacy = 2;
 
 //Still here? OK, let's talk.
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCustom["list"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -155,11 +155,11 @@ $intimacy = 2;
         <div class="page-header">
           <?php if($app->getUserHierarchy() == 1) : ?>
           <div class="pull-right"><p>
-            <?=btn($lCommon["admin_list"][$conf["site"]["lang"]],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
+            <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- End row -->
@@ -211,7 +211,7 @@ $intimacy = 2;
               <div class="side-corner-tag">
                 <a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>">
                   <p><span style="background:#<?=$hierarchy_color;?>;width:160px;right:-50px;"></span></p>
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$lCustom["singular"][$conf["site"]["lang"]])));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name[$i];?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$lCustom["singular"][LANG])));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name[$i];?>">
                 </a>
               </div>
               <p style="line-height:.8em;"><small><strong><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>"><?=mb_strtoupper($trece->name[$i]." ".$trece->surname[$i],"UTF-8");?></a></strong></small></p>
@@ -276,9 +276,9 @@ $intimacy = 2;
 
         <div class="alert alert-danger">
           <?php if($trece->rowcount_absolute > 0) : ?>
-              <?=$lCommon["few_data"][$conf["site"]["lang"]];?>
+              <?=$lCommon["few_data"][LANG];?>
           <?php else : ?>
-              <?=$lCommon["no_data"][$conf["site"]["lang"]];?>
+              <?=$lCommon["no_data"][LANG];?>
           <?php endif; ?>
         </div>
 
