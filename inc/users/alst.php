@@ -399,8 +399,8 @@
       ?>
 
         <div class="pull-right"><p>
-          <strong><?=$trece->rowcount_absolute;?> resultado<?=$trece->rowcount_absolute == 1 ? "" : "s";?></strong>
-        </p></div>
+         <strong><?=$trece->rowcount_absolute;?> <?=$trece->rowcount_absolute == 1 ? $lCommon["result"][LANG] : $lCommon["results"][LANG];?></strong>
+         </p></div>
         <h4>
           <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
         </h4>
