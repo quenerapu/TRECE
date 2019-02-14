@@ -113,16 +113,16 @@
 
       $msgType = $trece->wrongUsername + $trece->dupeUsername + $trece->wrongeMail + $trece->dupeeMail > 0 ? "danger" : "success";
       $msgText = $trece->wrongUsername + $trece->dupeUsername + $trece->wrongeMail + $trece->dupeeMail > 0 ?
-                ($trece->wrongUsername > 0 ? $lCustom["wrong_username"][$conf["site"]["lang"]]     ." " : "") .
-                ($trece->dupeUsername  > 0 ? $lCustom["duplicated_username"][$conf["site"]["lang"]]." " : "") .
-                ($trece->wrongeMail    > 0 ? $lCustom["wrong_email"][$conf["site"]["lang"]]        ." " : "") .
-                ($trece->dupeeMail     > 0 ? $lCustom["duplicated_email"][$conf["site"]["lang"]]   ." " : "") :
-                 $lCommon["general_ok"][$conf["site"]["lang"]];
+                ($trece->wrongUsername > 0 ? $lCustom["wrong_username"][LANG]     ." " : "") .
+                ($trece->dupeUsername  > 0 ? $lCustom["duplicated_username"][LANG]." " : "") .
+                ($trece->wrongeMail    > 0 ? $lCustom["wrong_email"][LANG]        ." " : "") .
+                ($trece->dupeeMail     > 0 ? $lCustom["duplicated_email"][LANG]   ." " : "") :
+                 $lCommon["general_ok"][LANG];
 
     else :
 
       $msgType = "danger";
-      $msgText = $lCommon["general_error"][$conf["site"]["lang"]];
+      $msgText = $lCommon["general_error"][LANG];
 
     endif;
 
@@ -203,7 +203,7 @@
   echo "</small></pre>";
 */
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCustom["edit"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
@@ -230,9 +230,9 @@
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <div class="pull-right"><p>
-            <?=btn($lCommon["admin_list"][$conf["site"]["lang"]],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
+            <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
-          <h1><strong><?=$lCustom["edit"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["edit"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -257,14 +257,14 @@
         <div class="row">
           <div class="col-xs-6">
             <div class="form-group">
-              <label for="id_status"><?=$lCustom["status"][$conf["site"]["lang"]];?>:</label><br>
-              <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][$conf["site"]["lang"]];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][$conf["site"]["lang"]];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
+              <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
+              <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-group">
-              <label for="uhierarchy"><?=$lCustom["hierarchy"][$conf["site"]["lang"]];?>:</label><br>
-              <select name="uhierarchy" id="uhierarchy" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][$conf["site"]["lang"]];?>" data-live-search="true" required>
+              <label for="uhierarchy"><?=$lCustom["hierarchy"][LANG];?>:</label><br>
+              <select name="uhierarchy" id="uhierarchy" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
                   require_once($conf["dir"]["includes"]."hierarchy/".$conf["file"]["crud"].".php");
                   $cconfHierarchy = require($conf["dir"]["includes"]."hierarchy/".$conf["file"]["conf"].".php");
@@ -279,14 +279,14 @@
         </div>
 
         <div class="form-group">
-          <label for="name"><?=$lCustom["name"][$conf["site"]["lang"]];?>:</label><br>
+          <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
           <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
         </div>
 
 
 
         <div class="form-group">
-          <label for="surname"><?=$lCustom["surname"][$conf["site"]["lang"]];?>:</label><br>
+          <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
           <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
         </div>
 
@@ -295,15 +295,15 @@
         <div class="row">
           <div class="col-xs-6">
             <div class="form-group<?=$wrongUsername+$dupeUsername>0?" has-error":"";?>">
-              <label for="username"><?=$lCustom["username"][$conf["site"]["lang"]];?>:</label><br>
+              <label for="username"><?=$lCustom["username"][LANG];?>:</label><br>
                <input type="text" id="username" name="username" class="form-control" value="<?=$username;?>" required>
-              <?=($wrongUsername+$dupeUsername>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($wrongUsername>0?$lCustom["wrong_username"][$conf["site"]["lang"]]." ":($dupeUsername>0?$lCustom["duplicated_username"][$conf["site"]["lang"]]." ".$lCommon["it_must_be_unique"][$conf["site"]["lang"]]." ":"")).$lCustom["mandatory_field"][$conf["site"]["lang"]]."</span></span>":"");?>
+              <?=($wrongUsername+$dupeUsername>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($wrongUsername>0?$lCustom["wrong_username"][LANG]." ":($dupeUsername>0?$lCustom["duplicated_username"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"")).$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
             </div>
           </div>
           <div class="col-xs-6">
             <div class="form-group">
-              <label for="ugender"><?=$lCustom["gender"][$conf["site"]["lang"]];?>:</label><br>
-              <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][$conf["site"]["lang"]];?>" data-live-search="true" required>
+              <label for="ugender"><?=$lCustom["gender"][LANG];?>:</label><br>
+              <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
                   require_once($conf["dir"]["includes"]."gender/".$conf["file"]["crud"].".php");
                   $cconfGender = require($conf["dir"]["includes"]."gender/".$conf["file"]["conf"].".php");
@@ -318,13 +318,13 @@
         </div>
 
         <div class="form-group<?=$wrongeMail+$dupeeMail>0?" has-error":"";?>">
-          <label for="email"><?=$lCommon["email"][$conf["site"]["lang"]];?>:</label><br>
-          <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][$conf["site"]["lang"]]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
-          <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][$conf["site"]["lang"]]." ".$lCommon["it_must_be_unique"][$conf["site"]["lang"]]." ":"").$lCustom["mandatory_field"][$conf["site"]["lang"]]."</span></span>":"");?>
+          <label for="email"><?=$lCommon["email"][LANG];?>:</label><br>
+          <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][LANG]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
+          <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"").$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][$conf["site"]["lang"]];?></button>
+          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
         </div>
 
       </div>
@@ -352,7 +352,7 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/bootstrap-select.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/i18n/defaults-<?=$conf["site"]["langs"][$conf["site"]["lang"]]["culture-name2"];?>.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/i18n/defaults-<?=$conf["site"]["langs"][LANG]["culture-name2"];?>.js"></script>
   <script>$(".selectpicker").selectpicker({style:"btn-info",size:4});</script>
 
 
