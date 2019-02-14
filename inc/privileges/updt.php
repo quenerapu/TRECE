@@ -109,8 +109,8 @@
 
         $msgType = $trece->dupeName > 0 ? "danger" : "success";
         $msgText = $trece->dupeName > 0 ?
-                  ($trece->dupeName > 0 ? $lCustom["duplicated_name"][$conf["site"]["lang"]]." " : "") :
-                   $lCommon["general_ok"][$conf["site"]["lang"]];
+                  ($trece->dupeName > 0 ? $lCustom["duplicated_name"][LANG]." " : "") :
+                   $lCommon["general_ok"][LANG];
 
       else :
 
@@ -128,7 +128,7 @@
         else :
 
           $msgType = "success";
-          $msgText = $lCommon["general_ok"][$conf["site"]["lang"]];
+          $msgText = $lCommon["general_ok"][LANG];
 
         endif;
 
@@ -137,7 +137,7 @@
     else :
 
       $msgType = "danger";
-      $msgText = $lCommon["general_error"][$conf["site"]["lang"]];
+      $msgText = $lCommon["general_error"][LANG];
 
     endif;
 
@@ -200,7 +200,7 @@
   echo "</small></pre>";
 */
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $lCustom["edit"][$conf["site"]["lang"]];
+  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
@@ -227,9 +227,9 @@
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <div class="pull-right"><p>
-            <?=btn($lCommon["admin_list"][$conf["site"]["lang"]],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
+            <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
-          <h1><strong><?=$lCustom["edit"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["edit"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -243,29 +243,29 @@
         <div class="row">
           <div class="col-xs-3">
             <div class="form-group">
-              <label for="id_status"><?=$lCustom["status"][$conf["site"]["lang"]];?>:</label><br>
-              <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][$conf["site"]["lang"]];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][$conf["site"]["lang"]];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
+              <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
+              <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
             </div>
           </div>
           <div class="col-xs-9">
             <div class="form-group<?=$dupeName>0?" has-error":"";?>">
-              <label for="name"><?=$lCustom["name"][$conf["site"]["lang"]];?>:</label><br>
+              <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
               <input type="text" id="name" name="name" class="form-control" placeholder="<?=$name;?>" value="<?=($cconf["default"]["name"]===$name||(strpos($name,$cconf["default"]["name"])===0)?$trece->name:$name);?>" required>
-              <span class="help-block">* <?=($dupeName>0?$lCustom["duplicated_name"][$conf["site"]["lang"]]:" ").$lCommon["it_must_be_unique"][$conf["site"]["lang"]];?></span>
+              <span class="help-block">* <?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></span>
             </div>
           </div>
         </div>
 
         <div class="row">
           <div class="form-group">
-            <button type="submit" class="btn btn-cons"><?=$lCommon["save_changes"][$conf["site"]["lang"]];?></button>
+            <button type="submit" class="btn btn-cons"><?=$lCommon["save_changes"][LANG];?></button>
 <?php if(($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)) : ?>
 <?php /*
             <hr>
             <div class="checkbox">
               <label>
                 <input type="checkbox" id="addNew" name="addNew" value="1" checked>
-                <?=$lCommon["and_add_a_new_blank_file"][$conf["site"]["lang"]];?>
+                <?=$lCommon["and_add_a_new_blank_file"][LANG];?>
               </label>
             </div>
 */ ?>
