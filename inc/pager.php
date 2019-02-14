@@ -11,7 +11,7 @@
   if ($page>1):
 
 ?>
-              <li><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/1".$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["first_page"][$conf["site"]["lang"]];?>">«</a></li>
+              <li><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/1".$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["first_page"][LANG];?>">«</a></li>
 <?php
 
   endif;
@@ -23,13 +23,13 @@
       if ($x == $page) :
 
 ?>
-              <li class="active"><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/".$x.$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["actual_page"][$conf["site"]["lang"]];?>"><?=$x;?> <span class="sr-only"><?=$lCommon["actual_page"][$conf["site"]["lang"]];?></span></a></li>
+              <li class="active"><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/".$x.$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["actual_page"][LANG];?>"><?=$x;?> <span class="sr-only"><?=$lCommon["actual_page"][LANG];?></span></a></li>
 <?php
 
   else:
 
 ?>
-              <li><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/".$x.$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["page"][$conf["site"]["lang"]];?> <?=$x;?>"><?=$x;?></a></li>
+              <li><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/".$x.$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["page"][LANG];?> <?=$x;?>"><?=$x;?></a></li>
 <?php
 
       endif;
@@ -41,7 +41,7 @@
   if ($page<$total_pages):
 
 ?>
-              <li><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/".$total_pages.$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["last_page"][$conf["site"]["lang"]];?> (<?=$total_pages;?>)">»</a></li>
+              <li><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx."/".$total_pages.$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["last_page"][LANG];?> (<?=$total_pages;?>)">»</a></li>
 <?php
 
   endif;
