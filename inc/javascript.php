@@ -16,7 +16,7 @@
       location.replace("<?=$conf["site"]["uri"];?>");
 //    location.reload();
 //    alert(data);
-      }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_added"][$conf["site"]["lang"]]);?>");});};
+      }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_added"][LANG]);?>");});};
 
     $(document).on("click",".add<?=isset($parental)?"AndSelect":"";?>Them",function(e){
     <?php if(!isset($parental)) : ?>
@@ -44,7 +44,7 @@
           },
         buttons:{
           confirm:{
-            text:"<?=$lCommon["add"][$conf["site"]["lang"]];?>",
+            text:"<?=$lCommon["add"][LANG];?>",
             action:function(){
               var number=this.$content.find(".number").val();
               if(number%1==0 && number<=<?=$cconf["default"]["max_new_items"];?>){
@@ -61,7 +61,7 @@
               },
               },
             cancel:{
-              text:"<?=$lCommon["cancel"][$conf["site"]["lang"]];?>",
+              text:"<?=$lCommon["cancel"][LANG];?>",
               },
             },
           });
@@ -79,7 +79,7 @@
 
 
   <div id="bulkAdd" style="display:none;">
-    <input type="text" placeholder="<?=sprintf($lCommon["how_many_do_you_want"][$conf["site"]["lang"]],$cconf["default"]["max_new_items"]);?>" class="number" style="box-sizing: border-box; line-height: 20px;">
+    <input type="text" placeholder="<?=sprintf($lCommon["how_many_do_you_want"][LANG],$cconf["default"]["max_new_items"]);?>" class="number" style="box-sizing: border-box; line-height: 20px;">
 <?php if(isset($parental)) : ?>
     <select name="parental" class="parental" data-style="btn-info">
       <?php $parental=explode("|",$parental); ?>
@@ -157,7 +157,7 @@
       location.replace("<?=$conf["site"]["uri"];?>");
 //    location.reload();
 //    alert(data);
-      $("#allnone:checkbox").prop("checked",false);$(".checkme:checkbox").prop("checked",false);}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][$conf["site"]["lang"]]);?>");});};
+      $("#allnone:checkbox").prop("checked",false);$(".checkme:checkbox").prop("checked",false);}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});};
 
     $("#deleteThem").on("click",function(){
       var howMany = 0;
@@ -166,10 +166,10 @@
 
       if(howMany>0){
         $.confirm({
-          content: sprintf("<?=$lCommon["you_are_going_to_delete"][$conf["site"]["lang"]];?>",howMany,function(){return howMany>1?"<?=$lCommon["you_are_going_to_delete_plural"][$conf["site"]["lang"]];?>":"";}),
+          content: sprintf("<?=$lCommon["you_are_going_to_delete"][LANG];?>",howMany,function(){return howMany>1?"<?=$lCommon["you_are_going_to_delete_plural"][LANG];?>":"";}),
           buttons:{
-            confirm:{text:"<?=$lCommon["accept"][$conf["site"]["lang"]];?>",action:function(){deleteThem(who);}},
-            cancel:{text:"<?=$lCommon["cancel"][$conf["site"]["lang"]];?>",action:function(){}},
+            confirm:{text:"<?=$lCommon["accept"][LANG];?>",action:function(){deleteThem(who);}},
+            cancel:{text:"<?=$lCommon["cancel"][LANG];?>",action:function(){}},
             }
           });
         }
