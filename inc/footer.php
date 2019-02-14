@@ -65,5 +65,6 @@
 
 
 
+<?=BEGRATEFUL;?>
 </body>
 </html>
