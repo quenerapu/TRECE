@@ -68,7 +68,7 @@
 
 //Still here? OK, let's talk.
 
-  $lCustom["pagetitle"][$conf["site"]["lang"]] = $trece->name;
+  $lCustom["pagetitle"][LANG] = $trece->name;
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
@@ -84,7 +84,7 @@
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][$conf["site"]["lang"]];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
 
         <p>&nbsp;</p>
