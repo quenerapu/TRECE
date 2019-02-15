@@ -264,12 +264,12 @@
             <div class="form-group">
               <div id="color" class="input-group colorpicker-component">
                 <span class="input-group-addon">#</span>
-                <input type="text" name="color" value="#<?=$trece->color;?>" class="form-control qqq">
+                <input type="text" name="color" value="#<?=$trece->color;?>" class="form-control color">
                 <span class="input-group-addon"><i></i></span>
               </div>
             </div>
             <script>
-              $(function(){$("#color").colorpicker({format:"hex",hexNumberSignPrefix:false,colorSelectors:{"red":"#ff0000","pink":"#ff1493","orange":"#ff4500","yellow":"#ffff00","purple":"#9400d3","green":"#00ff00","blue":"#4682b4","blue":"#4682b4","brown":"#8b4513","gray":"#696969",}});$("#color").on("colorpickerChange",function(event){$(".qqq").css("background-color",event.color.toString());});});
+              $(function(){$("#color").colorpicker({format:"hex",hexNumberSignPrefix:false,colorSelectors:{"red":"#ff0000","pink":"#ff1493","orange":"#ff4500","yellow":"#ffff00","purple":"#9400d3","green":"#00ff00","blue":"#4682b4","blue":"#4682b4","brown":"#8b4513","gray":"#696969",}});$("#color").on("colorpickerChange",function(event){$(".color").css("background-color",event.color.toString());});});
             </script>
           </div>
         </div>
