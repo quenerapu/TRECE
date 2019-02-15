@@ -3,7 +3,7 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" style="margin-right:0;">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -27,20 +27,14 @@
               <?php endforeach; ?>
               </small></p>
               <div class="hidden-sm hidden-md hidden-lg clearfix"></div>
-              <div id="navbar" class="navbar-collapse collapse">
-<?php if ($app->getUserSignInStatus()) : ?>
-                <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$app->getUserName();?> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><?=nav($lCommon[$conf["file"]["me"]][LANG],$lCommon[$conf["file"]["me"]]["en"]);?></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="<?=REALPATHLANG."?signout";?>"><?=$lCommon["signout"][LANG];?></a></li>
-                    </ul>
-                  </li>
+              <div id="navbar" class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                  <li><a href="https://github.com/quenerapu/TRECE" target="_blank">TRECE on GitHub</a></li>
+                  <li><?=nav("Demo","demo");?></li>
+                  <li><?=nav("Example","example");?></li>
                 </ul>
-<?php if ($app->getUserHierarchy() == 1) : ?>
-                <ul class="nav navbar-nav navbar-right">
+<?php if ($app->getUserSignInStatus()) : ?>
+                <ul class="nav navbar-nav">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["admin"][LANG];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -51,15 +45,22 @@
                     </ul>
                   </li>
                 </ul>
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$app->getUserName();?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><?=nav($lCommon[$conf["file"]["me"]][LANG],$lCommon[$conf["file"]["me"]]["en"]);?></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="<?=$conf["site"]["realpathLang"]."?signout";?>"><?=$lCommon["signout"][LANG];?></a></li>
+                    </ul>
+                  </li>
+                </ul>
 <?php endif; ?>
 <?php else : ?>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav">
                   <li><a href="<?=REALPATHLANG.$conf["file"]["signin"];?>"><?=$lCommon["signin"][LANG];?></a></li>
                 </ul>
 <?php endif; ?>
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="https://github.com/quenerapu/TRECE" target="_blank">TRECE on GitHub</a></li>
-                </ul>
               </div>
             </div>
           </div>

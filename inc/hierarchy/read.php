@@ -31,9 +31,9 @@
 //Not logged? Not admin? Get out of here!
 
   if (
-      1+1==3 # Public for everyone
-//    !$app->getUserSignInStatus() # Must be logged in
-//    || $app->getUserHierarchy() != 1 # Must be admin
+//    1+1==3 # Public for everyone
+      !$app->getUserSignInStatus() # Must be logged in
+      || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
     header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);

@@ -407,10 +407,9 @@
               <th><?=$lCustom["color"][LANG];?></th>
               <th><?=$lCommon["name"][LANG];?></th>
               <th><?=$lCustom["privileges"][LANG];?></th>
-              <th style="text-align:right;"><?=$lCommon["actions"][LANG];?></th>
+              <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
-          <?php // foreach($array as $row) : ?>
           <?php for($i=0;$i<$rowcount_page;$i++) : ?>
           <tbody class="sortable-item" id="sort-<?=$trece->id[$i];?>">
             <tr class="handle">
@@ -431,14 +430,19 @@
                 <?=$trece->ids_privileges[$i];?>
               </td>
               <td nowrap style="text-align:right;">
-                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["edit"][LANG];?>" class=""><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
-                <a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-ids_privileges="<?=$trece->ids_privileges[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["clone"][LANG];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["see"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-ids_privileges="<?=$trece->ids_privileges[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
+                  </ul>
+                </div>
               </td>
             </tr>
           </tbody>
           <?php endfor; ?>
-          <?php //endforeach; ?>
         </table>
 
       <?php

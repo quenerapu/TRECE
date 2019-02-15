@@ -413,10 +413,9 @@
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCommon["avatar"][LANG];?></th>
               <th><?=$lCommon["name"][LANG];?></th>
-              <th style="text-align:right;"><?=$lCommon["actions"][LANG];?></th>
+              <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
-          <?php // foreach($array as $row) : ?>
           <?php for($i=0;$i<$rowcount_page;$i++) : ?>
           <?php
             $hierarchy = explode("|",$trece->hierarchy[$i]);
@@ -454,23 +453,10 @@
                     <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
                 </div>
-
-
-
-<?php /*
-                <a data-id="<?=$trece->id[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["clone"][LANG];?>" class="signout-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i></a>
-
-                <a href="mailto:<?=$trece->email[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["send_email"][LANG];?>" class="" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["password"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["edit"][LANG];?>" class=""><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
-                <a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-surname="<?=$trece->surname[$i];?>" data-username="<?=$trece->username[$i];?>" data-ugender="<?=$trece->ugender[$i];?>" data-uhierarchy="<?=$trece->uhierarchy[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["clone"][LANG];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["see"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
-*/ ?>
               </td>
             </tr>
           </tbody>
           <?php endfor; ?>
-          <?php //endforeach; ?>
         </table>
 
       <?php

@@ -23,7 +23,7 @@ EOD;
   <div class="container main-container">
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <h4 class="text-right text-success" style="margin-right:.5em;margin-top:0;">Start here <i class="fa fa-arrow-up" aria-hidden="true"></i></h4>
       </div>
     </div><!-- row -->

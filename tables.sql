@@ -212,4 +212,48 @@ DELIMITER ;
 
 
 
--- 2019-02-11 10:06:22
+DROP TABLE IF EXISTS `inconceivable_example`;
+CREATE TABLE `inconceivable_example` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_status` tinyint(1) NOT NULL DEFAULT '0',
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_es` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_gal` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_en` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description_es` text COLLATE utf8_unicode_ci NOT NULL,
+  `description_gal` text COLLATE utf8_unicode_ci NOT NULL,
+  `description_en` text COLLATE utf8_unicode_ci NOT NULL,
+  `ids_users` text COLLATE utf8_unicode_ci NOT NULL,
+  `date_reg` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_upd` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ip_upd` varchar(39) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0.0.0.0',
+  `ref` char(8) COLLATE utf8_unicode_ci NOT NULL,
+  `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DELIMITER ;;
+
+CREATE TRIGGER `serialize_example_code` BEFORE INSERT ON `inconceivable_example` FOR EACH ROW
+BEGIN
+     DECLARE original_code varchar(250);
+     DECLARE code_counter int;
+     SET original_code = new.code;
+     SET code_counter = 1;
+     WHILE EXISTS (SELECT true FROM `inconceivable_example` WHERE code = new.code) DO
+        SET new.code = CONCAT(original_code, '-', code_counter);
+        SET code_counter = code_counter + 1;
+     END WHILE;
+
+  END;;
+
+DELIMITER ;
+
+
+
+
+
+
+-- 2019-02-15 11:33:59

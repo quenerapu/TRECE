@@ -31,9 +31,9 @@
 //Not logged? Not admin? Get out of here!
 
   if (
-      1+1==3 # Public for everyone
-//    !$app->getUserSignInStatus() # Must be logged in
-//    || $app->getUserHierarchy() != 1 # Must be admin
+//    1+1==3 # Public for everyone
+      !$app->getUserSignInStatus() # Must be logged in
+      || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
     header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
@@ -99,7 +99,7 @@
 
         <div style="width:200px;">
 
-          <img src="<?=file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$conf["css"]["avatar_prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$conf["css"]["avatar_prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=?";?>" class="img-thumbnail img-responsive" alt="<?=$trece->name;?>">
+          <img src="<?=file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=?");?>" class="img-thumbnail img-responsive" alt="<?=$trece->name;?>">
 
         </div>
 

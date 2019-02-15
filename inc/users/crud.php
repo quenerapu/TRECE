@@ -200,6 +200,9 @@ class Users {
 
   function addOne() {
 
+    $this->query1 = "";
+    $this->query2 = "";
+
     $this->randomizer("ref");
     foreach ($this->xx as $x) :
       $this->query1.= isset($this->$x) ? "`".$x."`, " : "";
