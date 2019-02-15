@@ -36,7 +36,7 @@
 //    || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
@@ -59,7 +59,7 @@
 
   if($rowcount_page == 0) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
@@ -101,7 +101,7 @@
 
           <div class="side-corner-tag">
             <p><span style="background:#<?=$trece->hierarchy_color;?>;width:160px;right:-50px;"></span></p>
-            <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["site"]["realpath"].$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=User")));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name." ".$trece->surname;?>">
+            <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=User")));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name." ".$trece->surname;?>">
           </div>
 
         </div>

@@ -14,7 +14,7 @@
 
   if ( $trece->num == 0 ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["queryq"]); die();
+    header("location:".REALPATHLANG.QUERYQ); die();
 
   endif;
 

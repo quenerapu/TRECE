@@ -55,7 +55,7 @@ $intimacy = 2;
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
     endif;
@@ -66,7 +66,7 @@ $intimacy = 2;
 
   if ( !isset($what) ) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/1".$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
@@ -121,7 +121,7 @@ $intimacy = 2;
 
   if($rowcount_page == 0 && $page>1) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/1".$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
@@ -203,11 +203,11 @@ $intimacy = 2;
           <div class="col-sm-3">
             <div class="qq" style="margin-bottom:20px;">
               <div class="white-panel" style="margin-bottom:10px;">
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["site"]["realpath"].$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Hierarchy"));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name[$i];?>">
+                <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Hierarchy"));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name[$i];?>">
                 </a>
               </div>
-              <p style="line-height:.8em;"><small><strong><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>"><?=mb_strtoupper($trece->name[$i],"UTF-8");?></a></strong></small></p>
+              <p style="line-height:.8em;"><small><strong><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>"><?=mb_strtoupper($trece->name[$i],"UTF-8");?></a></strong></small></p>
               <div class="clearfix"></div>
             </div>
           </div>

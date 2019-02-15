@@ -20,7 +20,7 @@ $max_thumb    = 120;
 //    || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -45,7 +45,7 @@ $max_thumb    = 120;
 
   if($trece->rowcount == 0) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -231,7 +231,7 @@ $max_thumb    = 120;
   <?php $base = substr($file,0,strrpos($file,".")); $base = str_lreplace("_thumb","",$base); ?>
           <li>
             <div class="check">
-              <img src="<?=$conf["site"]["realpath"].$imageFolder.basename($file);?>">
+              <img src="<?=REALPATH.$imageFolder.basename($file);?>">
               <div class="rightblock">
                 <a class="file" data-src="<?=$base."_img.".$ext;?>" href=""><span><?=$max_img;?> px.</span></a><br>
                 <a class="file" data-src="<?=$base."_icon.".$ext;?>" href=""><span><?=$max_icon;?> px.</span></a><br>
@@ -264,7 +264,7 @@ $max_thumb    = 120;
         var who = $(this).data("img")+"↲"+$(this).data("icon")+"↲"+$(this).data("thumb");
         $.confirm({
           content: "<div style=\"float:left;\"><h3>Delete?</h3></div>"+
-                   "<div style=\"float:right;\"><img src=\"<?=$conf["site"]["realpath"];?>"+$(this).data("thumb")+"\" style=\"width:80px;\"></div>",
+                   "<div style=\"float:right;\"><img src=\"<?=REALPATH;?>"+$(this).data("thumb")+"\" style=\"width:80px;\"></div>",
           boxWidth: "50%",
           useBootstrap: false,
           buttons:{
@@ -399,7 +399,7 @@ $max_thumb    = 120;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <div class="pull-right"><p>
-            <?=btn($lCommon["change-password"][LANG],"^".$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"]."?m=".$trece->email,"","fa-key");?>
+            <?=btn($lCommon["change-password"][LANG],"^".REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->email,"","fa-key");?>
           </p></div>
           <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>

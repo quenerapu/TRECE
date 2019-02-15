@@ -52,8 +52,8 @@
 
   <head prefix="og: http://ogp.me/ns#">
   <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG];?></title>
-  <link rel="canonical" href="<?=$conf["site"]["realpath"].$conf["site"]["virtualpath"];?>" />
-  <base href="<?=$conf["site"]["realpath"];?>" target="_self" />
+  <link rel="canonical" href="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
+  <base href="<?=REALPATH;?>" target="_self" />
   <meta charset="<?=$lCustom["charset"];?>" />
   <meta http-equiv="X-UA-Compatible" content="<?=$lCustom["x_ua_compatible"];?>" />
   <meta name="viewport" content="<?=$lCustom["viewport"];?>" />
@@ -73,9 +73,9 @@
 <!-- OG -->
   <meta property="fb:app_id" content="<?=$conf["contact"]["fb_app_id"];?>" />
   <meta property="og:type" content="<?=$lCustom["og_type"];?>" />
-  <meta property="og:url" content="<?=$conf["site"]["realpath"].$conf["site"]["virtualpath"];?>" />
+  <meta property="og:url" content="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
   <meta property="og:title" content="<?=$lCustom["og_title"][LANG];?>" />
-  <meta property="og:image" content="<?=$conf["site"]["realpath"].$conf["dir"]["images"]."og/".$lCustom["og_image"];?>" /><!-- 1200x630 px -->
+  <meta property="og:image" content="<?=REALPATH.$conf["dir"]["images"]."og/".$lCustom["og_image"];?>" /><!-- 1200x630 px -->
   <meta property="og:description" content="<?=$lCustom["og_description"][LANG];?>" />
   <meta property="og:image:alt" content="<?=$lCustom["og_image_alt"][LANG];?>" />
   <meta property="og:site_name" content="<?=$lCustom["og_site_name"][LANG];?>" />
@@ -100,22 +100,22 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/css/bootstrap.min.css">
 
 <!-- Favicon https://favicon-generator.org -->
-  <link rel="apple-touch-icon" sizes="57x57" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/favicon-16x16.png">
-  <link rel="manifest" href="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/manifest.json">
+  <link rel="apple-touch-icon" sizes="57x57" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/favicon-16x16.png">
+  <link rel="manifest" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="<?=$conf["site"]["realpath"].$conf["dir"]["images"];?>favicon/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="<?=REALPATH.$conf["dir"]["images"];?>favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
 <?php /*

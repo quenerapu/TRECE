@@ -5,7 +5,7 @@
 
   if ( !$app->getUserSignInStatus() ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["cms"]["login"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$conf["cms"]["login"].QUERYQ);
     die();
 
   endif;

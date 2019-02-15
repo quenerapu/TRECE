@@ -18,7 +18,7 @@
           <form class="form-inline" action="" method="get">
             <div class="pull-left">
               <div class="input-group" style="max-width:120px; max-width:250px;">
-                <div class="input-group-addon"><a href="<?=$conf["site"]["realpathLang"].($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
+                <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
                 <input type="hidden" name="wr" value="<?=$action;?>">
                 <input type="text" name="wh" class="form-control input-sm" value="<?=$searchWhat;?>" style="max-width:100%;">
               </div>

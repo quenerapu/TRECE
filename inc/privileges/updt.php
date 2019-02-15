@@ -31,7 +31,7 @@
     parse_str($conf["site"]["query"],$conf["site"]["queryArray"]);
     $goBack = $conf["site"]["queryArray"]["back"]."/".$conf["file"]["adminlist"];
     unset($conf["site"]["queryArray"]["back"]);
-    $conf["site"]["queryq"] = count($conf["site"]["queryArray"])>0? "?".http_build_query($conf["site"]["queryArray"]) : "";
+    QUERYQ = count($conf["site"]["queryArray"])>0? "?".http_build_query($conf["site"]["queryArray"]) : "";
 
   endif;
 
@@ -47,7 +47,7 @@
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -65,7 +65,7 @@
 
   if($trece->rowcount == 0) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -122,7 +122,7 @@
 
           $trece->addOne();
 
-          header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"]["0"]."/".$conf["site"]["virtualpathArray"]["1"]."/".$trece->ref);
+          header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"]["0"]."/".$conf["site"]["virtualpathArray"]["1"]."/".$trece->ref);
           die();
 
         else :
@@ -161,8 +161,8 @@
     ) :
 
 //  $conf["site"]["queryArray"]["bk"] = $conf["site"]["virtualpathArray"][$readtype+1];
-    $conf["site"]["queryq"] = $conf["site"]["queryq"] != "" ? "?".http_build_query($conf["site"]["queryArray"]) : "";
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/".$what."/".$conf["file"]["adminlist"]."/1".$conf["site"]["queryq"]);
+    QUERYQ = QUERYQ != "" ? "?".http_build_query($conf["site"]["queryArray"]) : "";
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/".$what."/".$conf["file"]["adminlist"]."/1".QUERYQ);
     die();
 
   endif;

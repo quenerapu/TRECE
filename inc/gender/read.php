@@ -36,7 +36,7 @@
 //    || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
@@ -59,7 +59,7 @@
 
   if($rowcount_page == 0) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
