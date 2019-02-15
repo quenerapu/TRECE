@@ -6,8 +6,8 @@
 
   define("TRECE"                                , true);            # Aaaaaaamen brothers and sisters!
   define("NPE"                                  , false);           # Shows Non-Production Environment flag or not
-  define("DEBUG"                                , true);            # Debuggable or not
-  define("MARKDOWN"                             , false);           # Use the Markdown syntax or not
+  define("DEBUG"                                , false);           # Debuggable or not
+  define("MARKDOWN"                             , true);            # Use the Markdown syntax or not
   define("THE_NAME_OF_THE_CORE_DIR"             , "core");          # CHANGE THIS and name the real folder accordingly
   define("THE_NAME_OF_THE_CONFIGURATION_FILE"   , "conf");          # CHANGE THIS and name the real file accordingly
   define("ENTROPY_AS_PREFIX_FOR_DATABASE_NAMES" , "inconceivable"); # CHANGE THIS and prefix your database table names accordingly
