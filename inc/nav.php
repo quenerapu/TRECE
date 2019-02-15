@@ -34,6 +34,7 @@
                   <li><?=nav("Example","example");?></li>
                 </ul>
 <?php if ($app->getUserSignInStatus()) : ?>
+<?php if ($app->getUserHierarchy() == 1) : ?>
                 <ul class="nav navbar-nav">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["admin"][LANG];?> <span class="caret"></span></a>
