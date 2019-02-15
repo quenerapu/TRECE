@@ -31,7 +31,7 @@
     parse_str($conf["site"]["query"],$conf["site"]["queryArray"]);
     $goBack = $conf["site"]["queryArray"]["back"]."/".$conf["file"]["adminlist"];
     unset($conf["site"]["queryArray"]["back"]);
-    QUERYQ = count($conf["site"]["queryArray"])>0? "?".http_build_query($conf["site"]["queryArray"]) : "";
+    $conf["site"]["queryArray"] = count($conf["site"]["queryArray"])>0? "?".http_build_query($conf["site"]["queryArray"]) : "";
 
   endif;
 
@@ -222,8 +222,8 @@
     ) :
 
 //  $conf["site"]["queryArray"]["bk"] = $conf["site"]["virtualpathArray"][$readtype+1];
-    QUERYQ = QUERYQ != "" ? "?".http_build_query($conf["site"]["queryArray"]) : "";
-    header("location:".REALPATHLANG.$action."/".$crudlpx."/".$what."/".$conf["file"]["adminlist"]."/1".QUERYQ);
+    $conf["site"]["queryArray"] = $conf["site"]["queryArray"] != "" ? "?".http_build_query($conf["site"]["queryArray"]) : "";
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/".$what."/".$conf["file"]["adminlist"]."/1".$conf["site"]["queryArray"]);
     die();
 
   endif;
