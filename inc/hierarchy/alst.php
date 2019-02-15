@@ -49,7 +49,7 @@
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
@@ -60,7 +60,7 @@
 
   if ( !isset($what) ) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/1".$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
@@ -326,7 +326,7 @@
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/1".$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
@@ -419,21 +419,21 @@
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <div class="side-corner-tag">
-                  <a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>">
+                  <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
                     <img src="<?=file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$conf["css"]["avatar_prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$conf["css"]["avatar_prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Hierarchy";?>" class="img-thumbnail img-responsive" style="width:80px;" alt="<?=$trece->name[$i];?>">
                   </a>
                   <p><span style="background:#<?=$trece->color[$i];?>;width:140px;right:-50px;"></span></p>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><?=$trece->name[$i];?></a>
+                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>"><?=$trece->name[$i];?></a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <?=$trece->ids_privileges[$i];?>
               </td>
               <td nowrap style="text-align:right;">
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["edit"][LANG];?>" class=""><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
+                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["edit"][LANG];?>" class=""><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
                 <a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-ids_privileges="<?=$trece->ids_privileges[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["clone"][LANG];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["see"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
+                <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["see"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
               </td>
             </tr>
           </tbody>

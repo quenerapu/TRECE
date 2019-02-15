@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
               </button>
               <div class="navbar-header pull-left">
-                <a class="navbar-brand" href="<?=$conf["site"]["realpathLang"].$conf["site"]["queryq"];?>">
+                <a class="navbar-brand" href="<?=REALPATHLANG.QUERYQ;?>">
                   <img src="<?=
                     file_exists($conf["dir"]["images"]."logo.svg") ?
                     $conf["dir"]["images"]."logo.svg" :
@@ -22,7 +22,7 @@
               </div>
               <p class="navbar-text pull-left"><small>
               <?php $i=1; foreach($conf["site"]["langs"] as $language) : ?>
-                <a href="<?=$conf["site"]["realpath"].$language["url-name"];?>"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?>
+                <a href="<?=REALPATH.$language["url-name"];?>"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?>
                 <?php $i++;?>
               <?php endforeach; ?>
               </small></p>
@@ -35,7 +35,7 @@
                     <ul class="dropdown-menu">
                       <li><?=nav($lCommon[$conf["file"]["me"]][LANG],$lCommon[$conf["file"]["me"]]["en"]);?></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="<?=$conf["site"]["realpathLang"]."?signout";?>"><?=$lCommon["signout"][LANG];?></a></li>
+                      <li><a href="<?=REALPATHLANG."?signout";?>"><?=$lCommon["signout"][LANG];?></a></li>
                     </ul>
                   </li>
                 </ul>
@@ -54,7 +54,7 @@
 <?php endif; ?>
 <?php else : ?>
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="<?=$conf["site"]["realpathLang"].$conf["file"]["signin"];?>"><?=$lCommon["signin"][LANG];?></a></li>
+                  <li><a href="<?=REALPATHLANG.$conf["file"]["signin"];?>"><?=$lCommon["signin"][LANG];?></a></li>
                 </ul>
 <?php endif; ?>
                 <ul class="nav navbar-nav navbar-right">

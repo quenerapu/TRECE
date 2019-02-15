@@ -114,7 +114,7 @@
 //No $crudlpx at all?
 //Well, show them the list, page 1
 
-header("location:".$conf["site"]["realpathLang"].$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"].$conf["site"]["queryq"]);
+header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"].QUERYQ);
 die();
 
 ?>

@@ -49,7 +49,7 @@
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$conf["file"]["publiclist"].$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
@@ -60,7 +60,7 @@
 
   if ( !isset($what) ) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/1".$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
@@ -333,7 +333,7 @@
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :
 
-    header("location:".$conf["site"]["realpathLang"].$action."/".$crudlpx."/1".$conf["site"]["queryq"]);
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
@@ -430,28 +430,28 @@
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <div class="side-corner-tag">
-                  <a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>">
+                  <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
                     <p><span style="background:#<?=$hierarchy_color;?>;width:130px;right:-50px;"></span></p>
                     <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=".$lCustom["singular"][LANG])));?>" class="img-thumbnail img-responsive" style="width:80px;" alt="<?=$trece->name[$i];?>">
                   </a>
                 </div>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><?=$trece->name[$i];?> <?=$trece->surname[$i];?></a><br>
+                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>"><?=$trece->name[$i];?> <?=$trece->surname[$i];?></a><br>
                 <small><strong><?=$hierarchy;?></strong> <?=strpos($trece->email[$i],"@")!==false?$trece->email[$i]:"<span class=\"label label-warning\">NO EMAIL</span>";?></small><br>
               </td>
               <td nowrap style="text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> <?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a data-id="<?=$trece->id[$i];?>" class="signout-object" style="cursor:pointer;"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <?=$lCommon["signout"][LANG];?></a></li>
                     <li><a href="mailto:<?=$trece->email[$i];?>" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> <?=$lCommon["send_email"][LANG];?></a></li>
-                    <li><a href="<?=$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i> <?=$lCommon["password"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i> <?=$lCommon["password"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-surname="<?=$trece->surname[$i];?>" data-username="<?=$trece->username[$i];?>" data-ugender="<?=$trece->ugender[$i];?>" data-uhierarchy="<?=$trece->uhierarchy[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
-                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
                 </div>
 
@@ -461,10 +461,10 @@
                 <a data-id="<?=$trece->id[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["clone"][LANG];?>" class="signout-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i></a>
 
                 <a href="mailto:<?=$trece->email[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["send_email"][LANG];?>" class="" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=$conf["site"]["realpathLang"].$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["password"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["edit"][LANG];?>" class=""><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
+                <a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["password"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i></a>
+                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["edit"][LANG];?>" class=""><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
                 <a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-surname="<?=$trece->surname[$i];?>" data-username="<?=$trece->username[$i];?>" data-ugender="<?=$trece->ugender[$i];?>" data-uhierarchy="<?=$trece->uhierarchy[$i];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["clone"][LANG];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i></a>
-                <a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["see"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
+                <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["see"][LANG];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></a>
 */ ?>
               </td>
             </tr>
