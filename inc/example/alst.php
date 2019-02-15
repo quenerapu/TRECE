@@ -512,7 +512,10 @@
         clone_description_gal:description_gal,
         clone_description_en:description_en,
         clone_code:code,
-        },function(data){location.reload();}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");}); // alert(data) | location.reload()
+        },function(data){
+//        alert(data);
+          location.reload();
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
       return false;
       });
   </script>
