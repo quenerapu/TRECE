@@ -233,6 +233,10 @@ CREATE TABLE `inconceivable_example` (
   UNIQUE KEY `code` (`code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `inconceivable_example` (`id`, `id_status`, `code`, `title_es`, `title_gal`, `title_en`, `description_es`, `description_gal`, `description_en`, `ids_users`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
+(1,	1,	'DALEK',	'Doctor Who',	'Doutor Who',	'Doctor Who',	'Serie de televisión británica producida por la BBC.',	'Serie de televisión británica producida pola BBC.',	'A British television programme produced by the BBC.',	'',	'2019-02-15 14:26:59',	'2019-02-15 14:41:42',	'91.117.90.147',	'yXpDnAGv',	1),
+(2,	1,	'DONT-PANIC',	'Guía del autoestopista galáctico',	'Guía do autoestopista galáctico',	'The Hitchhiker\'s Guide to the Galaxy',	'Película británica-estadounidense de comedia y ciencia ficción, estrenada en 2005 y basada en el libro homónimo, obra de Douglas Adams.',	'Película británica-estadounidense de comedia e ciencia ficción, estrenada no 2005 e baseada no libro homónimo, obra de Douglas Adams.',	'A 2005 British-American science fiction comedy film directed by Garth Jennings, based upon previous works in the media franchise of the same name, created by Douglas Adams.',	'',	'2019-02-15 14:34:41',	'2019-02-15 14:41:13',	'91.117.90.147',	'yb6XtPqR',	1),
+(3,	1,	'CYCLOP',	'Krull',	'Krull',	'Krull',	'Película estadounidense fantástica de 1983 dirigida por Peter Yates.',	'Película estadounidense de fantasía dirixida no 1983 por Peter Yates.',	'A 1983 British-American science fantasy swashbuckler film directed by Peter Yates.',	'',	'2019-02-15 14:43:24',	'2019-02-15 14:46:54',	'91.117.90.147',	'Q2Gy3sUn',	1);
 
 DELIMITER ;;
 
