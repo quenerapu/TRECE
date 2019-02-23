@@ -109,6 +109,7 @@
   Thank you Brian Reavis (@brianreavis) for inventing Selectize http://selectize.github.io/selectize.js/
   Thank you Boniface Pereira (@craftpip) for inventing jQuery Confirm. https://craftpip.github.io/jquery-confirm/
   Thank you Daniel Eden (@_dte) for inventing Animate.css. https://daneden.github.io/animate.css/
+  Thank you Daniel Ha (@danielha) and Jason Yan (@jasonyan) for inventing Disqus. https://disqus.com/
   Thank you Dave Gandy (@davegandy) for inventing FontAwesome. https://fontawesome.com/
   Thank you Douglas Crockford for inventing JSON. https://www.json.org/
   Thank you Dries Buytaert (@Dries) for inventing Drupal. https://www.drupal.org/
