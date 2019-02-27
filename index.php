@@ -427,6 +427,14 @@
 
     endif;
 
+    if(!$page && (!isset($conf["site"]["virtualpathArray"][0]) || $conf["site"]["virtualpathArray"][0] == "") && file_exists($conf["dir"]["includes"].$conf["file"]["homepage"].".php")) :
+
+      define("ISHOMEPAGE", true);
+      $page = $conf["dir"]["includes"].$conf["file"]["homepage"].".php";
+      $noComments = true;
+
+    endif;
+
     if(!$page && file_exists($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php") && (
       in_array($conf["site"]["virtualpathArray"][0],array(
         $conf["file"]["change-pass"],
@@ -434,14 +442,6 @@
       )) :
 
       $page = $conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php";
-
-    endif;
-
-    if(!$page && (!isset($conf["site"]["virtualpathArray"][0]) || $conf["site"]["virtualpathArray"][0] == "") && file_exists($conf["dir"]["includes"].$conf["file"]["homepage"].".php")) :
-
-      define("ISHOMEPAGE", true);
-      $page = $conf["dir"]["includes"].$conf["file"]["homepage"].".php";
-      $noComments = true;
 
     endif;
 
