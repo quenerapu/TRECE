@@ -427,6 +427,16 @@
 
     endif;
 
+    if(!$page && file_exists($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php") && (
+      in_array($conf["site"]["virtualpathArray"][0],array(
+        $conf["file"]["change-pass"],
+        ))
+      )) :
+
+      $page = $conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php";
+
+    endif;
+
     if(!$page && (!isset($conf["site"]["virtualpathArray"][0]) || $conf["site"]["virtualpathArray"][0] == "") && file_exists($conf["dir"]["includes"].$conf["file"]["homepage"].".php")) :
 
       define("ISHOMEPAGE", true);
@@ -505,6 +515,8 @@
       endif;
 
       if(file_exists($conf["dir"]["includes"].$conf["file"]["header"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["header"].".php"); else : echo "<!DOCTYPE html>\n<body>\n<pre>\nheader\n----\n</pre>\n"; endif;
+
+      if(file_exists($conf["dir"]["includes"].$conf["file"]["nav"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["nav"].".php"); endif;
 
       if($syntax == "md") :
 
