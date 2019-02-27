@@ -23,7 +23,7 @@
   if(!isset($lCustom["og_description"][LANG])) :
             $lCustom["og_description"][LANG] =        $lCustom["metadescription"][LANG]; endif;
   if(!isset($lCustom["og_image"])) :
-            $lCustom["og_image"] =                    file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"trece.jpg"; endif;
+            $lCustom["og_image"] =                    isset($conf["meta"]["image"]["file"])? $conf["meta"]["image"]["file"] : REALPATH.$conf["dir"]["images"]."og/".(file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"trece.jpg"); endif;
   if(!isset($lCustom["og_image_alt"][LANG])) :
             $lCustom["og_image_alt"][LANG] =          $lCustom["metadescription"][LANG]; endif;
   if(!isset($lCustom["og_site_name"][LANG])) :
@@ -75,7 +75,7 @@
   <meta property="og:type" content="<?=$lCustom["og_type"];?>" />
   <meta property="og:url" content="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
   <meta property="og:title" content="<?=$lCustom["og_title"][LANG];?>" />
-  <meta property="og:image" content="<?=REALPATH.$conf["dir"]["images"]."og/".$lCustom["og_image"];?>" /><!-- 1200x630 px -->
+  <meta property="og:image" content="<?=$lCustom["og_image"];?>" /><!-- 1200x630 px -->
   <meta property="og:description" content="<?=$lCustom["og_description"][LANG];?>" />
   <meta property="og:image:alt" content="<?=$lCustom["og_image_alt"][LANG];?>" />
   <meta property="og:site_name" content="<?=$lCustom["og_site_name"][LANG];?>" />
