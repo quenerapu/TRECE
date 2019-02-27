@@ -115,6 +115,7 @@
   Thank you Dries Buytaert (@Dries) for inventing Drupal. https://www.drupal.org/
   Thank you Eduardo D. (@eduardo_dx) for creating the Sermepa\Tpv class. https://github.com/ssheduardo/sermepa/
   Thank you Emanuil Rusev (@erusev) for inventing Parsedown. http://parsedown.org/
+  Thank you Eric Meyer (@meyerweb) for inventing Eric Meyer’s CSS Reset https://meyerweb.com/eric/tools/css/reset/
   Thank you Fabien Potencier (@fabpot) for inventing Symfony. https://www.symfony.com/
   Thank you Håkon Wium Lie (@wiumlie) for inventing CSS. https://www.w3.org/Style/CSS/
   Thank you Jakub Vrána (@jakubvrana) for inventing Adminer. https://www.adminer.org/
@@ -215,15 +216,13 @@
   $conf["site"]["uri"] =                "{$conf["site"]["scheme"]}//{$_SERVER["HTTP_HOST"]}".$_SERVER["REQUEST_URI"];
   $conf["site"]["query"] =              isset($_SERVER["QUERY_STRING"])?$_SERVER["QUERY_STRING"]:""; parse_str($conf["site"]["query"],$conf["site"]["queryArray"]);
   $conf["site"]["queryq"] =             $conf["site"]["query"]!=""?"?".$conf["site"]["query"]:null;
-//$conf["site"]["port"] =               $_SERVER["SERVER_PORT"];
-//$conf["site"]["path"] =               ltrim(str_lreplace(basename($_SERVER["PHP_SELF"]),"",$_SERVER["SCRIPT_NAME"]),"/");
-  $conf["site"]["realpath"] =           "{$conf["site"]["scheme"]}//{$_SERVER["HTTP_HOST"]}/".ltrim(str_lreplace(basename($_SERVER["PHP_SELF"]),"",$_SERVER["SCRIPT_NAME"]),"/");
+  $conf["site"]["realpath"] =           "{$conf["site"]["scheme"]}//{$_SERVER["HTTP_HOST"]}/".ltrim(str_replace_plus("lo",basename($_SERVER["PHP_SELF"]),"",$_SERVER["SCRIPT_NAME"]),"/");
   unset($conf["site"]["scheme"]);
-  $conf["site"]["virtualpath"] =        strcasecmp($conf["site"]["realpath"],str_lreplace($conf["site"]["queryq"],"",$conf["site"]["uri"]))!=0?
+  $conf["site"]["virtualpath"] =        strcasecmp($conf["site"]["realpath"],str_replace_plus("lo",$conf["site"]["queryq"],"",$conf["site"]["uri"]))!=0?
                                         substr(
-                                          str_lreplace($conf["site"]["queryq"],"",$conf["site"]["uri"]),
+                                          str_replace_plus("lo",$conf["site"]["queryq"],"",$conf["site"]["uri"]),
                                           strcasecmp($conf["site"]["realpath"],
-                                            str_lreplace($conf["site"]["queryq"],"",$conf["site"]["uri"])
+                                            str_replace_plus("lo",$conf["site"]["queryq"],"",$conf["site"]["uri"])
                                           )
                                         ):"";
   $conf["site"]["fullpath"] =           $conf["site"]["realpath"].$conf["site"]["virtualpath"];
@@ -396,6 +395,9 @@
 
 
 
+  $page = false;
+  $noComments = false;
+
   if(!isset($conf["site"]["action"])) :
 
     $conf["site"]["action"] = !empty($conf["site"]["virtualpathArray"]) ?
@@ -407,132 +409,147 @@
 
   if($conf["site"]["action"]) :
 
-    if(file_exists($conf["dir"]["includes"].$conf["site"]["action"]."/index.php")) :
+    if(!$page && file_exists($conf["dir"]["includes"].$conf["site"]["action"]."/".$conf["file"]["index"].".php")) :
 
-      require_once($conf["dir"]["includes"].$conf["site"]["action"]."/index.php");
-      die();
-
-    endif;
-
-    if(file_exists($conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php")) :
-
-      require_once($conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php");
-      die();
+      $page = $conf["dir"]["includes"].$conf["site"]["action"]."/".$conf["file"]["index"].".php";
 
     endif;
 
-    if(file_exists($conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php")) :
+    if(!$page && file_exists($conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php")) :
 
-      require_once($conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php");
-      die();
-
-    endif;
-
-    if(isset($conf["site"]["virtualpathArray"][0]) && file_exists($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php")) :
-
-      require_once($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php");
-      die();
+      $page = $conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php";
 
     endif;
 
-    if(!empty($conf["site"]["virtualpathArray"]) &&
-      file_exists($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php") && (
-      in_array($conf["site"]["virtualpathArray"][0],array(
-        $conf["file"]["change-pass"])
-        )
-    )) :
+    if(!$page && file_exists($conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php")) :
 
-      require_once($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php");
-      die();
+      $page = $conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php";
 
     endif;
 
-    $conf["file"]["homepage"] = explode("/",$conf["file"]["homepage"]);
+    if(!$page && (!isset($conf["site"]["virtualpathArray"][0]) || $conf["site"]["virtualpathArray"][0] == "") && file_exists($conf["dir"]["includes"].$conf["file"]["homepage"].".php")) :
 
-    if($conf["site"]["action"] == $conf["file"]["homepage"][0]) :
+      define("ISHOMEPAGE", true);
+      $page = $conf["dir"]["includes"].$conf["file"]["homepage"].".php";
+      $noComments = true;
 
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["homepage"][0].".php")) :
+    endif;
 
-        define("ISHOMEPAGE", true);
+    if(!$page && file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
 
-        require_once($conf["dir"]["includes"].$conf["file"]["homepage"][0].".php");
-        die();
+      $page = $conf["dir"]["includes"].$conf["file"]["the404"].".php";
+      $noComments = true;
+
+    endif;
+
+  endif;
+
+
+
+  if(file_exists($page)):
+
+    $syntax = array_slice(file($page),0,1);
+    $syntax = explode("<?php /* ",$syntax[0]);
+    $syntax = isset($syntax[1])?trim($syntax[1]):"php";
+
+    if(in_array($syntax,array("html","md"))) :
+
+      $lines = array_slice(file($page,FILE_IGNORE_NEW_LINES),1,6);
+
+      foreach($lines as $line) :
+        $line = explode(":",$line,2);
+        $line[0] = trim($line[0]," [] ");
+        $line[1] = trim($line[1]); $line[1] = trim($line[1],"()"); $line[1] = ltrim($line[1],"# "); $line[1] = trim($line[1],'"');
+        if(in_array($line[0],["title","datetime","description","keywords","image_file","image_description"])) :
+          $conf["meta"]["temp"][$line[0]] = $line[1];
+        endif;
+      endforeach;
+
+      if($conf["meta"]["temp"]) :
+
+        $langs = explode("|",$conf["site"]["all_langs"]);
+
+        $titles = explode("|",$conf["meta"]["temp"]["title"]);
+        $descriptions = explode("|",$conf["meta"]["temp"]["description"]);
+        $image_descriptions = explode("|",$conf["meta"]["temp"]["image_description"]);
+
+        foreach ($titles as $title) :
+
+          $lang = preg_match('#\[(.*?)\]#',$title,$lang) ? $lang[1] : LANG;
+          $conf["meta"]["title"][$lang] = str_replace_plus("fo","[".$lang."]","",$title);
+
+        endforeach;
+
+        foreach ($descriptions as $description) :
+
+          $lang = preg_match('#\[(.*?)\]#',$description,$lang) ? $lang[1] : LANG;
+          $conf["meta"]["description"][$lang] = str_replace_plus("fo","[".$lang."]","",$description);
+
+        endforeach;
+
+        foreach ($image_descriptions as $image_description) :
+
+          $lang = preg_match('#\[(.*?)\]#',$image_description,$lang) ? $lang[1] : LANG;
+          $conf["meta"]["image"]["description"][$lang] = str_replace_plus("fo","[".$lang."]","",$image_description);
+
+        endforeach;
+
+        if(isset($conf["meta"]["temp"]["image_file"])) : $conf["meta"]["image"]["file"]  = $conf["meta"]["temp"]["image_file"];  unset($conf["meta"]["image_file"]); endif;
+        if(isset($conf["meta"]["temp"]["datetime"]))   :
+                                                         $conf["meta"]["datetime"] = $conf["meta"]["temp"]["datetime"];
+                                                         define("DATE",date('Y-m-d', strtotime(str_replace('-', '/', $conf["meta"]["datetime"]))));
+        endif;
+
+        unset($conf["meta"]["temp"]);
 
       endif;
 
-    endif;
+      if(file_exists($conf["dir"]["includes"].$conf["file"]["header"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["header"].".php"); else : echo "<!DOCTYPE html>\n<body>\n<pre>\nheader\n----\n</pre>\n"; endif;
 
+      if($syntax == "md") :
 
+        $page = file($page,FILE_IGNORE_NEW_LINES);
+        array_shift($page);
+        $page = implode("\n",$page);
 
+        if(defined("MULTILANG")) :
 
+          if(strpos($page,"[--".LANG."--]")) :
 
+            $page = strstr($page,"[--".LANG."--]");
+            $page = strstr($page,"[--/".LANG."--]",true);
+            $page = str_replace_plus("fo","[--".LANG."--]","",$page);
 
+          endif;
 
+        endif;
 
+        $page = str_replace("[[DATE]]",DATE,$page);
 
-
-
-
-
-
-
-
-
-
-
-    $direct     =   true;
-    $action     =   $conf["site"]["mainaction"];
-    $crudlpx    =   $conf["file"]["read"];
-    $what       =   $conf["site"]["action"];
-    $whatelse   =   isset($conf["site"]["virtualpathArray"][1])?$conf["site"]["virtualpathArray"][1]:null;
-
-    if(!file_exists($conf["dir"]["includes"].$action."/".$conf["file"]["index"].".php")) : # mainaction
-
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
-
-        require_once($conf["dir"]["includes"].$conf["file"]["the404"].".php");
-        die();
-
-      endif;
-
-      echo "<h1>404</h1>";
-      die();
-
-    endif;
-
-    require_once($conf["dir"]["includes"].$action."/".$conf["file"]["index"].".php");
-    die();
-
-  else :
-
-    if($conf["file"]["homepage"] != "") :
-
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["homepage"].".php")) :
-
-        require_once($conf["dir"]["includes"].$conf["file"]["homepage"].".php");
-        die();
+        $Parsedown = new ParsedownExtraPlugin();
+        $Parsedown->code_block_attr_on_parent = true;
+        $Parsedown->code_text = '<span class="my-code">%s</span>';
+        $Parsedown->table_class = "table table-bordered table-condensed short";
+        echo $Parsedown->text($page);
 
       else :
 
-        echo "<h1>The Homepage</h1>";
-        die();
+        require_once($page);
 
       endif;
+
+      if(file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["footer"].".php"); else : echo "\n<pre>\n----\nfooter\n</pre>".BEGRATEFUL."\n</body>\n</html>"; endif;
 
     else :
 
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
-
-        require_once($conf["dir"]["includes"].$conf["file"]["the404"].".php");
-        die();
-
-      endif;
-
-      echo "<h1>404</h1>";
-      die();
+      require_once($page);
 
     endif;
 
+  else :
+
+    echo "<pre>404\n</pre>";
+
   endif;
 
 
@@ -541,22 +558,8 @@
 
 
 
-function str_lreplace($search,$replace,$subject) { # Replaces LAST occurence of a string in a string
-  $pos=strrpos($subject,$search);
-  if($pos!==false) :
-    $subject=substr_replace($subject,$replace,$pos,strlen($search));
-  endif;
-  return $subject;
-  }
-
-
-
-# -----------------------------------------------------------------------------------
-
-
-
-function str_freplace($search,$replace,$subject) { # Replaces FIRST occurence of a string in a string. MUST JOIN THIS WITH HER SISTER, YES. :)
-  $pos=strpos($subject,$search);
+function str_replace_plus($fl,$search,$replace,$subject) { # Replaces FIRST or LAST occurence of a string in a string
+  $pos=($fl=="lo"?strrpos($subject,$search):strpos($subject,$search)); # fo = strpos = first occurrence | lo = strrpos = last occurrence
   if($pos!==false) :
     $subject=substr_replace($subject,$replace,$pos,strlen($search));
   endif;
