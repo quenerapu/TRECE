@@ -123,8 +123,8 @@
 
   endif;
 
-# .. END SELECTIZE
-# ...........................................................................
+# .. END JSON
+# ...............................
 
 
 
@@ -392,9 +392,7 @@
                 <input type="checkbox" class="checkme" name="item" data-id="<?=$trece->id[$i]?>" value="<?=$trece->id[$i];?>|<?=$trece->{$cconf["img"]["ref"]}[$i];?>">
               </td>
               <td>
-                <a href="javascript:void(0);" class="dalle" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>">
-                  <span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span>
-                </a>
+                <a href="javascript:void(0);" class="change-status" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>"><span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span></a>
               </td>
 <?php /*
               <td>
@@ -470,14 +468,23 @@
 
 
 
+<?php
+# .........................................................................................
+# ...####..##..##..####..##..##..####..######....####..######..####..######.##..##..####...
+# ..##..##.##..##.##..##.###.##.##.....##.......##.......##...##..##...##...##..##.##......
+# ..##.....######.######.##.###.##.###.####......####....##...######...##...##..##..####...
+# ..##..##.##..##.##..##.##..##.##..##.##...........##...##...##..##...##...##..##.....##..
+# ...####..##..##.##..##.##..##..####..######....####....##...##..##...##....####...####...
+# .........................................................................................
+?>
+
   <script>
-    $(document).on("click",".dalle",function(){
+    $(document).on("click",".change-status",function(){
       var pk    = $(this).data("pk");
       var name  = $(this).data("name");
       var value = $(this).data("value")==0?1:0;
 
       $.post("",{
-        dalleThis:true,
         pk:pk,
         name:name,
         value:value,
@@ -489,6 +496,11 @@
       return false;
       });
   </script>
+
+<?php
+# .. END CHANGE STATUS
+# .........................................................................................
+?>
 
 
 

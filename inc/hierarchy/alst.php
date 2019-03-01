@@ -37,6 +37,9 @@
     $cconf    = require($conf["dir"]["includes"].$action."/".$conf["file"]["conf"].".php");
     $lCustom  = require($conf["dir"]["includes"].$action."/".$conf["file"]["i18n"].".php");
 
+    $conf["site"]["queryArray"]["back"] = $back;
+    $conf["site"]["queryq"] = "?".http_build_query($conf["site"]["queryArray"]);
+
   endif;
 
 
@@ -49,7 +52,7 @@
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["publiclist"].QUERYQ);
+    header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
     die();
 
   endif;
@@ -120,8 +123,8 @@
 
   endif;
 
-# .. END SELECTIZE
-# ...........................................................................
+# .. END JSON
+# ...............................
 
 
 
@@ -175,12 +178,13 @@
   if(isset($_POST["pk"])) : # x-editable fields
 
     $trece        = new $action($db,$conf);
-    $trece->field = $_POST["field"];
-    $trece->value = $_POST["value"];
+    $trece->field = $_POST["name"];
+    $trece->value = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
     $trece->pk    = $_POST["pk"];
 
-    $trece->updateOneSingleField();
-
+    if(!$trece->updateOneSingleField()) :
+      echo "error";
+    endif;
     die();
 
   endif;
@@ -404,6 +408,7 @@
           <thead>
             <tr>
               <th><input type="checkbox" id="allnone"></th>
+              <th><?=$lCustom["status"][LANG];?></th>
               <th><?=$lCustom["color"][LANG];?></th>
               <th><?=$lCommon["name"][LANG];?></th>
               <th><?=$lCustom["privileges"][LANG];?></th>
@@ -412,9 +417,12 @@
           </thead>
           <?php for($i=0;$i<$rowcount_page;$i++) : ?>
           <tbody class="sortable-item" id="sort-<?=$trece->id[$i];?>">
-            <tr class="handle">
+            <tr id="tr_<?=$trece->id[$i]?>" class="handle">
               <td>
                 <input type="checkbox" class="checkme" name="item" data-id="<?=$trece->id[$i]?>" value="<?=$trece->id[$i];?>|<?=$trece->{$cconf["img"]["ref"]}[$i];?>">
+              </td>
+              <td>
+                <a href="javascript:void(0);" class="change-status" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>"><span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span></a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <div class="side-corner-tag">
@@ -490,6 +498,42 @@
 
 
 <?php
+# .........................................................................................
+# ...####..##..##..####..##..##..####..######....####..######..####..######.##..##..####...
+# ..##..##.##..##.##..##.###.##.##.....##.......##.......##...##..##...##...##..##.##......
+# ..##.....######.######.##.###.##.###.####......####....##...######...##...##..##..####...
+# ..##..##.##..##.##..##.##..##.##..##.##...........##...##...##..##...##...##..##.....##..
+# ...####..##..##.##..##.##..##..####..######....####....##...##..##...##....####...####...
+# .........................................................................................
+?>
+
+  <script>
+    $(document).on("click",".change-status",function(){
+      var pk    = $(this).data("pk");
+      var name  = $(this).data("name");
+      var value = $(this).data("value")==0?1:0;
+
+      $.post("",{
+        pk:pk,
+        name:name,
+        value:value,
+        },function(data){
+//      alert(data);
+        $("#tr_"+pk).closest("tbody").load(location.href+" #tr_"+pk);
+        setTimeout(startxEditable,2000);
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+      return false;
+      });
+  </script>
+
+<?php
+# .. END CHANGE STATUS
+# .........................................................................................
+?>
+
+
+
+<?php
 # ....................................................................
 # ...####..##......####..##..##.######...######.##..##.######..####...
 # ..##..##.##.....##..##.###.##.##.........##...##..##...##...##......
@@ -509,8 +553,10 @@
         cloneThis:true,
         clone_ref:ref,
         clone_name:name,
-        clone_ids_privileges:ids_privileges,
-        },function(data){location.reload();}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");}); // alert(data) | location.reload()
+        },function(data){
+//      alert(data);
+        location.reload();
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
       return false;
       });
   </script>
@@ -518,6 +564,61 @@
 <?php
 # .. END CLONE THIS
 # ....................................................................
+?>
+
+
+
+<?php
+# ...........................................................................
+# ..##..##..........######.#####..######.######..####..#####..##.....######..
+# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
+# ....##....######..####...##..##...##.....##...######.#####..##.....####....
+# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
+# ..##..##..........######.#####..######...##...##..##.#####..######.######..
+# ...........................................................................
+?>
+
+  <script>
+
+    $(document).ready(function(){startxEditable();});
+
+    function startxEditable(){
+<?php /*
+      $(".id_status").editable(
+        {
+          url:window.location.href,
+          mode:"popup",
+          placement:"right",
+          emptytext:"Inactive",
+          value:[$(this).data("value")],
+          source:[{value:1,text:"Active"}],
+          success:function(response,newValue){$(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));setTimeout(startxEditable,2000);}
+        }
+        ).on("save",function(e,params){});
+      $(".name").editable(
+        {
+          url:window.location.href,
+          mode:"inline",
+          showbuttons:true,
+          success:function(response,newValue){}
+        }
+        ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
+        ).on("save",function(e,params){
+//        alert(JSON.stringify(params,null,4));
+          if(params.response.length>0){
+            $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+            $(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));
+            setTimeout(startxEditable,2000);
+            }
+          });
+*/ ?>
+      };
+
+  </script>
+
+<?php
+# .. END X-EDITABLE
+# ...........................................................................
 ?>
 
 
