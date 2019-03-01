@@ -173,12 +173,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/js/bootstrap-colorpicker.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/css/bootstrap-colorpicker.min.css">
 
-<!-- reCAPTCHA -->
+<!-- X-editable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
 
+<!-- reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js"></script>
 
 <!-- sprintf.js -->
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/<?=$conf["version"]["sprintf"];?>/sprintf.min.js"></script>
 
 <?php /* END TODO */ ?>

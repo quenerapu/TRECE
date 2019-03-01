@@ -184,33 +184,6 @@
 
 
 <?php
-# ...........................................................................
-# ..##..##..........######.#####..######.######..####..#####..##.....######..
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ....##....######..####...##..##...##.....##...######.#####..##.....####....
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ..##..##..........######.#####..######...##...##..##.#####..######.######..
-# ...........................................................................
-?>
-<?php /*
-<!-- Latest compiled and minified x-editable JS from http://vitalets.github.io/x-editable/ -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap-editable/js/bootstrap-editable.min.js"></script>
-
-  <script>
-    $(document).ready(function(){
-      $(".editable").editable({showbuttons:false,mode:"inline"}).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}).on("save",function(e,params){});
-      });
-  </script>
-
-<?php
-# .. END X-EDITABLE
-# ...........................................................................
-?>
-*/ ?>
-
-
-<?php
 # ...........................................................
 # ...####..##.....##.........##.##..##..####..##..##.######..
 # ..##..##.##.....##........##..###.##.##..##.###.##.##......

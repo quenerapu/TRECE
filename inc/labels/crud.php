@@ -1,16 +1,16 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
-//EXAMPLE
+//LABELS
 
-# ......................................................................
-# ..########.##.....##....###....##.....##.########..##.......########..
-# ..##........##...##....##.##...###...###.##.....##.##.......##........
-# ..##.........##.##....##...##..####.####.##.....##.##.......##........
-# ..######......###....##.....##.##.###.##.########..##.......######....
-# ..##.........##.##...#########.##.....##.##........##.......##........
-# ..##........##...##..##.....##.##.....##.##........##.......##........
-# ..########.##.....##.##.....##.##.....##.##........########.########..
-# ......................................................................
+# ...........................................................
+# ..##..........###....########..########.##........######...
+# ..##.........##.##...##.....##.##.......##.......##....##..
+# ..##........##...##..##.....##.##.......##.......##........
+# ..##.......##.....##.########..######...##........######...
+# ..##.......#########.##.....##.##.......##.............##..
+# ..##.......##.....##.##.....##.##.......##.......##....##..
+# ..########.##.....##.########..########.########..######...
+# ...........................................................
 
 // http://patorjk.com/software/taag/#p=display&f=Banner4&t=%20TRECE%20
 // http://patorjk.com/software/taag/#p=display&f=Bright&t=Deprecated
@@ -28,7 +28,7 @@
 
 
 
-class Example{
+class Labels{
 
   private $conn;
 
@@ -37,27 +37,19 @@ class Example{
   //object properties
   public $id;
   public $id_status;
-  public $code;
-  public $title_es;
-  public $title_gal;
-  public $title_en;
-  public $description_es;
-  public $description_gal;
-  public $description_en;
-  public $ids_users;
-  public $ref;
-  public $loops_ref;
+  public $name;
   public $date_reg;
   public $date_upd;
   public $ip_upd;
-  public $dupeCode;
+  public $ref;
+  public $loops_ref;
+  public $dupeName;
 
   public $query = "";
   public $query1 = "";
   public $query2 = "";
-  public $xx = ["id_status","title_es","title_gal","title_en","code","description_es","description_gal","description_en","ids_users","date_upd","ip_upd","ref","loops_ref"];
-  public $xx_updateOne = ["id_status","title_es","title_gal","title_en","code","description_es","description_gal","description_en","ids_users"];
-  public $xx_notinsearch = ["id_status","ids_users","ref","loops_ref"];
+  public $xx = ["id_status","name","date_upd","ip_upd","ref","loops_ref"];
+  public $xx_notinsearch = ["id_status","date_upd","ip_upd","ref","loops_ref"];
 
 
 
@@ -68,7 +60,7 @@ class Example{
     $this->cconf        = $cconf;
     $this->lCommon      = $lCommon;
     $this->lCustom      = $lCustom;
-    $this->tablename    = explode("|",$this->conf["table"]["example"]);
+    $this->tablename    = explode("|",$this->conf["table"]["labels"]);
     $this->tableletter  = $this->tablename[1];
     $this->tablename    = $this->tablename[0];
 
@@ -114,87 +106,6 @@ class Example{
 # ...............................................
 
 
-
-# ...........................................................
-# ...####..##..##.######..####..##..##.#####..######.######..
-# ..##..##.##..##.##.....##..##.##.##..##..##.##.....##......
-# ..##.....######.####...##.....####...#####..####...####....
-# ..##..##.##..##.##.....##..##.##.##..##..##.##.....##......
-# ...####..##..##.######..####..##..##.##..##.######.##......
-# ...........................................................
-
-  function checkRef() {
-
-    #Intimacy 0 : For owner's eyes
-    #Intimacy 1 : For admin's eyes
-    #Intimacy 2 : Public
-
-    $this->query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
-                    ($this->intimacy == 2 ? $this->tableletter.".`id_status` = 1 AND " : "") .
-                    $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? LIMIT 0,1";
-
-    $this->query = $this->queryBeautifier($this->query);
-
-    $stmt = $this->conn->prepare($this->query);
-    $stmt->bindParam(1,$this->ref);
-    $stmt->execute();
-
-    $this->rowcount = $stmt->rowCount();
-
-    return true;
-
-  }
-
-
-
-# ......................................................
-# ..#####..######..####..#####.....####..##..##.######..
-# ..##..##.##.....##..##.##..##...##..##.###.##.##......
-# ..#####..####...######.##..##...##..##.##.###.####....
-# ..##..##.##.....##..##.##..##...##..##.##..##.##......
-# ..##..##.######.##..##.#####.....####..##..##.######..
-# ......................................................
-
-  function readOne() {
-
-    #Intimacy 0 : For owner's eyes
-    #Intimacy 1 : For admin's eyes
-    #Intimacy 2 : Public
-
-    $this->dupeCode = 0;
-
-    $this->query = "@id:=".$this->tableletter.".`id` as id, ";
-    foreach ($this->xx as $x) :
-      $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
-    endforeach;
-
-    $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
-                  ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
-                   $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? " .
-                   "LIMIT 0,1";
-
-    $this->query = $this->queryBeautifier($this->query);
-
-    $stmt = $this->conn->prepare($this->query);
-    $stmt->bindParam(1,$this->ref);
-    $stmt->execute();
-
-    $this->rowcount = $stmt->rowCount();
-
-    if($this->rowcount > 0) :
-
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      foreach($row as $k=>$v) : $this->$k = $v; endforeach;
-
-    endif;
-
-    }
-
-# .. END READ ONE
-# ......................................................
-
-
-
 # ....................................................................................................................................................
 # ..##..##.#####..#####...####..######.######...####..##..##.######....####..######.##..##..####..##.....######...######.######.######.##.....#####...
 # ..##..##.##..##.##..##.##..##...##...##......##..##.###.##.##.......##.......##...###.##.##.....##.....##.......##.......##...##.....##.....##..##..
@@ -208,13 +119,16 @@ class Example{
     $this->query = "UPDATE `".$this->tablename."` ".
                               $this->tableletter." SET " .
                               $this->tableletter.".`".$this->field."` = :value, " .
+                              $this->tableletter.".`ip_upd` = :ip_upd, " .
+                              $this->tableletter.".`date_upd` = now(), " .
                               "WHERE ".$this->tableletter.".`id` = :pk";
 
     $this->query = $this->queryBeautifier($this->query);
 
     $stmt = $this->conn->prepare($this->query);
-    $stmt->bindParam(":value", $this->value);
-    $stmt->bindParam(":pk", $this->pk);
+    $stmt->bindParam(":value",  $this->value);
+    $stmt->bindParam(":pk",     $this->pk);
+    $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
 
     $stmt->execute();
 
@@ -225,77 +139,6 @@ class Example{
 
 # .. END UPDATE ONE SINGLE FIELD
 # ....................................................................................................................................................
-
-
-
-# ....................................................................
-# ..##..##.#####..#####...####..######.######....####..##..##.######..
-# ..##..##.##..##.##..##.##..##...##...##.......##..##.###.##.##......
-# ..##..##.#####..##..##.######...##...####.....##..##.##.###.####....
-# ..##..##.##.....##..##.##..##...##...##.......##..##.##..##.##......
-# ...####..##.....#####..##..##...##...######....####..##..##.######..
-# ....................................................................
-
-  function updateOne() {
-
-    $this->dupeCode = 0;
-
-    if(isset($this->code)) :
-
-      $this->query = "SELECT " .
-               $this->tableletter.".`id` " .
-               "FROM `".$this->tablename."` ".$this->tableletter." " .
-               "WHERE ".$this->tableletter.".`code` = :code , " .
-               "AND ".$this->tableletter.".`ref` <> :ref " .
-               "LIMIT 0,1";
-
-      $this->query = $this->queryBeautifier($this->query);
-
-      $stmt = $this->conn->prepare($this->query);
-      $stmt->bindParam(":ref", $this->ref);
-      $stmt->bindParam(":code", $this->code);
-      $stmt->execute();
-      $this->dupeCode = $stmt->rowCount();
-      $this->query = "";
-
-    endif;
-
-    if($this->dupeCode > 0) :
-
-      return true;
-
-    else :
-
-      foreach ($this->xx_updateOne as $x) :
-        $this->query.= isset($this->$x) && $x!="ref" ? $this->tableletter.".`".$x."` = :".$x.", " : "";
-      endforeach;
-
-      $this->query = "UPDATE `".$this->tablename."` ".
-                                $this->tableletter." SET " .$this->query.
-                                $this->tableletter.".`date_upd` = now(), " .
-                                $this->tableletter.".`ip_upd` = :ip_upd, " .
-                                "WHERE ".$this->tableletter.".`ref` = :ref";
-
-      $this->query = $this->queryBeautifier($this->query);
-
-      $stmt = $this->conn->prepare($this->query);
-      foreach ($this->xx_updateOne as $x) :
-        if(isset($this->$x)) : $stmt->bindParam(":".$x , $this->$x); endif;
-      endforeach;
-      $stmt->bindParam(":ref" , $this->ref);
-      $stmt->bindParam(":ip_upd" , $_SERVER["REMOTE_ADDR"]);
-
-      if($stmt->execute()) : return true; endif;
-
-      return false;
-
-    endif;
-
-    }
-
-# .. END UPDATE ONE
-# ....................................................................
-
 
 
 # ....................................................................
@@ -342,9 +185,9 @@ class Example{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`title_es` COLLATE utf8_general_ci NOT LIKE '".$this->cconf["default"]["title_es"]."%' " .
+                    "AND ".$this->tableletter.".`name` COLLATE utf8_general_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
                     (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
-                    "ORDER BY ". $this->tableletter.".`title_es` ASC";
+                    "ORDER BY ". $this->tableletter.".`name` ASC";
 
     $this->query = $this->queryBeautifier($this->query);
 
@@ -400,7 +243,7 @@ class Example{
     $this->rowcount_absolute = $stmt->rowCount();
 
     $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title_es` COLLATE utf8_general_ci LIKE '".$this->cconf["default"]["title_es"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title_es` COLLATE utf8_general_ci ASC " .
+                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8_general_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8_general_ci ASC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 
     $this->query = $this->queryBeautifier($this->query);

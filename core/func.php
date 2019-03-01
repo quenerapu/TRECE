@@ -93,11 +93,11 @@ function get_words($sentence,$count=10) { # Cleanly gets firsts $count words fro
 
 
 
-  function doWordWrap($t,$x=60) {
-    $t = strip_tags($t);
-    $t = wordwrap($t,60,"ƒ",false);
+  function doWordWrap($t,$x=100) {
+    $t = strip_tags(htmlspecialchars_decode($t));
+    $t = wordwrap($t,$x,"ƒ",false);
     $t = explode("ƒ",$t,2);
-    $t = $t[0]."…";
+    $t = $t[0].(mb_strlen($t[0])==$x?"…":"");
     return $t;
     }
 

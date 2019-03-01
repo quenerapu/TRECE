@@ -348,7 +348,10 @@ class Gender{
 
   function readAllJSON() {
 
-    $this->query1 = $this->tableletter.".`id`, ";
+    $this->query1 = "";
+    $this->query2 = "";
+
+    $this->query1.= $this->tableletter.".`id`, ";
     foreach ($this->xx as $x) :
       $this->query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
       $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
@@ -392,7 +395,10 @@ class Gender{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->query1 = "@id:=".$this->tableletter.".`id` as id, ";
+    $this->query1 = "";
+    $this->query2 = "";
+
+    $this->query1.= "@id:=".$this->tableletter.".`id` as id, ";
     foreach ($this->xx as $x) :
       $this->query1.= $this->tableletter.".`".$x."`, ";
       $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";

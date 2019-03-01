@@ -344,6 +344,11 @@ return [
     "gal" => "Clonar tema",
     "en"  => "Clone subject",
     ],
+  "closed" => [
+    "es"  => "Cerrado",
+    "gal" => "Pechado",
+    "en"  => "Closed",
+    ],
   "code" => [
     "es"  => "Código",
     "gal" => "Código",
@@ -864,6 +869,16 @@ return [
     "gal" => "Horizontal",
     "en"  => "Landscape",
     ],
+  "language" => [
+    "es"  => "Idioma",
+    "gal" => "Idioma",
+    "en"  => "Language",
+    ],
+  "languages" => [
+    "es"  => "Idiomas",
+    "gal" => "Idiomas",
+    "en"  => "Languages",
+    ],
   "last_page" => [
     "es"  => "Última página",
     "gal" => "Última páxina",
@@ -984,6 +999,11 @@ return [
 # ..##....##.....................................................................................................
 # ...............................................................................................................
 
+  "name" => [
+    "es"  => "Nombre",
+    "gal" => "Nome",
+    "en"  => "Name",
+    ],
   "new_activity" => [
     "es"  => "Nueva actividad",
     "gal" => "Nova actividade",
@@ -1054,10 +1074,10 @@ return [
     "gal" => "Novo tema",
     "en"  => "New subject",
     ],
-  "name" => [
-    "es"  => "Nombre",
-    "gal" => "Nome",
-    "en"  => "Name",
+  "next" => [
+    "es"  => "Siguiente",
+    "gal" => "Seguinte",
+    "en"  => "Next",
     ],
   "no" => [
     "es"  => "No",
@@ -1111,6 +1131,16 @@ return [
     "es"  => "Objetivos",
     "gal" => "Obxectivos",
     "en"  => "Objetives",
+    ],
+  "open" => [
+    "es"  => "Abierto",
+    "gal" => "Aberto",
+    "en"  => "Open",
+    ],
+  "options" => [
+    "es"  => "Opciones",
+    "gal" => "Opcións",
+    "en"  => "Options",
     ],
   "order" => [
     "es"  => "Orden",
@@ -1184,6 +1214,11 @@ return [
     "es"  => "Publicaciones del blog",
     "gal" => "Publicacións do blog",
     "en"  => "Blog posts",
+    ],
+  "previous" => [
+    "es"  => "Anterior",
+    "gal" => "Anterior",
+    "en"  => "Previous",
     ],
   "private_list" => [
     "es"  => "Listado privado",

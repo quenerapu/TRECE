@@ -106,7 +106,7 @@ $max_thumb    = 120;
     if(isset($_POST["surname"]))       : $trece->surname       = htmlspecialchars(trim($_POST["surname"]));                                     endif;
     if(isset($_POST["username"]))      : $trece->username      = htmlspecialchars(strtolower(preg_replace("/\s/","",trim($_POST["username"]))));endif;
     if(isset($_POST["email"]))         : $trece->email         = htmlspecialchars(strtolower(preg_replace("/\s/","",$_POST["email"])));         endif;
-    if(isset($_POST["bio"]))           : $trece->bio           = $_POST["bio"];                                                                 endif;
+    if(isset($_POST["bio"]))           : $trece->bio           = html_entity_decode($_POST["bio"]);                                             endif;
 //  if(isset($_POST["uhierarchy"]))    : $trece->uhierarchy    = $_POST["uhierarchy"];                                                          endif;
     if(isset($_POST["ugender"]))       : $trece->ugender       = $_POST["ugender"];                                                             endif;
 
@@ -486,7 +486,7 @@ $max_thumb    = 120;
 
         <div class="form-group">
           <label for="bio"><?=$lCustom["bio"][LANG];?>:</label>
-          <textarea class="form-control tinymce" id="bio" name="bio" placeholder=""><?=htmlspecialchars($trece->bio);?></textarea>
+          <textarea class="form-control tinymce" id="bio" name="bio" placeholder=""><?=$trece->bio;?></textarea>
         </div>
 
 

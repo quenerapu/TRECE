@@ -260,4 +260,40 @@ DELIMITER ;
 
 
 
--- 2019-02-15 11:33:59
+DROP TABLE IF EXISTS `inconceivable_labels`;
+CREATE TABLE `inconceivable_labels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_status` tinyint(1) NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date_reg` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_upd` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ip_upd` varchar(39) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0.0.0.0',
+  `ref` char(8) COLLATE utf8_unicode_ci NOT NULL,
+  `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DELIMITER ;;
+
+CREATE TRIGGER `serialize_label_name` BEFORE INSERT ON `inconceivable_labels` FOR EACH ROW
+BEGIN
+     DECLARE original_name varchar(255);
+     DECLARE name_counter int;
+     SET original_name = new.name;
+     SET name_counter = 1;
+     WHILE EXISTS (SELECT true FROM `inconceivable_labels` WHERE name = new.name) DO
+        SET new.name = CONCAT(original_name, ' ', name_counter);
+        SET name_counter = name_counter + 1;
+     END WHILE;
+
+  END;;
+
+DELIMITER ;
+
+
+
+
+
+-- 2019-03-01 11:33:59
