@@ -1,6 +1,7 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php /* IMPORTANT: at line 7, replace 0.0.0.0 with your public IPv4. You can get it here, for instance: https://whatismyip.com. */ ?>
-<?php define("YOUR_IP","0.0.0.0"); if($_SERVER["REMOTE_ADDR"]!=YOUR_IP):die();endif; ?>
+<?php define("YOUR_IP","0.0.0.0"); ?>
+<?php if($_SERVER["REMOTE_ADDR"]==YOUR_IP): ?>
 <small>
 <?php // echo "<pre>"; ?>
 <?php // echo "SESSION ID: ".session_id()."\n----\n\n"; # uncomment this line to print ?>
@@ -22,3 +23,4 @@
 <?php // echo "PRIVILEGES: ".$app->getUserPrivileges()."\n"; # uncomment this line to print?>
 <?php // echo "</pre>"; ?>
 </small>
+<?php endif; ?>
