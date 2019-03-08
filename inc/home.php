@@ -1,11 +1,7 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
 
-  $lCustom["pagetitle"]["es"] = "TRECE";
-  $lCustom["pagetitle"]["gal"] = "TRECE";
-  $lCustom["pagetitle"]["en"] = "TRECE";
-
-$customCSS = <<<EOD
+  $customCSS = <<<EOD
   <style>
     /* whatever */
   </style>
