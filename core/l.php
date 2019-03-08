@@ -216,8 +216,6 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
 
       if(isset($row["hash_pass"]) && password_verify($this->password,$row["hash_pass"])) :
 
-        echo "ZAS";
-
         $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".$this->tableletter.".`signed_in` = 1 WHERE ".$this->tableletter.".`id` = ".($row["id"])."";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
