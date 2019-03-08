@@ -110,6 +110,8 @@
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
           \"name\":\"".$trece->name[$i]."\"
+//        \"name\":\"".$trece->name[$i]."\",
+//        \"parent\":\"".$trece->parent[$i]."\"
         }";
 
       endfor;
@@ -212,7 +214,7 @@
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = "Copy of ".$_POST["clone_name"];
-    $trece->name_url            = getUrlFriendlyString($trece->name);
+//  $trece->id_parent           = $_POST["clone_id_parent"];
 
     $trece->addOne();
 
@@ -382,6 +384,7 @@
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCustom["status"][LANG];?></th>
               <th><?=$lCommon["name"][LANG];?></th>
+<?php /*      <th><?=$lCustom["parent"][LANG];?></th> */ ?>
               <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
@@ -394,28 +397,24 @@
               <td>
                 <a href="javascript:void(0);" class="change-status" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>"><span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span></a>
               </td>
+              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
+                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>" data-name="name"><?=$trece->name[$i];?></a>
+              </td>
 <?php /*
-              <td>
-                <a href="javascript:void(0);" class="id_status editable editable-click" data-type="checklist" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>" data-title="Tú dirás">
-                  <?=$trece->id_status[$i]==1?"Active":"Inactive";?>
+              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
+                <a href="javascript:void(0);" class="id_parent editable editable-click" data-type="select" data-pk="<?=$trece->id[$i];?>" data-name="id_parent" data-value="<?=$trece->id_parent[$i];?>" data-title="Provincia">
+                  <?=$trece->parent_name[$i];?>
                 </a>
               </td>
 */ ?>
-              <td>
-                <a href="javascript:void(0);" class="name editable editable-click<?=$trece->id_status[$i]==0?" attenuate":"";?>" data-type="text" data-pk="<?=$trece->id[$i];?>" data-name="name"><?=$trece->name[$i];?></a>
-              </td>
               <td nowrap style="text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
 <?php /*
-                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-id_parent="<?=$trece->id_parent[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
 */ ?>
                     <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
-<?php /*
-                    <li class="divider"></li>
-                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
-*/ ?>
                   </ul>
                 </div>
               </td>
@@ -518,11 +517,13 @@
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
       var name            =   $(this).data("name");
+//    var id_parent       =   $(this).data("id_parent");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
         clone_name:name,
+//      clone_id_parent:id_parent,
         },function(data){
 //      alert(data);
         location.reload();
@@ -553,24 +554,13 @@
     $(document).ready(function(){startxEditable();});
 
     function startxEditable(){
-<?php /*
-      $(".id_status").editable(
-        {
-          url:window.location.href,
-          mode:"popup",
-          placement:"right",
-          emptytext:"Inactive",
-          value:[$(this).data("value")],
-          source:[{value:1,text:"Active"}],
-          success:function(response,newValue){$(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));setTimeout(startxEditable,2000);}
-        }
-        ).on("save",function(e,params){});
-*/ ?>
+
       $(".name").editable(
         {
           url:window.location.href,
-          mode:"inline",
-          showbuttons:true,
+          mode:"inline", //popup
+//        placement:"right",
+          showbuttons:false,
           success:function(response,newValue){}
         }
         ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
@@ -582,7 +572,23 @@
             setTimeout(startxEditable,2000);
             }
           });
-
+<?php /*
+      $(".id_parent").editable(
+        {
+          url:window.location.href,
+          mode:"inline", //popup
+//        placement:"right",
+          showbuttons:false,
+          value:[$(this).data("value")],
+          source:[
+<?php foreach ($trece->parents as $i=>$v) : ?>
+            {value:<?=$i;?>,text:"<?=$v;?>"},
+<?php endforeach; ?>
+            ],
+          success:function(response,newValue){$(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));setTimeout(startxEditable,2000);}
+        }
+        ).on("save",function(e,params){});
+*/ ?>
       };
 
   </script>

@@ -783,10 +783,11 @@ class Users {
 
       endif;
 
+    endif;
+
     # .. END reCAPTCHA
     # ..................................................................
 
-    endif;
 
     if(isset($this->password_strength) && $this->password_strength < 4) :
 

@@ -48,6 +48,7 @@ class Labels{
   public $query = "";
   public $query1 = "";
   public $query2 = "";
+//public $xx = ["id_status","name","id_parent","date_upd","ip_upd","ref","loops_ref"];
   public $xx = ["id_status","name","date_upd","ip_upd","ref","loops_ref"];
   public $xx_notinsearch = ["id_status","date_upd","ip_upd","ref","loops_ref"];
 
@@ -60,9 +61,12 @@ class Labels{
     $this->cconf        = $cconf;
     $this->lCommon      = $lCommon;
     $this->lCustom      = $lCustom;
-    $this->tablename    = explode("|",$this->conf["table"]["labels"]);
+    $this->tablename    = explode("|",$this->conf["table"]["countries"]);
     $this->tableletter  = $this->tablename[1];
     $this->tablename    = $this->tablename[0];
+//  $this->parent_tablename = explode("|",$this->conf["table"]["whatever"]);
+//  $this->parent_tableletter = $this->parent_tablename[1];
+//  $this->parent_tablename = $this->parent_tablename[0];
 
     }
 
@@ -182,6 +186,7 @@ class Labels{
       $this->query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
       $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
+//    $this->query1.= "CONCAT((SELECT ".$this->parent_tableletter.".`name` FROM ".$this->parent_tablename." ".$this->parent_tableletter." WHERE ".$this->tableletter.".`id_parent` =".$this->parent_tableletter.".`id`)) AS parent, ";
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
@@ -225,10 +230,12 @@ class Labels{
     $this->query2 = "";
 
     $this->query1.= "@id:=".$this->tableletter.".`id` as id, ";
+//  $this->query1.= "@id_parent:=".$this->tableletter.".`id_parent` as id_parent, ";
     foreach ($this->xx as $x) :
       $this->query1.= $this->tableletter.".`".$x."`, ";
       $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
+//  $this->query1.= "CONCAT((SELECT ".$this->parent_tableletter.".`name` FROM `".$this->parent_tablename."` ".$this->parent_tableletter." WHERE ".$this->parent_tableletter.".`id` = @id_parent)) AS parent_name ";
 
     $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
@@ -241,7 +248,14 @@ class Labels{
     $stmt = $this->conn->prepare($this->query);
     $stmt->execute();
     $this->rowcount_absolute = $stmt->rowCount();
-
+/*
+    $this->query = "SELECT ".$this->parent_tableletter.".`id`, ".$this->parent_tableletter.".`name` FROM `".$this->parent_tablename."` ".$this->parent_tableletter." WHERE ".$this->parent_tableletter.".`id_status` = 1 ORDER BY ".$this->parent_tableletter.".`name`";
+    $this->query = $this->queryBeautifier($this->query);
+    $stmt = $this->conn->prepare($this->query);
+    $stmt->execute();
+    $this->parent_rowcount = $stmt->rowCount();
+    while($x=$stmt->fetch(PDO::FETCH_ASSOC)) : $this->parents[$x["id"]]=$x["name"]; endwhile;
+*/
     $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
                    "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8_general_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8_general_ci ASC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
