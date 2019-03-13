@@ -741,7 +741,7 @@ class Users {
     $this->wrongeMailorUsername  = false;
     $this->wrongPasswordStrength = false;
     $this->wrongCaptchaResponse  = false;
-/*
+
     # ..................................................................
     # ..#####..######..####...####..#####..######..####..##..##..####...
     # ..##..##.##.....##..##.##..##.##..##...##...##..##.##..##.##..##..
@@ -787,7 +787,7 @@ class Users {
 
     # .. END reCAPTCHA
     # ..................................................................
-*/
+
     if(isset($this->password_strength) && $this->password_strength < 4) :
 
       $this->wrongPasswordStrength = true; return true;
