@@ -741,7 +741,7 @@ class Users {
     $this->wrongeMailorUsername  = false;
     $this->wrongPasswordStrength = false;
     $this->wrongCaptchaResponse  = false;
-
+/*
     # ..................................................................
     # ..#####..######..####...####..#####..######..####..##..##..####...
     # ..##..##.##.....##..##.##..##.##..##...##...##..##.##..##.##..##..
@@ -787,7 +787,7 @@ class Users {
 
     # .. END reCAPTCHA
     # ..................................................................
-
+*/
     if(isset($this->password_strength) && $this->password_strength < 4) :
 
       $this->wrongPasswordStrength = true; return true;
@@ -952,13 +952,12 @@ class Users {
     $this->mail_to          = $mail_to;
     $this->mail_subject     = $mail_subject;
     $this->mail_message     = $mail_message;
-    $this->mail_to          = $mail_to;
-    $this->mail_from        = "robot@underisk.boa.gal";
-    $this->mail_host        = "underisk.boa.gal";
-    $this->mail_username    = "robot@underisk.boa.gal";
-    $this->mail_password    = "Jm1XqA7EVfQe";
-    $this->mail_tls_or_ssl  = "tls";
-    $this->mail_port        = 587;
+    $this->mail_from        = $this->conf["mail"]["from"];
+    $this->mail_host        = $this->conf["mail"]["host"];
+    $this->mail_username    = $this->conf["mail"]["username"];
+    $this->mail_password    = $this->conf["mail"]["password"];
+    $this->mail_tls_or_ssl  = $this->conf["mail"]["tls_or_ssl"];
+    $this->mail_port        = $this->conf["mail"]["port"];
 
     $mail = new PHPMailer(true);
     try {
