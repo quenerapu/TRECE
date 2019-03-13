@@ -12,7 +12,7 @@
 
   $trece->changePass1();
 
-  if ( $trece->num == 0 ) :
+  if ($trece->num == 0) :
 
     header("location:".REALPATHLANG.QUERYQ); die();
 
@@ -27,7 +27,7 @@
 
 
 
-  if ( $_POST ) :
+  if ($_POST) :
 
     $msg = true;
 
