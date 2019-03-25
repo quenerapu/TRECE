@@ -173,6 +173,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/js/bootstrap-colorpicker.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/css/bootstrap-colorpicker.min.css">
 
+<!-- Rangeslider.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/<?=$conf["version"]["rangesliders"];?>/rangeslider.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/<?=$conf["version"]["rangesliders"];?>/rangeslider.min.css">
+
+<!-- Ion RangeSlider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/<?=$conf["version"]["ion_rangeslider"];?>/js/ion.rangeSlider.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/<?=$conf["version"]["ion_rangeslider"];?>/css/ion.rangeSlider.min.css">
+
 <!-- X-editable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
@@ -196,10 +204,13 @@
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/<?=$conf["version"]["respond_js"];?>/respond.min.js"></script>
   <![endif]-->
 
-<!-- Custom CSS -->
+<!-- Custom JS -->
+  <?=isset($customJS)?$customJS:"";?>
 
+<!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["styles"];?>styles.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
   <?=isset($customCSS)?$customCSS:"";?>
+
 
 <?php if(NPE) : ?>
   <style>

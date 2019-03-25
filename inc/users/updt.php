@@ -205,6 +205,22 @@
 
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
 
+
+
+  $customJS = <<<EOD
+  <script>
+    /* whatever */
+  </script>
+EOD;
+
+  $customCSS = <<<EOD
+  <style>
+    /* whatever */
+  </style>
+EOD;
+
+
+
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
 

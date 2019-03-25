@@ -103,6 +103,7 @@
   Thank you Adam Shaw for inventing FullCalendar. https://fullcalendar.io/
   Thank you Alexandru Mărășteanu for porting sprintf to Javascript. https://github.com/alexei/sprintf.js/
   Thank you Alexis Deveria (@fyrd) for inventing Can I use. https://caniuse.com/
+  Thank you André Ruffert (@andreruffert) for inventing Rangeslider. http://rangeslider.js.org/
   Thank you Blake Ross (@blakeross) for inventing Firefox. https://www.firefox.com/
   Thank you Boniface Pereira (@craftpip) for inventing jQuery Confirm. https://craftpip.github.io/jquery-confirm/
   Thank you Brendan Eich (@BrendanEich) for inventing JavaScript. https://www.javascript.com/
@@ -113,6 +114,7 @@
   Thank you Daniel Eden (@_dte) for inventing Animate.css. https://daneden.github.io/animate.css/
   Thank you Daniel Ha (@danielha) and Jason Yan (@jasonyan) for inventing Disqus. https://disqus.com/
   Thank you Dave Gandy (@davegandy) for inventing FontAwesome. https://fontawesome.com/
+  Thank you Denis Ineshin (@IonDen666) for inventing Ion RangeSlider. http://ionden.com/a/plugins/ion.rangeSlider
   Thank you Douglas Crockford for inventing JSON. https://www.json.org/
   Thank you Dries Buytaert (@Dries) for inventing Drupal. https://www.drupal.org/
   Thank you Eduardo D. (@eduardo_dx) for creating the Sermepa\Tpv class. https://github.com/ssheduardo/sermepa/
@@ -133,6 +135,7 @@
   Thank you Matt Mullenweg (@photomatt) for inventing WordPress. https://wordpress.org/
   Thank you Min Hur (@minhur) for inventing Bootstrap Toggle. http://bootstraptoggle.com/
   Thank you Nicolas Gallagher (@necolas) for inventing Normalize.css. https://necolas.github.io/normalize.css/
+  Thank you Pasquale Vitiello (@pacovitiello) for inventing Sneakpeekit. https://sneakpeekit.com/
   Thank you Rasmus Lerdorf (@rasmus) for inventing PHP. http://php.net/
   Thank you Richard Stallman for founding the Free Software Foundation. https://www.fsf.org/
   Thank you Ryan Kirkman (@ryan_kirkman) and Ajax Davis (@ajaxdavis) for inventing cdnjs. https://cdnjs.com/

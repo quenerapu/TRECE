@@ -12,21 +12,19 @@
 
 
 
-//OK. Let's talk.
+  $customJS = <<<EOD
+  <script>
+    /* whatever */
+  </script>
+EOD;
 
-  $lCustom["pagetitle"]["es"] = "Área de administración";
-  $lCustom["pagetitle"]["gal"] = "Área de administración";
-  $lCustom["pagetitle"]["en"] = "Admin area";
+  $customCSS = <<<EOD
+  <style>
+    /* whatever */
+  </style>
+EOD;
 
-  $msg = false;
 
-  if ( $_POST ) :
-
-    $msg = true;
-    $msgType = "danger";
-    $msgText = $lCommon["login_fail"][LANG];
-
-  endif;
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
