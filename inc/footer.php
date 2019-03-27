@@ -3,10 +3,6 @@
 
     <div class="container">
 
-      <div style="border-top:1px dotted #ccc;border-left:1px dotted #ccc;background:white;position:absolute;padding:0 .7em .2em .5em;right:0;bottom:0;text-align:right;">
-        <a href="http://trece.io" target="_blank" style="text-decoration:none;"><span style="font-size:1.1em;letter-spacing:-.01em;font-family:Arial,Helvetica,Garuda;color:#c40268;"><small>Crafted with <i class="fa fa-heart" aria-hidden="true"></i> and <img src="data:image/svg+xml;base64,<?=str_replace("[COLOR]",$conf["logo"]["garnet"],$conf["logo"]["img"]);?>" style="display:inline-block;height:1em;margin:.6em .1em .6em .1em;padding-bottom:.15em;" alt="TRECE"></small></span></a>
-      </div>
-
       <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
           <div style="padding:0;">
@@ -24,18 +20,22 @@
           <div class="clearfix"></div>
         </div>
       </div>
+
+      <?php if(defined("DEBUG") && DEBUG) : ?>
+      <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+          <?php // require($conf["dir"]["includes"]."debug.php"); ?>
+        </div>
+      </div><!-- /.row -->
+      <?php endif; ?>
+
+      <div style="border-top:1px dotted #ccc;border-left:1px dotted #ccc;background:white;position:absolute;padding:0 .7em .2em .5em;right:0;bottom:0;text-align:right;">
+        <a href="https://trece.io" target="_blank" style="text-decoration:none;"><img src="data:image/svg+xml;base64,<?=str_replace("[COLOR]",$conf["logo"]["garnet"],$conf["logo"]["img"]);?>" style="display:inline-block;height:1em;margin:.4em 0 .1em .1em;padding-bottom:.15em;" alt="TRECE"></a>
+      </div>
+
     </div>
 
   </footer>
-
-  <?php if(defined("DEBUG") && DEBUG) : ?>
-  <div class="row">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-      <?php require($conf["dir"]["includes"]."debug.php"); ?>
-    </div>
-  </div><!-- /.row -->
-  <?php endif; ?>
-
 
 
   <!-- Custom JS -->
