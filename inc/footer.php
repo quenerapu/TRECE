@@ -24,7 +24,7 @@
       <?php if(defined("DEBUG") && DEBUG) : ?>
       <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-          <?php // require($conf["dir"]["includes"]."debug.php"); ?>
+          <?php require($conf["dir"]["includes"]."debug.php"); ?>
         </div>
       </div><!-- /.row -->
       <?php endif; ?>
