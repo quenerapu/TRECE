@@ -1,6 +1,6 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 
-      <div style="top:0;position:fixed;background-color:#000;height:25px;width:100%;z-index:9999;padding-top:3px;">
+      <div style="top:0;position:fixed;background-color:#000;height:25px;width:100%;z-index:9999;padding-top:1px;">
         <div class="container">
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1">
