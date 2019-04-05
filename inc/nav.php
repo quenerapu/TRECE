@@ -74,7 +74,7 @@
                     <ul class="dropdown-menu">
                       <li><?=nav($lCommon[$conf["file"]["me"]][LANG],$lCommon[$conf["file"]["me"]]["en"]);?></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="<?=$conf["site"]["realpathLang"]."?signout";?>"><?=$lCommon["signout"][LANG];?></a></li>
+                      <li><a href="<?=REALPATHLANG."?signout";?>"><?=$lCommon["signout"][LANG];?></a></li>
                     </ul>
                   </li>
                 </ul>
