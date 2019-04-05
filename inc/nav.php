@@ -49,7 +49,6 @@
               <p class="navbar-text pull-left" style="color:white;">
                 <small style="margin-right:1em;">Whatever</small>
               </p>
-              </small></p>
               <div class="hidden-sm hidden-md hidden-lg clearfix"></div>
               <div id="navbar" class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
