@@ -107,7 +107,7 @@
 # BECAUSE WHAT COULD GO WRONG?
 # Version ".$conf["trece"]["version"]." '".$conf["trece"]["motto"]."'
 # Created by Iñaki Quenerapú (@quenerapu)
-# GPL-3.0 https://choosealicense.com/licenses/gpl-3.0/
+# MIT License https://choosealicense.com/licenses/mit/
 
 
   BE GRATEFUL. Make someone happy by tweeting at least one of these lines
