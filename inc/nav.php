@@ -8,7 +8,7 @@
                 <small style="margin-right:1em;">Whatever</small>
               </p>
               <p class="pull-right" style="color:white;">
-                <small style="margin-right:1em;">Whatever whatever whatever</small>
+                <small style="margin-right:1em;"><a href="https://github.com/quenerapu/TRECE" target="_blank" style="color:white;">TRECE on GitHub</a></small>
                 <small style="margin-right:1em;">
               <?php $i=1; foreach($conf["site"]["langs"] as $language) : ?>
                 <a href="<?=REALPATH.$language["url-name"];?>" style="color:white;"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?><?php $i++;?>
@@ -53,7 +53,6 @@
               <div class="hidden-sm hidden-md hidden-lg clearfix"></div>
               <div id="navbar" class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
-                  <li><a href="https://github.com/quenerapu/TRECE" target="_blank">TRECE on GitHub</a></li>
                   <li><?=nav("Demo","demo");?></li>
                 </ul>
 <?php if ($app->getUserSignInStatus()) : ?>
