@@ -10,7 +10,7 @@ $success_color = "#28a745";
 $danger_color  = "#dc3545";
 $font_color    = "#5e5e5e";
 $sticky_footer = $_GET["sf"];
-$padding_top   = 100;
+$padding_top   = 125;
 echo <<<FINCSS
 @charset "UTF-8";
 
@@ -43,7 +43,7 @@ body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !
 .navbar-text a:active {text-decoration:none;color:white !important;}
 
 /* vertical smartphones */
-@media screen and (min-width:360px) and (max-width:752px){.navbar-fixed-top>.container{padding-left:0;}.navbar-text{margin-left:15px;}}
+@media screen and (min-width:360px) and (max-width:752px){.navbar-fixed-top>.container{padding-left:0;}.navbar-text{margin-left:15px;}.navbar-collapse{max-height:100% !important;}}
 /* horizontal smartphones and vertical tablets */
 @media screen and (min-width:753px) and (max-width:1023px){}
 /* horizontal tablets and normal desktops */

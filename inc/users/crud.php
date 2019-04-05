@@ -87,9 +87,53 @@ class Users {
     $this->tablename    = explode("|",$this->conf["table"]["users"]);
     $this->tableletter  = $this->tablename[1];
     $this->tablename    = $this->tablename[0];
-    $this->hierarchy_tablename = explode("|",$this->conf["table"]["hierarchy"]);
-    $this->hierarchy_tableletter = $this->hierarchy_tablename[1];
-    $this->hierarchy_tablename = $this->hierarchy_tablename[0];
+    $this->uhierarchy_tablename = explode("|",$this->conf["table"][$this->conf["dir"]["uhierarchy"]]);
+    $this->uhierarchy_tableletter = $this->uhierarchy_tablename[1];
+    $this->uhierarchy_tablename = $this->uhierarchy_tablename[0];
+
+    }
+
+
+
+# .....................................................................
+# ..######.######.#####...####..######...######.######.##...##.######..
+# ..##.......##...##..##.##.......##.......##.....##...###.###.##......
+# ..####.....##...#####...####....##.......##.....##...##.#.##.####....
+# ..##.......##...##..##.....##...##.......##.....##...##...##.##......
+# ..##.....######.##..##..####....##.......##...######.##...##.######..
+# .....................................................................
+
+  function firstTime() {
+
+    if(file_exists(dirname(__FILE__)."/tables.sql")) :
+
+      $this->query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
+      $stmt = $this->conn->prepare($this->query);
+      $stmt->execute();
+
+      if($stmt->rowCount() == 0 ) :
+
+        $this->query = "";
+        $lines = file(dirname(__FILE__)."/tables.sql");
+        foreach ($lines as $line) :
+          $line = str_replace("inconceivable",$this->conf["table"]["prefix"],$line);
+          if (substr($line,0,2)=="--"||$line=="") continue;
+          $this->query.= $line;
+            if(substr(trim($line),-1, 1)==";") :
+              $stmt = $this->conn->prepare($this->query);
+              $stmt->execute();
+              $this->query = "";
+            endif;
+        endforeach;
+        unlink(dirname(__FILE__)."/tables.sql");
+
+        return true;
+
+      endif;
+
+      return false;
+
+    endif;
 
     }
 
@@ -285,7 +329,7 @@ class Users {
       $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
     endforeach;
 
-    $this->query.= "CONCAT((SELECT ".$this->hierarchy_tableletter.".`color` FROM `".$this->hierarchy_tablename."` ".$this->hierarchy_tableletter." WHERE ".$this->hierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy_color, ";
+    $this->query.= "CONCAT((SELECT ".$this->uhierarchy_tableletter.".`color` FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy_color, ";
 
     $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
                   ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
@@ -562,7 +606,7 @@ class Users {
 # ..##..##.######.##..##.#####....##..##.######.######..
 # ......................................................
 
-  function readAll($page,$from_record_num,$records_per_page,$where=null) {
+  function readAll($records_per_page,$page,$from_record_num,$where=null) {
 
     #Intimacy 0 : For owner's eyes
     #Intimacy 1 : For admin's eyes
@@ -577,7 +621,7 @@ class Users {
       $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
 
-    $this->query1.= "CONCAT((SELECT CONCAT(".$this->hierarchy_tableletter.".`name`,'|',".$this->hierarchy_tableletter.".`color`) FROM `".$this->hierarchy_tablename."` ".$this->hierarchy_tableletter." WHERE ".$this->hierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
+    $this->query1.= "CONCAT((SELECT CONCAT(".$this->uhierarchy_tableletter.".`name`,'|',".$this->uhierarchy_tableletter.".`color`) FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
 
     $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .

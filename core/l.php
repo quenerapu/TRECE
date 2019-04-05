@@ -6,8 +6,8 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
   private $conn;
   private $tablename;
   private $tableletter;
-  private $hierarchy_tablename;
-  private $hierarchy_tableletter;
+  private $uhierarchy_tablename;
+  private $uhierarchy_tableletter;
   private $log_tablename;
   private $log_tableletter;
 
@@ -21,15 +21,15 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
 
 
 
-  public function __construct($db,$tablename,$hierarchy_tablename,$log_tablename) {
+  public function __construct($db,$tablename,$uhierarchy_tablename,$log_tablename) {
 
     $this->conn = $db;
     $this->tablename = explode("|",$tablename);
     $this->tableletter = $this->tablename[1];
     $this->tablename = $this->tablename[0];
-    $this->hierarchy_tablename = explode("|",$hierarchy_tablename);
-    $this->hierarchy_tableletter = $this->hierarchy_tablename[1];
-    $this->hierarchy_tablename = $this->hierarchy_tablename[0];
+    $this->uhierarchy_tablename = explode("|",$uhierarchy_tablename);
+    $this->uhierarchy_tableletter = $this->uhierarchy_tablename[1];
+    $this->uhierarchy_tablename = $this->uhierarchy_tablename[0];
     $this->log_tablename = explode("|",$log_tablename);
     $this->log_tableletter = $this->log_tablename[1];
     $this->log_tablename = $this->log_tablename[0];
@@ -39,9 +39,9 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
       $this->tablename,
       $this->tableletter,
       $this->tablename,
-      $this->hierarchy_tablename,
-      $this->hierarchy_tableletter,
-      $this->hierarchy_tablename,
+      $this->uhierarchy_tablename,
+      $this->uhierarchy_tableletter,
+      $this->uhierarchy_tablename,
       $this->log_tablename,
       $this->log_tableletter,
       $this->log_tablename,
@@ -108,11 +108,11 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
   public function getUserSignInStatus() { return $this->signed_in; }
   public function getUserName()         { return $this->getUserSignInStatus()?$_SESSION["name"]:""; }
   public function getUserUsername()     { return $this->getUserSignInStatus()?$_SESSION["username"]:""; }
-  public function getUserHierarchy()    { return $this->getUserSignInStatus()?$_SESSION["hierarchy"]:""; }
-  public function getUserPrivileges()   { return $this->getUserSignInStatus()?$_SESSION["privileges"]:""; }
+  public function getUserHierarchy()    { return $this->getUserSignInStatus()?$_SESSION["uhierarchy"]:""; }
+  public function getUserPrivileges()   { return $this->getUserSignInStatus()?$_SESSION["uprivileges"]:""; }
   public function getUserRef()          { return $this->getUserSignInStatus()?$_SESSION["ref"]:""; }
   public function getUserID()           { return $this->getUserSignInStatus()?$_SESSION["id"]:""; }
-  public function getUserGender()       { return $this->getUserSignInStatus()?$_SESSION["gender"]:""; }
+  public function getUserGender()       { return $this->getUserSignInStatus()?$_SESSION["ugender"]:""; }
 
 
 
@@ -197,7 +197,7 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
              $this->tableletter.".`username`, " .
              $this->tableletter.".`hash_pass`, " .
              $this->tableletter.".`ugender`, " .
-             "CONCAT((SELECT ".$this->hierarchy_tableletter.".`ids_privileges` FROM ".$this->hierarchy_tablename." ".$this->hierarchy_tableletter." WHERE ".$this->hierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS privileges " .
+             "CONCAT((SELECT ".$this->uhierarchy_tableletter.".`ids_privileges` FROM ".$this->uhierarchy_tablename." ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS uprivileges " .
              "FROM `".$this->tablename."` ".$this->tableletter." " .
              "WHERE ".$this->tableletter.".`id_status` = 1 " .
              (!empty($_SESSION["signed_in"])?"AND ".$this->tableletter.".`signed_in` = 0 ":"") .
@@ -230,9 +230,9 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
         $_SESSION["ref"]            =   $row["ref"];
         $_SESSION["name"]           =   $row["name"];
         $_SESSION["username"]       =   $row["username"];
-        $_SESSION["gender"]         =   $row["ugender"];
-        $_SESSION["hierarchy"]      =   $row["uhierarchy"];
-        $_SESSION["privileges"]     =   $row["privileges"];
+        $_SESSION["ugender"]        =   $row["ugender"];
+        $_SESSION["uhierarchy"]     =   $row["uhierarchy"];
+        $_SESSION["uprivileges"]    =   $row["uprivileges"];
 
         return true;
 

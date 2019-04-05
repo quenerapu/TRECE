@@ -108,7 +108,7 @@ $max_thumb    = 120;
     if(isset($_POST["email"]))         : $trece->email         = htmlspecialchars(strtolower(preg_replace("/\s/","",$_POST["email"])));         endif;
     if(isset($_POST["bio"]))           : $trece->bio           = html_entity_decode($_POST["bio"]);                                             endif;
 //  if(isset($_POST["uhierarchy"]))    : $trece->uhierarchy    = $_POST["uhierarchy"];                                                          endif;
-    if(isset($_POST["ugender"]))       : $trece->ugender       = $_POST["ugender"];                                                             endif;
+    if(isset($_POST["gender"]))        : $trece->gender        = $_POST["gender"];                                                              endif;
 
     if($trece->updateOne()) :
 
@@ -357,7 +357,7 @@ $max_thumb    = 120;
   echo "<br>surname: ".$trece->surname;
   echo "<br>username: ".$trece->username;
   echo "<br>email: ".$trece->email;
-  echo "<br>ugender: ".$trece->ugender;
+  echo "<br>gender: ".$trece->gender;
   echo "<br>uhierarchy: ".$trece->uhierarchy;
   echo "<br>bio: ".$trece->bio;
   echo "<br>wrongUsername: ".$trece->wrongUsername;
@@ -478,9 +478,9 @@ EOD;
               <label for="ugender"><?=$lCustom["gender"][LANG];?>:</label><br>
               <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
-                  require_once($conf["dir"]["includes"]."gender/".$conf["file"]["crud"].".php");
-                  $cconfGender = require($conf["dir"]["includes"]."gender/".$conf["file"]["conf"].".php");
-                  $gender = new Gender($db,$conf,$cconfGender); $stmt = $gender->readAllJSON();
+                  require_once($conf["dir"]["includes"]."genders/".$conf["file"]["crud"].".php");
+                  $cconfGender = require($conf["dir"]["includes"]."genders/".$conf["file"]["conf"].".php");
+                  $gender = new Genders($db,$conf,$cconfGender); $stmt = $gender->readAllJSON();
                 ?>
                 <?php if ($gender->rowcount>0): for($i=0;$i<$gender->rowcount;$i++) : ?>
                 <option value="<?=$gender->letter[$i];?>" data-letter="<?=$gender->letter[$i];?>"<?=$gender->letter[$i] == $trece->ugender ? " selected" : "";?>><?=$gender->name[$i];?></option>

@@ -330,8 +330,16 @@
 # ..............................................................
 
   $trece = new $action($db,$conf,$cconf);
+
+  if($trece->firstTime()) :
+
+    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
+    die();
+
+  endif;
+
   $trece->intimacy = 1;
-  $stmt = $trece->readAll($page,$from_record_num,$records_per_page,$searchWhat);
+  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat);
   $rowcount_page = $trece->rowcount;
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :

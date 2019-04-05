@@ -70,6 +70,18 @@
 
 
 
+  if ($conf["table"]["prefix"]=="inconceivable") : # This is inconceivable
+
+    echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>index.php</code> line 13. Bye.</h3>"; die();
+
+  endif;
+
+
+
+# -----------------------------------------------------------------------------------
+
+
+
   define("BEGRATEFUL", "
 
 <!--
@@ -142,6 +154,7 @@
   Thank you Sebastian Tschan for inventing jQuery File Upload. https://github.com/blueimp/jQuery-File-Upload/
   Thank you Silvio Moreto (@silviomoreto) for inventing Bootstrap-Select. https://silviomoreto.github.io/bootstrap-select/
   Thank you Stephen Cole Kleene for inventing regular expressions. https://regex101.com/
+  Thank you Silktide (@silktide) for inventing Cookie Consent by Insites https://cookieconsent.insites.com/
   Thank you Ted Nelson (@TheTedNelson) for inventing the hypertext. http://www.hyperland.com/
   Thank you Thomas Boutell (@boutell) for inventing the GD Graphics Library. https://libgd.github.io/
   Thank you Tim Berners-Lee (@timberners_lee) for inventing the Web and HTML. https://www.w3.org/html/
@@ -296,7 +309,35 @@
   endif;
 
   require_once($conf["dir"]["core"].$conf["file"]["login"].".php");
-  $app = new SignIn($db,$conf["table"]["users"],$conf["table"]["hierarchy"],$conf["table"]["log"]);
+  $app = new SignIn($db,$conf["table"]["users"],$conf["table"]["uhierarchy"],$conf["table"]["log"]);
+
+
+
+# -----------------------------------------------------------------------------------
+
+
+
+  $usertables = array($conf["dir"]["genders"],$conf["dir"]["uhierarchy"],$conf["dir"]["uprivileges"],$conf["dir"]["users"]);
+
+  foreach($usertables as $usertable) :
+
+    if (file_exists($conf["dir"]["includes"].$usertable."/tables.sql")) :
+
+      $cconf = require($conf["dir"]["includes"].$usertable."/".$conf["file"]["conf"].".php");
+      require($conf["dir"]["includes"].$usertable."/".$conf["file"]["crud"].".php");
+      $trece = new $usertable($db,$conf,$cconf);
+
+      if(!$trece->firstTime()) :
+
+        echo "<h3>Error creando la tabla ".$usertable.". Bye.</h3>"; die();
+
+      endif;
+
+    endif;
+
+  endforeach;
+
+  unset($trece);
 
 
 
@@ -451,6 +492,15 @@
 
     endif;
 
+    if(!$page && file_exists($conf["dir"]["includes"].$conf["site"]["mainaction"]."/".$conf["file"]["index"].".php")) : # mainaction
+
+      $direct = true;
+      $action = $conf["site"]["mainaction"];
+      $what   = $conf["site"]["action"];
+      $page = $conf["dir"]["includes"].$conf["site"]["mainaction"]."/".$conf["file"]["index"].".php";
+
+    endif;
+
     if(!$page && file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
 
       $page = $conf["dir"]["includes"].$conf["file"]["the404"].".php";
@@ -544,11 +594,14 @@
 
         $page = str_replace("[[DATE]]",DATE,$page);
 
-        $Parsedown = new ParsedownExtraPlugin();
-        $Parsedown->code_block_attr_on_parent = true;
-        $Parsedown->code_text = '<span class="my-code">%s</span>';
-        $Parsedown->table_class = "table table-bordered table-condensed short";
-        echo $Parsedown->text($page);
+        $markdownStuff = new ParsedownExtraPlugin();
+        $markdownStuff->code_block_attr_on_parent = true;
+        $markdownStuff->code_text = '<span class="my-code">%s</span>';
+        $markdownStuff->table_class = "table table-bordered table-condensed short";
+        $markdownStuff = $markdownStuff->text($page);
+
+        if(file_exists($conf["dir"]["includes"].$conf["file"]["md-container"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["md-container"].".php"); else : echo $markdownStuff; endif;
+
 
       else :
 

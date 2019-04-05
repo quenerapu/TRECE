@@ -282,12 +282,12 @@ EOD;
               <label for="uhierarchy"><?=$lCustom["hierarchy"][LANG];?>:</label><br>
               <select name="uhierarchy" id="uhierarchy" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
-                  require_once($conf["dir"]["includes"]."hierarchy/".$conf["file"]["crud"].".php");
-                  $cconfHierarchy = require($conf["dir"]["includes"]."hierarchy/".$conf["file"]["conf"].".php");
-                  $hierarchy = new Hierarchy($db,$conf,$cconfHierarchy); $stmt = $hierarchy->readAllJSON();
+                  require_once($conf["dir"]["includes"].$conf["dir"]["uhierarchy"]."/".$conf["file"]["crud"].".php");
+                  $cconfUHierarchy = require($conf["dir"]["includes"].$conf["dir"]["uhierarchy"]."/".$conf["file"]["conf"].".php");
+                  $uhierarchy = new $conf["dir"]["uhierarchy"]($db,$conf,$cconfUHierarchy); $stmt = $uhierarchy->readAllJSON();
                 ?>
-                <?php if ($hierarchy->rowcount>0): for($i=0;$i<$hierarchy->rowcount;$i++) : ?>
-                <option value="<?=$hierarchy->id[$i];?>" data-color="<?=$hierarchy->color[$i];?>"<?=$hierarchy->id[$i] == $trece->uhierarchy ? " selected" : "";?>><?=$hierarchy->name[$i];?></option>
+                <?php if ($uhierarchy->rowcount>0): for($i=0;$i<$uhierarchy->rowcount;$i++) : ?>
+                <option value="<?=$uhierarchy->id[$i];?>" data-color="<?=$uhierarchy->color[$i];?>"<?=$uhierarchy->id[$i] == $trece->uhierarchy ? " selected" : "";?>><?=$uhierarchy->name[$i];?></option>
                 <?php endfor; endif; ?>
               </select>
             </div>
@@ -321,9 +321,9 @@ EOD;
               <label for="ugender"><?=$lCustom["gender"][LANG];?>:</label><br>
               <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
-                  require_once($conf["dir"]["includes"]."gender/".$conf["file"]["crud"].".php");
-                  $cconfGender = require($conf["dir"]["includes"]."gender/".$conf["file"]["conf"].".php");
-                  $gender = new Gender($db,$conf,$cconfGender); $stmt = $gender->readAllJSON();
+                  require_once($conf["dir"]["includes"].$conf["dir"]["genders"]."/"..$conf["file"]["crud"].".php");
+                  $cconfGender = require($conf["dir"]["includes"].$conf["dir"]["genders"]."/".$conf["file"]["conf"].".php");
+                  $gender = new $conf["dir"]["genders"]($db,$conf,$cconfGender); $stmt = $gender->readAllJSON();
                 ?>
                 <?php if ($gender->rowcount>0): for($i=0;$i<$gender->rowcount;$i++) : ?>
                 <option value="<?=$gender->letter[$i];?>" data-letter="<?=$gender->letter[$i];?>"<?=$gender->letter[$i] == $trece->ugender ? " selected" : "";?>><?=$gender->name[$i];?></option>

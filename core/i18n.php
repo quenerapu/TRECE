@@ -374,6 +374,16 @@ return [
     "gal" => "Copia",
     "en"  => "Copy",
     ],
+  "counties" => [
+    "es"  => "Comarcas",
+    "gal" => "Comarcas",
+    "en"  => "Counties",
+    ],
+  "countries" => [
+    "es"  => "Países",
+    "gal" => "Países",
+    "en"  => "Countries",
+    ],
   "courses" => [
     "es"  => "Cursos",
     "gal" => "Cursos",
@@ -411,6 +421,11 @@ return [
     "es"  => "Depurar URL en Facebook",
     "gal" => "Depurar URL no Facebook",
     "en"  => "Debug URL on Facebook",
+  ],
+  "demo" => [
+    "es"  => "Demo",
+    "gal" => "Demo",
+    "en"  => "Demo",
   ],
   "delete" => [
     "es" => "Borrar",
@@ -676,10 +691,32 @@ return [
 # ...######......................................................................................................
 # ...............................................................................................................
 
+  "gdpr" => [
+    "txt" => [ # https://www.40defiebre.com/que-es/experiencia-usuario
+      "es"  => "Utilizamos <em>cookies</em> propias y de terceros para mejorar tu experiencia como usuario/a y la seguridad.",
+      "gal" => "Utilizamos <em>cookies</em> propias e de terceiros para mellorar a túa experiencia como usuario/a e a seguridade.",
+      "en"  => "We use our own cookies and those of third parties to improve your browsing experience and security.",
+      ],
+    "more_info" => [
+      "es"  => "Más información",
+      "gal" => "Máis información",
+      "en"  => "More information",
+      ],
+    "accept" => [
+      "es"  => "Aceptar",
+      "gal" => "Aceptar",
+      "en"  => "Accept",
+      ],
+    ],
   "gender" => [
     "es"  => "Género",
     "gal" => "Xénero",
     "en"  => "Gender",
+    ],
+  "genders" => [
+    "es"  => "Géneros",
+    "gal" => "Xéneros",
+    "en"  => "Genders",
     ],
   "general_error" => [
     "es"  => "Error",
@@ -903,6 +940,11 @@ return [
     "es"  => "Listado",
     "gal" => "Listado",
     "en"  => "List",
+    ],
+  "locations" => [
+    "es"  => "Localidades",
+    "gal" => "Localidades",
+    "en"  => "Locations",
     ],
   "logo" => [
     "es"  => "Logo",
@@ -1195,6 +1237,11 @@ return [
     "gal" => "Números de teléfono",
     "en"  => "Phone numbers",
     ],
+  "places" => [
+    "es"  => "Lugares",
+    "gal" => "Lugares",
+    "en"  => "Places",
+    ],
   "please_select" => [
     "es"  => "Por favor, elige",
     "gal" => "Por favor, elixe",
@@ -1204,6 +1251,11 @@ return [
     "es"  => "Publicación",
     "gal" => "Publicación",
     "en"  => "Post",
+    ],
+  "posts" => [
+    "es"  => "Publicaciones",
+    "gal" => "Publicacións",
+    "en"  => "Posts",
     ],
   "poster" => [
     "es"  => "Cartel",
@@ -1234,6 +1286,11 @@ return [
     "es"  => "Perfil",
     "gal" => "Perfil",
     "en"  => "Profile",
+    ],
+  "provinces" => [
+    "es"  => "Provincias",
+    "gal" => "Provincias",
+    "en"  => "Provinces",
     ],
   "public_list" => [
     "es"  => "Listado público",
@@ -1286,6 +1343,11 @@ return [
 # ..##.....##....................................................................................................
 # ...............................................................................................................
 
+  "regions" => [
+    "es"  => "Regiones",
+    "gal" => "Rexións",
+    "en"  => "Regions",
+    ],
   "replace" => [
     "es"  => "Sustituir",
     "gal" => "Substituir",

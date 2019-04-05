@@ -1,5 +1,31 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
-      <nav class="navbar navbar-default navbar-fixed-top">
+
+      <div style="top:0;position:fixed;background-color:#000;height:25px;width:100%;z-index:9999;padding-top:3px;">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+              <p class="pull-left" style="color:white;">
+                <small style="margin-right:1em;">Whatever</small>
+              </p>
+              <p class="pull-right" style="color:white;">
+                <small style="margin-right:1em;">Whatever whatever whatever</small>
+                <small style="margin-right:1em;">
+              <?php $i=1; foreach($conf["site"]["langs"] as $language) : ?>
+                <a href="<?=REALPATH.$language["url-name"];?>" style="color:white;"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?><?php $i++;?>
+              <?php endforeach; ?>
+                </small>&nbsp;&nbsp;
+                <a href="mailto:whatever@whatever.wa" style="color:white;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                <a href="https://twitter.com/whatever" style="color:white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://facebook.com/whatever" style="color:white;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                <a href="https://instagram.com/whatever" style="color:white;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://youtube.com/whatever" style="color:white;"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="navbar navbar-default navbar-fixed-top" style="top:25px;">
         <div class="container">
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -20,11 +46,9 @@
                     ;?>" alt="<?=$conf["meta"]["title"][LANG];?>" class="img-responsive">
                 </a>
               </div>
-              <p class="navbar-text pull-left"><small>
-              <?php $i=1; foreach($conf["site"]["langs"] as $language) : ?>
-                <a href="<?=REALPATH.$language["url-name"];?>"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?>
-                <?php $i++;?>
-              <?php endforeach; ?>
+              <p class="navbar-text pull-left" style="color:white;">
+                <small style="margin-right:1em;">Whatever</small>
+              </p>
               </small></p>
               <div class="hidden-sm hidden-md hidden-lg clearfix"></div>
               <div id="navbar" class="navbar-collapse collapse navbar-right">
@@ -39,9 +63,9 @@
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["admin"][LANG];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><?=nav($lCommon["gender"][LANG],"gender");?></li>
-                      <li><?=nav($lCommon["privileges"][LANG],"privileges");?></li>
-                      <li><?=nav($lCommon["hierarchy"][LANG],"hierarchy");?></li>
+                      <li><?=nav($lCommon["genders"][LANG],"genders");?></li>
+                      <li><?=nav($lCommon["privileges"][LANG],"uprivileges");?></li>
+                      <li><?=nav($lCommon["hierarchy"][LANG],"uhierarchy");?></li>
                       <li><?=nav($lCommon["users"][LANG],"users");?></li>
                     </ul>
                   </li>

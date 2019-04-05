@@ -193,8 +193,6 @@
 
 <?php /* END TODO */ ?>
 
-
-
 <!-- HTML5 Shiv & Respond.js -->
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -211,7 +209,6 @@
   <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["styles"];?>styles.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
   <?=isset($customCSS)?$customCSS:"";?>
 
-
 <?php if(NPE) : ?>
   <style>
     /* common */
@@ -226,6 +223,13 @@
     @media screen and (min-width:1200px){.npe{position:fixed;width:200px;top:25px;left:-50px;padding:12px;}}
   </style>
 <?php endif; ?>
+
+<!-- Cookie Consent -->
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/<?=$conf["version"]["cookieconsent2"];?>/cookieconsent.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/<?=$conf["version"]["cookieconsent2"];?>/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load",function(){window.cookieconsent.initialise({"palette":{"popup":{"background":"#237afc"},"button":{"background":"#fff"}},"position":"bottom-right","content":{"message":"<?=$lCommon["gdpr"]["txt"][LANG];?>","dismiss":"<?=$lCommon["gdpr"]["accept"][LANG];?>","link":"<?=$lCommon["gdpr"]["more_info"][LANG];?>","href":"<?=REALPATHLANG.$conf["file"]["cookies-policy"];?>"}})});
+  </script>
 
 </head>
 
