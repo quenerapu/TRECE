@@ -17,11 +17,10 @@
             <i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> <a href="mailto:<?=$conf["contact"]["email"];?>"><?=strrev($conf["contact"]["email"]);?></a>
           </small></p>
           <p><small>
-            <a href="#">Whatever</a> |
-            <a href="#">Whatever</a> |
-            <a href="#">Whatever</a> |
-            <a href="#">Whatever</a>
-          </small></p>
+            <a href="<?=REALPATHLANG."contact";?>"><?=$lCommon["contact"][LANG];?></a> |
+            <a href="<?=REALPATHLANG."cookies";?>"><?=$lCommon["gdpr"]["cookie_policy"][LANG];?></a> |
+            <a href="<?=REALPATHLANG."privacy";?>"><?=$lCommon["gdpr"]["privacy_policy"][LANG];?></a>
+            </small></p>
         </div>
         <div class="col-xs-12 col-sm-4">
           <p><small>

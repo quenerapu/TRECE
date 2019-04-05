@@ -365,8 +365,8 @@ return [
     "en"  => "Confirm",
     ],
   "contact" => [
-    "es"  => "Contacta",
-    "gal" => "Contacta",
+    "es"  => "Contacto",
+    "gal" => "Contacto",
     "en"  => "Contact",
     ],
   "copy" => [
@@ -692,20 +692,30 @@ return [
 # ...............................................................................................................
 
   "gdpr" => [
-    "txt" => [ # https://www.40defiebre.com/que-es/experiencia-usuario
-      "es"  => "Utilizamos <em>cookies</em> propias y de terceros para mejorar tu experiencia como usuario/a y la seguridad.",
-      "gal" => "Utilizamos <em>cookies</em> propias e de terceiros para mellorar a túa experiencia como usuario/a e a seguridade.",
-      "en"  => "We use our own cookies and those of third parties to improve your browsing experience and security.",
+    "accept" => [
+      "es"  => "Aceptar",
+      "gal" => "Aceptar",
+      "en"  => "Accept",
+      ],
+    "cookie_policy" => [
+      "es"  => "Política de <em>cookies</em>",
+      "gal" => "Política de <em>cookies</em>",
+      "en"  => "Cookie policy",
       ],
     "more_info" => [
       "es"  => "Más información",
       "gal" => "Máis información",
       "en"  => "More information",
       ],
-    "accept" => [
-      "es"  => "Aceptar",
-      "gal" => "Aceptar",
-      "en"  => "Accept",
+    "privacy_policy" => [
+      "es"  => "Política de privacidad",
+      "gal" => "Política de privacidade",
+      "en"  => "Privacy policy",
+      ],
+    "txt" => [ # https://www.40defiebre.com/que-es/experiencia-usuario
+      "es"  => "Utilizamos <em>cookies</em> propias y de terceros para mejorar tu experiencia como usuario/a y la seguridad.",
+      "gal" => "Utilizamos <em>cookies</em> propias e de terceiros para mellorar a túa experiencia como usuario/a e a seguridade.",
+      "en"  => "We use our own cookies and those of third parties to improve your browsing experience and security.",
       ],
     ],
   "gender" => [
@@ -1452,8 +1462,8 @@ return [
     "en"  => "Short name",
     ],
   "signin" => [
-    "es"  => "Inicio de sesión",
-    "gal" => "Inicio de sesión",
+    "es"  => "Iniciar sesión",
+    "gal" => "Iniciar sesión",
     "en"  => "Sign in",
     ],
   "signin_fail" => [
