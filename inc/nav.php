@@ -55,7 +55,6 @@
                 <ul class="nav navbar-nav">
                   <li><a href="https://github.com/quenerapu/TRECE" target="_blank">TRECE on GitHub</a></li>
                   <li><?=nav("Demo","demo");?></li>
-                  <li><?=nav("Example","example");?></li>
                 </ul>
 <?php if ($app->getUserSignInStatus()) : ?>
 <?php if ($app->getUserHierarchy() == 1) : ?>
