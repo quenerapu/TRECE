@@ -52,11 +52,28 @@
               <div class="hidden-sm hidden-md hidden-lg clearfix"></div>
               <div id="navbar" class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
-                  <li><?=nav("Demo","demo");?></li>
+                  <li><?=nav($lCommon["demo"][LANG],"demo");?></li>
                 </ul>
 <?php if ($app->getUserSignInStatus()) : ?>
 <?php if ($app->getUserHierarchy() == 1) : ?>
                 <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["blog"][LANG];?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><?=nav($lCommon["posts"][LANG],"blog");?></li>
+                      <li><?=nav($lCommon["labels"][LANG],"bloglabels");?></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["places"][LANG];?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><?=nav($lCommon["countries"][LANG],"countries");?></li>
+                      <li><?=nav($lCommon["regions"][LANG],"regions");?></li>
+                      <li><?=nav($lCommon["provinces"][LANG],"provinces");?></li>
+                      <li><?=nav($lCommon["counties"][LANG],"counties");?></li>
+                      <li><?=nav($lCommon["locations"][LANG],"locations");?></li>
+                    </ul>
+                  </li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["admin"][LANG];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">

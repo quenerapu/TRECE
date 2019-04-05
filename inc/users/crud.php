@@ -349,9 +349,9 @@ class Users {
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
       foreach($row as $k=>$v) : $this->$k = $v; endforeach;
 
-      $username_blacklist = explode("|",$this->conf["site"]["username_blacklist"]);
+      $username_blacklst = explode("|",$this->conf["site"]["username_blacklst"]);
 
-      if(in_array($this->username,$username_blacklist))   : $this->wrongUsername  = 1;  endif;
+      if(in_array($this->username,$username_blacklst))    : $this->wrongUsername  = 1;  endif;
       if(!filter_var($this->email,FILTER_VALIDATE_EMAIL)) : $this->wrongeMail     = 1;  endif;
 
       return true;
@@ -415,9 +415,9 @@ class Users {
 
     if(isset($this->username)) :
 
-      $username_blacklist = explode("|",$this->conf["site"]["username_blacklist"]);
+      $username_blacklst = explode("|",$this->conf["site"]["username_blacklst"]);
 
-      if(in_array($this->username,$username_blacklist)) :
+      if(in_array($this->username,$username_blacklst)) :
 
         $this->wrongUsername = 1;
 
