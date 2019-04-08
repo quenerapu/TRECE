@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-1">
           <p><small>
-            <strong><?=$conf["meta"]["title"][LANG];?></strong>
+            <strong><?=$conf["meta"]["name"][LANG];?></strong>
           </small></p>
           <p style="line-height:.9em;"><small>
             <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> <?=$conf["contact"]["address_line1"];?><br>
@@ -24,7 +24,7 @@
         </div>
         <div class="col-xs-12 col-sm-4">
           <p><small>
-            <strong><?=$conf["meta"]["title"][LANG];?></strong>
+            <strong><?=$conf["meta"]["name"][LANG];?></strong>
           </small></p>
           <p style="line-height:.9em;"><small>
             <a href="#">Whatever</a> |

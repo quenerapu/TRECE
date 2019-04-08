@@ -25,7 +25,7 @@ CREATE TABLE `inconceivable_blog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `inconceivable_blog` (`id`, `id_status`, `id_author`, `date`, `title`, `url_title`, `intro`, `post`, `ids_labels`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
-(1, 1,  0,  NOW(), 'New post', CONCAT(CURDATE(),'-new-post'),  'About this new post.',  '<p>More about this new post.</p>',  '1'  , NOW(),  NOW(),  '0.0.0.0', LEFT(UUID(),8), 1);
+(1, 1,  0,  NOW(), 'New post', CONCAT(CURDATE(),'-new-post'),  'About this new post.',  '<p>More about this new post.</p>',  '1'  , NOW(),  NOW(),  '0.0.0.0', '3KhjdE4q', 1);
 
 DELIMITER ;;
 
