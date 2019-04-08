@@ -9,50 +9,53 @@ A Content Management System for the brave. Because what could go wrong?
 
 ### Step 2
 
-![](https://trece.io/img/step_2.png)
+Edit `conf/core.php` lines 17-22 (eMail configuration) and lines 29-30 (reCAPTCHA) to fit your needs:
 
-Edit `index.php` and change the word "inconceivable" (line 13) for another word. Remember: the harder to deduce, the better.
+```php
+  "mail"         =>  [
+# --------------------------------------------------------------------
+//  "need_mail"  =>  $forgot_pass."|".$change_pass."|".$users, # Add other actions wich need use of eMail
+    "from"       =>  "email@domain.com",
+    "host"       =>  "domain.com",
+    "username"   =>  "email@domain.com",
+    "password"   =>  "1234",
+    "tls_or_ssl" =>  "tls",
+    "port"       =>  587,
+  ],
+  "recaptcha" =>  [ # reCAPTCHA: https://www.google.com/recaptcha
+# --------------------------------------------------------------------
+    "public"  =>  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "secret"  =>  "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+  ],
+```
 
 ### Step 3
 
-![](https://trece.io/img/step_3.png)
+Edit `conf/core.php` line 91 replacing `inconceivable` with another hard to guess character string:
 
-Open `tables.sql` and replace every occurrence of the word "inconceivable" with the word you chose in the previous step. **Replace. Them. All**.
+```php
+    "entropy"           =>  $entropy="inconceivable",
+```
 
 ### Step 4
 
-![](https://trece.io/img/step_4.png)
+Edit `conf/db.php` lines 12-15 (database configuration) to fit your needs:
 
-In the same file, find the table formerly known as `inconceivable_users` and replace the fake email address `email@domain.com` with a real email address of your own.
+```php
+    private $host     = "localhost";
+    private $db_name  = "db_name";
+    private $username = "db_username";
+    private $password = "1234";
+```
 
 ### Step 5
 
-Now you can upload all these queries to your MySQL database.
+Edit `inc/users/tables.sql` line 38, replacing `email@domain.com` with your current eMail address:
+
+```sql
+(1, 1, 0, 1, 0, 'The Boss', 'Is In The House', 'theboss', 'm', 'email@domain.com', '', NULL, '0000-00-00 00:00:00', '0.0.0.0', 0, '', NOW(), NOW(), '0.0.0.0', LEFT(UUID(),8), 0);
+```
 
 ### Step 6
 
-![](https://trece.io/img/step_6.png)
-
-Open `core/conf.php`, go to lines 156 - 161 and replace the fake email configuration with the right one. This is the email account to send eMails from TRECE.
-
-### Step 7
-
-![](https://trece.io/img/step_7.png)
-
-In the same file, lines 227 - 228, change the reCaptcha keys (public and secret) with yours. If you don't have one, Google provides them at https://www.google.com/recaptcha
-
-### Step 8
-
-![](https://trece.io/img/step_8.png)
-
-Edit `core/db.php` to replace the fake database configuration with the real info.
-
-### Step 9
-
-You're done! Upload to your site host all the files (except `tables.sql`, obviously).
-
-### Step 10
-
-![](https://trece.io/img/step_10.png)
-
-Visit your brand new TRECE installation, click on **Sign in** and tell TRECE that you «forgot or don't know your password». You will receive an email with instructions. Not sure if you'll have to search for it at the spam box, sorry.
+That's all! :) Upload all the files, visit your brand new installation of TRECE with your browser, click on «Sign In» and then click on «Forgot or don't know my password». Follow instructions to generate your password, sign in and test the site.
