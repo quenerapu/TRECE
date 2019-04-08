@@ -321,7 +321,7 @@ EOD;
               <label for="ugender"><?=$lCustom["gender"][LANG];?>:</label><br>
               <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
                 <?php
-                  require_once($conf["dir"]["includes"].$conf["dir"]["genders"]."/"..$conf["file"]["crud"].".php");
+                  require_once($conf["dir"]["includes"].$conf["dir"]["genders"]."/".$conf["file"]["crud"].".php");
                   $cconfGender = require($conf["dir"]["includes"].$conf["dir"]["genders"]."/".$conf["file"]["conf"].".php");
                   $gender = new $conf["dir"]["genders"]($db,$conf,$cconfGender); $stmt = $gender->readAllJSON();
                 ?>

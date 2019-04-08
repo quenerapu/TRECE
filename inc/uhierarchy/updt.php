@@ -293,9 +293,9 @@ EOD;
         <div class="form-group">
           <label for="ids_privileges"><?=$lCustom["privileges"][LANG];?>:</label><br>
           <?php
-            require_once($conf["dir"]["includes"]."privileges/".$conf["file"]["crud"].".php");
-            $cconfPrivileges = require($conf["dir"]["includes"]."privileges/".$conf["file"]["conf"].".php");
-            $privileges = new Privileges($db,$conf,$cconfPrivileges); $stmt = $privileges->readAllJSON();
+            require_once($conf["dir"]["includes"].$conf["dir"]["uprivileges"]."/".$conf["file"]["crud"].".php");
+            $cconfPrivileges = require($conf["dir"]["includes"].$conf["dir"]["uprivileges"]."/".$conf["file"]["conf"].".php");
+            $privileges = new $conf["dir"]["uprivileges"]($db,$conf,$cconfPrivileges); $stmt = $privileges->readAllJSON();
           ?>
           <?php if ($privileges->rowcount>0): for($i=0;$i<$privileges->rowcount;$i++) : ?>
           <div class="checkbox">
