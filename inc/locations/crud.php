@@ -92,7 +92,7 @@ class Locations{
         $this->query = "";
         $lines = file(dirname(__FILE__)."/tables.sql");
         foreach ($lines as $line) :
-          $line = str_replace("inconceivable",$this->conf["table"]["prefix"],$line);
+          $line = str_replace("inconceivable",ENTROPY,$line);
           if (substr($line,0,2)=="--"||$line=="") continue;
           $this->query.= $line;
             if(substr(trim($line),-1, 1)==";") :

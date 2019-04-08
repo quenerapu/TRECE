@@ -66,9 +66,9 @@
 
 
 
-  if ($conf["table"]["prefix"]=="inconceivable") : # This is inconceivable
+  if ($conf["table"]["entropy"]=="inconceivable") : # This is inconceivable
 
-    echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>index.php</code> line 13. Bye.</h3>"; die();
+    echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>".THE_NAME_OF_THE_CORE_DIR."/".THE_NAME_OF_THE_CONFIGURATION_FILE."</code> line 91. Bye.</h3>"; die();
 
   endif;
 
@@ -170,30 +170,6 @@
 
 
 
-  if(MARKDOWN) :
-
-    $markdownFilesArray = explode("|",$conf["markdown"]["files"]);
-
-    foreach ($markdownFilesArray as $lib) :
-
-      if(!file_exists($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib)) : # Markdown libraries are required
-
-        echo "<h3>MARKDOWN is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR turn the constant <code>MARKDOWN</code> to <code>\"false\"</code> in <code>index.php</code> line 8.</p>"; die();
-
-      endif;
-
-      require_once($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib);
-
-    endforeach;
-
-  endif;
-
-
-
-# -----------------------------------------------------------------------------------
-
-
-
   $conf["site"]["langs"] = explode("|",$conf["site"]["langs"]);
 
   foreach($conf["site"]["langs"] as $key=>$lang) :
@@ -266,7 +242,31 @@
   define("REALPATHLANG",  $conf["site"]["realpathLang"]);   # example: REALPATHLANG."/es/user"
   define("LANG",          $conf["site"]["lang"]);           # example: es
   define("QUERYQ",        $conf["site"]["queryq"]);         # example: First with ?, next with &
-  define("ENTROPY",       $conf["site"]["entropy"]);
+  define("ENTROPY",       $conf["table"]["entropy"]);
+
+
+
+# -----------------------------------------------------------------------------------
+
+
+
+  if(MARKDOWN) :
+
+    $markdownFilesArray = explode("|",$conf["markdown"]["files"]);
+
+    foreach ($markdownFilesArray as $lib) :
+
+      if(!file_exists($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib)) : # Markdown libraries are required
+
+        echo "<h3>MARKDOWN is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR turn the constant <code>MARKDOWN</code> to <code>\"false\"</code> in <code>index.php</code> line 8.</p>"; die();
+
+      endif;
+
+      require_once($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib);
+
+    endforeach;
+
+  endif;
 
 
 
