@@ -1,4 +1,4 @@
-# TRECE 0.14.00 Now with installer!!
+# TRECE 0.14.00 now with installer!!
 A Content Management System for the brave. Because what could go wrong?
 
 ## Prerequisites
