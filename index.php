@@ -68,7 +68,23 @@
 
   if ($conf["table"]["entropy"]=="inconceivable") : # This is inconceivable
 
-    echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>".THE_NAME_OF_THE_CORE_DIR."/".THE_NAME_OF_THE_CONFIGURATION_FILE."</code> line 91. Bye.</h3>"; die();
+    if (file_exists("firsttime.php")) :
+
+      require("firsttime.php"); die();
+
+    else :
+
+      echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>".THE_NAME_OF_THE_CORE_DIR."/".THE_NAME_OF_THE_CONFIGURATION_FILE."</code> line 91. Bye.</h3>"; die();
+
+    endif;
+
+  else :
+
+    if (file_exists("firsttime.php")) :
+
+      unlink("firsttime.php");
+
+    endif;
 
   endif;
 

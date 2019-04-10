@@ -300,7 +300,8 @@
 
   if($trece->firstTime()) :
 
-    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
+    echo "<html><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
+//  header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
