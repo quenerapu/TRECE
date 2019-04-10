@@ -5,7 +5,7 @@ A Content Management System for the brave. Because what could go wrong?
 
 - An Apache PHP friendly hosting
 - A MySQL/MariaDB database
-- A reCAPTCHA account (soon it won't be mandatory)
+- A [reCAPTCHA](https://google.com/recaptcha) pair of keys (soon it won't be mandatory)
 - An eMail account just for sending automatic eMails (the classic `noreply@domain.com` account)
 - One eMail account for you, the adminer
 
