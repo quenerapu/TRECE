@@ -21,7 +21,7 @@ Upload all the files to your hosting.
 
 ### Step 3
 
-Run it in your browser
+Run it in your browser.
 
 ### Step 4
 
