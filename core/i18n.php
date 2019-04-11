@@ -394,6 +394,11 @@ return [
     "gal" => "Administración de cursos",
     "en"  => "Course list",
     ],
+  "create_account" => [
+    "es"  => "Crear cuenta",
+    "gal" => "Crear conta",
+    "en"  => "Create account",
+    ],
 
 
 

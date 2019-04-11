@@ -54,6 +54,11 @@ return [
     "gal" => "Nome de usuario/a ou enderezo de correo electrónico repetidos.",
     "en" => "Duplicated username or eMail address.",
     ],
+  "check_your_email" => [
+    "es"  => "Revisa tu correo electrónico, por favor.",
+    "gal" => "Revisa o teu correo electrónico, por favor.",
+    "en"  => "Check your eMail, please",
+    ],
   "bio" => [
     "es"  => "Bio",
     "gal" => "Bio",
@@ -68,6 +73,11 @@ return [
     "es"  => "Editar usuario/a",
     "gal" => "Editar usuario/a",
     "en"  => "Edit user",
+    ],
+  "email" => [
+    "es"  => "Correo electrónico",
+    "gal" => "Enderezo electrónico",
+    "en"  => "eMail address",
     ],
   "female" => [
     "es"  => "Femenino",
@@ -99,6 +109,11 @@ return [
     "gal" => "Campo obrigatorio",
     "en"  => "Mandatory field",
     ],
+  "membership_application" => [
+    "es"  => "Formulario de inscripción",
+    "gal" => "Formulario de inscrición",
+    "en"  => "Membership application",
+    ],
   "name" => [
     "es"  => "Nombre",
     "gal" => "Nome",
@@ -108,6 +123,11 @@ return [
     "es"  => "Nuevo usuario/a",
     "gal" => "Novo usuario/a",
     "en"  => "New user",
+    ],
+  "request_sent" => [
+    "es"  => "Solicitud enviada",
+    "gal" => "Solicitude enviada",
+    "en"  => "Request sent",
     ],
   "no_email" => [
     "es"  => "No tiene eMail",

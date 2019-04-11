@@ -427,6 +427,11 @@ EOD;
       </div>
     </div><!-- row -->
 
+<?php
+# .. END SEARCH
+# .............................................
+?>
+
 
 
     <div class="row" style="margin-top:1em;">
