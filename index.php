@@ -165,6 +165,7 @@
   Thank you Ryan Kirkman (@ryan_kirkman) and Ajax Davis (@ajaxdavis) for inventing cdnjs. https://cdnjs.com/
   Thank you Sebastian Tschan for inventing jQuery File Upload. https://github.com/blueimp/jQuery-File-Upload/
   Thank you Silvio Moreto (@silviomoreto) for inventing Bootstrap-Select. https://silviomoreto.github.io/bootstrap-select/
+  Thank you Stefan Bohacek (@fourtonfish) for inventing Simple Sharing Buttons Generator. https://simplesharingbuttons.com/
   Thank you Stephen Cole Kleene for inventing regular expressions. https://regex101.com/
   Thank you Silktide (@silktide) for inventing Cookie Consent by Insites https://cookieconsent.insites.com/
   Thank you Ted Nelson (@TheTedNelson) for inventing the hypertext. http://www.hyperland.com/
