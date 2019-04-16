@@ -175,6 +175,7 @@
   Thank you Vinton Cerf (@vgcerf) for inventing the Internet. https://es.wikipedia.org/wiki/Vinton_Cerf/
   Thank you Vitaliy Potapov (@vitpotapov) for inventing X-editable. https://vitalets.github.io/x-editable/
   Thank you Ward Cunningham (@WardCunningham) for inventing the wiki. http://wiki.c2.com/
+  Thank you Zeno Rocha (@zenorocha) for inventing clipboard.js. https://clipboardjs.com/
 
 -->
 
