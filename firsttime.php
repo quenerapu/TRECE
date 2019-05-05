@@ -29,8 +29,8 @@
 # ...######...#######..##.....##.########.##........######...#######..##....##.##.......###.##........##.....##.##.........
 # .........................................................................................................................
 
-    $reading = fopen("core/conf.php","r");
-    $writing = fopen("core/conf.tmp","w");
+    $reading = fopen("trece/conf.php","r");
+    $writing = fopen("trece/conf.tmp","w");
 
     $replaced = false;
 
@@ -59,7 +59,7 @@
 
     fclose($reading); fclose($writing);
 
-    if ($replaced) : rename("core/conf.tmp","core/conf.php"); else : unlink("core/conf.tmp"); endif;
+    if ($replaced) : rename("trece/conf.tmp","trece/conf.php"); else : unlink("trece/conf.tmp"); endif;
 
 
 
@@ -73,8 +73,8 @@
 # ...######...#######..##.....##.########.##.......########..########..###.##........##.....##.##.........
 # ........................................................................................................
 
-    $reading = fopen("core/db.php","r");
-    $writing = fopen("core/db.tmp","w");
+    $reading = fopen("trece/db.php","r");
+    $writing = fopen("trece/db.tmp","w");
 
     $replaced = false;
 
@@ -94,7 +94,7 @@
 
     fclose($reading); fclose($writing);
 
-    if ($replaced) : rename("core/db.tmp","core/db.php"); else : unlink("core/db.tmp"); endif;
+    if ($replaced) : rename("trece/db.tmp","trece/db.php"); else : unlink("trece/db.tmp"); endif;
 
 
 
@@ -108,8 +108,8 @@
 # ..####.##....##..######..##........#######...######..########.##.....##..######..##..........##....##.....##.########..########.########..######..###..######...#####.##.########..
 # ...................................................................................................................................................................................
 
-    $reading = fopen("inc/users/tables.sql","r");
-    $writing = fopen("inc/users/tables.tmp","w");
+    $reading = fopen("trece/inc/users/tables.sql","r");
+    $writing = fopen("trece/inc/users/tables.tmp","w");
 
     $replaced = false;
 
@@ -126,7 +126,7 @@
 
     fclose($reading); fclose($writing);
 
-    if ($replaced) : rename("inc/users/tables.tmp","inc/users/tables.sql"); else : unlink("inc/users/tables.tmp"); endif;
+    if ($replaced) : rename("trece/inc/users/tables.tmp","trece/inc/users/tables.sql"); else : unlink("trece/inc/users/tables.tmp"); endif;
 
 
 
@@ -164,15 +164,15 @@
 
             <p>
               Host<br>
-              <input type="text" name="database_host" id="database_host" value="localhost">
+              <input type="text" name="database_host" id="database_host">
             </p>
             <p>
               DB Username<br>
-              <input type="text" name="database_username" id="database_username" value="db_username">
+              <input type="text" name="database_username" id="database_username">
             </p>
             <p>
               DB Password<br>
-              <input type="text" name="database_password" id="database_password" value="1234">
+              <input type="text" name="database_password" id="database_password">
             </p>
 
           </div>
@@ -180,11 +180,11 @@
 
             <p>
               DB Name<br>
-              <input type="text" name="database_name" id="database_name" value="db_name">
+              <input type="text" name="database_name" id="database_name">
             </p>
             <p>
               DB Entropy<br>
-              <input type="text" name="database_entropy" id="database_entropy" value="inconceivable">
+              <input type="text" name="database_entropy" id="database_entropy">
             </p>
 
           </div>
@@ -199,15 +199,15 @@
 
             <p>
               Address<br>
-              <input type="text" name="email_address" id="email_address" value="email@domain.com">
+              <input type="text" name="email_address" id="email_address">
             </p>
             <p>
               Host<br>
-              <input type="text" name="email_host" id="email_host" value="domain.com">
+              <input type="text" name="email_host" id="email_host">
             </p>
             <p>
               Password<br>
-              <input type="text" name="email_password" id="email_password" value="1234">
+              <input type="text" name="email_password" id="email_password">
             </p>
 
           </div>
@@ -215,11 +215,11 @@
 
             <p>
               TLS/SSL<br>
-              <input type="text" name="email_tlsssl" id="email_tlsssl" value="tls">
+              <input type="text" name="email_tlsssl" id="email_tlsssl">
             </p>
             <p>
               Port<br>
-              <input type="text" name="email_port" id="email_port" value="000">
+              <input type="text" name="email_port" id="email_port">
             </p>
 
           </div>
@@ -234,11 +234,11 @@
 
           <p>
             Public key<br>
-            <input type="text" name="recaptcha_publickey" id="recaptcha_publickey" value="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="width:250px;">
+            <input type="text" name="recaptcha_publickey" id="recaptcha_publickey" style="width:250px;">
           </p>
           <p>
             Secret key<br>
-            <input type="text" name="recaptcha_secretkey" id="recaptcha_secretkey" value="yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" style="width:250px;">
+            <input type="text" name="recaptcha_secretkey" id="recaptcha_secretkey" style="width:250px;">
           </p>
 
       </fieldset>
@@ -249,11 +249,11 @@
 
           <p>
             Username<br>
-            <input type="text" name="admin_username" id="admin_username" value="theboss">
+            <input type="text" name="admin_username" id="admin_username">
           </p>
           <p>
             eMail address<br>
-            <input type="text" name="admin_email" id="admin_email" value="email@domain.com">
+            <input type="text" name="admin_email" id="admin_email">
           </p>
 
       </fieldset>

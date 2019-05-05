@@ -5,8 +5,10 @@
 
 
   define("TRECE"                                , true);            # Aaaaaaamen brothers and sisters!
-  define("THE_NAME_OF_THE_CORE_DIR"             , "core");          # CHANGE THIS and name the real folder accordingly
+  define("THE_NAME_OF_THE_CORE_DIR"             , "trece");         # CHANGE THIS and name the real folder accordingly
   define("THE_NAME_OF_THE_CONFIGURATION_FILE"   , "conf");          # CHANGE THIS and name the real file accordingly
+  define("NPE"                                  , false);           # Shows or not the Non-Production Environment flag
+  define("DEBUG"                                , true);            # Debuggable or not
 
 
 
@@ -253,9 +255,7 @@
 
 
 
-  define("NPE",           false);                           # Shows or not the Non-Production Environment flag
-  define("DEBUG",         false);                           # Debuggable or not
-  define("MARKDOWN",      true);                            # Use or not the Markdown syntax
+  define("MARKDOWN",      $conf["site"]["markdown"]);       # Use or not the Markdown syntax
   define("REALPATH",      $conf["site"]["realpath"]);       # example: REALPATH."/css"
   define("REALPATHLANG",  $conf["site"]["realpathLang"]);   # example: REALPATHLANG."/es/user"
   define("LANG",          $conf["site"]["lang"]);           # example: es
@@ -276,7 +276,7 @@
 
       if(!file_exists($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib)) : # Markdown libraries are required
 
-        echo "<h3>MARKDOWN is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR turn the constant <code>MARKDOWN</code> to <code>\"false\"</code> in <code>index.php</code> line 8.</p>"; die();
+        echo "<h3>MARKDOWN is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR set markdown to <code>\"false\"</code> in <code>trece/conf.php</code>, line 127.</p>"; die();
 
       endif;
 
@@ -418,29 +418,21 @@
       )
      ) : # Stop the presses! It's a MULTILANG site but no language found @ the URL. Reload using $conf["site"]["main_lang"] instead.
 
-      header("location:".
-        REALPATH.
-        $conf["site"]["main_lang"].
-        ($conf["file"]["homepage_redirect"]!="" ? "/".$conf["file"]["homepage_redirect"]:"").
-//      "/".
-        QUERYQ
+      header("location:".REALPATH.$conf["site"]["main_lang"]
+//      QUERYQ
         );
       die();
 
   endif;
 
   if (
-      $conf["file"]["homepage_redirect"] != ""
+      $conf["site"]["homepage_redirect"] != ""
       && (!isset($conf["site"]["virtualpathArray"][0]))
-     ) : # Stop the presses! $conf["file"]["homepage_redirect"] is set, but naked address found @ the URL. Redirecting to $conf["file"]["homepage_redirect"]
+     ) : # Stop the presses! $conf["site"]["homepage_redirect"] is set, but naked address found @ the URL. Redirecting to $conf["site"]["homepage_redirect"]
 
-      header("location:".
-        $conf["site"]["realpath"].
-        (defined("MULTILANG")?LANG:"").
-        $conf["file"]["homepage_redirect"].
-//      "/".
-        QUERYQ
-        );
+      header("location:".REALPATHLANG.$conf["site"]["homepage_redirect"]
+//      QUERYQ
+      );
       die();
 
   endif;
@@ -467,7 +459,7 @@
 
     $conf["site"]["action"] = !empty($conf["site"]["virtualpathArray"]) ?
                               $conf["site"]["virtualpathArray"][0] :
-                              $conf["file"]["homepage"];
+                              $conf["site"]["homepage"];
                               false;
 
   endif;
@@ -480,22 +472,22 @@
 
     endif;
 
-    if(!$page && file_exists($conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php")) :
-
-      $page = $conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php";
-
-    endif;
-
     if(!$page && file_exists($conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php")) :
 
       $page = $conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php";
 
     endif;
 
-    if(!$page && (!isset($conf["site"]["virtualpathArray"][0]) || $conf["site"]["virtualpathArray"][0] == "") && file_exists($conf["dir"]["includes"].$conf["file"]["homepage"].".php")) :
+    if(!$page && file_exists($conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php")) :
+
+      $page = $conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php";
+
+    endif;
+
+    if(!$page && (!isset($conf["site"]["virtualpathArray"][0]) || $conf["site"]["virtualpathArray"][0] == "") && file_exists($conf["dir"]["includes"].$conf["site"]["homepage"].".php")) :
 
       define("ISHOMEPAGE", true);
-      $page = $conf["dir"]["includes"].$conf["file"]["homepage"].".php";
+      $page = $conf["dir"]["includes"].$conf["site"]["homepage"].".php";
       $noComments = true;
 
     endif;
@@ -535,99 +527,124 @@
     $syntax = array_slice(file($page),0,1);
     $syntax = explode("<?php /* ",$syntax[0]);
     $syntax = isset($syntax[1])?trim($syntax[1]):"php";
+    $public = true; #$page is set to public
+    $metadt = false; #$page does not contain metadata
+
+    if(in_array($syntax,array("html!","md!"))) : $public = false; $syntax = rtrim($syntax,"!"); endif;
 
     if(in_array($syntax,array("html","md"))) :
 
-      $lines = array_slice(file($page,FILE_IGNORE_NEW_LINES),1,6);
+      $metalines = ["[title]","[datetime]","[description]","[keywords]","[image_file]","[image_description]"];
+      $lines = array_slice(file($page,FILE_IGNORE_NEW_LINES),1,6); $metacount = 0;
+      foreach($lines as $line) : foreach ($metalines as $metaline) : if (stripos($line,$metaline) !== FALSE) : $metacount++; endif; endforeach; endforeach;
 
-      foreach($lines as $line) :
-        $line = explode(":",$line,2);
-        $line[0] = trim($line[0]," [] ");
-        $line[1] = trim($line[1]); $line[1] = trim($line[1],"()"); $line[1] = ltrim($line[1],"# "); $line[1] = trim($line[1],'"');
-        if(in_array($line[0],["title","datetime","description","keywords","image_file","image_description"])) :
-          $conf["meta"]["temp"][$line[0]] = $line[1];
-        endif;
-      endforeach;
+      if($metacount==6) :
 
-      if($conf["meta"]["temp"]) :
-
-        $langs = explode("|",$conf["site"]["all_langs"]);
-
-        $titles = explode("|",$conf["meta"]["temp"]["title"]);
-        $descriptions = explode("|",$conf["meta"]["temp"]["description"]);
-        $image_descriptions = explode("|",$conf["meta"]["temp"]["image_description"]);
-
-        foreach ($titles as $title) :
-
-          $lang = preg_match('#\[(.*?)\]#',$title,$lang) ? $lang[1] : LANG;
-          $conf["meta"]["title"][$lang] = str_replace_plus("fo","[".$lang."]","",$title);
-
+        $metalines = str_replace(["[","]"],"",$metalines);
+        foreach($lines as $line) :
+          $line = explode(":",$line,2);
+          if($line[0]!="" && substr($line[0],0,1)=="[") :
+            $line[0] = trim($line[0]," [] ");
+            $line[1] = trim($line[1]); $line[1] = trim($line[1],"()"); $line[1] = ltrim($line[1],"# "); $line[1] = trim($line[1],'"');
+            if(in_array($line[0],$metalines)) : $metadt = true; $conf["meta"]["temp"][$line[0]] = $line[1]; endif;
+          endif;
         endforeach;
-
-        foreach ($descriptions as $description) :
-
-          $lang = preg_match('#\[(.*?)\]#',$description,$lang) ? $lang[1] : LANG;
-          $conf["meta"]["description"][$lang] = str_replace_plus("fo","[".$lang."]","",$description);
-
-        endforeach;
-
-        foreach ($image_descriptions as $image_description) :
-
-          $lang = preg_match('#\[(.*?)\]#',$image_description,$lang) ? $lang[1] : LANG;
-          $conf["meta"]["image"]["description"][$lang] = str_replace_plus("fo","[".$lang."]","",$image_description);
-
-        endforeach;
-
-        if(isset($conf["meta"]["temp"]["image_file"])) : $conf["meta"]["image"]["file"]  = $conf["meta"]["temp"]["image_file"];  unset($conf["meta"]["image_file"]); endif;
-        if(isset($conf["meta"]["temp"]["datetime"]))   :
-                                                         $conf["meta"]["datetime"] = $conf["meta"]["temp"]["datetime"];
-                                                         define("DATE",date('Y-m-d', strtotime(str_replace('-', '/', $conf["meta"]["datetime"]))));
-        endif;
-
-        unset($conf["meta"]["temp"]);
 
       endif;
 
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["header"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["header"].".php"); else : echo "<!DOCTYPE html>\n<body>\n<pre>\nheader\n----\n</pre>\n"; endif;
+      if($metadt) :
 
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["nav"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["nav"].".php"); endif;
+        if($conf["meta"]["temp"]) :
 
-      if($syntax == "md") :
+          $langs = explode("|",$conf["site"]["all_langs"]);
 
-        $page = file($page,FILE_IGNORE_NEW_LINES);
-        array_shift($page);
-        $page = implode("\n",$page);
+          $titles = explode("|",$conf["meta"]["temp"]["title"]);
+          $descriptions = explode("|",$conf["meta"]["temp"]["description"]);
+          $image_descriptions = explode("|",$conf["meta"]["temp"]["image_description"]);
 
-        if(defined("MULTILANG")) :
+          foreach ($titles as $title) :
 
-          if(strpos($page,"[--".LANG."--]")) :
+            $lang = preg_match('#\[(.*?)\]#',$title,$lang) ? $lang[1] : LANG;
+            $conf["meta"]["title"][$lang] = str_replace_plus("fo","[".$lang."]","",$title);
 
-            $page = strstr($page,"[--".LANG."--]");
-            $page = strstr($page,"[--/".LANG."--]",true);
-            $page = str_replace_plus("fo","[--".LANG."--]","",$page);
+          endforeach;
+
+          foreach ($descriptions as $description) :
+
+            $lang = preg_match('#\[(.*?)\]#',$description,$lang) ? $lang[1] : LANG;
+            $conf["meta"]["description"][$lang] = str_replace_plus("fo","[".$lang."]","",$description);
+
+          endforeach;
+
+          foreach ($image_descriptions as $image_description) :
+
+            $lang = preg_match('#\[(.*?)\]#',$image_description,$lang) ? $lang[1] : LANG;
+            $conf["meta"]["image"]["description"][$lang] = str_replace_plus("fo","[".$lang."]","",$image_description);
+
+          endforeach;
+
+          if(isset($conf["meta"]["temp"]["keywords"]))   : $conf["meta"]["keywords"]       = $conf["meta"]["temp"]["keywords"]; endif;
+          if(isset($conf["meta"]["temp"]["image_file"])) : $conf["meta"]["image"]["file"]  = $conf["meta"]["temp"]["image_file"];  unset($conf["meta"]["image_file"]); endif;
+          if(isset($conf["meta"]["temp"]["datetime"]))   :
+                                                           $conf["meta"]["datetime"] = $conf["meta"]["temp"]["datetime"];
+                                                           define("DATE",date('Y-m-d', strtotime(str_replace('-', '/', $conf["meta"]["datetime"]))));
+          endif;
+
+          unset($conf["meta"]["temp"]);
+
+        endif;
+
+      endif;
+
+      if($public || (!$public && $app->getUserSignInStatus())) :
+
+        if(file_exists($conf["dir"]["includes"].$conf["file"]["header"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["header"].".php"); endif;
+
+        if(file_exists($conf["dir"]["includes"].$conf["file"]["nav"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["nav"].".php"); endif;
+
+      if($syntax == "md" && MARKDOWN) :
+
+          $page = file($page,FILE_IGNORE_NEW_LINES);
+          array_shift($page);
+          $page = implode("\n",$page);
+          $page = str_replace_plus("fo","*/","",$page);
+
+          if(defined("MULTILANG")) :
+
+            if(strpos($page,"[--".LANG."--]")) :
+
+              $page = strstr($page,"[--".LANG."--]");
+              $page = strstr($page,"[--/".LANG."--]",true);
+              $page = str_replace_plus("fo","[--".LANG."--]","",$page);
+
+            endif;
 
           endif;
 
+          if($metadt) : $page = str_replace("[[DATE]]",DATE,$page); endif;
+
+          $markdownStuff = new ParsedownExtraPlugin();
+          $markdownStuff->code_block_attr_on_parent = true;
+          $markdownStuff->code_text = '<span class="my-code">%s</span>';
+          $markdownStuff->table_class = "table table-bordered table-condensed short";
+          $markdownStuff = $markdownStuff->text($page);
+
+          if(file_exists($conf["dir"]["includes"].$conf["file"]["md-container"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["md-container"].".php"); else : echo $markdownStuff; endif;
+
+        else :
+
+          require_once($page);
+
         endif;
 
-        $page = str_replace("[[DATE]]",DATE,$page);
-
-        $markdownStuff = new ParsedownExtraPlugin();
-        $markdownStuff->code_block_attr_on_parent = true;
-        $markdownStuff->code_text = '<span class="my-code">%s</span>';
-        $markdownStuff->table_class = "table table-bordered table-condensed short";
-        $markdownStuff = $markdownStuff->text($page);
-
-        if(file_exists($conf["dir"]["includes"].$conf["file"]["md-container"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["md-container"].".php"); else : echo $markdownStuff; endif;
-
+        if(file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["footer"].".php"); endif;
 
       else :
 
-        require_once($page);
+        header("location:".REALPATHLANG);
+        die();
 
       endif;
-
-      if(file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["footer"].".php"); else : echo "\n<pre>\n----\nfooter\n</pre>".BEGRATEFUL."\n</body>\n</html>"; endif;
 
     else :
 
@@ -680,7 +697,7 @@ function findKey($array,$keySearch) { # Checks if key exists in multiarray
 
 
 
-function getUrlFriendlyString($str) { # Generates a SEO friendly URL (ok, the artisan way)
+function getUrlFriendlyString($str,$space="-") { # Generates a SEO friendly URL (ok, the artisan way)
   // Revisar -> http://stackoverflow.com/questions/3371697/replacing-accented-characters-php
   $unwanted_array = [
     "Á"=>"A", "À"=>"A", "Â"=>"A", "Ä"=>"A", "Ã"=>"A", "Å"=>"A", "Ă"=>"A", "Æ"=>"AE",
@@ -711,7 +728,7 @@ function getUrlFriendlyString($str) { # Generates a SEO friendly URL (ok, the ar
 
     $str = trim($str);
     $str = strtr($str,$unwanted_array);
-    $_str = preg_replace("/-+/", "-", preg_replace("/[^a-z0-9-|]/", "", strtolower(str_replace(" ", "-", $str))));
+    $_str = preg_replace("/-+/",$space,preg_replace("/[^a-z0-9-|]/",$space, strtolower(str_replace(" ",$space,$str))));
     return $_str;
 
   }
