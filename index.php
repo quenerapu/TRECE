@@ -8,7 +8,7 @@
   define("THE_NAME_OF_THE_CORE_DIR"             , "trece");         # CHANGE THIS and name the real folder accordingly
   define("THE_NAME_OF_THE_CONFIGURATION_FILE"   , "conf");          # CHANGE THIS and name the real file accordingly
   define("NPE"                                  , false);           # Shows or not the Non-Production Environment flag
-  define("DEBUG"                                , true);            # Debuggable or not
+  define("DEBUG"                                , false);           # Debuggable or not
 
 
 
@@ -276,7 +276,7 @@
 
       if(!file_exists($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib)) : # Markdown libraries are required
 
-        echo "<h3>MARKDOWN is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR set markdown to <code>\"false\"</code> in <code>trece/conf.php</code>, line 127.</p>"; die();
+        echo "<h3>Markdown is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR set markdown to <code>\"false\"</code> in <code>trece/conf.php</code>, line 127.</p>"; die();
 
       endif;
 
