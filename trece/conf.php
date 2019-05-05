@@ -5,8 +5,8 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.14.00",  # http://trece.io/changelog
-    "motto"     =>  "A humblest start", # In other words: "Nailing perfection" ;-)
+    "version"   =>  "0.15.00",  # http://trece.io/changelog
+    "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
     "theme"     =>  $theme="basic",
   ],
 
