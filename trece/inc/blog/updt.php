@@ -371,8 +371,6 @@
     resizeImage($source,$filename."_thumb".".".$extension,$width,$height,$cconf["img"]["bio_max_thumb"],$cconf["img"]["bio_max_thumb"]);
 
     imagedestroy($source); if(file_exists($filename.".".$extension)) : unlink($filename.".".$extension); endif; # CLEAN THE CRIME SCENE
-    echo json_encode(array("location"=>$filename."_img".".".$extension));
-    die();
 
   else : header("HTTP/1.1 500 Server Error");
   endif;
