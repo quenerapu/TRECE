@@ -38,6 +38,7 @@ class Bloglabels{
   public $id;
   public $id_status;
   public $name;
+  public $url_name;
   public $date_reg;
   public $date_upd;
   public $ip_upd;
@@ -49,7 +50,7 @@ class Bloglabels{
   public $query1 = "";
   public $query2 = "";
 //public $xx = ["id_status","name","id_parent","date_upd","ip_upd","ref","loops_ref"];
-  public $xx = ["id_status","name","date_upd","ip_upd","ref","loops_ref"];
+  public $xx = ["id_status","name","url_name","date_upd","ip_upd","ref","loops_ref"];
   public $xx_notinsearch = ["id_status","date_upd","ip_upd","ref","loops_ref"];
 
 
@@ -175,16 +176,20 @@ class Bloglabels{
     $this->query = "UPDATE `".$this->tablename."` ".
                               $this->tableletter." SET " .
                               $this->tableletter.".`".$this->field."` = :value, " .
+                              $this->tableletter.".`url_".$this->field."` = :url_value, " .
                               $this->tableletter.".`ip_upd` = :ip_upd, " .
                               $this->tableletter.".`date_upd` = now(), " .
                               "WHERE ".$this->tableletter.".`id` = :pk";
 
     $this->query = $this->queryBeautifier($this->query);
 
+    $this->url_value = getUrlFriendlyString($this->value);
+
     $stmt = $this->conn->prepare($this->query);
-    $stmt->bindParam(":value",  $this->value);
-    $stmt->bindParam(":pk",     $this->pk);
-    $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
+    $stmt->bindParam(":value",      $this->value);
+    $stmt->bindParam(":url_value",  $this->url_value);
+    $stmt->bindParam(":pk",         $this->pk);
+    $stmt->bindParam(":ip_upd",     $_SERVER["REMOTE_ADDR"]);
 
     $stmt->execute();
 

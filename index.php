@@ -158,6 +158,7 @@
   Thank you Linus Torvalds (@Linus__Torvalds) for inventing Linux. https://github.com/torvalds/linux/
   Thank you Maciej Gurban (@maciej_gurban) for inventing Responsive Bootstrap Toolkit. https://github.com/maciej-gurban/responsive-bootstrap-toolkit/
   Thank you Mark Otto (@mdo) and Jacob Thornton (@fat) for inventing Bootstrap. https://getbootstrap.com/
+  Thank you Matt Delac (@mattdelac_) for inventing WOW.js and Thomas Grainger (@graingert) for bringing it into MIT license. https://wowjs.uk/
   Thank you Matt Mullenweg (@photomatt) for inventing WordPress. https://wordpress.org/
   Thank you Min Hur (@minhur) for inventing Bootstrap Toggle. http://bootstraptoggle.com/
   Thank you Nicolas Gallagher (@necolas) for inventing Normalize.css. https://necolas.github.io/normalize.css/
