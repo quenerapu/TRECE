@@ -164,15 +164,15 @@
 
             <p>
               Host<br>
-              <input type="text" name="database_host" id="database_host">
+              <input type="text" name="database_host" id="database_host" value="">
             </p>
             <p>
               DB Username<br>
-              <input type="text" name="database_username" id="database_username">
+              <input type="text" name="database_username" id="database_username" value="">
             </p>
             <p>
               DB Password<br>
-              <input type="text" name="database_password" id="database_password">
+              <input type="text" name="database_password" id="database_password" value="">
             </p>
 
           </div>
@@ -180,11 +180,12 @@
 
             <p>
               DB Name<br>
-              <input type="text" name="database_name" id="database_name">
+              <input type="text" name="database_name" id="database_name" value="">
             </p>
             <p>
-              DB Entropy<br>
-              <input type="text" name="database_entropy" id="database_entropy">
+              DB Entropy (CHANGE-THIS-TEXT)<br>
+              <input type="text" name="database_entropy" id="database_entropy" value="inconceivable">
+              <p>Type here a word different to inconceivable</p>
             </p>
 
           </div>
@@ -199,15 +200,15 @@
 
             <p>
               Address<br>
-              <input type="text" name="email_address" id="email_address">
+              <input type="text" name="email_address" id="email_address" value="">
             </p>
             <p>
               Host<br>
-              <input type="text" name="email_host" id="email_host">
+              <input type="text" name="email_host" id="email_host" value="">
             </p>
             <p>
               Password<br>
-              <input type="text" name="email_password" id="email_password">
+              <input type="text" name="email_password" id="email_password" value="">
             </p>
 
           </div>
@@ -215,11 +216,11 @@
 
             <p>
               TLS/SSL<br>
-              <input type="text" name="email_tlsssl" id="email_tlsssl">
+              <input type="text" name="email_tlsssl" id="email_tlsssl" value="ssl">
             </p>
             <p>
               Port<br>
-              <input type="text" name="email_port" id="email_port">
+              <input type="text" name="email_port" id="email_port" value="465">
             </p>
 
           </div>
@@ -230,15 +231,15 @@
 
       <fieldset>
 
-        <legend>reCaptcha:</legend>
+        <legend>reCaptcha (v2):</legend>
 
           <p>
             Public key<br>
-            <input type="text" name="recaptcha_publickey" id="recaptcha_publickey" style="width:250px;">
+            <input type="text" name="recaptcha_publickey" id="recaptcha_publickey" style="width:250px;" value="">
           </p>
           <p>
             Secret key<br>
-            <input type="text" name="recaptcha_secretkey" id="recaptcha_secretkey" style="width:250px;">
+            <input type="text" name="recaptcha_secretkey" id="recaptcha_secretkey" style="width:250px;" value="">
           </p>
 
       </fieldset>
@@ -249,11 +250,11 @@
 
           <p>
             Username<br>
-            <input type="text" name="admin_username" id="admin_username">
+            <input type="text" name="admin_username" id="admin_username" value="">
           </p>
           <p>
             eMail address<br>
-            <input type="text" name="admin_email" id="admin_email">
+            <input type="text" name="admin_email" id="admin_email" value="">
           </p>
 
       </fieldset>
