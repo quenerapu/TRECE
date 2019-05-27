@@ -16,7 +16,6 @@ CREATE TABLE `inconceivable_genders` (
   `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `ref` (`ref`),
   UNIQUE KEY `letter` (`letter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

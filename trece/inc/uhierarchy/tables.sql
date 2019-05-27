@@ -17,8 +17,7 @@ CREATE TABLE `inconceivable_uhierarchy` (
   `ref` char(8) COLLATE utf8_unicode_ci NOT NULL,
   `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `ref` (`ref`)
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `inconceivable_uhierarchy` (`id`, `id_status`, `ids_privileges`, `sort`, `name`, `color`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES

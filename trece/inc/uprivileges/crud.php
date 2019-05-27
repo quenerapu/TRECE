@@ -38,7 +38,7 @@ class UPrivileges{
   public $id;
   public $id_status;
   public $name;
-  public $name_url;
+  public $url_name;
   public $date_reg;
   public $date_upd;
   public $ip_upd;
@@ -49,8 +49,8 @@ class UPrivileges{
   public $query = "";
   public $query1 = "";
   public $query2 = "";
-  public $xx = ["id_status","name","name_url","date_upd","ip_upd","ref","loops_ref"];
-  public $xx_updateOne = ["id_status","name","name_url"];
+  public $xx = ["id_status","name","url_name","date_upd","ip_upd","ref","loops_ref"];
+  public $xx_updateOne = ["id_status","name","url_name"];
   public $xx_notinsearch = ["id_status","date_upd","ip_upd","ref","loops_ref"];
 
 

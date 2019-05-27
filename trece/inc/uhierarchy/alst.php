@@ -240,6 +240,7 @@
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = "Copy of ".$_POST["clone_name"];
     $trece->ids_privileges      = $_POST["clone_ids_privileges"];
+    $trece->color               = $_POST["clone_color"];
     $trece->sort                = 0;
 
     $trece->addOne();
@@ -465,7 +466,12 @@ EOD;
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
-                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-ids_privileges="<?=$trece->ids_privileges[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a 
+                      data-ref="<?=$trece->ref[$i];?>" 
+                      data-name="<?=htmlentities($trece->name[$i]);?>" 
+                      data-ids_privileges="<?=$trece->ids_privileges[$i];?>" 
+                      data-color="<?=$trece->color[$i];?>" 
+                      class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
@@ -571,11 +577,14 @@ EOD;
       var ref             =   $(this).data("ref");
       var name            =   $(this).data("name");
       var ids_privileges  =   $(this).data("ids_privileges");
+      var color           =   $(this).data("color");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
         clone_name:name,
+        clone_ids_privileges:ids_privileges,
+        clone_color:color,
         },function(data){
 //      alert(data);
         location.reload();

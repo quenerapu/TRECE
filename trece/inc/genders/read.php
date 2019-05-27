@@ -86,8 +86,8 @@ EOD;
 
 
 
-  require_once($conf["dir"]["includes"]."header_public.php");
-  require_once($conf["dir"]["includes"]."nav_public.php");
+  require_once($conf["dir"]["includes"]."header.php");
+  require_once($conf["dir"]["includes"]."nav.php");
 
 ?>
 
@@ -128,4 +128,4 @@ EOD;
 
 
 
-<?php require_once($conf["dir"]["includes"]."footer_public.php"); ?>
+<?php require_once($conf["dir"]["includes"]."footer.php"); ?>

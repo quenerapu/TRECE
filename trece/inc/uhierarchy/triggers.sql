@@ -1,4 +1,4 @@
-CREATE TRIGGER `serialize_hierarchy_name` BEFORE INSERT ON `inconceivable_uhierarchy` FOR EACH ROW BEGIN
+CREATE TRIGGER `serialize_uhierarchy_name` BEFORE INSERT ON `inconceivable_uhierarchy` FOR EACH ROW BEGIN
      DECLARE original_name varchar(255);
      DECLARE name_counter int;
      SET original_name = new.name;

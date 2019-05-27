@@ -37,6 +37,7 @@ return [
   "default" => [
     "id_status"      => 0,
     "name"           => "New privilege",
+    "url_name"       => "new-privilege",
     "max_new_items"  => 15,
     ],
 

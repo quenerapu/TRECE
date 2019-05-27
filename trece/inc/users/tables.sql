@@ -28,8 +28,7 @@ CREATE TABLE `inconceivable_users` (
   `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `ref` (`ref`)
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `inconceivable_users` (`id`, `id_status`, `signed_in`, `uhierarchy`, `id_language`, `name`, `surname`, `username`, `ugender`, `email`, `hash_pass`, `password_change_hash`, `password_change_timestamp`, `password_change_ip`, `password_strength`, `bio`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES

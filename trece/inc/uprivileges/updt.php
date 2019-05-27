@@ -102,7 +102,7 @@
 
     if(isset($_POST["id_status"]))          : $trece->id_status          = 1; else : $trece->id_status = 0;                 endif;
     if(isset($_POST["name"]))               : $trece->name               = htmlspecialchars(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["name"])));
-                                              $trece->name_url           = getUrlFriendlyString($trece->name);              endif;
+                                              $trece->url_name           = getUrlFriendlyString($trece->name);              endif;
     if($trece->updateOne()) :
 
       if($trece->dupeName > 0) :
@@ -118,7 +118,7 @@
 
           $trece->id_status     = $cconf["default"]["id_status"];
           $trece->name          = $cconf["default"]["name"];
-          $trece->name_url      = getUrlFriendlyString($cconf["default"]["name"]);
+          $trece->url_name      = getUrlFriendlyString($cconf["default"]["name"]);
 
           $trece->addOne();
 
@@ -192,7 +192,7 @@
   echo "<br>id_status: ".$trece->id_status;
   echo "<br>name: ".$trece->name;
   echo "<br>dupeName: ".$trece->dupeName;
-  echo "<br>name_url: ".$trece->name_url;
+  echo "<br>url_name: ".$trece->url_name;
   echo "<br>gotPic: ".($trece->gotPic ? "true" : "false");
   echo "<br>tablename: ".$trece->tablename;
   echo "<br>tableletter: ".$trece->tableletter;

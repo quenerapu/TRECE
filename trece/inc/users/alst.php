@@ -239,7 +239,7 @@
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = "Copy of ".$_POST["clone_name"];
     $trece->surname             = $_POST["clone_surname"];
-    $trece->username            = $_POST["clone_username"];
+    $trece->username            = $cconf["default"]["username"];
     $trece->email               = $cconf["default"]["email"];
     $trece->uhierarchy          = $_POST["clone_uhierarchy"];
     $trece->ugender             = $_POST["clone_ugender"];
@@ -478,7 +478,13 @@ EOD;
                     <li><a data-id="<?=$trece->id[$i];?>" class="signout-object" style="cursor:pointer;"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <?=$lCommon["signout"][LANG];?></a></li>
                     <li><a href="mailto:<?=$trece->email[$i];?>" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> <?=$lCommon["send_email"][LANG];?></a></li>
                     <li><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i> <?=$lCommon["password"][LANG];?></a></li>
-                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-surname="<?=$trece->surname[$i];?>" data-username="<?=$trece->username[$i];?>" data-ugender="<?=$trece->ugender[$i];?>" data-uhierarchy="<?=$trece->uhierarchy[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a 
+                      data-ref="<?=$trece->ref[$i];?>" 
+                      data-name="<?=htmlentities($trece->name[$i]);?>" 
+                      data-surname="<?=htmlentities($trece->surname[$i]);?>" 
+                      data-ugender="<?=$trece->ugender[$i];?>" 
+                      data-uhierarchy="<?=$trece->uhierarchy[$i];?>" 
+                      class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
@@ -616,7 +622,6 @@ EOD;
       var ref             =   $(this).data("ref");
       var name            =   $(this).data("name");
       var surname         =   $(this).data("surname");
-      var username        =   $(this).data("username");
       var ugender         =   $(this).data("ugender");
       var uhierarchy      =   $(this).data("uhierarchy");
 
@@ -625,7 +630,6 @@ EOD;
         clone_ref:ref,
         clone_name:name,
         clone_surname:surname,
-        clone_username:username,
         clone_ugender:ugender,
         clone_uhierarchy:uhierarchy,
         },function(data){

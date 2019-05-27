@@ -68,7 +68,7 @@
 
 //Still here? OK, let's talk.
 
-  $lCustom["pagetitle"][LANG] = $trece->name;
+  $lCustom["pagetitle"][LANG] = $trece->name.(mb_strlen($trece->surname)>0?" ".$trece->surname:"");
 
 
 
