@@ -216,7 +216,7 @@
     $trece                      = new $action($db,$conf);
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->title               = "Copia de ".$_POST["clone_title"];
+    $trece->title               = "Copy of ".$_POST["clone_title"];
     $trece->intro               = $_POST["clone_intro"];
     $trece->post                = $_POST["clone_post"];
 
@@ -498,7 +498,13 @@ EOD;
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
-                    <li><a data-ref="<?=$trece->ref[$i];?>" data-date="<?=$trece->date[$i];?>" data-title="<?=$trece->title[$i];?>" data-intro="<?=$trece->intro[$i];?>" data-post="<?=$trece->post[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a 
+                      data-ref="<?=$trece->ref[$i];?>" 
+                      data-date="<?=$trece->date[$i];?>" 
+                      data-title="<?=htmlentities($trece->title[$i]);?>" 
+                      data-intro="<?=htmlentities($trece->intro[$i]);?>" 
+                      data-post="<?=htmlentities($trece->post[$i]);?>" 
+                      class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
 <?php /*
                     <li class="divider"></li>
                     <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
