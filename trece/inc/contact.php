@@ -28,7 +28,7 @@
       require($conf["dir"]["libraries"]."phpmailer/src/PHPMailer.php");
       require($conf["dir"]["libraries"]."phpmailer/src/SMTP.php");
 
-      class Booking{
+      class Contact{
 
 //      private $conf;
 
@@ -83,9 +83,8 @@
           # ..................................................................
 
 
-//        $this->mail_to          = "quenerapu@gmail.com";
           $this->mail_to          = $this->conf["contact"]["email"];
-          $this->mail_subject     = "Mensaje desde fixing.es";
+          $this->mail_subject     = "Message from ".$this->conf["meta"]["name"][LANG];
           $this->mail_from        = $this->conf["mail"]["from"];
           $this->mail_host        = $this->conf["mail"]["host"];
           $this->mail_username    = $this->conf["mail"]["username"];
@@ -118,49 +117,41 @@
               return true;
               } catch (Exception $e) { echo "Message could not be sent. Mailer Error: " . $mail->ErrorInfo; }
 
-  /*
-        $temp = explode(".", $_FILES["foto"]["name"]);
-        $newfilename = $ficha->ref . '.' . end($temp);
-        move_uploaded_file($_FILES["foto"]["tmp_name"], "uploads/" . $newfilename);
-  */
-
         }
-        }
+      }
 
-//      print_r($conf);
+      $trece = new Contact();
+      $trece->conf = $conf;
+      $trece->mail_name             = isset($_POST["name"]) ? $_POST["name"] : "No name";
+      $trece->mail_email            = isset($_POST["email"]) ? $_POST["email"] : "No eMail address";
+      $trece->mail_message          = $trece->mail_name." ".$trece->mail_email." ".(isset($_POST["message"]) ? " escribiu:<br><br>".$_POST["message"] : " enviou unha mensaxe sen texto.");
+      $trece->g_recaptcha_response  = $_POST["g-recaptcha-response"];
 
-        $ficha = new Booking();
-        $ficha->conf = $conf;
-        $ficha->mail_name             = isset($_POST["name"]) ? $_POST["name"] : "No name";
-        $ficha->mail_email            = isset($_POST["email"]) ? $_POST["email"] : "No eMail address";
-        $ficha->mail_message          = $ficha->mail_name." ".$ficha->mail_email." ".(isset($_POST["message"]) ? " escribiu:<br><br>".$_POST["message"] : " enviou unha mensaxe sen texto.");
-        $ficha->g_recaptcha_response  = $_POST["g-recaptcha-response"];
+      if(!$trece->sendMessage()):
 
-        if(!$ficha->sendMessage()):
+        $msg = true;
 
-          $msg = true;
+        $msgType = "danger";
+        $msgText = "Your message could not be sent.";
+        return null;
+        die();
 
+      else :
+
+        $msg = true;
+
+        if($trece->wrongCaptchaResponse) :
           $msgType = "danger";
-          $msgText = "Your message could not be sent.";
-          return null;
-          die();
-
+          $msgText = "Error. reCAPTCHA verification failed.";
         else :
-
-          $msg = true;
-
-          if($ficha->wrongCaptchaResponse) :
-            $msgType = "danger";
-            $msgText = "Error. reCAPTCHA verification failed.";
-          else :
-            $msgType = "success";
-            $msgText = "Message sent. Thank you :-)";
-          endif;
-
-
+          $msgType = "success";
+          $msgText = "Message sent. Thank you :-)";
         endif;
 
+
       endif;
+
+    endif;
 
 
 
@@ -174,7 +165,7 @@
 EOD;
   $customCSS = <<<EOD
   <style>
-    .post p:first-of-type:first-letter{font-family:"Open Sans";font-weight:800;float:left;font-size:3.95em;line-height:.8em;margin:.4rem .6rem 0 -.4rem;}
+    /* whatever */
   </style>
 EOD;
 
@@ -200,7 +191,7 @@ EOD;
 
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-        <h1>Contact</h1>
+        <h1><?=$conf["meta"]["description"][LANG];?></h1>
       </div>
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
@@ -210,14 +201,14 @@ EOD;
         <fieldset style="margin-bottom:3em;">
           <legend>Social networks</legend>
           <h3 style="margin:0;">
-            <a href="https://twitter.com/xxxxxxxxx"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            <a href="https://facebook.com/xxxxxxxxx"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-            <a href="https://instagram.com/xxxxxxxxx"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+            <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>"><i class="fa fa-instagram" aria-hidden="true"></i></a>
           </h3>
         </fieldset>
 
         <fieldset>
-        <legend>Formulario de contacto</legend>
+        <legend>Contact form</legend>
 
         <!-- Text input-->
         <div class="form-group">
