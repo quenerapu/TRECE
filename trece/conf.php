@@ -58,6 +58,7 @@ return [
     "adminlist"         =>  "alst",
     "change-pass"       =>  $change_pass="change-password",
     "cookies-policy"    =>  "cookies",
+    "contact"           =>  "contact",
     "crud"              =>  "crud",
     "db"                =>  "db",
     "debug"             =>  "d",
@@ -178,6 +179,7 @@ return [
     "twitter"       =>  "@yourtwitterusername",
     "instagram"     =>  "@yourinstagramusername",
     "facebook"      =>  "@yourfacebookusername",
+    "youtube"       =>  "youtube-channel",
     "fb_app_id"     =>  "123456789012345",  # Get yours at https://developers.facebook.com/apps
     "geo"           =>  [
            "region" =>  "xx",         # Georegion http://geo-tag.de/generator
