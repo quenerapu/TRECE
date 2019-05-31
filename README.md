@@ -25,4 +25,4 @@ Run it in your browser.
 
 ### Step 4
 
-That's all! :) Upload all the files, visit your brand new installation of TRECE with your browser, click on «Sign In» and then click on «Forgot or don't know my password». Follow instructions to generate your password, sign in and test the site.
+That's all! :) Click on «Sign In» and then click on «Forgot or don't know my password». Follow instructions to generate your password, sign in and test the site.
