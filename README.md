@@ -7,7 +7,7 @@ A Content Management System for the brave. Because what could go wrong?
 - A MySQL/MariaDB database
 - A [reCAPTCHA](https://google.com/recaptcha) v2 pair of keys (soon it won't be mandatory)
 - An eMail account just for sending automatic eMails (the classic `noreply@domain.com` account)
-- One eMail account for you, the adminer
+- One eMail account for you, the administrator
 
 ## Installation
 
