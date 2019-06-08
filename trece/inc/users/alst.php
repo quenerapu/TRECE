@@ -633,8 +633,8 @@ EOD;
         clone_ugender:ugender,
         clone_uhierarchy:uhierarchy,
         },function(data){
-//      location.reload();
-        alert(data);
+        location.reload();
+//      alert(data);
         }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
       return false;
       });
