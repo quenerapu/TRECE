@@ -86,6 +86,23 @@ function get_words($sentence,$count=10) { # Cleanly gets firsts $count words fro
     endif;
     imagecopyresampled($d,$s,0,0,$x,$y,$nw,$nh,$w,$h); imagejpeg($d,$f,100); imagedestroy($d);
     }
+# -----------------------------------------------------------------------------------
+
+
+
+  function cropImage($s,$f,$w,$h,$nw,$nh,$x=0,$y=0) {
+    $d = imagecreatetruecolor($nw,$nh);
+    if($nw==$nh) :
+      if($w>$h) : $nw=floor($w*($nh/$h)); $x=ceil(($w-$h)/2);
+      elseif($h>$w) : $nh=floor($h*($nw/$w)); $y=ceil(($h-$w)/2);
+      endif;
+    endif;
+    imagecopyresampled($d,$s,$x,$y,0,0,$nw,$nh,$nw,$nh); imagejpeg($d,$f,100); imagedestroy($d);
+//  imagecopyresampled($d,$s,$x,$y,$nw,$nh,$nw,$nh,$nw,$nh); imagejpeg($d,$f,100); imagedestroy($d);
+//  imagecopyresampled($d,$s,0,0,$x,$y,$nw,$nh,$w,$h); imagejpeg($d,$f,100); imagedestroy($d);
+
+
+    }
 
 
 
