@@ -16,7 +16,7 @@ echo <<<ENDCSS
 
 # Thank you Håkon Wium Lie (@wiumlie) for inventing CSS.
 
-This is a CSS file
+# This is a CSS file
 
 */
 

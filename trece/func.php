@@ -86,6 +86,9 @@ function get_words($sentence,$count=10) { # Cleanly gets firsts $count words fro
     endif;
     imagecopyresampled($d,$s,0,0,$x,$y,$nw,$nh,$w,$h); imagejpeg($d,$f,100); imagedestroy($d);
     }
+
+
+
 # -----------------------------------------------------------------------------------
 
 
