@@ -963,7 +963,7 @@ return [
     ],
   "locations" => [
     "es"  => "Localidades",
-    "gal" => "Localidades",
+    "gal" => "Concellos",
     "en"  => "Locations",
     ],
   "logo" => [

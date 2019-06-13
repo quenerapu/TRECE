@@ -118,7 +118,7 @@
     if(isset($_POST["email"]))         : $trece->email         = htmlspecialchars(strtolower(preg_replace("/\s/","",$_POST["email"])));         endif;
     if(isset($_POST["bio"]))           : $trece->bio           = html_entity_decode($_POST["bio"]);                                             endif;
 //  if(isset($_POST["uhierarchy"]))    : $trece->uhierarchy    = $_POST["uhierarchy"];                                                          endif;
-    if(isset($_POST["ugender"]))       : $trece->ugender       = $_POST["ugender"];                                                                                     endif;
+    if(isset($_POST["ugender"]))       : $trece->ugender       = $_POST["ugender"];                                                             endif;
 
     if($trece->updateOne()) :
 
