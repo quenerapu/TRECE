@@ -184,7 +184,7 @@
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name"]));
-    $trece->name_url            = getUrlFriendlyString($trece->name);
+    $trece->url_name            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_name"]));
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 
@@ -215,7 +215,7 @@
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = "Copy of ".$_POST["clone_name"];
-//  $trece->id_parent           = $_POST["clone_id_parent"];
+    $trece->url_name            = getUrlFriendlyString($trece->name);
 
     $trece->addOne();
 
@@ -364,7 +364,6 @@ EOD;
           <?php // $lacosa = "Questiontypes"; ?>
           <div class="pull-right"><p>
             <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?>
-<?php /*    <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?> */ ?>
           </p></div>
           <?php endif; ?>
           <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
@@ -408,7 +407,6 @@ EOD;
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCustom["status"][LANG];?></th>
               <th><?=$lCommon["name"][LANG];?></th>
-<?php /*      <th><?=$lCustom["parent"][LANG];?></th> */ ?>
               <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
@@ -424,20 +422,10 @@ EOD;
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>" data-name="name"><?=$trece->name[$i];?></a>
               </td>
-<?php /*
-              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="javascript:void(0);" class="id_parent editable editable-click" data-type="select" data-pk="<?=$trece->id[$i];?>" data-name="id_parent" data-value="<?=$trece->id_parent[$i];?>" data-title="Provincia">
-                  <?=$trece->parent_name[$i];?>
-                </a>
-              </td>
-*/ ?>
               <td nowrap style="text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-<?php /*
-                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-id_parent="<?=$trece->id_parent[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
-*/ ?>
                     <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                   </ul>
                 </div>
@@ -491,16 +479,7 @@ EOD;
 
 
 
-<?php
-# .........................................................................................
-# ...####..##..##..####..##..##..####..######....####..######..####..######.##..##..####...
-# ..##..##.##..##.##..##.###.##.##.....##.......##.......##...##..##...##...##..##.##......
-# ..##.....######.######.##.###.##.###.####......####....##...######...##...##..##..####...
-# ..##..##.##..##.##..##.##..##.##..##.##...........##...##...##..##...##...##..##.....##..
-# ...####..##..##.##..##.##..##..####..######....####....##...##..##...##....####...####...
-# .........................................................................................
-?>
-
+<!-- Change Status -->
   <script>
     $(document).on("click",".change-status",function(){
       var pk    = $(this).data("pk");
@@ -527,27 +506,16 @@ EOD;
 
 
 
-<?php
-# ....................................................................
-# ...####..##......####..##..##.######...######.##..##.######..####...
-# ..##..##.##.....##..##.###.##.##.........##...##..##...##...##......
-# ..##.....##.....##..##.##.###.####.......##...######...##....####...
-# ..##..##.##.....##..##.##..##.##.........##...##..##...##.......##..
-# ...####..######..####..##..##.######.....##...##..##.######..####...
-# ....................................................................
-?>
-
+<!-- Clone This -->
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
       var name            =   $(this).data("name");
-//    var id_parent       =   $(this).data("id_parent");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
         clone_name:name,
-//      clone_id_parent:id_parent,
         },function(data){
 //      alert(data);
         location.reload();
@@ -563,16 +531,9 @@ EOD;
 
 
 
-<?php
-# ...........................................................................
-# ..##..##..........######.#####..######.######..####..#####..##.....######..
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ....##....######..####...##..##...##.....##...######.#####..##.....####....
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ..##..##..........######.#####..######...##...##..##.#####..######.######..
-# ...........................................................................
-?>
-
+<!-- X-editable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
   <script>
 
     $(document).ready(function(){startxEditable();});
@@ -596,31 +557,9 @@ EOD;
             setTimeout(startxEditable,2000);
             }
           });
-<?php /*
-      $(".id_parent").editable(
-        {
-          url:window.location.href,
-          mode:"inline", //popup
-//        placement:"right",
-          showbuttons:false,
-          value:[$(this).data("value")],
-          source:[
-<?php foreach ($trece->parents as $i=>$v) : ?>
-            {value:<?=$i;?>,text:"<?=$v;?>"},
-<?php endforeach; ?>
-            ],
-          success:function(response,newValue){$(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));setTimeout(startxEditable,2000);}
-        }
-        ).on("save",function(e,params){});
-*/ ?>
       };
 
   </script>
-
-<?php
-# .. END X-EDITABLE
-# ...........................................................................
-?>
 
 
 

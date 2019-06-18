@@ -277,6 +277,7 @@ EOD;
               <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
             </div>
           </div>
+
           <div class="col-xs-6">
             <div class="form-group">
               <label for="uhierarchy"><?=$lCustom["hierarchy"][LANG];?>:</label><br>
@@ -294,19 +295,20 @@ EOD;
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
-          <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
+              <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
+              <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
+            </div>
+          </div>
         </div>
-
-
-
-        <div class="form-group">
-          <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
-          <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
-        </div>
-
-
 
         <div class="row">
           <div class="col-xs-6">
@@ -357,19 +359,38 @@ EOD;
 
 
 
-  <script>$(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+  <script>
+    $(function(){$('[data-toggle="tooltip"]').tooltip();});
+  </script>
 
-  <script>$("#uhierarchy").change(function(){$(".side-corner-tag span").css("background-color","#"+$(this).find(":selected").data("color"));});</script>
 
+
+  <script>
+    $("#uhierarchy").change(function(){$(".side-corner-tag span").css("background-color","#"+$(this).find(":selected").data("color"));});
+  </script>
+
+
+
+<!-- Bootstrap Switch -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/css/bootstrap3/bootstrap-switch.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/js/bootstrap-switch.min.js"></script>
   <script>
     $('[name="id_status"]').bootstrapSwitch();
     $('input[name="id_status"]').on("switchChange.bootstrapSwitch",function(event,state){if(state){$("#avatar").removeClass("attenuate",500);}else{$("#avatar").addClass("attenuate",500);}});
   </script>
 
+
+
+  <!-- Bootstrap Select -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/css/bootstrap-select.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/bootstrap-select.min.js"></script>
+<?php /*
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/i18n/defaults-<?=$conf["site"]["langs"][LANG]["culture-name2"];?>.js"></script>
-  <script>$(".selectpicker").selectpicker({style:"btn-info",size:4});</script>
+*/ ?>
+  <script>
+    $(".selectpicker").selectpicker({style:"btn-info",size:4});
+  </script>
+
 
 
 <?php if(!$trece->gotPic) : ?>
@@ -384,7 +405,9 @@ EOD;
 <?php endif; ?>
 
   <?php if($msg&&$msgType!="danger") : ?>
-  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
+  <script>
+    $(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});
+  </script>
   <?php endif; ?>
 
   <script>

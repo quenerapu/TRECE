@@ -244,7 +244,7 @@
   $letter           = isset($trece->letter)?$trece->letter:$cconf["default"]["letter"];
   $dupeName         = isset($trece->dupeName)?$trece->dupeName:0;
   $dupeLetter       = isset($trece->dupeLetter)?$trece->dupeLetter:0;
-  $stmt = $trece->readOne();
+  $stmt             = $trece->readOne();
   $name             = $dupeName+$dupeLetter > 0 ? $name : $trece->name;
   $letter           = $dupeName+$dupeLetter > 0 ? $letter : (!is_null($letter) ? $letter : $trece->letter);
   $filename         = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
@@ -323,6 +323,7 @@ EOD;
 
       <div class="col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-2">
 
+        <label for="id_status"><?=$lCommon["icon"][LANG];?>:</label><br>
         <div style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;">
           <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
             <div style="float:left;">
@@ -342,41 +343,48 @@ EOD;
 
       <div class="col-sm-6 col-md-5">
 
-        <div class="form-group">
-          <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
-          <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
-        </div>
-
-        <div class="form-group<?=$dupeName>0?" has-error":"";?>">
-          <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
-          <input type="text" id="name" name="name" class="form-control" placeholder="<?=$trece->name;?>" value="<?=($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)?"":$name;?>" required>
-          <span class="help-block">* <?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></span>
-        </div>
-
-        <div class="form-group<?=$dupeLetter>0?" has-error":"";?>">
-          <label for="letter"><?=$lCustom["letter"][LANG];?>:</label><br>
-          <input type="text" id="letter" name="letter" class="form-control" value="<?=$letter;?>" maxlength="1"<?=$dupeName+$dupeLetter==0&&strlen(trim($letter))>0?" readonly":" required";?>>
-          <span class="help-block">* <?=($dupeLetter>0?$lCustom["duplicated_letter"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></span>
-        </div>
-
         <div class="row">
-          <div class="form-group">
-            <input type="hidden" id="cropData1" name="cropData1">
-            <input type="hidden" id="cropData2" name="cropData2">
-            <input type="hidden" id="imagebase64" name="imagebase64">
-            <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
-<?php if(($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)) : ?>
-<?php /*
-            <hr>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="addNew" name="addNew" value="1" checked>
-                <?=$lCommon["and_add_a_new_blank_file"][LANG];?>
-              </label>
+
+          <div class="col-xs-12">
+
+            <div class="form-group">
+              <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
+              <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
             </div>
-*/ ?>
-<?php endif; ?>
+
           </div>
+
+          <div class="col-xs-7">
+
+            <div class="form-group<?=$dupeName>0?" has-error":"";?>">
+              <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
+              <input type="text" id="name" name="name" class="form-control" placeholder="<?=$trece->name;?>" value="<?=($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)?"":$name;?>" required>
+              <span class="help-block" style="line-height:1em;"><small><?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></small></span>
+            </div>
+
+          </div>
+
+          <div class="col-xs-5">
+
+            <div class="form-group<?=$dupeLetter>0?" has-error":"";?>">
+              <label for="letter"><?=$lCustom["letter"][LANG];?>:</label><br>
+              <input type="text" id="letter" name="letter" class="form-control" value="<?=$letter;?>" maxlength="1"<?=$dupeName+$dupeLetter==0&&strlen(trim($letter))>0?" readonly":" required";?>>
+              <span class="help-block" style="line-height:1em;"><small><?=($dupeLetter>0?$lCustom["duplicated_letter"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></small></span>
+            </div>
+
+          </div>
+
+          <div class="col-xs-4">
+
+            <div class="form-group">
+              <input type="hidden" id="cropData1" name="cropData1">
+              <input type="hidden" id="cropData2" name="cropData2">
+              <input type="hidden" id="imagebase64" name="imagebase64">
+              <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
+            </div>
+
+          </div>
+
         </div>
 
       </div>
@@ -393,16 +401,26 @@ EOD;
 
 
 
-  <script>$(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+  <script>
+    $(function(){$('[data-toggle="tooltip"]').tooltip();});
+  </script>
 
+
+
+<!-- Bootstrap Switch.com -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/css/bootstrap3/bootstrap-switch.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/js/bootstrap-switch.min.js"></script>
   <script>
     $('[name="id_status"]').bootstrapSwitch();
     $('input[name="id_status"]').on("switchChange.bootstrapSwitch",function(event,state){if(state){$("#crop-image").removeClass("attenuate",500);}else{$("#crop-image").addClass("attenuate",500);}});
   </script>
 
+
+
   <?php if($msg&&$msgType!="danger") : ?>
-  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
+  <script>
+    $(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});
+  </script>
   <?php endif; ?>
 
   <script>
@@ -410,6 +428,7 @@ EOD;
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
     var thePic="<?=$trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["viewport_w"]."x".$cconf["img"]["viewport_h"]."/?text=?");?>";

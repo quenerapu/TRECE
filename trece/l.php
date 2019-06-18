@@ -41,10 +41,8 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
       $this->tablename,
       $this->uhierarchy_tablename,
       $this->uhierarchy_tableletter,
-      $this->uhierarchy_tablename,
       $this->log_tablename,
       $this->log_tableletter,
-      $this->log_tablename,
       $this->email_or_username,
       $this->password
     );

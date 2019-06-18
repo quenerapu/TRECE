@@ -272,21 +272,8 @@ EOD;
           </div>
         </div>
 
-        <div class="row">
-          <div class="form-group">
-            <button type="submit" class="btn btn-cons"><?=$lCommon["save_changes"][LANG];?></button>
-<?php if(($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)) : ?>
-<?php /*
-            <hr>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="addNew" name="addNew" value="1" checked>
-                <?=$lCommon["and_add_a_new_blank_file"][LANG];?>
-              </label>
-            </div>
-*/ ?>
-<?php endif; ?>
-          </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-cons"><?=$lCommon["save_changes"][LANG];?></button>
         </div>
 
       </div>
@@ -303,17 +290,29 @@ EOD;
 
 
 
-  <script>$(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+  <script>
+    $(function(){$('[data-toggle="tooltip"]').tooltip();});
+  </script>
 
+
+
+<!-- Bootstrap Switch -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/css/bootstrap3/bootstrap-switch.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/js/bootstrap-switch.min.js"></script>
   <script>
     $('[name="id_status"]').bootstrapSwitch();
     $('input[name="id_status"]').on("switchChange.bootstrapSwitch",function(event,state){if(state){$("#crop-image").removeClass("attenuate",500);}else{$("#crop-image").addClass("attenuate",500);}});
   </script>
 
+
+
   <?php if($msg&&$msgType!="danger") : ?>
-  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
+  <script>
+    $(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});
+  </script>
   <?php endif; ?>
+
+
 
   <script>
     $("[href^=\\#div_]").on("shown.bs.tab",function(e){$("[href^=\\#div_]").removeClass("btn-primary");$(this).addClass("btn-primary");});

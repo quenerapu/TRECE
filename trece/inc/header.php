@@ -95,16 +95,6 @@
   <meta name="ICBM" content="<?=$lCustom["geo"]["latitude"].", ".$lCustom["geo"]["longitude"];?>">
   <meta name="geo.placename" content="<?=$lCustom["geo"]["placename"];?>">
 
-<!-- Bootstrap & jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/<?=$conf["version"]["jquery"];?>/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/<?=$conf["version"]["jqueryui"];?>/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/<?=$conf["version"]["moment"];?>/moment-with-locales.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/css/bootstrap.min.css">
-<?php /*
-  <link rel="stylesheet" href="css/bootstrap.3.3.7.min.css">
-*/ ?>
-
 <!-- Favicon https://favicon-generator.org -->
   <link rel="apple-touch-icon" sizes="57x57" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-60x60.png">
@@ -124,6 +114,19 @@
   <meta name="msapplication-TileImage" content="<?=REALPATH.$conf["dir"]["images"];?>favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
+<!-- Bootstrap & jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/<?=$conf["version"]["jquery"];?>/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/<?=$conf["version"]["jqueryui"];?>/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/<?=$conf["version"]["moment"];?>/moment-with-locales.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/css/bootstrap.min.css">
+<?php /*
+  <link rel="stylesheet" href="<?=$conf["dir"]["styles"];?>bootstrap.3.3.7.min.css">
+*/ ?>
+
+<!-- Responsive Bootstrap Toolkit -->
+  <script src="https://cdn.jsdelivr.net/npm/responsive-toolkit@2.6.3/src/bootstrap-toolkit.min.js"></script>
+
 <?php /*
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/<?=$conf["version"]["bootstrap"];?>/<?=$conf["version"]["bootswatch"];?>/bootstrap.min.css">
 */ ?>
@@ -142,9 +145,6 @@
 
 <?php /* TODO: the following libraries should be loaded ONLY when needed, NOT by default :-( */ ?>
 
-<!-- Responsive Bootstrap Toolkit -->
-  <script src="https://cdn.jsdelivr.net/npm/responsive-toolkit@2.6.3/src/bootstrap-toolkit.min.js"></script>
-
 <!-- Animate.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/<?=$conf["version"]["animatecss"];?>/animate.min.css">
 
@@ -153,12 +153,6 @@
 
 <!-- jQuery Form Validator -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/<?=$conf["version"]["jquery_form_validator"];?>/theme-default.min.css">
-
-<!-- Bootstrap-select -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/css/bootstrap-select.min.css">
-
-<!-- Bootstrap Switch.com -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/css/bootstrap3/bootstrap-switch.min.css">
 
 <!-- jQuery Confirm -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.css" />
@@ -172,17 +166,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/<?=$conf["version"]["ekko_lightbox"];?>/ekko-lightbox.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/<?=$conf["version"]["ekko_lightbox"];?>/ekko-lightbox.min.js"></script>
 
-<!-- Croppie -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.css">
-
-<!-- Bootstrap Datetimepicker -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/<?=$conf["version"]["bootstrap_datetimepicker"];?>/js/bootstrap-datetimepicker.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/<?=$conf["version"]["bootstrap_datetimepicker"];?>/css/bootstrap-datetimepicker.min.css">
-
-<!-- Bootstrap Colorpicker -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/js/bootstrap-colorpicker.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/css/bootstrap-colorpicker.min.css">
-
 <!-- Rangeslider.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/<?=$conf["version"]["rangesliders"];?>/rangeslider.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/<?=$conf["version"]["rangesliders"];?>/rangeslider.min.css">
@@ -190,10 +173,6 @@
 <!-- Ion RangeSlider -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/<?=$conf["version"]["ion_rangeslider"];?>/js/ion.rangeSlider.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/<?=$conf["version"]["ion_rangeslider"];?>/css/ion.rangeSlider.min.css">
-
-<!-- X-editable -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
 
 <!-- reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js"></script>

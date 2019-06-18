@@ -443,6 +443,7 @@ EOD;
 
       <div class="col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-2">
 
+        <label for="id_status"><?=$lCommon["avatar"][LANG];?>:</label><br>
         <div class="side-corner-tag" style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;margin-bottom:10em;">
           <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
             <div style="float:left;">
@@ -463,23 +464,31 @@ EOD;
 
 
 
+      <form id="form" class="form-classic" action="" method="post" enctype="multipart/form-data">
+
       <div class="col-sm-6 col-md-5">
 
-        <form id="form" class="form-classic" action="" method="post" enctype="multipart/form-data">
+        <div class="row">
 
-        <div class="form-group">
-          <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
-          <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
+          <div class="col-xs-12 col-sm-6">
+    
+            <div class="form-group">
+              <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
+              <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
+            </div>
+
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+
+            <div class="form-group">
+              <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
+              <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
+            </div>
+
+          </div>
+
         </div>
-
-
-
-        <div class="form-group">
-          <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
-          <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
-        </div>
-
-
 
         <div class="row">
           <div class="col-xs-6">
@@ -506,15 +515,11 @@ EOD;
           </div>
         </div>
 
-
-
         <div class="form-group<?=$wrongeMail+$dupeeMail>0?" has-error":"";?>">
           <label for="email"><?=$lCommon["email"][LANG];?>:</label><br>
           <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][LANG]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
           <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"").$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
         </div>
-
-
 
         <div class="form-group">
           <label for="url_portfolio">URL portafolio:</label><br>
@@ -535,9 +540,9 @@ EOD;
           <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
         </div>
 
-      </form>
-
       </div>
+
+      </form>
 
     </div>
 
@@ -550,23 +555,31 @@ EOD;
 
 
 
-  <script>$(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
-
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
-    var thePic="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>";function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
+    $(function(){$('[data-toggle="tooltip"]').tooltip();});
   </script>
 
 
 
+  <!-- Bootstrap Select -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/css/bootstrap-select.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/bootstrap-select.min.js"></script>
 <?php /*
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/<?=$conf["version"]["bootstrap_select"];?>/js/i18n/defaults-<?=$conf["site"]["langs"][LANG]["culture-name2"];?>.js"></script>
 */ ?>
-  <script>$(".selectpicker").selectpicker({style:"btn-info",size:4});</script>
+  <script>
+    $(".selectpicker").selectpicker({style:"btn-info",size: 4});
+  </script>
+
+
+
+  <!-- Croppie -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
+  <script>
+    var thePic="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>";function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
+  </script>
 
 
 
@@ -615,7 +628,9 @@ EOD;
 
 
   <?php if($msg&&$msgType!="danger") : ?>
-  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
+  <script>
+    $(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});
+  </script>
   <?php endif; ?>
 
 

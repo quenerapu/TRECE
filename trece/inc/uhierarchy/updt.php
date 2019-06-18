@@ -262,31 +262,27 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="row">
-          <div class="col-xs-3">
+          <div class="col-xs-12 col-sm-3">
             <div class="form-group">
               <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
               <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group<?=$dupeName>0?" has-error":"";?>">
               <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
               <input type="text" id="name" name="name" class="form-control" placeholder="<?=$name;?>" value="<?=($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)?"":$name;?>" required>
-              <span class="help-block">* <?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></span>
+              <span class="help-block" style="line-height:1em;"><small><?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></small></span>
             </div>
           </div>
-          <div class="col-xs-3">
+          <div class="col-xs-6 col-sm-3">
             <label for="color"><?=$lCustom["color"][LANG];?>:</label><br>
             <div class="form-group">
               <div id="color" class="input-group colorpicker-component">
-                <span class="input-group-addon">#</span>
-                <input type="text" name="color" value="#<?=$trece->color;?>" class="form-control color">
                 <span class="input-group-addon"><i></i></span>
+                <input type="text" name="color" value="#<?=$trece->color;?>" class="form-control color">
               </div>
             </div>
-            <script>
-              $(function(){$("#color").colorpicker({format:"hex",hexNumberSignPrefix:false,colorSelectors:{"red":"#ff0000","pink":"#ff1493","orange":"#ff4500","yellow":"#ffff00","purple":"#9400d3","green":"#00ff00","blue":"#4682b4","blue":"#4682b4","brown":"#8b4513","gray":"#696969",}});$("#color").on("colorpickerChange",function(event){$(".color").css("background-color",event.color.toString());});});
-            </script>
           </div>
         </div>
 
@@ -307,21 +303,8 @@ EOD;
           <?php endfor; endif; ?>
         </div>
 
-        <div class="row">
-          <div class="form-group">
-            <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
-<?php if(($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)) : ?>
-<?php /*
-            <hr>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="addNew" name="addNew" value="1" checked>
-                <?=$lCommon["and_add_a_new_blank_file"][LANG];?>
-              </label>
-            </div>
-*/ ?>
-<?php endif; ?>
-          </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
         </div>
 
       </div>
@@ -338,15 +321,34 @@ EOD;
 
 
 
-  <script>$(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+  <script>
+    $(function(){$('[data-toggle="tooltip"]').tooltip();});
+  </script>
 
+
+
+<!-- Bootstrap Colorpicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/js/bootstrap-colorpicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/<?=$conf["version"]["bootstrap_colorpicker"];?>/css/bootstrap-colorpicker.min.css">
+  <script>
+    $(function(){$("#color").colorpicker({format:"hex",hexNumberSignPrefix:false,colorSelectors:{"red":"#ff0000","pink":"#ff1493","orange":"#ff4500","yellow":"#ffff00","purple":"#9400d3","green":"#00ff00","blue":"#4682b4","blue":"#4682b4","brown":"#8b4513","gray":"#696969",}});$("#color").on("colorpickerChange",function(event){$(".color").css("background-color",event.color.toString());});});
+  </script>
+
+
+
+<!-- Bootstrap Switch -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/css/bootstrap3/bootstrap-switch.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/js/bootstrap-switch.min.js"></script>
   <script>
     $('[name="id_status"]').bootstrapSwitch();
   </script>
 
+
+
   <?php if($msg&&$msgType!="danger") : ?>
-  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
+  <script>
+    $(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});
+  </script>
   <?php endif; ?>
 
   <script>
