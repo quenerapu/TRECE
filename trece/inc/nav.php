@@ -9,15 +9,28 @@
               </p>
               <p class="pull-right" style="color:white;">
                 <small style="margin-right:1em;">
-              <?php $i=1; foreach($conf["site"]["langs"] as $language) : ?>
+              <?php if(count($conf["site"]["langs"])>1) : $i=1; foreach($conf["site"]["langs"] as $language) : ?>
                 <a href="<?=REALPATH.$language["url-name"];?>" style="color:white;"><?=strtoupper($language["ref-name"]);?></a><?=$i<count($conf["site"]["langs"])?" |":"";?><?php $i++;?>
-              <?php endforeach; ?>
+              <?php endforeach; endif; ?>
                 </small>
-                <a href="mailto:whatever@whatever.wa" style="color:white;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                <a href="https://twitter.com/whatever" style="color:white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                <a href="https://facebook.com/whatever" style="color:white;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                <a href="https://instagram.com/whatever" style="color:white;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                <a href="https://youtube.com/whatever" style="color:white;"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+              <?php if(isset($conf["contact"]["phone_no"]) && strlen($conf["contact"]["phone_no"])>0) : ?>
+                <a href="tel:<?=$conf["contact"]["phone_no"];?>" style="color:white;"><i class="fa fa-phone-square" aria-hidden="true"></i></a>
+              <?php endif; ?>
+              <?php if(isset($conf["contact"]["email"]) && strlen($conf["contact"]["email"])>0) : ?>
+                <a href="mailto:<?=$conf["contact"]["email"];?>" style="color:white;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+              <?php endif; ?>
+              <?php if(isset($conf["contact"]["twitter"]) && strlen($conf["contact"]["twitter"])>0) : ?>
+                <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" style="color:white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+              <?php endif; ?>
+              <?php if(isset($conf["contact"]["facebook"]) && strlen($conf["contact"]["facebook"])>0) : ?>
+                <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" style="color:white;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+              <?php endif; ?>
+              <?php if(isset($conf["contact"]["instagram"]) && strlen($conf["contact"]["instagram"])>0) : ?>
+                <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" style="color:white;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+              <?php endif; ?>
+              <?php if(isset($conf["contact"]["youtube"]) && strlen($conf["contact"]["youtube"])>0) : ?>
+                <a href="https://youtube.com/<?=$conf["contact"]["youtube"];?>" style="color:white;"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+              <?php endif; ?>
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>
                   <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon[$conf["file"]["me"]][LANG];?></a> |

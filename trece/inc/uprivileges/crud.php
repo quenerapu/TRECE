@@ -284,7 +284,7 @@ class UPrivileges{
 
   function updateOne() {
 
-    $this->dupeName   = 0;
+    $this->dupeName = 0;
 
     if(isset($this->name)) :
 

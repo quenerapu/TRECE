@@ -100,9 +100,9 @@
 
     $msg = true;
 
-    if(isset($_POST["id_status"]))          : $trece->id_status          = 1; else : $trece->id_status = 0;                 endif;
+    if(isset($_POST["id_status"]))          : $trece->id_status          = 1; else : $trece->id_status = 0;                                                          endif;
     if(isset($_POST["name"]))               : $trece->name               = htmlspecialchars(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["name"])));
-                                              $trece->url_name           = getUrlFriendlyString($trece->name);              endif;
+                                              $trece->url_name           = getUrlFriendlyString($trece->name);                                                       endif;
     if($trece->updateOne()) :
 
       if($trece->dupeName > 0) :
@@ -181,7 +181,7 @@
 
   $name             = isset($trece->name)?$trece->name:$cconf["default"]["name"];
   $dupeName         = isset($trece->dupeName)?$trece->dupeName:0;
-  $stmt = $trece->readOne();
+  $stmt             = $trece->readOne();
   $name             = $dupeName > 0 ? $name : $trece->name;
 
 /*

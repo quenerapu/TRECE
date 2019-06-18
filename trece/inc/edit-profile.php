@@ -522,11 +522,6 @@ EOD;
         </div>
 
         <div class="form-group">
-          <label for="url_portfolio">URL portafolio:</label><br>
-          <input type="text" id="url_portfolio" name="url_portfolio" class="form-control" value="">
-        </div>
-
-        <div class="form-group">
           <label for="bio"><?=$lCustom["bio"][LANG];?>:</label>
           <textarea class="form-control tinymce" id="bio" name="bio" placeholder=""><?=$trece->bio;?></textarea>
         </div>
