@@ -180,9 +180,9 @@
     $trece                      = new $action($db,$conf);
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->name                = $cconf["default"]["name"];
-    $trece->surname             = $cconf["default"]["surname"];
-    $trece->username            = $cconf["default"]["username"];
+    $trece->name                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name"]));
+    $trece->surname             = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["surname"]));
+    $trece->username            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["username"]));
     $trece->email               = $cconf["default"]["email"];
     $trece->uhierarchy          = $cconf["default"]["uhierarchy"];
     $trece->ugender             = $cconf["default"]["ugender"];
