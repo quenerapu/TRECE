@@ -114,25 +114,21 @@
   <meta name="msapplication-TileImage" content="<?=REALPATH.$conf["dir"]["images"];?>favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
+<!-- Normalize.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/<?=$conf["version"]["normalize_css"];?>/normalize.min.css">
+
 <!-- Bootstrap & jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/<?=$conf["version"]["jquery"];?>/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/<?=$conf["version"]["jqueryui"];?>/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/<?=$conf["version"]["moment"];?>/moment-with-locales.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/<?=$conf["version"]["bootstrap"];?>/js/bootstrap.min.js"></script>
 <?php /*
   <link rel="stylesheet" href="<?=$conf["dir"]["styles"];?>bootstrap.3.3.7.min.css">
 */ ?>
 
 <!-- Responsive Bootstrap Toolkit -->
   <script src="https://cdn.jsdelivr.net/npm/responsive-toolkit@2.6.3/src/bootstrap-toolkit.min.js"></script>
-
-<?php /*
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/<?=$conf["version"]["bootstrap"];?>/<?=$conf["version"]["bootswatch"];?>/bootstrap.min.css">
-*/ ?>
-
-<!-- Modernizr -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/<?=$conf["version"]["modernizr"];?>/modernizr.min.js"></script>
 
 <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
@@ -142,25 +138,17 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,600,600i,800,800i,900,900i">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Special+Elite">
 
+<?php /*
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/<?=$conf["version"]["bootstrap"];?>/<?=$conf["version"]["bootswatch"];?>/bootstrap.min.css">
 
-<?php /* TODO: the following libraries should be loaded ONLY when needed, NOT by default :-( */ ?>
+<!-- Modernizr -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/<?=$conf["version"]["modernizr"];?>/modernizr.min.js"></script>
 
 <!-- Animate.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/<?=$conf["version"]["animatecss"];?>/animate.min.css">
 
-<!-- Normalize.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/<?=$conf["version"]["normalize_css"];?>/normalize.min.css">
-
 <!-- jQuery Form Validator -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/<?=$conf["version"]["jquery_form_validator"];?>/theme-default.min.css">
-
-<!-- jQuery Confirm -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.js"></script>
-
-<!-- Selectize.js -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/css/selectize.bootstrap3.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Syone/selectize-bootswatch@1.0/css/selectize.<?=$conf["version"]["bootswatch"];?>.css" />
 
 <!-- Ekko-Lightbox -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/<?=$conf["version"]["ekko_lightbox"];?>/ekko-lightbox.css" />
@@ -173,14 +161,7 @@
 <!-- Ion RangeSlider -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/<?=$conf["version"]["ion_rangeslider"];?>/js/ion.rangeSlider.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/<?=$conf["version"]["ion_rangeslider"];?>/css/ion.rangeSlider.min.css">
-
-<!-- reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js"></script>
-
-<!-- sprintf.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/<?=$conf["version"]["sprintf"];?>/sprintf.min.js"></script>
-
-<?php /* END TODO */ ?>
+*/ ?>
 
 <!-- HTML5 Shiv & Respond.js -->
 
@@ -191,12 +172,12 @@
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/<?=$conf["version"]["respond_js"];?>/respond.min.js"></script>
   <![endif]-->
 
-<!-- Custom JS -->
-  <?=isset($customJS)?$customJS:"";?>
-
 <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["styles"];?><?=$conf["file"]["style"];?>.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
   <?=isset($customCSS)?$customCSS:"";?>
+
+<!-- Custom JS -->
+  <?=isset($customJS)?$customJS:"";?>
 
 <?php if(NPE) : ?>
   <style>

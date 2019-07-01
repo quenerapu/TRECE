@@ -62,7 +62,7 @@
                   $conf["dir"]["images"]."logo.svg" :
                   (file_exists($conf["dir"]["images"]."logo.png") ?
                   $conf["dir"]["images"]."logo.png" :
-                  "data:image/svg+xml;base64,".str_replace("[COLOR]",$conf["logo"]["white"],$conf["logo"]["img"]))
+                  "data:image/svg+xml;base64,".str_replace("[COLOR]",$conf["trece"]["logo"]["white"],$conf["trece"]["logo"]["img"]))
                   ;?>" alt="<?=$conf["meta"]["title"][LANG];?>" class="img-responsive">
               </div>
               </a>

@@ -599,7 +599,7 @@ EOD;
 
 
   <!-- TinyMCE -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
   <script>
     tinymce.init({
       selector: "textarea.tinymce",
@@ -635,17 +635,10 @@ EOD;
   </script>
 
 
-<?php
-# ..................................................................
-# ...####..######.##.....######..####..######.######.######.######..
-# ..##.....##.....##.....##.....##..##...##.....##......##..##......
-# ...####..####...##.....####...##.......##.....##.....##...####....
-# ......##.##.....##.....##.....##..##...##.....##....##....##......
-# ...####..######.######.######..####....##...######.######.######..
-# ..................................................................
-?>
 
-<!-- Latest compiled and minified Selectize JS from https://selectize.github.io/selectize.js/ -->
+<!-- Selectize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/css/selectize.bootstrap3.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Syone/selectize-bootswatch@1.0/css/selectize.<?=$conf["version"]["bootswatch"];?>.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/js/standalone/selectize.min.js"></script>
   <script>
 //  var xelect = $("#ids_sections").selectize()[0].selectize.destroy();

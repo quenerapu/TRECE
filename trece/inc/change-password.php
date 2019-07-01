@@ -189,6 +189,13 @@ EOD;
 
   <?php if ( !$trece->done ) : ?>
 
+
+
+  <!-- reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+
+
+
   <script>
 
     $(document).ready(function(){$(".last-step").hide();});
@@ -225,6 +232,8 @@ EOD;
   </script>
 
 
+
+  <!-- Hideshowpassword -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/<?=$conf["version"]["hideshowpassword"];?>/hideShowPassword.min.js"></script>
   <script>
     $("#password + .showhide").on("click", function() {

@@ -46,7 +46,7 @@
       <?php endif; ?>
 
       <div style="border-top:1px dotted #ccc;border-left:1px dotted #ccc;background:white;position:absolute;padding:0 .7em .2em .5em;right:0;bottom:0;text-align:right;">
-        <a href="https://trece.io" target="_blank" style="text-decoration:none;"><img src="data:image/svg+xml;base64,<?=str_replace("[COLOR]",$conf["logo"]["garnet"],$conf["logo"]["img"]);?>" style="display:inline-block;height:1em;margin:.4em 0 .1em .1em;padding-bottom:.15em;" alt="TRECE"></a>
+        <a href="https://trece.io" target="_blank" style="text-decoration:none;"><img src="data:image/svg+xml;base64,<?=str_replace("[COLOR]",$conf["trece"]["logo"]["garnet"],$conf["trece"]["logo"]["img"]);?>" style="display:inline-block;height:1em;margin:.4em 0 .1em .1em;padding-bottom:.15em;" alt="TRECE"></a>
       </div>
 
     </div>

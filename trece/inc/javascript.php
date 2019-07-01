@@ -1,16 +1,6 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
-<?php
-# ...........................................................................................
-# ...####..#####..#####.....####..##..##.#####.....####..######.##.....######..####..######..
-# ..##..##.##..##.##..##...##..##.###.##.##..##...##.....##.....##.....##.....##..##...##....
-# ..######.##..##.##..##...######.##.###.##..##....####..####...##.....####...##.......##....
-# ..##..##.##..##.##..##...##..##.##..##.##..##.......##.##.....##.....##.....##..##...##....
-# ..##..##.#####..#####....##..##.##..##.#####.....####..######.######.######..####....##....
-# ...........................................................................................
-?>
 
-
-
+  <!-- Add and select -->
   <script>
     function add<?=isset($parental)?"AndSelect":"";?>Them(howMany,parental<?=isset($extras)?",extras":"";?>){$.post("",{addThem:true,add_howMany:howMany,add_parental:parental<?=isset($extras)?",add_extras:extras":"";?>},function(data){
       location.replace("<?=$conf["site"]["uri"];?>");
@@ -71,11 +61,6 @@
       });
   </script>
 
-<?php
-# .. END ADD THEM
-# .......................................................
-?>
-
 
 
   <div id="bulkAdd" style="display:none;">
@@ -116,16 +101,7 @@
 
 
 
-<?php
-# .............................................................
-# ..####...####..#####..######...######.##..##.######.##...##..
-# ..#.....##..##.##..##...##.......##...##..##.##.....###.###..
-# ..####..##..##.#####....##.......##...######.####...##.#.##..
-# .....##.##..##.##..##...##.......##...##..##.##.....##...##..
-# ..####...####..##..##...##.......##...##..##.######.##...##..
-# .............................................................
-?>
-
+  <!-- Sort them -->
   <script>
     $(document).ready(function(){
       $(".sortable").sortable({
@@ -135,23 +111,11 @@
       });
   </script>
 
-<?php
-# .. END SORT THEM
-# .............................................................
-?>
 
 
-
-<?php
-# ............................................................................
-# ..#####..######.##.....######.######.######...######.##..##.######.##...##..
-# ..##..##.##.....##.....##.......##...##.........##...##..##.##.....###.###..
-# ..##..##.####...##.....####.....##...####.......##...######.####...##.#.##..
-# ..##..##.##.....##.....##.......##...##.........##...##..##.##.....##...##..
-# ..#####..######.######.######...##...######.....##...##..##.######.##...##..
-# ............................................................................
-?>
-
+  <!-- Delete them -->
+  <!-- sprintf.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/<?=$conf["version"]["sprintf"];?>/sprintf.min.js"></script>
   <script>
     function deleteThem(who){$.post("",{deleteThem:true,delete_who:who},function(data){
       location.replace("<?=$conf["site"]["uri"];?>");
@@ -176,23 +140,9 @@
       });
   </script>
 
-<?php
-# .. END DELETE THEM
-# ............................................................................
-?>
 
 
-
-<?php
-# ...........................................................
-# ...####..##.....##.........##.##..##..####..##..##.######..
-# ..##..##.##.....##........##..###.##.##..##.###.##.##......
-# ..######.##.....##.......##...##.###.##..##.##.###.####....
-# ..##..##.##.....##......##....##..##.##..##.##..##.##......
-# ..##..##.######.######.##.....##..##..####..##..##.######..
-# ...........................................................
-?>
-
+  <!-- All/None -->
   <script>
     $("#allnone:checkbox").click(function(){
       var checked=!$(this).data("checked");
@@ -201,30 +151,11 @@
       });
   </script>
 
-<?php
-# .. END ALL/NONE
-# ...........................................................
-?>
 
 
-
-<?php
-# ......................................................................................................
-# ..######..####..##..##.######.#####..##..##.........####...####..##..##.######.######.#####..##...##..
-# ......##.##..##.##..##.##.....##..##..####.........##..##.##..##.###.##.##.......##...##..##.###.###..
-# ......##.##.###.##..##.####...#####....##...######.##.....##..##.##.###.####.....##...#####..##.#.##..
-# ..##..##.##..##.##..##.##.....##..##...##..........##..##.##..##.##..##.##.......##...##..##.##...##..
-# ...####...#####..####..######.##..##...##...........####...####..##..##.##.....######.##..##.##...##..
-# ......................................................................................................
-?>
-
-<!-- Latest compiled and minified jQuery Confirm JS from http://craftpip.github.io/jquery-confirm/ -->
+  <!-- jQuery Confirm -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.js"></script>
   <script>
     jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
   </script>
-
-<?php
-# .. END JQUERY-CONFIRM
-# ..................................................................
-?>

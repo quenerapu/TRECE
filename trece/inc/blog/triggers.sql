@@ -1,4 +1,4 @@
-CREATE TRIGGER `serialize_blogpost_title` BEFORE INSERT ON `inconceivable_blog` FOR EACH ROW BEGIN
+CREATE TRIGGER `inconceivable_serialize_blogpost_title` BEFORE INSERT ON `inconceivable_blog` FOR EACH ROW BEGIN
      DECLARE original_title varchar(255);
      DECLARE original_url_title varchar(255);
      DECLARE title_counter int;

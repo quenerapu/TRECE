@@ -592,7 +592,7 @@ EOD;
 
 
   <!-- TinyMCE -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
   <script>
     tinymce.init({
       selector: "textarea.tinymce",

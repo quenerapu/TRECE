@@ -83,6 +83,14 @@ endif;
 
     if (file_exists("firsttime.php")) :
 
+      if (!file_exists($conf["dir"]["includes"].$conf["site"]["homepage"].".php")) :
+
+        $script = fopen($conf["dir"]["includes"].$conf["site"]["homepage"].".php","w") or die();
+        fwrite($script,"<?php /* md\n\n# TRECE ".$conf["trece"]["version"]." **".$conf["trece"]["motto"]."**.\n\n*/");
+        fclose($script);
+
+      endif;
+
       require("firsttime.php"); die();
 
     else :
@@ -148,6 +156,7 @@ endif;
   Thank you Brian Reavis (@brianreavis) for inventing Selectize http://selectize.github.io/selectize.js/
   Thank you Christian Robertson (@cr64) for inventing the Roboto fontface. https://fonts.google.com/specimen/Roboto/
   Thank you CJ Patoilo (@cjpatoilo) for inventing Milligram. https://milligram.io/
+  Thank you Cloud Four (@cloudfour) for inventing hideShowPassword. https://cloudfour.github.io/hideShowPassword/
   Thank you Daniel Eden (@_dte) for inventing Animate.css. https://daneden.github.io/animate.css/
   Thank you Daniel Ha (@danielha) and Jason Yan (@jasonyan) for inventing Disqus. https://disqus.com/
   Thank you Dave Gandy (@davegandy) for inventing FontAwesome. https://fontawesome.com/
