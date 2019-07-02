@@ -241,7 +241,7 @@ EOD;
           <label class="col-md-4 control-label" for="textarea"><abbr title="General Data Protection Regulation">GDPR</abbr>:</label>
           <div class="col-md-6">
             <label class="checkbox-inline">
-            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> General Data Protection Regulation:<br>Yes, 've read and accept the <a href="politica-de-privacidade" target="_blank">privacy policy <i class="fa fa-external-link" aria-hidden="true"></i></a>.</p>
+            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> General Data Protection Regulation:<br>Yes, I've read and accept the <a href="<?=REALPATHLANG.$conf["file"]["privacy-policy"];?>" target="_blank">privacy policy</a> <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i>.</p>
             </label>
           </div>
         </div>

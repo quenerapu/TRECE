@@ -46,6 +46,7 @@ return [
     "includes"          =>  $core."inc/",
     "libraries"         =>  $core."lib/",
     "images"            =>  "img/",
+    "download"          =>  "download/",
     "scripts"           =>  "js/",
     "styles"            =>  "css/",
 # ----
@@ -109,7 +110,7 @@ return [
     "provinces"         =>  $entropy."_provinces|pr",
     "regions"           =>  $entropy."_regions|rg",
     "countries"         =>  $entropy."_countries|cs",
-    "sites"             =>  $entropy."_sites|st",
+//  "sites"             =>  $entropy."_sites|st",
   ],
 
 
@@ -182,9 +183,9 @@ return [
                         ],
     "phone_no"      =>  "+xx xxxxxxxxx",
     "email"         =>  "email@domain.com",
-    "twitter"       =>  "@yourtwitterusername",
-    "instagram"     =>  "@yourinstagramusername",
-    "facebook"      =>  "@yourfacebookusername",
+    "twitter"       =>  "yourtwitterusername", #Twitter username without @
+    "instagram"     =>  "yourinstagramusername", #Instagram username without @
+    "facebook"      =>  "yourfacebookusername", #Facebook username without @
     "youtube"       =>  "youtube-channel",
     "fb_app_id"     =>  "123456789012345",  # Get yours at https://developers.facebook.com/apps
     "geo"           =>  [

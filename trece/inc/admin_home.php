@@ -1,6 +1,6 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
-//404
+//ADMIN HOME
 
 # .........................................................................................
 # .....###....########..##.....##.####.##....##....##.....##..#######..##.....##.########..
@@ -20,6 +20,19 @@
 
 
 
+
+
+//Not logged? Not admin? Get out of here!
+
+  if (
+      !$app->getUserSignInStatus() # Must be logged in
+//    || $app->getUserHierarchy() != 1 # Must be admin
+     ) :
+
+    header("location:".REALPATHLANG.QUERYQ);
+    die();
+
+  endif;
 
 
 

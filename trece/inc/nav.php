@@ -33,9 +33,13 @@
               <?php endif; ?>
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>
+                  <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><?=$_SESSION["name"];?></a> |
                   <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon[$conf["file"]["me"]][LANG];?></a> |
                   <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><?=$lCommon["signout"][LANG];?></a>
                 <?php else : ?>
+<?php /*
+                  <a href="<?=REALPATHLANG;?>new" style="color:white;"><?=$lCommon["create_account"][LANG];?></a> |
+*/ ?>
                   <a href="<?=REALPATHLANG.$conf["file"]["signin"];?>" style="color:white;"><?=$lCommon["signin"][LANG];?></a>
                 <?php endif; ?>
                 </small>
