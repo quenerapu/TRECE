@@ -35,7 +35,7 @@ return [
     ],
 
   "default" => [
-    "id_status"      => 0,
+    "id_status"      => 1,
     "name"           => "New bloglabel",
     "url_name"       => "new-bloglabel",
     "max_new_items"  => 15,

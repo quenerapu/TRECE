@@ -361,7 +361,6 @@ EOD;
           <?php // $lacosa = "Questiontypes"; ?>
           <div class="pull-right"><p>
             <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?>
-<?php /*    <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?> */ ?>
           </p></div>
           <?php endif; ?>
           <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
@@ -429,10 +428,6 @@ EOD;
                       data-ref="<?=$trece->ref[$i];?>" 
                       data-name="<?=htmlentities($trece->name[$i]);?>" 
                       class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
-<?php /*
-                    <li class="divider"></li>
-                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$trece->{$cconf["file"]["ref"]}[$i].$conf["site"]["queryq"];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
-*/ ?>
                   </ul>
                 </div>
               </td>

@@ -184,7 +184,7 @@
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name"]));
-    $trece->url_name            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_name"]));
+    $trece->url_name            = getUrlFriendlyString($trece->name);
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 
