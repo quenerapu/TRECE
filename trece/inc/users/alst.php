@@ -469,7 +469,7 @@ EOD;
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>"><?=$trece->name[$i];?> <?=$trece->surname[$i];?></a><br>
                 <small><strong><?=$hierarchy;?></strong> <?=strpos($trece->email[$i],"@")!==false?$trece->email[$i]:"<span class=\"label label-warning\">NO EMAIL</span>";?></small><br>
               </td>
-              <td nowrap style="text-align:right;">
+              <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> <?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
