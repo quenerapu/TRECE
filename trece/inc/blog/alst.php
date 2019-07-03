@@ -216,9 +216,13 @@
     $trece                      = new $action($db,$conf);
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
+    $trece->date                = date("Y-m-d");
     $trece->title               = "Copy of ".$_POST["clone_title"];
+    $trece->url_title           = $trece->date."-".getUrlFriendlyString($trece->title);
     $trece->intro               = $_POST["clone_intro"];
     $trece->post                = $_POST["clone_post"];
+//  $trece->id_author           = $_POST["clone_id_author"];
+    $trece->id_author           = $app->getUserID();
 
     $trece->addOne();
 
@@ -504,6 +508,7 @@ EOD;
                       data-title="<?=htmlentities($trece->title[$i]);?>" 
                       data-intro="<?=htmlentities($trece->intro[$i]);?>" 
                       data-post="<?=htmlentities($trece->post[$i]);?>" 
+                      data-id_author="<?=htmlentities($trece->id_author[$i]);?>" 
                       class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
 <?php /*
                     <li class="divider"></li>
@@ -614,6 +619,7 @@ EOD;
       var title           =   $(this).data("title");
       var intro           =   $(this).data("intro");
       var post            =   $(this).data("post");
+      var id_author       =   $(this).data("id_author");
 
       $.post("",{
         cloneThis:true,
@@ -622,6 +628,7 @@ EOD;
         clone_title:title,
         clone_intro:intro,
         clone_post:post,
+        clone_id_author:id_author,
         },function(data){
 //        alert(data);
           location.reload();
