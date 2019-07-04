@@ -227,7 +227,7 @@
     $trece->url_title           = $trece->date."-".getUrlFriendlyString($trece->title);
     $trece->intro               = $_POST["clone_intro"];
     $trece->post                = $_POST["clone_post"];
-    $trece->ids_labels          = $_POST["ids_labels"];
+    $trece->ids_labels          = $_POST["clone_ids_labels"];
 //  $trece->id_author           = $_POST["clone_id_author"];
     $trece->id_author           = $app->getUserID();
 
