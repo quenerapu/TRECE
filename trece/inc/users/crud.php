@@ -17,17 +17,6 @@
 // https://stackoverflow.com/questions/8154158/mysql-how-do-i-use-delimiters-in-triggers
 
 
-
-
-
-
-
-
-
-
-
-
-
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\Exception;
 
@@ -35,7 +24,7 @@
   require($conf["dir"]["libraries"]."phpmailer/src/PHPMailer.php");
   require($conf["dir"]["libraries"]."phpmailer/src/SMTP.php");
 
-//require("vendor/autoload.php"); # Load composer's autoloader
+
 
 
 
@@ -79,17 +68,17 @@ class Users {
 
   public function __construct($db,$conf=null,$cconf=null,$lCommon=null,$lCustom=null) {
 
-    $this->conn         = $db;
-    $this->conf         = $conf;
-    $this->cconf        = $cconf;
-    $this->lCommon      = $lCommon;
-    $this->lCustom      = $lCustom;
-    $this->tablename    = explode("|",$this->conf["table"]["users"]);
-    $this->tableletter  = $this->tablename[1];
-    $this->tablename    = $this->tablename[0];
-    $this->uhierarchy_tablename = explode("|",$this->conf["table"][$this->conf["dir"]["uhierarchy"]]);
+    $this->conn                   = $db;
+    $this->conf                   = $conf;
+    $this->cconf                  = $cconf;
+    $this->lCommon                = $lCommon;
+    $this->lCustom                = $lCustom;
+    $this->tablename              = explode("|",$this->conf["table"]["users"]);
+    $this->tableletter            = $this->tablename[1];
+    $this->tablename              = $this->tablename[0];
+    $this->uhierarchy_tablename   = explode("|",$this->conf["table"][$this->conf["dir"]["uhierarchy"]]);
     $this->uhierarchy_tableletter = $this->uhierarchy_tablename[1];
-    $this->uhierarchy_tablename = $this->uhierarchy_tablename[0];
+    $this->uhierarchy_tablename   = $this->uhierarchy_tablename[0];
 
     }
 
@@ -283,8 +272,7 @@ class Users {
     $this->randomizer("ref");
     foreach ($this->xx as $x) :
       $this->query1.= isset($this->$x) ? "`".$x."`, " : "";
-//    $this->query2.= isset($this->$x) ? ":".($x=="email"?"ref":"$x").", " : "";
-      $this->query2.= isset($this->$x) ? ":$x, " : "";
+      $this->query2.= isset($this->$x) ? ":".$x.", " : "";
     endforeach;
     $this->query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$this->query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$this->query2."now(), now(), :ip_upd)");
     $this->query1 = "";
@@ -412,13 +400,18 @@ class Users {
     $this->query = "UPDATE `".$this->tablename."` ".
                               $this->tableletter." SET " .
                               $this->tableletter.".`".$this->field."` = :value, " .
+                              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
+                              $this->tableletter.".`ip_upd` = :ip_upd, " .
+                              $this->tableletter.".`date_upd` = now(), " .
                               "WHERE ".$this->tableletter.".`id` = :pk";
 
     $this->query = $this->queryBeautifier($this->query);
 
     $stmt = $this->conn->prepare($this->query);
-    $stmt->bindParam(":value", $this->value);
-    $stmt->bindParam(":pk", $this->pk);
+                                  $stmt->bindParam(":value",      $this->value);
+    if(isset($this->url_value)) : $stmt->bindParam(":url_value",  $this->url_value); endif;
+                                  $stmt->bindParam(":pk",         $this->pk);
+                                  $stmt->bindParam(":ip_upd",     $_SERVER["REMOTE_ADDR"]);
 
     $stmt->execute();
 
@@ -640,7 +633,7 @@ class Users {
 # ..##..##.######.##..##.#####....##..##.######.######..
 # ......................................................
 
-  function readAll($records_per_page=6,$page=0,$from_record_num=0,$where=null,$searchLabel=null) {
+  function readAll($records_per_page=6,$page=0,$from_record_num=0,$where=null) {
 
     #Intimacy 0 : For owner's eyes
     #Intimacy 1 : For admin's eyes

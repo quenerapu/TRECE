@@ -152,10 +152,16 @@
 
   if(isset($_POST["pk"])) : # x-editable fields
 
-    $trece        = new $action($db,$conf);
-    $trece->field = $_POST["name"];
-    $trece->value = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
-    $trece->pk    = $_POST["pk"];
+    $trece              = new $action($db,$conf);
+    $trece->field       = $_POST["name"];
+    $trece->value       = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
+    $trece->pk          = $_POST["pk"];
+
+    if (strpos($trece->pk,"|") !== false) :
+      $trece->pk        = explode("|",$trece->pk);
+      $trece->pk        = $trece->pk[0];
+      $trece->url_value = getUrlFriendlyString($trece->value);
+    endif;
 
     if(!$trece->updateOneSingleField()) :
       echo "error";
@@ -183,7 +189,7 @@
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name"]));
-    $trece->name_url            = getUrlFriendlyString($trece->name);
+    $trece->url_name            = getUrlFriendlyString($trece->name);
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 
@@ -214,6 +220,7 @@
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->name                = "Copy of ".$_POST["clone_name"];
+    $trece->url_name            = getUrlFriendlyString($trece->name);
     $trece->id_parent           = $_POST["clone_id_parent"];
 
     $trece->addOne();
@@ -431,7 +438,10 @@ EOD;
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" data-id_parent="<?=$trece->id_parent[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>"
+                           data-name="<?=$trece->name[$i];?>" 
+                           data-id_parent="<?=$trece->id_parent[$i];?>" 
+                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>
@@ -499,15 +509,10 @@ EOD;
 //      alert(data);
         $("#tr_"+pk).closest("tbody").load(location.href+" #tr_"+pk);
         setTimeout(startxEditable,2000);
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_changed"][LANG]);?>");});
       return false;
       });
   </script>
-
-<?php
-# .. END CHANGE STATUS
-# .........................................................................................
-?>
 
 
 
@@ -531,11 +536,6 @@ EOD;
       });
   </script>
 
-<?php
-# .. END CLONE THIS
-# ....................................................................
-?>
-
 
 
 <!-- X-editable -->
@@ -553,21 +553,25 @@ EOD;
           mode:"inline", //popup
 //        placement:"right",
           showbuttons:false,
-          success:function(response,newValue){}
+          success:function(response,newValue){
+  //        alert(JSON.stringify(params,null,4));
+            if(response.length>0){
+              $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+              }
+              id = $(this).data("pk")+""; /* https://stackoverflow.com/a/36483219 */
+              if(id.indexOf("|")>=0){id=id.split("|");id=id[0];}
+              $(this).closest("tbody").load(location.href+" #tr_"+id);
+              setTimeout(startxEditable,2000);
+            }
         }
         ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
         ).on("save",function(e,params){
-//        alert(JSON.stringify(params,null,4));
-          if(params.response.length>0){
-            $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
-            $(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));
-            setTimeout(startxEditable,2000);
-            }
           });
 
       $(".id_parent").editable(
         {
           url:window.location.href,
+//        emptytext: "Sen asignar",
           mode:"inline", //popup
 //        placement:"right",
           showbuttons:false,

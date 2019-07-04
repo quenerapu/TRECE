@@ -150,10 +150,16 @@
 
   if(isset($_POST["pk"])) : # x-editable fields
 
-    $trece        = new $action($db,$conf);
-    $trece->field = $_POST["name"];
-    $trece->value = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
-    $trece->pk    = $_POST["pk"];
+    $trece              = new $action($db,$conf);
+    $trece->field       = $_POST["name"];
+    $trece->value       = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
+    $trece->pk          = $_POST["pk"];
+
+    if (strpos($trece->pk,"|") !== false) :
+      $trece->pk        = explode("|",$trece->pk);
+      $trece->pk        = $trece->pk[0];
+      $trece->url_value = getUrlFriendlyString($trece->value);
+    endif;
 
     if(!$trece->updateOneSingleField()) :
       echo "error";
@@ -478,13 +484,12 @@ EOD;
                     <li><a data-id="<?=$trece->id[$i];?>" class="signout-object" style="cursor:pointer;"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <?=$lCommon["signout"][LANG];?></a></li>
                     <li><a href="mailto:<?=$trece->email[$i];?>" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> <?=$lCommon["send_email"][LANG];?></a></li>
                     <li><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i> <?=$lCommon["password"][LANG];?></a></li>
-                    <li><a 
-                      data-ref="<?=$trece->ref[$i];?>" 
-                      data-name="<?=htmlentities($trece->name[$i]);?>" 
-                      data-surname="<?=htmlentities($trece->surname[$i]);?>" 
-                      data-ugender="<?=$trece->ugender[$i];?>" 
-                      data-uhierarchy="<?=$trece->uhierarchy[$i];?>" 
-                      class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>" 
+                           data-name="<?=htmlentities($trece->name[$i]);?>" 
+                           data-surname="<?=htmlentities($trece->surname[$i]);?>" 
+                           data-ugender="<?=$trece->ugender[$i];?>" 
+                           data-uhierarchy="<?=$trece->uhierarchy[$i];?>" 
+                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
@@ -539,16 +544,7 @@ EOD;
 
 
 
-<?php
-# .........................................................................................
-# ...####..##..##..####..##..##..####..######....####..######..####..######.##..##..####...
-# ..##..##.##..##.##..##.###.##.##.....##.......##.......##...##..##...##...##..##.##......
-# ..##.....######.######.##.###.##.###.####......####....##...######...##...##..##..####...
-# ..##..##.##..##.##..##.##..##.##..##.##...........##...##...##..##...##...##..##.....##..
-# ...####..##..##.##..##.##..##..####..######....####....##...##..##...##....####...####...
-# .........................................................................................
-?>
-
+<!-- Change Status -->
   <script>
     $(document).on("click",".change-status",function(){
       var pk    = $(this).data("pk");
@@ -563,28 +559,14 @@ EOD;
 //      alert(data);
         $("#tr_"+pk).closest("tbody").load(location.href+" #tr_"+pk);
         setTimeout(startxEditable,2000);
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_changed"][LANG]);?>");});
       return false;
       });
   </script>
 
-<?php
-# .. END CHANGE STATUS
-# .........................................................................................
-?>
 
 
-
-<?php
-# ...........................................................................
-# ..##......####...####...####..##..##.######...######.##..##.######..####...
-# ..##.....##..##.##.....##..##.##..##...##.......##...##..##...##...##......
-# ..##.....##..##.##.###.##..##.##..##...##.......##...######...##....####...
-# ..##.....##..##.##..##.##..##.##..##...##.......##...##..##...##.......##..
-# ..######..####...####...####...####....##.......##...##..##.######..####...
-# ...........................................................................
-?>
-
+<!-- Sign out this user -->
   <script>
     $(document).on("click",".signout-object",function(){
       var who = $(this).data("id");
@@ -595,28 +577,14 @@ EOD;
         },function(data){
         location.reload();
 //      alert(data);
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_loged_out"][LANG]);?>");});
       return false;
       });
   </script>
 
-<?php
-# .. END CLONE THIS
-# ....................................................................
-?>
 
 
-
-<?php
-# ....................................................................
-# ...####..##......####..##..##.######...######.##..##.######..####...
-# ..##..##.##.....##..##.###.##.##.........##...##..##...##...##......
-# ..##.....##.....##..##.##.###.####.......##...######...##....####...
-# ..##..##.##.....##..##.##..##.##.........##...##..##...##.......##..
-# ...####..######..####..##..##.######.....##...##..##.######..####...
-# ....................................................................
-?>
-
+<!-- Clone This -->
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
@@ -633,72 +601,26 @@ EOD;
         clone_ugender:ugender,
         clone_uhierarchy:uhierarchy,
         },function(data){
-        location.reload();
 //      alert(data);
+        location.reload();
         }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
       return false;
       });
   </script>
 
-<?php
-# .. END CLONE THIS
-# ....................................................................
-?>
 
 
-
-<?php
-# ...........................................................................
-# ..##..##..........######.#####..######.######..####..#####..##.....######..
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ....##....######..####...##..##...##.....##...######.#####..##.....####....
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ..##..##..........######.#####..######...##...##..##.#####..######.######..
-# ...........................................................................
-?>
-
+<!-- X-editable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
   <script>
 
     $(document).ready(function(){startxEditable();});
 
     function startxEditable(){
-<?php /*
-      $(".id_status").editable(
-        {
-          url:window.location.href,
-          mode:"popup",
-          placement:"right",
-          emptytext:"Inactive",
-          value:[$(this).data("value")],
-          source:[{value:1,text:"Active"}],
-          success:function(response,newValue){$(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));setTimeout(startxEditable,2000);}
-        }
-        ).on("save",function(e,params){});
-      $(".username").editable(
-        {
-          url:window.location.href,
-          mode:"inline",
-          showbuttons:true,
-          success:function(response,newValue){}
-        }
-        ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
-        ).on("save",function(e,params){
-//        alert(JSON.stringify(params,null,4));
-          if(params.response.length>0){
-            $.alert({type:"red",content:"<?=$lCustom["duplicated_username"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
-            $(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));
-            setTimeout(startxEditable,2000);
-            }
-          });
-*/ ?>
       };
 
   </script>
-
-<?php
-# .. END X-EDITABLE
-# ...........................................................................
-?>
 
 
 

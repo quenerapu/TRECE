@@ -214,8 +214,6 @@ class Blog{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->dupeCode = 0;
-
     $this->query = "@id:=".$this->tableletter.".`id` as id, ";
     foreach ($this->xx as $x) :
       $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
@@ -266,6 +264,7 @@ class Blog{
     $this->query = "UPDATE `".$this->tablename."` ".
                               $this->tableletter." SET " .
                               $this->tableletter.".`".$this->field."` = :value, " .
+                              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
                               $this->tableletter.".`ip_upd` = :ip_upd, " .
                               $this->tableletter.".`date_upd` = now(), " .
                               "WHERE ".$this->tableletter.".`id` = :pk";
@@ -273,9 +272,10 @@ class Blog{
     $this->query = $this->queryBeautifier($this->query);
 
     $stmt = $this->conn->prepare($this->query);
-    $stmt->bindParam(":value",  $this->value);
-    $stmt->bindParam(":pk",     $this->pk);
-    $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
+                                  $stmt->bindParam(":value",      $this->value);
+    if(isset($this->url_value)) : $stmt->bindParam(":url_value",  $this->url_value); endif;
+                                  $stmt->bindParam(":pk",         $this->pk);
+                                  $stmt->bindParam(":ip_upd",     $_SERVER["REMOTE_ADDR"]);
 
     $stmt->execute();
 

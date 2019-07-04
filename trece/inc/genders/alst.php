@@ -151,10 +151,16 @@
 
   if(isset($_POST["pk"])) : # x-editable fields
 
-    $trece        = new $action($db,$conf);
-    $trece->field = $_POST["name"];
-    $trece->value = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
-    $trece->pk    = $_POST["pk"];
+    $trece              = new $action($db,$conf);
+    $trece->field       = $_POST["name"];
+    $trece->value       = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
+    $trece->pk          = $_POST["pk"];
+
+    if (strpos($trece->pk,"|") !== false) :
+      $trece->pk        = explode("|",$trece->pk);
+      $trece->pk        = $trece->pk[0];
+      $trece->url_value = getUrlFriendlyString($trece->value);
+    endif;
 
     if(!$trece->updateOneSingleField()) :
       echo "error";
@@ -435,10 +441,9 @@ EOD;
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
-                    <li><a 
-                      data-ref="<?=$trece->ref[$i];?>" 
-                      data-name="<?=htmlentities($trece->name[$i]);?>" 
-                      class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>" 
+                           data-name="<?=htmlentities($trece->name[$i]);?>" 
+                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>
@@ -491,16 +496,7 @@ EOD;
 
 
 
-<?php
-# .........................................................................................
-# ...####..##..##..####..##..##..####..######....####..######..####..######.##..##..####...
-# ..##..##.##..##.##..##.###.##.##.....##.......##.......##...##..##...##...##..##.##......
-# ..##.....######.######.##.###.##.###.####......####....##...######...##...##..##..####...
-# ..##..##.##..##.##..##.##..##.##..##.##...........##...##...##..##...##...##..##.....##..
-# ...####..##..##.##..##.##..##..####..######....####....##...##..##...##....####...####...
-# .........................................................................................
-?>
-
+<!-- Change Status -->
   <script>
     $(document).on("click",".change-status",function(){
       var pk    = $(this).data("pk");
@@ -515,28 +511,14 @@ EOD;
 //      alert(data);
         $("#tr_"+pk).closest("tbody").load(location.href+" #tr_"+pk);
         setTimeout(startxEditable,2000);
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_changed"][LANG]);?>");});
       return false;
       });
   </script>
 
-<?php
-# .. END CHANGE STATUS
-# .........................................................................................
-?>
 
 
-
-<?php
-# ....................................................................
-# ...####..##......####..##..##.######...######.##..##.######..####...
-# ..##..##.##.....##..##.###.##.##.........##...##..##...##...##......
-# ..##.....##.....##..##.##.###.####.......##...######...##....####...
-# ..##..##.##.....##..##.##..##.##.........##...##..##...##.......##..
-# ...####..######..####..##..##.######.....##...##..##.######..####...
-# ....................................................................
-?>
-
+<!-- Clone This -->
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
@@ -554,65 +536,19 @@ EOD;
       });
   </script>
 
-<?php
-# .. END CLONE THIS
-# ....................................................................
-?>
 
 
-
-<?php
-# ...........................................................................
-# ..##..##..........######.#####..######.######..####..#####..##.....######..
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ....##....######..####...##..##...##.....##...######.#####..##.....####....
-# ...####...........##.....##..##...##.....##...##..##.##..##.##.....##......
-# ..##..##..........######.#####..######...##...##..##.#####..######.######..
-# ...........................................................................
-?>
-
+<!-- X-editable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/<?=$conf["version"]["x-editable"];?>/bootstrap3-editable/css/bootstrap-editable.css" />
   <script>
 
     $(document).ready(function(){startxEditable();});
 
     function startxEditable(){
-<?php /*
-      $(".id_status").editable(
-        {
-          url:window.location.href,
-          mode:"popup",
-          placement:"right",
-          emptytext:"Inactive",
-          value:[$(this).data("value")],
-          source:[{value:1,text:"Active"}],
-          success:function(response,newValue){$(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));setTimeout(startxEditable,2000);}
-        }
-        ).on("save",function(e,params){});
-      $(".name").editable(
-        {
-          url:window.location.href,
-          mode:"inline",
-          showbuttons:true,
-          success:function(response,newValue){}
-        }
-        ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
-        ).on("save",function(e,params){
-//        alert(JSON.stringify(params,null,4));
-          if(params.response.length>0){
-            $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
-            $(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));
-            setTimeout(startxEditable,2000);
-            }
-          });
-*/ ?>
       };
 
   </script>
-
-<?php
-# .. END X-EDITABLE
-# ...........................................................................
-?>
 
 
 

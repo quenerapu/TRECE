@@ -112,8 +112,6 @@
           \"value\":\"".$trece->id[$i]."\",
           \"name\":\"".$trece->name[$i]."\"
         }";
-//        \"url_name\":\"".$trece->url_name[$i]."\",
-//        \"parent\":\"".$trece->parent[$i]."\"
 
       endfor;
 
@@ -153,10 +151,16 @@
 
   if(isset($_POST["pk"])) : # x-editable fields
 
-    $trece        = new $action($db,$conf);
-    $trece->field = $_POST["name"];
-    $trece->value = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
-    $trece->pk    = $_POST["pk"];
+    $trece              = new $action($db,$conf);
+    $trece->field       = $_POST["name"];
+    $trece->value       = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
+    $trece->pk          = $_POST["pk"];
+
+    if (strpos($trece->pk,"|") !== false) :
+      $trece->pk        = explode("|",$trece->pk);
+      $trece->pk        = $trece->pk[0];
+      $trece->url_value = getUrlFriendlyString($trece->value);
+    endif;
 
     if(!$trece->updateOneSingleField()) :
       echo "error";
@@ -420,13 +424,15 @@ EOD;
                 <a href="javascript:void(0);" class="change-status" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>"><span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span></a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>" data-name="name"><?=$trece->name[$i];?></a>
+                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name"><?=$trece->name[$i];?></a>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a data-ref="<?=$trece->ref[$i];?>" data-name="<?=$trece->name[$i];?>" class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>"
+                           data-name="<?=$trece->name[$i];?>" 
+                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>
@@ -494,15 +500,10 @@ EOD;
 //      alert(data);
         $("#tr_"+pk).closest("tbody").load(location.href+" #tr_"+pk);
         setTimeout(startxEditable,2000);
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_changed"][LANG]);?>");});
       return false;
       });
   </script>
-
-<?php
-# .. END CHANGE STATUS
-# .........................................................................................
-?>
 
 
 
@@ -524,11 +525,6 @@ EOD;
       });
   </script>
 
-<?php
-# .. END CLONE THIS
-# ....................................................................
-?>
-
 
 
 <!-- X-editable -->
@@ -546,16 +542,19 @@ EOD;
           mode:"inline", //popup
 //        placement:"right",
           showbuttons:false,
-          success:function(response,newValue){}
+          success:function(response,newValue){
+  //        alert(JSON.stringify(params,null,4));
+            if(response.length>0){
+              $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+              }
+              id = $(this).data("pk")+""; /* https://stackoverflow.com/a/36483219 */
+              if(id.indexOf("|")>=0){id=id.split("|");id=id[0];}
+              $(this).closest("tbody").load(location.href+" #tr_"+id);
+              setTimeout(startxEditable,2000);
+            }
         }
         ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
         ).on("save",function(e,params){
-//        alert(JSON.stringify(params,null,4));
-          if(params.response.length>0){
-            $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
-            $(this).closest("tbody").load(location.href+" #tr_"+$(this).data("pk"));
-            setTimeout(startxEditable,2000);
-            }
           });
       };
 
