@@ -107,7 +107,65 @@
 EOD;
   $customCSS = <<<EOD
   <style>
-    .post p:first-of-type:first-letter{font-family:"Open Sans";font-weight:800;float:left;font-size:3.95em;line-height:.8em;margin:.4rem .6rem 0 -.4rem;}
+  <link href="https://fonts.googleapis.com/css?family=Amiko|Changa:700|Palanquin&display=swap" rel="stylesheet">
+  <style>
+    /* https://fontjoy.com/ */
+    h1{font-family:"Changa",sans-serif;}
+    h2{font-family:"Amiko",sans-serif;}
+    .post p,.post li{font-family:"Palanquin",sans-serif;}
+
+    /* vertical smartphones */
+    @media screen and (min-width:360px) and (max-width:752px) and (-webkit-min-device-pixel-ratio:0){ /* CHROME ONLY!! */
+      .post p:first-of-type::first-letter{font-size:6.4em;margin:.25em .1em .1em -.05em;}
+      }
+    @-moz-document url-prefix() { /* FIREFOX ONLY!! */
+      @media screen and (min-width:360px) and (max-width:752px){
+        .post p:first-of-type::first-letter{font-size:6.2em;margin:.1em .1em 0 0;}
+        }
+      }
+
+    @media screen and (min-width:360px) and (max-width:752px){
+      .container-top{margin-top:-2em;}
+      h2{font-size:1.3em;line-height:1.6em;padding:.5em;}
+      .post{padding:.5em;}
+      .post p,.post li{font-size:1.3em;line-height:1.6em;padding-bottom:.7em;}
+      .post p:first-of-type::first-letter{font-family:"Changa",sans-serif;float:left;}
+    }
+
+    /* horizontal smartphones and vertical tablets */
+    @media screen and (min-width:753px) and (max-width:1023px){
+      h2{font-size:1.3em;line-height:1.6em;padding:1.2em 0;}
+    }
+
+    /* horizontal tablets and normal desktops */
+    @media screen and (min-width:1024px) and (max-width:1199px){
+      h2{font-size:1.3em;line-height:1.6em;padding:1.2em 0;}
+    }
+
+    /* big desktops */
+    @media screen and (min-width:1200px) and (-webkit-min-device-pixel-ratio:0){ /* CHROME ONLY!! */
+      .post p:first-of-type::first-letter{margin:.3em .1em .1em 0;}
+      }
+    @-moz-document url-prefix() { /* FIREFOX ONLY!! */
+      @media screen and (min-width:1200px){
+        .post p:first-of-type::first-letter{margin:.1em .1em .1em 0;}
+      }
+    }
+    @media screen and (min-width:1200px){
+      .container-top{margin-top:-1em;}
+      h2{font-size:1.3em;line-height:1.6em;padding:1.2em 0;}
+      .post p,.post li{font-size:1.3em;line-height:1.6em;padding-bottom:.7em;}
+      .post p:first-of-type::first-letter{display:inline-block;font-family:"Changa",sans-serif;float:left;font-size:6.2em;}
+    }
+
+    .social-share{margin:1em 0;padding-bottom:3em;width:140px;text-align:left;}
+    .icon{position:relative;text-align:center;width:0px;height:0px;padding:20px;border-top-right-radius:20px;border-top-left-radius:20px;border-bottom-right-radius:20px;border-bottom-left-radius:20px;-moz-border-radius:20px 20px 20px 20px;-webkit-border-radius:20px 20px 20px 20px;-khtml-border-radius:20px 20px 20px 20px;}
+    .icon i{font-size:18px;position:absolute;left:9px;top:10px;color:#fff;}
+    .icon.social{float:left;margin:0 5px 0 0;cursor:pointer;background:#666;transition:.5s;-moz-transition:.5s;-webkit-transition:.5s;-o-transition:.5s;}
+    .icon.social:hover{background:#000;transition:.5s;-moz-transition:.5s;-webkit-transition:.5s;-o-transition:.5s;-webkit-filter:drop-shadow(0 1px 10px rgba(0,0,0,.8));-moz-filter:drop-shadow(0 1px 10px rgba(0,0,0,.8));-ms-filter:drop-shadow(0 1px 10px rgba(0,0,0,.8));-o-filter:drop-shadow(0 1px 10px rgba(0,0,0,.8));filter:drop-shadow(0 1px 10px rgba(0,0,0,.8));}
+    .icon.social.fb i{left:14px;top:10px;}
+    .icon.social.tw i{left:11px;}
+    .icon.social.em i{left:11px;}
   </style>
 EOD;
 
@@ -124,62 +182,72 @@ EOD;
 
 
 <?php if($rowcount_page>0) : ?>
-  <div class="container main-container"<?=$included ? " style=\"padding-bottom:3em;\"" : "";?>>
 
+  <div class="container container-top"<?=$included ? " style=\"padding-bottom:3em;\"" : "";?>>
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-        <h1><strong><?=${"trece"}->{"title"};?></strong></h1>
+        <h1>
+          <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}));?></small><br>
+          <?=${"trece"}->{"title"};?>
+        </h1>
 
       </div>
     </div><!-- row -->
-
-
-
     <div class="row">
-
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-        <img src="<?=(file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Novas"));?>" class="img-thumbnail img-responsive" alt="<?=${"trece"}->{"title"};?>">
+        <img src="<?=(file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Entrada blog"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars(${"trece"}->{"title"});?>">
 
       </div>
-
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-        <h4><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}));?></h4>
+        <div class="social-share">
+          <div class="icon social fb"><a href="https://www.facebook.com/sharer/sharer.php?u=<?=$conf["site"]["fullpath"];?>&quote=<?=htmlspecialchars(${"trece"}->{"intro"});?>" target="_blank" title="Compartir en Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></div>
+          <div class="icon social tw"><a href="https://twitter.com/intent/tweet?source=<?=$conf["site"]["fullpath"];?>&text=<?=$conf["site"]["fullpath"];?>%20<?=htmlspecialchars(${"trece"}->{"intro"});?>%20--%20&via=<?=$conf["contact"]["twitter"];?>" target="_blank" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></div>
+          <div class="icon social em"><a href="mailto:?subject=&body=<?=htmlspecialchars(${"trece"}->{"intro"});?>%20<?=$conf["site"]["fullpath"];?>" target="_blank" title="Enviar por correo electrónico"><i class="fa fa-envelope" aria-hidden="true"></i></a></div>
+        </div>
 
-        <h4>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=<?=$conf["site"]["fullpath"];?>&quote=<?=${"trece"}->{"intro"};?>" target="_blank" title="Compartir en Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-          <a href="https://twitter.com/intent/tweet?source=<?=$conf["site"]["fullpath"];?>&text=<?=$conf["site"]["fullpath"];?>%20<?=${"trece"}->{"intro"};?>%20--%20&via=@vilarfao" target="_blank" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-          <a href="mailto:?subject=&body=<?=${"trece"}->{"intro"};?>%20<?=$conf["site"]["fullpath"];?>" target="_blank" title="Enviar por correo electrónico"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+      </div>
+    </div><!-- row -->
+  </div><!-- container -->
+
+  <div class="container-fluid" style="background:#ddd;">
+    <div class="row">
+      <div class="container"<?=$included ? " style=\"padding-bottom:3em;\"" : "";?>>
+        <div class="row">
+          <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+
 <?php if($app->getUserSignInStatus() && $app->getUserHierarchy() == 1) : ?>
-          <a href="https://developers.facebook.com/tools/debug/sharing/?q=<?=$conf["site"]["fullpath"];?>" target="_blank">Facebook debugger</a>
-          <a href="https://developers.facebook.com/tools/debug/sharing/?q=<?=$conf["site"]["fullpath"];?>" target="_blank">Twitter Card Validator</a>
+
+            <p><small>
+              <a href="https://developers.facebook.com/tools/debug/sharing/?q=<?=$conf["site"]["fullpath"];?>" target="_blank" style="text-decoration:underline;">Facebook debugger</a> | 
+              <a href="https://cards-dev.twitter.com/validator" target="_blank" style="text-decoration:underline;">Twitter Card Validator</a>
+            </small></p>
+
 <?php endif; ?>
-        </h4>
 
-        <div class="panel panel-default" style="margin:2em 0;padding:2em;">
-          <h4 style="line-height:1.4em;"><?=${"trece"}->{"intro"};?></h4>
+            <h2><?=${"trece"}->{"intro"};?></h2>
+
+          </div>
         </div>
-
       </div>
+    </div>
+  </div><!-- container-flud -->
 
+  <div class="container" style="margin:3em auto 8em auto;">
+    <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-        <div class="post" style="line-height:1.6em;">
-
+        <div class="post">
           <?=mb_strlen(${"trece"}->{"post"})>0 ?${"trece"}->{"post"}:"";?>
-
         </div>
 
       </div>
-
     </div><!-- row -->
+  </div><!-- container -->
 
-  </div><!-- container main-container -->
 <?php endif; ?>
-
-
 
   <div class="clearfix"></div>
 

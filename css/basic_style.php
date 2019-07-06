@@ -278,7 +278,6 @@ ul.error-list li:before {content:"»"; padding-right:8px;}
 .page-header{margin-top:0 !important;}
 .page-header h1{margin-top:0 !important;}
 .main-container{padding-bottom:8em;}
-.post p:first-of-type::first-letter{float:left; font-size:6em; margin:.1em .1em .1em 0;}
 
 .min_programa {margin-bottom:30px;}
 .pastilla {display:flex; justify-content:center; overflow: hidden; padding-bottom:0;}

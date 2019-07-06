@@ -180,6 +180,7 @@ endif;
   Thank you Linus Torvalds (@Linus__Torvalds) for inventing Linux. https://github.com/torvalds/linux/
   Thank you Maciej Gurban (@maciej_gurban) for inventing Responsive Bootstrap Toolkit. https://github.com/maciej-gurban/responsive-bootstrap-toolkit/
   Thank you Mark Otto (@mdo) and Jacob Thornton (@fat) for inventing Bootstrap. https://getbootstrap.com/
+  Thank you Mathias Bynens for inventing he. https://mths.be/he/
   Thank you Matt Delac (@mattdelac_) for inventing WOW.js and Thomas Grainger (@graingert) for bringing it into MIT license. https://wowjs.uk/
   Thank you Matt Mullenweg (@photomatt) for inventing WordPress. https://wordpress.org/
   Thank you Min Hur (@minhur) for inventing Bootstrap Toggle. http://bootstraptoggle.com/
@@ -746,13 +747,13 @@ function getUrlFriendlyString($str,$space="-") { # Generates a SEO friendly URL 
     "Ý"=>"Y",
     "ý"=>"y", "ÿ"=>"y",
     "Ž"=>"Z", "ž"=>"z",
-    "/"=>"-",
+    "/"=>"-", "¿"=>"",  "?"=>"",  "¡"=>"",  "!"=>"",  
     ];
 
     $str = trim($str);
     $str = strtr($str,$unwanted_array);
     $_str = preg_replace("/-+/",$space,preg_replace("/[^a-z0-9-|]/",$space, strtolower(str_replace(" ",$space,$str))));
-    return $_str;
+    return trim($_str,"-");
 
   }
 

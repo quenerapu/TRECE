@@ -5,7 +5,7 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.15.20",  # http://trece.io/changelog
+    "version"   =>  "0.15.30",  # http://trece.io/changelog
     "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
     "theme"     =>  $theme="basic",
     "logo"      =>  [
@@ -223,6 +223,7 @@ return [
     "fontawesome"                       =>  "4.7.0",          # Font Awesome http://fontawesome.com/
 //  "fontawesome"                       =>  "5.8.1",          # Font Awesome http://fontawesome.com/
     "fullcalendar"                      =>  "3.10.0",         # Fullcalendar https://fullcalendar.io/
+    "he"                                =>  "1.2.0",          # he (for “HTML entities”) https://mths.be/he/
     "html5shiv"                         =>  "3.7.3",          # HTML5 Shiv http://github.com/aFarkas/html5shiv/
     "hideshowpassword"                  =>  "2.1.1",          # hideShowPassword https://github.com/cloudfour/hideShowPassword/
     "i18next"                           =>  "14.0.1",         # i18next https://www.i18next.com/

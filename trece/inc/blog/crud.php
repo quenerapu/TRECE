@@ -214,6 +214,8 @@ class Blog{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
+    $this->dupeTitle = 0;
+
     $this->query = "@id:=".$this->tableletter.".`id` as id, ";
     foreach ($this->xx as $x) :
       $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
@@ -222,7 +224,7 @@ class Blog{
 //  JSONLABELS
     $this->query.=
     "CONCAT(\"'\",".$this->tableletter.".`ids_labels`,\"'\") AS ids_labels, " .
-    "CONCAT((SELECT GROUP_CONCAT('{\"value\":',".$this->labels_tableletter.".`id`,',\"name\":\"',".$this->labels_tableletter.".`name`,'\"}' ORDER BY FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ',''))) FROM `".$this->labels_tablename."` ".$this->labels_tableletter.", `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`id` = @id AND FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ','')))) AS jsonlabels, ";
+    "CONCAT((SELECT GROUP_CONCAT('{\"value\":',".$this->labels_tableletter.".`id`,',\"name\":',CONCAT('\"',REPLACE(REPLACE(".$this->labels_tableletter.".`name`,'\"','&#8243;'),'\\'','&#8242;'),'\"'),'}' ORDER BY FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ',''))) FROM `".$this->labels_tablename."` ".$this->labels_tableletter.", `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`id` = @id AND FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ','')))) AS jsonlabels, ";
 
     $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
                   ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
@@ -403,7 +405,7 @@ class Blog{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`name` COLLATE utf8_general_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
+                    "AND ".$this->tableletter.".`title` COLLATE utf8_general_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
                     (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
                     "ORDER BY ". $this->tableletter.".`date` DESC";
 

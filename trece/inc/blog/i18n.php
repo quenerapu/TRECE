@@ -44,6 +44,11 @@ return [
     "gal" => "Calquera etiqueta",
     "en"  => "Any label",
     ],
+  "any_subject" => [
+    "es"  => "Cualquier tema",
+    "gal" => "Calquera tema",
+    "en"  => "Any subject",
+    ],
   "clone" => [
     "es"  => "Clonar entrada",
     "gal" => "Clonar entrada",

@@ -264,6 +264,11 @@ return [
     "gal" => "Non se pode engadir",
     "en"  => "Cannot be added",
     ],
+  "cannot_be_changed" => [
+    "es"  => "No se puede cambiar",
+    "gal" => "Non se pode mudar",
+    "en"  => "Cannot be changed",
+    ],
   "cannot_be_cloned" => [
     "es"  => "No se puede clonar",
     "gal" => "Non se pode clonar",

@@ -62,8 +62,8 @@
   <meta name="lang" content="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" />
   <meta name="generator" content="<?=$lCustom["generator"];?>" />
   <meta name="robots" content="<?=$lCustom["robots"];?>" />
-  <meta name="description" content="<?=$lCustom["metadescription"][LANG];?>" />
-  <meta name="keywords" content="<?=$lCustom["metakeywords"];?>" />
+  <meta name="description" content="<?=htmlspecialchars($lCustom["metadescription"][LANG]);?>" />
+  <meta name="keywords" content="<?=htmlspecialchars($lCustom["metakeywords"]);?>" />
 
 <?php if((NPE) || (DEBUG)) : ?>
 <!-- DEBUG MODE -->
@@ -77,23 +77,23 @@
   <meta property="fb:app_id" content="<?=$conf["contact"]["fb_app_id"];?>" />
   <meta property="og:type" content="<?=$lCustom["og_type"];?>" />
   <meta property="og:url" content="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
-  <meta property="og:title" content="<?=$lCustom["og_title"][LANG];?>" />
+  <meta property="og:title" content="<?=htmlspecialchars($lCustom["og_title"][LANG]);?>" />
   <meta property="og:image" content="<?=$lCustom["og_image"];?>" /><!-- 1200x630 px -->
-  <meta property="og:description" content="<?=$lCustom["og_description"][LANG];?>" />
-  <meta property="og:image:alt" content="<?=$lCustom["og_image_alt"][LANG];?>" />
-  <meta property="og:site_name" content="<?=$lCustom["og_site_name"][LANG];?>" />
+  <meta property="og:description" content="<?=htmlspecialchars($lCustom["og_description"][LANG]);?>" />
+  <meta property="og:image:alt" content="<?=htmlspecialchars($lCustom["og_image_alt"][LANG]);?>" />
+  <meta property="og:site_name" content="<?=htmlspecialchars($lCustom["og_site_name"][LANG]);?>" />
 
 <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<?=$lCustom["twitter_title"][LANG];?>">
-  <meta name="twitter:image:alt" content="<?=$lCustom["twitter_image_alt"][LANG];?>">
+  <meta name="twitter:title" content="<?=htmlspecialchars($lCustom["twitter_title"][LANG]);?>">
+  <meta name="twitter:image:alt" content="<?=htmlspecialchars($lCustom["twitter_image_alt"][LANG]);?>">
   <meta name="twitter:site" content="<?=$lCustom["twitter_site"];?>">
 
 <!-- Geo Stuff -->
   <meta name="geo.region" content="<?=$lCustom["geo"]["region"];?>">
   <meta name="geo.position" content="<?=$lCustom["geo"]["latitude"].";".$lCustom["geo"]["longitude"];?>">
   <meta name="ICBM" content="<?=$lCustom["geo"]["latitude"].", ".$lCustom["geo"]["longitude"];?>">
-  <meta name="geo.placename" content="<?=$lCustom["geo"]["placename"];?>">
+  <meta name="geo.placename" content="<?=htmlspecialchars($lCustom["geo"]["placename"]);?>">
 
 <!-- Favicon https://favicon-generator.org -->
   <link rel="apple-touch-icon" sizes="57x57" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-57x57.png">

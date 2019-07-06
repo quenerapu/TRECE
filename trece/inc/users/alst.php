@@ -109,7 +109,7 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"name\":\"".$trece->name[$i]."\"
+          \"name\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->name[$i]))."\"
         }";
 
       endfor;
@@ -467,7 +467,7 @@ EOD;
                 <div class="side-corner-tag">
                   <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
                     <p><span style="background:#<?=$hierarchy_color;?>;width:130px;right:-50px;"></span></p>
-                    <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=".$lCustom["singular"][LANG])));?>" class="img-thumbnail img-responsive" style="width:80px;" alt="<?=$trece->name[$i];?>">
+                    <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ugender[$i].".jpg?".time():(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=".$lCustom["singular"][LANG])));?>" class="img-thumbnail img-responsive" style="height:80px;" alt="<?=htmlspecialchars($trece->name[$i]);?>">
                   </a>
                 </div>
               </td>
@@ -485,8 +485,8 @@ EOD;
                     <li><a href="mailto:<?=$trece->email[$i];?>" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> <?=$lCommon["send_email"][LANG];?></a></li>
                     <li><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i> <?=$lCommon["password"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
-                           data-name="<?=htmlentities($trece->name[$i]);?>" 
-                           data-surname="<?=htmlentities($trece->surname[$i]);?>" 
+                           data-name="<?=htmlspecialchars($trece->name[$i]);?>" 
+                           data-surname="<?=htmlspecialchars($trece->surname[$i]);?>" 
                            data-ugender="<?=$trece->ugender[$i];?>" 
                            data-uhierarchy="<?=$trece->uhierarchy[$i];?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
@@ -601,8 +601,8 @@ EOD;
         clone_ugender:ugender,
         clone_uhierarchy:uhierarchy,
         },function(data){
-//      alert(data);
-        location.reload();
+//        alert(data);
+          location.reload();
         }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
       return false;
       });

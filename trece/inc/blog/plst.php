@@ -211,7 +211,7 @@ EOD;
                 </div>
                 <div class="pull-left">
                   <select id="label" name="label" style="margin-left:5px;">
-                    <option value="0"<?=$searchBloglabel==0?" selected":"";?>><?=$lCustom["any_label"][LANG];?></option>
+                    <option value="0"<?=$searchBloglabel==0?" selected":"";?>><?=$lCustom["any_subject"][LANG];?></option>
                     <?php
                       require_once($conf["dir"]["includes"]."bloglabels/".$conf["file"]["crud"].".php");
                       $cconfBloglabels = require($conf["dir"]["includes"]."bloglabels/".$conf["file"]["conf"].".php");
@@ -270,11 +270,11 @@ EOD;
 
         ?>
 
-          <div class="col-sm-3">
+          <div class="col-xs-6 col-sm-4 col-md-3">
             <div style="margin-bottom:20px;">
               <div class="white-panel" style="margin-bottom:10px;">
                 <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Novas"));?>" class="img-thumbnail img-responsive" alt="<?=$trece->title[$i];?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title[$i]);?>">
                 </a>
               </div>
               <p style="line-height:.8em;margin-bottom:0;"><small><strong><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>"><?=mb_strtoupper($trece->title[$i],"UTF-8");?></a></strong></small></p>
@@ -285,11 +285,14 @@ EOD;
 
         <?php
 
-              if($sum%4==0 || $sum_total == $rowcount_page) :
+//            if($sum%4==0 || $sum_total == $rowcount_page) :
 
+//      </div><!-- End row -->
         ?>
 
-        </div><!-- End row -->
+            <?php if($sum%4==0) : ?><div class="hidden-sm"><div class="clearfix"></div></div><?php endif; ?>
+            <?php if($sum%3==0) : ?><div class="visible-sm-block"><div class="clearfix"></div></div><?php endif; ?>
+
 
         <?php
 
@@ -298,11 +301,13 @@ EOD;
         ?>
 
 
+<?php /*
         <div class="row grid-divider"><!-- Start row -->
+*/ ?>
       <?php
 
               endif;
-            endif;
+//          endif;
 
             $sum++;
             $sum_total++;
@@ -352,6 +357,7 @@ EOD;
 
       ?>
 
+      </div>
       </div>
 
     </div><!-- End row -->

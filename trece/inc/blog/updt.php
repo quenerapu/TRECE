@@ -122,7 +122,7 @@
     $msg = true;
 
     if(isset($_POST["date"]))       : $trece->date       = $_POST["date"]!=""?date("Y-m-d",strtotime(str_replace("/","-",$_POST["date"]))):"0000-00-00";  endif;
-    if(isset($_POST["title"]))      : $trece->title      = htmlspecialchars(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title"])));
+    if(isset($_POST["title"]))      : $trece->title      = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title"])));
                                       $trece->url_title  = $trece->date."-".getUrlFriendlyString($trece->title);                                          endif;
     if(isset($_POST["intro"]))      : $trece->intro      = $_POST["intro"];                                                                               endif;
     if(isset($_POST["post"]))       : $trece->post       = $_POST["post"];                                                                                endif;
@@ -496,13 +496,14 @@ EOD;
         <div class="form-group">
           <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
           <label for="title"><?=$lCustom["title"][LANG];?>:</label><br>
-          <textarea id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>"><?=$trece->title;?></textarea>
+          <input type="text" id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>" value="<?=htmlspecialchars($trece->title);?>">
+          <span class="help-block" id="title_lettercounter"></span>
         </div>
 
         <div class="form-group">
-          <label class="sr-only" for="date"><?=$lCustom["labels"][LANG];?></label>
+          <label class="sr-only" for="ids_labels"><?=$lCustom["labels"][LANG];?></label>
           <label for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label><br>
-          <input type="text" id="ids_labels" name="ids_labels" class="form-control" placeholder="" data-foradditem="<?=trim($trece->ids_labels,"'");?>" data-foraddoption='[<?=$trece->jsonlabels;?>]' value="">
+          <input type="text" id="ids_labels" name="ids_labels" class="form-control" placeholder="" data-foradditem="<?=trim($trece->ids_labels,"'");?>" data-foraddoption='[<?=html_entity_decode($trece->jsonlabels);?>]' value="">
         </div>
 
       </div>
@@ -512,13 +513,14 @@ EOD;
         <div class="form-group">
           <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?></label>
           <label for="intro"><?=$lCustom["intro"][LANG];?>:</label><br>
-          <textarea id="intro" name="intro" class="form-control" placeholder="Entradiña que non supere os 250 caracteres (coma se fora un tuit)"><?=$trece->intro;?></textarea>
+          <textarea id="intro" name="intro" class="form-control" placeholder=""><?=$trece->intro;?></textarea>
+          <span class="help-block" id="intro_lettercounter"></span>
         </div>
 
         <div class="form-group">
           <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?></label>
           <label for="post"><?=$lCustom["post"][LANG];?>:</label><br>
-          <textarea id="post" name="post" class="form-control tinymce" placeholder="Texto completo da publicación."><?=$trece->post;?></textarea>
+          <textarea id="post" name="post" class="form-control tinymce" placeholder=""><?=$trece->post;?></textarea>
         </div>
 
       </div>
@@ -557,7 +559,11 @@ EOD;
 
 
 
-  <script>$(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+  <script>
+    $(function(){$('[data-toggle="tooltip"]').tooltip();});
+  </script>
+
+
 
   <!-- Latest compiled and minified jQuery Mask Plugin from http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/<?=$conf["version"]["jquery_mask"];?>/jquery.mask.min.js"></script>
@@ -565,8 +571,32 @@ EOD;
   <script>
     $(document).ready(function() {
       $('input[name="date"]').mask("00/00/0000"),{placeholder:"__/__/____"};
-      $('input[name="dataCambioEstado"]').mask("00/00/0000"),{placeholder:"__/__/____"};
-//    $('input[name="iban"]').mask("SS00 0000 0000 0000 0000 0000",{placeholder:"____ ____ ____ ____ ____ ____"});
+
+      var text_max_title = 55; // https://seopressor.com/blog/google-title-meta-descriptions-length/
+      var text_max_intro = 160;
+      $("#title_lettercounter").html((text_max_title - <?=mb_strlen($trece->title,"utf8");?>)+" remaining.");
+      $("#intro_lettercounter").html((text_max_intro - <?=mb_strlen($trece->intro,"utf8");?>)+" remaining.");
+
+      $('input[name="title"]').on("keyup",function(event){
+        var len_title = $(this).val().length;
+        var text_length_title = $('input[name="title"]').val().length;
+        var text_remaining_title = text_max_title-text_length_title;
+        if (len_title >= text_max_title) {
+          $(this).val($(this).val().substring(0,len_title-1));
+        }
+        $("#title_lettercounter").html(text_remaining_title+" remaining.");
+      });
+
+      $('textarea[name="intro"]').on("keyup",function(event){
+        var len_intro = $(this).val().length;
+        var text_length_intro = $('textarea[name="intro"]').val().length;
+        var text_remaining_intro = text_max_intro-text_length_intro;
+        if (len_intro >= text_max_intro) {
+          $(this).val($(this).val().substring(0,len_intro-1));
+        }
+        $("#intro_lettercounter").html(text_remaining_intro+" remaining.");
+      });
+
     });
   </script>
 
@@ -641,8 +671,8 @@ EOD;
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/css/selectize.bootstrap3.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Syone/selectize-bootswatch@1.0/css/selectize.<?=$conf["version"]["bootswatch"];?>.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/js/standalone/selectize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/he/<?=$conf["version"]["he"];?>/he.min.js"></script>
   <script>
-//  var xelect = $("#ids_sections").selectize()[0].selectize.destroy();
     var foraddItem = $("#ids_labels").data("foradditem");
     var foraddOption = $("#ids_labels").data("foraddoption");
     var xelect = $("#ids_labels").selectize({
@@ -651,7 +681,7 @@ EOD;
       labelField: "name",
       searchField: "name",
       plugins: ["remove_button","drag_drop"], // "restore_on_backspace",
-      options: [<?=$trece->jsonlabels;?>],
+      options: [<?=html_entity_decode($trece->jsonlabels);?>],
       closeAfterSelect: true,
       persist: true,
       preload: true,
@@ -665,20 +695,25 @@ EOD;
           type: "GET",
           dataType: "json",
           error: function(){callback();},
-          success: function(res){callback(res);}
+          success: function(res){
+            for (var k in res){res[k].name = he.decode(res[k].name);}
+            callback(res);
+            }
           });
         },
       });
     var xelectize = xelect[0].selectize;
     var foraddItem = JSON.parse('[' + foraddItem + ']');
-    for (var iz = 0; iz < foraddOption.length; iz++) {
+
+    for (var iz = 0; iz < foraddItem.length; iz++) {
       if(foraddItem.indexOf(foraddOption[iz].value)!==-1){
-        var tocho = '[{"value":'+foraddOption[iz].value+',"name":"'+foraddOption[iz].name+'"}]';
+        var tocho = '[{"value":'+foraddOption[iz].value+',"name":"'+he.decode(foraddOption[iz].name)+'"}]';
         var realtocho = JSON.parse(tocho);
         xelectize.addOption(realtocho);
         xelectize.addItem(foraddOption[iz].value);
         }
       }
+
   </script>
 
 

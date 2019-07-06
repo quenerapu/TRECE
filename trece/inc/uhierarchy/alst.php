@@ -109,7 +109,7 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"name\":\"".$trece->name[$i]."\"
+          \"name\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->name[$i]))."\"
         }";
 
       endfor;
@@ -458,7 +458,7 @@ EOD;
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <div class="side-corner-tag">
                   <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                    <img src="<?=file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$conf["css"]["avatar_prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$conf["css"]["avatar_prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Hierarchy";?>" class="img-thumbnail img-responsive" style="width:80px;" alt="<?=$trece->name[$i];?>">
+                    <img src="<?=file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$conf["css"]["avatar_prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$conf["css"]["avatar_prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Hierarchy";?>" class="img-thumbnail img-responsive" style="height:80px;" alt="<?=htmlspecialchars($trece->name[$i]);?>">
                   </a>
                   <p><span style="background:#<?=$trece->color[$i];?>;width:140px;right:-50px;"></span></p>
               </td>
@@ -472,9 +472,9 @@ EOD;
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?=$conf["site"]["realpathLang"].$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
-                           data-name="<?=htmlentities($trece->name[$i]);?>" 
+                           data-name="<?=htmlspecialchars($trece->name[$i]);?>" 
                            data-ids_privileges="<?=$trece->ids_privileges[$i];?>" 
                            data-color="<?=$trece->color[$i];?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
