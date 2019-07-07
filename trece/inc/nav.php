@@ -88,6 +88,7 @@
                       <li><?=nav($lCommon["provinces"][LANG],"provinces");?></li>
                       <li><?=nav($lCommon["regions"][LANG],"regions");?></li>
                       <li><?=nav($lCommon["countries"][LANG],"countries");?></li>
+                      <li><?=nav($lCommon["languages"][LANG],"languages");?></li>
                     </ul>
                   </li>
                   <li class="dropdown">

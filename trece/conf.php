@@ -5,7 +5,7 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.15.30",  # http://trece.io/changelog
+    "version"   =>  "0.15.40",  # http://trece.io/changelog
     "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
     "theme"     =>  $theme="basic",
     "logo"      =>  [
@@ -110,6 +110,7 @@ return [
     "provinces"         =>  $entropy."_provinces|pr",
     "regions"           =>  $entropy."_regions|rg",
     "countries"         =>  $entropy."_countries|cs",
+    "languages"         =>  $entropy."_languages|lg",
 //  "sites"             =>  $entropy."_sites|st",
   ],
 
