@@ -106,7 +106,6 @@
 
 EOD;
   $customCSS = <<<EOD
-  <style>
   <link href="https://fonts.googleapis.com/css?family=Amiko|Changa:700|Palanquin&display=swap" rel="stylesheet">
   <style>
     /* https://fontjoy.com/ */
@@ -197,7 +196,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-        <img src="<?=(file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Entrada blog"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars(${"trece"}->{"title"});?>">
+        <img src="<?=(file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars(${"trece"}->{"title"});?>">
 
       </div>
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">

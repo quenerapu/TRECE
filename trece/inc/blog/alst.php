@@ -223,8 +223,8 @@
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->date                = date("Y-m-d");
-    $trece->title               = "Copy of ".$_POST["clone_title"];
-    $trece->url_title           = $trece->date."-".getUrlFriendlyString($trece->title);
+    $trece->title               = mb_substr("Copy of ".$_POST["clone_title"],0,54);
+    $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$trece->date."-".$cconf["default"]["url_title"]));
     $trece->intro               = $_POST["clone_intro"];
     $trece->post                = $_POST["clone_post"];
     $trece->ids_labels          = $_POST["clone_ids_labels"];

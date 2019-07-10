@@ -175,7 +175,7 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><a href="<?=REALPATHLANG.$action."/plst";?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
         </div>
       </div>
     </div><!-- End row -->
@@ -242,7 +242,6 @@ EOD;
 
     <div class="row" style="margin-top:1em;margin-bottom:3em;">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
         <?php
 
           if ($rowcount_page>0):
@@ -253,22 +252,13 @@ EOD;
 
             endif;
 
-            $sum = 1;
-            $sum_total = 1;
-
+            $sum = 1; $sum_total = 1;
             for($i=0;$i<$rowcount_page;$i++) :
 
-
-              if($sum==1) :
-
         ?>
-
+        <?php if($sum==1) : ?>
         <div class="row grid-divider"><!-- Start row -->
-        <?php
-
-              endif;
-
-        ?>
+        <?php endif; ?>
 
           <div class="col-xs-6 col-sm-4 col-md-3">
             <div style="margin-bottom:20px;">
@@ -277,65 +267,25 @@ EOD;
                   <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title[$i]);?>">
                 </a>
               </div>
-              <p style="line-height:.8em;margin-bottom:0;"><small><strong><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>"><?=mb_strtoupper($trece->title[$i],"UTF-8");?></a></strong></small></p>
-              <small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small>
+              <p style="line-height:.8em;margin-bottom:.5em;"><small><strong><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>"><?=mb_strtoupper($trece->title[$i],"UTF-8");?></a></strong></small></p>
+              <p style="line-height:.8em;margin-bottom:0;"><small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small></p>
               <div class="clearfix"></div>
             </div>
           </div>
 
-        <?php
-
-//            if($sum%4==0 || $sum_total == $rowcount_page) :
-
-//      </div><!-- End row -->
-        ?>
-
-            <?php if($sum%4==0) : ?><div class="hidden-sm"><div class="clearfix"></div></div><?php endif; ?>
-            <?php if($sum%3==0) : ?><div class="visible-sm-block"><div class="clearfix"></div></div><?php endif; ?>
+          <?php if($sum%4==0) : ?><div class="hidden-sm"><div class="clearfix"></div></div><?php endif; ?>
+          <?php if($sum%3==0) : ?><div class="visible-sm-block"><div class="clearfix"></div></div><?php endif; ?>
+          <?php if($sum%2==0 && $sum%4!=0) : ?><div class="visible-xs-block"><div class="clearfix"></div></div><?php endif; ?>
 
 
         <?php
 
-                if($sum_total < $rowcount_page) :
-
-        ?>
-
-
-<?php /*
-        <div class="row grid-divider"><!-- Start row -->
-*/ ?>
-      <?php
-
-              endif;
-//          endif;
-
-            $sum++;
-            $sum_total++;
-
-          endfor;
-
-      ?>
-
-
-
-<?php /*</div><!-- End of col-xs-12 col-sm-10 col-sm-offset-1 --> */ ?>
-
-
-
-
-        <?php
+            $sum++; $sum_total++;
+            endfor;
 
             if($trece->rowcount_absolute > $records_per_page) :
 
-        ?>
-<!--    <div class="col-xs-12 col-sm-10 col-sm-offset-1"> -->
-        <?php
-
               require $conf["dir"]["includes"]."pager.php";
-
-        ?>
-<!--    </div> -->
-        <?php
 
             endif;
 
@@ -351,16 +301,12 @@ EOD;
           <?php endif; ?>
         </div>
 
-      <?php
+      <?php endif; ?>
 
-        endif;
-
-      ?>
+        </div><!-- End row -->
 
       </div>
-      </div>
-
-    </div><!-- End row -->
+    </div>
 
   </div><!-- End container main-container -->
 
