@@ -577,7 +577,7 @@ EOD;
         },function(data){
         location.reload();
 //      alert(data);
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_loged_out"][LANG]);?>");});
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_logged_out"][LANG]);?>");});
       return false;
       });
   </script>

@@ -284,6 +284,11 @@ return [
     "gal" => "Non se pode etiquetar",
     "en"  => "Cannot be labeled",
     ],
+  "cannot_be_logged_out" => [
+    "es"  => "No se puede cerrar la sesión",
+    "gal" => "Non se pode pechar a sesión",
+    "en"  => "Cannot be logged out",
+    ],
   "clic_here_to_change_your_password" => [
     "es"  => "Haz clic aquí para crear/cambiar tu contraseña para %s:",
     "gal" => "Fai clic aquí para crear/cambiar o teu contrasinal para %s:",

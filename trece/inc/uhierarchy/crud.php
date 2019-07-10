@@ -290,7 +290,7 @@ class UHierarchy{
 
   function updateOne() {
 
-    $this->dupeName   = 0;
+    $this->dupeName = 0;
 
     if(isset($this->name)) :
 
@@ -452,7 +452,7 @@ class UHierarchy{
     $this->rowcount_absolute = $stmt->rowCount();
 
     $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8_general_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`sort` ASC " .
+                   "ORDER BY ".$this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8_general_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`sort` ASC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 
     $this->query = $this->queryBeautifier($this->query);

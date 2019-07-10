@@ -543,7 +543,7 @@ EOD;
 //        placement:"right",
           showbuttons:false,
           success:function(response,newValue){
-  //        alert(JSON.stringify(params,null,4));
+//          alert(JSON.stringify(params,null,4));
             if(response.length>0){
               $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
               }
