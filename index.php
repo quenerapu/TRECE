@@ -21,7 +21,7 @@ endif;
   define("THE_NAME_OF_THE_CORE_DIR"             , "trece");         # CHANGE THIS and name the real folder accordingly
   define("THE_NAME_OF_THE_CONFIGURATION_FILE"   , "conf");          # CHANGE THIS and name the real file accordingly
   define("NPE"                                  , false);           # Shows or not the Non-Production Environment flag
-  define("DEBUG"                                , true);           # Debuggable or not
+  define("DEBUG"                                , false);           # Debuggable or not
 
 
 
