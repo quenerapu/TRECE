@@ -43,6 +43,7 @@ class Blog{
   public $url_title;
   public $intro;
   public $post;
+  public $ids_labels;
   public $date_reg;
   public $date_upd;
   public $ip_upd;

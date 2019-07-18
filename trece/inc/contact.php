@@ -241,7 +241,7 @@ EOD;
           <label class="col-md-4 control-label" for="textarea"><abbr title="General Data Protection Regulation">GDPR</abbr>:</label>
           <div class="col-md-6">
             <label class="checkbox-inline">
-            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> General Data Protection Regulation:<br>Yes, I've read and accept the <a href="<?=REALPATHLANG.$conf["file"]["privacy-policy"];?>" target="_blank">privacy policy</a> <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i>.</p>
+            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> General Data Protection Regulation:<br>Yes, I've read and accept the <a href="<?=REALPATHLANG.$conf["file"]["privacy-policy"];?>" target="_blank">privacy policy</a> <i class="fa fa-external-link" aria-hidden="true"></i>.</p>
             </label>
           </div>
         </div>
@@ -285,6 +285,13 @@ EOD;
   <?php if($msg&&$msgType!="danger") : ?>
   <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
   <?php endif; ?>
+
+
+
+  <!-- reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+
+
 
   <script>
     function toggleDisable(checkbox) {

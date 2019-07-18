@@ -254,7 +254,7 @@ return [
 
   "css"               =>  [
 # --------------------------------------------------------------------
-    "stickyfooter_h"  =>  200,        # Height (pixels) for the Bootstrap Sticky Footer
+    "stickyfooter_h"  =>  300,        # Height (pixels) for the Bootstrap Sticky Footer
     "avatar_prefix"   =>  "avatar_",  # Avatar prefix
     "avatar_h"        =>  100,        # Avatar height (pixels)
     "avatar_w"        =>  100,        # Avatar width (pixels)
