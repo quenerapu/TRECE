@@ -103,10 +103,9 @@ class Countries{
         if(file_exists(dirname(__FILE__)."/triggers.sql")) :
           $this->query = "";
           $this->query = file_get_contents(dirname(__FILE__)."/triggers.sql");
-          unlink(dirname(__FILE__)."/triggers.sql");
           $this->query = str_replace("inconceivable",ENTROPY,$this->query);
           $stmt = $this->conn->prepare($this->query);
-          if($stmt->execute()) : return true; endif;
+          if($stmt->execute()) : unlink(dirname(__FILE__)."/triggers.sql"); return true; endif;
           return false;
         endif;
 
@@ -251,7 +250,10 @@ class Countries{
 
     $i=0;
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
-      foreach($row as $k=>$v) : $this->$k[$i] = preg_replace(array("/\s{2,}/","~[[:cntrl:]]~")," ",$v); endforeach; $i++;
+      foreach($row as $k=>$v) : 
+//      $this->$k[$i] = preg_replace(array("/\s{2,}/","~[[:cntrl:]]~")," ",$v); # Buggy
+        $this->$k[$i] = preg_replace("/ {2,}/","\s",trim($v));
+      endforeach; $i++;
     endwhile;
 
     }

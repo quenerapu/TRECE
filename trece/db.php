@@ -21,7 +21,7 @@
       $this->conn = null;
 
       try {
-        $this->conn = new PDO("mysql:host=".$this->host.";dbname=".$this->db_name.";charset=utf8",$this->username,$this->password
+        $this->conn = new PDO("mysql:host=".$this->host.";dbname=".$this->db_name.";charset=utf8mb4",$this->username,$this->password
           , array(PDO::MYSQL_ATTR_INIT_COMMAND =>"SET SESSION group_concat_max_len=100000")
           );
         }

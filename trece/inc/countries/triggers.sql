@@ -1,5 +1,5 @@
 CREATE TRIGGER `inconceivable_serialize_country_name` BEFORE INSERT ON `inconceivable_countries` FOR EACH ROW BEGIN
-     DECLARE original_name varchar(255);
+     DECLARE original_name varchar(191);
      DECLARE name_counter int;
      SET original_name = new.name;
      SET name_counter = 1;

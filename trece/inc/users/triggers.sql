@@ -1,6 +1,6 @@
 CREATE TRIGGER `inconceivable_serialize_username` BEFORE INSERT ON `inconceivable_users` FOR EACH ROW BEGIN
-     DECLARE original_username varchar(255);
-     DECLARE original_email varchar(255);
+     DECLARE original_username varchar(191);
+     DECLARE original_email varchar(191);
      DECLARE username_counter int;
      SET original_username = new.username;
      SET original_email = new.email;
