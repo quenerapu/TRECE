@@ -7,14 +7,14 @@ DROP TABLE IF EXISTS `inconceivable_uhierarchy`;
 CREATE TABLE `inconceivable_uhierarchy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_status` tinyint(4) NOT NULL DEFAULT '0',
-  `ids_privileges` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ids_privileges` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '0',
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` char(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ffffff',
+  `color` char(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ffffff',
   `date_reg` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_upd` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ip_upd` varchar(39) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
-  `ref` char(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_upd` varchar(39) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0.0.0.0',
+  `ref` char(8) COLLATE utf8_unicode_ci NOT NULL,
   `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)

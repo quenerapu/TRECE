@@ -11,8 +11,8 @@ CREATE TABLE `inconceivable_regions` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_reg` datetime NOT NULL DEFAULT NOW(),
   `date_upd` datetime NOT NULL DEFAULT NOW(),
-  `ip_upd` varchar(39) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
-  `ref` char(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_upd` varchar(39) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0.0.0.0',
+  `ref` char(8) COLLATE utf8_unicode_ci NOT NULL,
   `loops_ref` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
