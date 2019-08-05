@@ -40,6 +40,6 @@ CREATE TABLE `inconceivable_log` (
   `id_user` tinyint(1) NOT NULL DEFAULT '0',
   `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ip` varchar(39) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
+  `ip` varchar(39) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
