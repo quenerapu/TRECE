@@ -5,7 +5,7 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.15.50",  # http://trece.io/changelog
+    "version"   =>  "0.15.60",  # http://trece.io/changelog
     "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
     "theme"     =>  $theme="basic",
     "logo"      =>  [
@@ -105,13 +105,13 @@ return [
 # ----
     "blog"              =>  $entropy."_blog|bg",
     "bloglabels"        =>  $entropy."_bloglabels|bl",
+    "pages"             =>  $entropy."_pages|pg",
     "locations"         =>  $entropy."_locations|lc",
     "counties"          =>  $entropy."_counties|ct",
     "provinces"         =>  $entropy."_provinces|pr",
     "regions"           =>  $entropy."_regions|rg",
     "countries"         =>  $entropy."_countries|cs",
     "languages"         =>  $entropy."_languages|lg",
-//  "sites"             =>  $entropy."_sites|st",
   ],
 
 
@@ -137,7 +137,7 @@ return [
     "homepage"          =>  $homepage="home",
     "homepage_redirect" =>  "", # date("Y") to match the present year
     "aftersignin_home"  =>  "admin_home", # Where to go after signing in. Leave empty to go $homepage or write the name of the page
-    "mainaction"        =>  "users", # ie: if "users", then http://domain.com/quenerapu == http://domain.com/users/quenerapu == http://domain.com/users/read/quenerapu
+    "mainaction"        =>  "pages", # ie: if "users", then http://domain.com/quenerapu == http://domain.com/users/quenerapu == http://domain.com/users/read/quenerapu
     "username_blacklst" =>  "trece|minitrece",
   ],
 
@@ -254,7 +254,7 @@ return [
 
   "css"               =>  [
 # --------------------------------------------------------------------
-    "stickyfooter_h"  =>  300,        # Height (pixels) for the Bootstrap Sticky Footer
+    "stickyfooter_h"  =>  250,        # Height (pixels) for the Bootstrap Sticky Footer
     "avatar_prefix"   =>  "avatar_",  # Avatar prefix
     "avatar_h"        =>  100,        # Avatar height (pixels)
     "avatar_w"        =>  100,        # Avatar width (pixels)

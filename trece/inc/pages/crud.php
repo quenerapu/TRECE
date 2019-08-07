@@ -1,16 +1,16 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
-//GENDERS
+//PAGES
 
-# .....................................................................
-# ...######...########.##....##.########..########.########...######...
-# ..##....##..##.......###...##.##.....##.##.......##.....##.##....##..
-# ..##........##.......####..##.##.....##.##.......##.....##.##........
-# ..##...####.######...##.##.##.##.....##.######...########...######...
-# ..##....##..##.......##..####.##.....##.##.......##...##.........##..
-# ..##....##..##.......##...###.##.....##.##.......##....##..##....##..
-# ...######...########.##....##.########..########.##.....##..######...
-# .....................................................................
+# ...................................................
+# ..########.....###.....######...########..######...
+# ..##.....##...##.##...##....##..##.......##....##..
+# ..##.....##..##...##..##........##.......##........
+# ..########..##.....##.##...####.######....######...
+# ..##........#########.##....##..##.............##..
+# ..##........##.....##.##....##..##.......##....##..
+# ..##........##.....##..######...########..######...
+# ...................................................
 
 // http://patorjk.com/software/taag/#p=display&f=Banner4&t=%20TRECE%20
 // http://patorjk.com/software/taag/#p=display&f=Bright&t=Deprecated
@@ -28,7 +28,7 @@
 
 
 
-class Genders{
+class Pages{
 
   private $conn;
 
@@ -36,36 +36,39 @@ class Genders{
 
   //object properties
   public $id;
+  public $id_parent;
+  public $ids_breadcrumb_trail;
   public $id_status;
-  public $name;
-  public $letter;
+  public $title;
+  public $url_title;
+  public $intro;
+  public $post;
   public $date_reg;
   public $date_upd;
   public $ip_upd;
   public $ref;
   public $loops_ref;
-  public $dupeName;
-  public $dupeLetter;
+  public $dupeTitle;
 
   public $query = "";
   public $query1 = "";
   public $query2 = "";
-  public $xx = ["id_status","name","letter","date_upd","ip_upd","ref","loops_ref"];
-  public $xx_updateOne = ["id_status","name","letter"];
-  public $xx_notinsearch = ["id_status","date_upd","ip_upd","ref","loops_ref"];
+  public $xx = ["id_status","id_parent","ids_breadcrumb_trail","title","url_title","intro","post","date_upd","ip_upd","ref","loops_ref"];
+  public $xx_updateOne = ["id_status","ids_breadcrumb_trail","id_parent","title","url_title","intro","post"];
+  public $xx_notinsearch = ["id_status","id_parent","ids_breadcrumb_trail","url_title","ref","loops_ref","date_upd","ip_upd"];
 
 
 
   public function __construct($db,$conf=null,$cconf=null,$lCommon=null,$lCustom=null) {
 
-    $this->conn         = $db;
-    $this->conf         = $conf;
-    $this->cconf        = $cconf;
-    $this->lCommon      = $lCommon;
-    $this->lCustom      = $lCustom;
-    $this->tablename    = explode("|",$this->conf["table"]["genders"]);
-    $this->tableletter  = $this->tablename[1];
-    $this->tablename    = $this->tablename[0];
+    $this->conn                = $db;
+    $this->conf                = $conf;
+    $this->cconf               = $cconf;
+    $this->lCommon             = $lCommon;
+    $this->lCustom             = $lCustom;
+    $this->tablename           = explode("|",$this->conf["table"]["pages"]);
+    $this->tableletter         = $this->tablename[1];
+    $this->tablename           = $this->tablename[0];
 
     }
 
@@ -151,7 +154,17 @@ class Genders{
     endforeach;
     $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
 
-    if($stmt->execute()) : $this->lastid = $this->conn->lastInsertId(); return true; endif;
+    if($stmt->execute()) : 
+
+      $this->query = $this->queryBeautifier("UPDATE `".$this->tablename."` SET `ids_breadcrumb_trail` = `id` WHERE `ids_breadcrumb_trail` = ''");
+      $stmt = $this->conn->prepare($this->query);
+      if($stmt->execute()) : 
+        $this->lastid = $this->conn->lastInsertId(); 
+        return true; 
+      endif;
+
+    endif;
+
     return false;
 
     }
@@ -193,6 +206,44 @@ class Genders{
 
 
 
+# ......................................................................................................................................
+# ...####..######.######...#####..#####..######..####..#####...####..#####..##..##.##...##.#####....######.#####...####..######.##......
+# ..##.....##.......##.....##..##.##..##.##.....##..##.##..##.##..##.##..##.##..##.###.###.##..##.....##...##..##.##..##...##...##......
+# ..##.###.####.....##.....#####..#####..####...######.##..##.##.....#####..##..##.##.#.##.#####......##...#####..######...##...##......
+# ..##..##.##.......##.....##..##.##..##.##.....##..##.##..##.##..##.##..##.##..##.##...##.##..##.....##...##..##.##..##...##...##......
+# ...####..######...##.....#####..##..##.######.##..##.#####...####..##..##..####..##...##.#####......##...##..##.##..##.######.######..
+# ......................................................................................................................................
+
+  function getBreadcrumbTrail() {
+
+    #Intimacy 0 : For owner's eyes
+    #Intimacy 1 : For admin's eyes
+    #Intimacy 2 : Public
+
+    $this->rowcount = 0;
+    $this->in = "'".implode("','",$this->conf["site"]["virtualpathArray"])."'";
+    $this->find_in_set = implode(",",$this->conf["site"]["virtualpathArray"]);
+
+    if(count($this->find_in_set)>0) :
+
+      $this->query = "SELECT GROUP_CONCAT(".$this->tableletter.".`id`) AS ref FROM `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`url_title` IN(".$this->in.") ORDER BY FIND_IN_SET(".$this->tableletter.".`url_title`,'".$this->find_in_set."') LIMIT 1 ";
+
+      $this->query = $this->queryBeautifier($this->query);
+
+      $stmt = $this->conn->prepare($this->query);
+      $stmt->execute();
+      $this->rowcount = $stmt->rowCount();
+      $this->ref = $stmt->fetchColumn();
+
+    endif;
+
+    }
+
+# .. END GET BREADCRUMB TRAIL
+# ......................................................................................................................................
+
+
+
 # ......................................................
 # ..#####..######..####..#####.....####..##..##.######..
 # ..##..##.##.....##..##.##..##...##..##.###.##.##......
@@ -207,13 +258,17 @@ class Genders{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->dupeName   = 0;
-    $this->dupeLetter = 0;
+    $this->dupeTitle = 0;
 
-    $this->query = "@id:=".$this->tableletter.".`id` as id, ";
+    $this->query = "@id:=".$this->tableletter.".`id` AS id, ";
+    $this->query.= "@ids_breadcrumb_trail:=".$this->tableletter.".`ids_breadcrumb_trail` AS ids_breadcrumb_trail, ";
     foreach ($this->xx as $x) :
-      $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
+      $this->query.= $this->tableletter.".`".$x."` AS ".$x.", ";
     endforeach;
+
+//  BREADCRUMB TRAIL
+    $this->query.=
+    "CONCAT((SELECT GROUP_CONCAT(".$this->tableletter.".`url_title` ORDER BY FIND_IN_SET(".$this->tableletter.".`id`,@ids_breadcrumb_trail) SEPARATOR '/') FROM `".$this->tablename."` ".$this->tableletter." WHERE FIND_IN_SET(".$this->tableletter.".`id`,@ids_breadcrumb_trail))) AS path, ";
 
     $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
                   ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
@@ -290,15 +345,14 @@ class Genders{
 
   function updateOne() {
 
-    $this->dupeName   = 0;
-    $this->dupeLetter = 0;
+    $this->dupeTitle = 0;
 
-    if(isset($this->name)) :
+    if(isset($this->title)) :
 
       $this->query = "SELECT " .
                $this->tableletter.".`id` " .
                "FROM `".$this->tablename."` ".$this->tableletter." " .
-               "WHERE ".$this->tableletter.".`name` = :name , " .
+               "WHERE ".$this->tableletter.".`title` = :title , " .
                "AND ".$this->tableletter.".`ref` <> :ref " .
                "LIMIT 0,1";
 
@@ -306,34 +360,14 @@ class Genders{
 
       $stmt = $this->conn->prepare($this->query);
       $stmt->bindParam(":ref", $this->ref);
-      $stmt->bindParam(":name", $this->name);
+      $stmt->bindParam(":title", $this->title);
       $stmt->execute();
-      $this->dupeName = $stmt->rowCount();
+      $this->dupeTitle = $stmt->rowCount();
       $this->query = "";
 
     endif;
 
-    if(isset($this->letter)) :
-
-      $this->query = "SELECT " .
-               $this->tableletter.".`id` " .
-               "FROM `".$this->tablename."` ".$this->tableletter." " .
-               "WHERE ".$this->tableletter.".`letter` = :letter , " .
-               "AND ".$this->tableletter.".`ref` <> :ref " .
-               "LIMIT 0,1";
-
-      $this->query = $this->queryBeautifier($this->query);
-
-      $stmt = $this->conn->prepare($this->query);
-      $stmt->bindParam(":ref", $this->ref);
-      $stmt->bindParam(":letter", $this->letter);
-      $stmt->execute();
-      $this->dupeLetter = $stmt->rowCount();
-      $this->query = "";
-
-    endif;
-
-    if($this->dupeName + $this->dupeLetter > 0) :
+    if($this->dupeTitle > 0) :
 
       return true;
 
@@ -415,9 +449,16 @@ class Genders{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`name` COLLATE utf8mb4_general_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
-                    (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
-                    "ORDER BY ". $this->tableletter.".`name` ASC";
+                    (isset($this->ref)?" AND ".$this->tableletter.".`ref` <> '".$this->ref."' ":"") .
+                    (isset($this->search)?" AND ".$this->tableletter.".`id_parent` = ".$this->search." ":"") .
+                    "AND ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
+                    "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci ASC ";
+
+/*
+SELECT *
+FROM `ciugauesece_pages`
+WHERE SUBSTRING_INDEX(SUBSTRING_INDEX(ids_breadcrumb_trail,',',-2),',',1) = "2"
+*/
 
     $this->query = $this->queryBeautifier($this->query);
 
@@ -475,8 +516,9 @@ class Genders{
     $stmt->execute();
     $this->rowcount_absolute = $stmt->rowCount();
 
-    $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_general_ci ASC " .
+    $this->query = "SELECT ".$this->query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
+                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci ASC " .
+//                 "ORDER BY ". $this->tableletter.".`id_status` ASC, `date` DESC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 
     $this->query = $this->queryBeautifier($this->query);
@@ -560,57 +602,6 @@ class Genders{
 
 # .. END RANDOMIZER
 # ..........................................................................
-
-
-
-  public function getPic($i,$alt,$size="icon") {
-
-//  $i = $i == 0 ? "":"[".$i."]";
-    $getPic =(
-          file_exists(
-          $this->conf["dir"]["images"].
-          $this->conf["css"][$size."_prefix"].
-          $this->cconf["img"]["prefix"].
-          (isset($this->ref) ?
-            $this->{$this->cconf["img"]["ref"]}:
-            $this->{$this->cconf["img"]["ref"]}[$i]
-          ).
-          ".jpg")?
-          REALPATH.
-          $this->conf["dir"]["images"].
-          $this->conf["css"][$size."_prefix"].
-          $this->cconf["img"]["prefix"].
-          (isset($this->ref) ?
-            $this->{$this->cconf["img"]["ref"]}:
-            $this->{$this->cconf["img"]["ref"]}[$i]
-          ).
-          ".jpg?".time():
-          (file_exists(
-            $this->conf["dir"]["images"].
-            $this->conf["css"][$size."_prefix"].
-            $this->cconf["img"]["prefix"].
-            "0.jpg")?
-            REALPATH.
-            $this->conf["dir"]["images"].
-            $this->conf["css"][$size."_prefix"].
-            $this->cconf["img"]["prefix"].
-            "0.jpg?".
-            time():
-            "https://fakeimg.pl/".
-            $this->cconf["img"][$size."_w"].
-            "x".
-            $this->cconf["img"][$size."_h"].
-            "/?text=".
-            (isset($this->ref) ?
-              $this->$alt:
-              $this->$alt[$i]
-            )
-          )
-          );
-    return $getPic;
-
-  }
-
 
 
 }

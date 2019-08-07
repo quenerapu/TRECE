@@ -20,6 +20,6 @@ CREATE TABLE `inconceivable_genders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `inconceivable_genders` (`id`, `id_status`, `name`, `letter`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
-(1,  1,  'Male',  'm',  NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 0),
-(2,  1,  'Female', 'f',  NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 0);
+(1,  1,  'Male',  'm',  NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1),
+(2,  1,  'Female', 'f',  NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1);
 

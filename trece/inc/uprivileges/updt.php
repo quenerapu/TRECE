@@ -184,22 +184,6 @@
   $stmt             = $trece->readOne();
   $name             = $dupeName > 0 ? $name : $trece->name;
 
-/*
-  echo "<pre><small>";
-//print_r($trece);
-  echo "<br>id: ".$trece->id;
-  echo "<br>ref: ".$trece->ref;
-  echo "<br>id_status: ".$trece->id_status;
-  echo "<br>name: ".$trece->name;
-  echo "<br>dupeName: ".$trece->dupeName;
-  echo "<br>url_name: ".$trece->url_name;
-  echo "<br>gotPic: ".($trece->gotPic ? "true" : "false");
-  echo "<br>tablename: ".$trece->tablename;
-  echo "<br>tableletter: ".$trece->tableletter;
-  echo "<br>intimacy: ".$trece->intimacy;
-  echo "</small></pre>";
-*/
-
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
 
 
@@ -209,10 +193,10 @@
     /* whatever */
   </script>
 EOD;
-
   $customCSS = <<<EOD
   <style>
-    /* whatever */
+    a.tit-btn{text-decoration:none;}
+    a.tit-btn:hover:not(.btn-primary){background:#eee;}
   </style>
 EOD;
 
@@ -222,11 +206,6 @@ EOD;
   require_once($conf["dir"]["includes"]."nav.php");
 
 ?>
-
-  <style>
-    a.tit-btn{text-decoration:none;}
-    a.tit-btn:hover:not(.btn-primary){background:#eee;}
-  </style>
 
   <div class="container main-container"<?=$included ? " style=\"padding-bottom:3em;\"" : "";?>>
 

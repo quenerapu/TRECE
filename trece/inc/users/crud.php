@@ -230,7 +230,6 @@ class Users {
                                                    ")";
 
       $this->query = $this->queryBeautifier($this->query);
-//    echo $this->query;
 
                                               $stmt = $this->conn->prepare($this->query);
       if(isset($this->name))                : $stmt->bindParam(":name",           $this->name);              endif;

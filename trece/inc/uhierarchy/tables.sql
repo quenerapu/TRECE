@@ -21,6 +21,6 @@ CREATE TABLE `inconceivable_uhierarchy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `inconceivable_uhierarchy` (`id`, `id_status`, `ids_privileges`, `sort`, `name`, `color`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
-(1, 1,  '1',  1,  'Admin',  '800000', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 0),
-(2, 1,  '', 10, 'User', '008000', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 0);
+(1, 1,  '1',  1,  'Admin',  '800000', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1),
+(2, 1,  '', 10, 'User', '008000', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1);
 

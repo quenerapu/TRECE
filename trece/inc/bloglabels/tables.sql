@@ -19,5 +19,5 @@ CREATE TABLE `inconceivable_bloglabels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `inconceivable_bloglabels` (`id`, `id_status`, `name`, `url_name`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
-(1, 1,  'Demo label', 'demo-label', '2019-04-05 02:11:34',  '2019-04-05 02:11:34',  '0.0.0.0',  '22efeec0', 1);
+(1, 1,  'Demo label', 'demo-label', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1);
 

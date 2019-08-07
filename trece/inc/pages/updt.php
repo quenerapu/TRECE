@@ -1,16 +1,16 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
-//BLOG
+//PAGES
 
-# ..........................................
-# ..########..##........#######...######....
-# ..##.....##.##.......##.....##.##....##...
-# ..##.....##.##.......##.....##.##.........
-# ..########..##.......##.....##.##...####..
-# ..##.....##.##.......##.....##.##....##...
-# ..##.....##.##.......##.....##.##....##...
-# ..########..########..#######...######....
-# ..........................................
+# ...................................................
+# ..########.....###.....######...########..######...
+# ..##.....##...##.##...##....##..##.......##....##..
+# ..##.....##..##...##..##........##.......##........
+# ..########..##.....##.##...####.######....######...
+# ..##........#########.##....##..##.............##..
+# ..##........##.....##.##....##..##.......##....##..
+# ..##........##.....##..######...########..######...
+# ...................................................
 
 // http://patorjk.com/software/taag/#p=display&f=Banner4&t=%20TRECE%20
 // http://patorjk.com/software/taag/#p=display&f=Bright&t=Deprecated
@@ -99,11 +99,7 @@
   if(isset($_POST["deleteImage"]) && isset($_POST["object_who"])) :
 
     $items = explode("↲",$_POST["object_who"]);
-    foreach($items as $item) :
-      if(file_exists($item)) :
-        unlink($item);
-      endif;
-    endforeach;
+    foreach($items as $item) : if(file_exists($item)) : unlink($item); endif; endforeach;
     die();
 
   endif;
@@ -126,12 +122,13 @@
     unset($_FILES);
     $msg = true;
 
-    if(isset($_POST["date"]))       : $trece->date       = $_POST["date"]!=""?date("Y-m-d",strtotime(str_replace("/","-",$_POST["date"]))):"0000-00-00";  endif;
-    if(isset($_POST["title"]))      : $trece->title      = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title"])));
-                                      $trece->url_title  = $trece->date."-".getUrlFriendlyString($trece->title);                                          endif;
-    if(isset($_POST["intro"]))      : $trece->intro      = $_POST["intro"];                                                                               endif;
-    if(isset($_POST["post"]))       : $trece->post       = $_POST["post"];                                                                                endif;
-    if(isset($_POST["ids_labels"])) : $trece->ids_labels = $_POST["ids_labels"];                                                                          endif;
+    if(isset($_POST["title"]))                : $trece->title                     = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title"])));
+                                                $trece->url_title                 = getUrlFriendlyString($trece->title);                                        endif;
+    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->ids_breadcrumb_trail      = $_POST["ids_breadcrumb_trail"];                                             
+                                                $trece->id_parent                 = explode(",",$trece->ids_breadcrumb_trail); end($trece->id_parent);
+                                                $trece->id_parent                 = prev($trece->id_parent);                                                    endif;
+    if(isset($_POST["intro"]))                : $trece->intro                     = $_POST["intro"];                                                            endif;
+    if(isset($_POST["post"]))                 : $trece->post                      = $_POST["post"];                                                             endif;
 
     if($trece->updateOne()) :
 
@@ -398,7 +395,7 @@
 
 
 
-  $customJS = <<<EOD
+   $customJS = <<<EOD
   <script>
     /* whatever */
   </script>
@@ -444,73 +441,96 @@ EOD;
 
     <div class="row">
 
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-4 col-lg-offset-1">
-
-        <div style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;margin-bottom:1em;">
-          <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
-            <div style="float:left;">
-              <input id="upload" name="upload" type="file" style="display:none;">
-              <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
-            </div>
-            <?php if($trece->gotPic) : ?>
-            <div style="float:left;">
-              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fa fa-trash" aria-hidden="true"></i></label>
-            </div>
-            <?php endif; ?>
-          </div>
-          <div id="crop-image"></div>
-        </div>
-
-      </div>
-
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-5">
-
-        <div class="form-group">
-          <label class="sr-only" for="date"><?=$lCustom["date"][LANG];?></label>
-          <label for="date"><?=$lCustom["date"][LANG];?>:</label><br>
-          <input type="text" id="date" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date("d/m/Y",strtotime($trece->date)));?>" placeholder="DD/MM/AAAA">
-          <p class="help-block" style="line-height:.8em;"><small><i class="fa fa-calendar" aria-hidden="true"></i> <a id="onte" style="cursor:pointer;">Onte</a> | <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <a id="hoxe" style="cursor:pointer;">Hoxe</a></small></p>
-        </div>
-
-        <div class="form-group">
-          <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
-          <label for="title"><?=$lCustom["title"][LANG];?>:</label><br>
-          <input type="text" id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>" value="<?=htmlspecialchars($trece->title);?>">
-          <span class="help-block" id="title_lettercounter"></span>
-        </div>
-
-        <div class="form-group">
-          <label class="sr-only" for="ids_labels"><?=$lCustom["labels"][LANG];?></label>
-          <label for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label><br>
-          <input type="text" id="ids_labels" name="ids_labels" class="form-control" placeholder="" data-foradditem="<?=trim($trece->ids_labels,"'");?>" data-foraddoption='[<?=html_entity_decode($trece->jsonlabels);?>]' value="">
-        </div>
-
-      </div>
-
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="form-group">
-          <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?></label>
-          <label for="intro"><?=$lCustom["intro"][LANG];?>:</label><br>
-          <textarea id="intro" name="intro" class="form-control" placeholder=""><?=$trece->intro;?></textarea>
-          <span class="help-block" id="intro_lettercounter"></span>
-        </div>
+          <label class="sr-only" for="title"><?=$lCustom["breadcrum_trail"][LANG];?></label>
+          <label for="id_breadcrum_trail"><?=$lCustom["breadcrum_trail"][LANG];?>:</label><br>
 
-        <div class="form-group">
-          <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?></label>
-          <label for="post"><?=$lCustom["post"][LANG];?>:</label><br>
-          <textarea id="post" name="post" class="form-control tinymce" placeholder=""><?=$trece->post;?></textarea>
-        </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span><?=REALPATH;?><?=LANG;?></span>
+              <select id="sec1" name="sec1" class=""></select>
+              <select id="sec2" name="sec2" class=""></select>
+              <select id="sec3" name="sec3" class=""></select>
+              <span>/<?=$trece->url_title;?></span>
+            </div>
+            <div class="panel-body">
+              <input type="text" id="path" name="path" class="form-control" value="<?=REALPATHLANG.$trece->path;?>" readonly>
+            </div>
+          </div>
 
+        </div>
+  
       </div>
 
-      <div class="col-xs-12 col-sm-5 col-sm-offset-1">
+    </div>
 
-        <div class="form-group">
-          <input type="hidden" id="cropData1" name="cropData1">
-          <input type="hidden" id="cropData2" name="cropData2">
-          <input type="hidden" id="imagebase64" name="imagebase64">
-          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-12 col-lg-4">
+
+            <div style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;margin-bottom:1em;">
+              <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
+                <div style="float:left;">
+                  <input id="upload" name="upload" type="file" style="display:none;">
+                  <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
+                </div>
+                <?php if($trece->gotPic) : ?>
+                <div style="float:left;">
+                  <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fa fa-trash" aria-hidden="true"></i></label>
+                </div>
+                <?php endif; ?>
+              </div>
+              <div id="crop-image"></div>
+            </div>
+
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-lg-7 col-lg-offset-1">
+
+            <div class="form-group">
+              <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
+              <label for="title"><?=$lCustom["title"][LANG];?>:</label><br>
+              <input type="text" id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>" value="<?=htmlspecialchars($trece->title);?>">
+              <span class="help-block" id="title_lettercounter"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?></label>
+              <label for="intro"><?=$lCustom["intro"][LANG];?>:</label><br>
+              <textarea id="intro" name="intro" class="form-control" placeholder=""><?=$trece->intro;?></textarea>
+              <span class="help-block" id="intro_lettercounter"></span>
+            </div>
+
+          </div>
+
+          <div class="col-xs-12">
+
+            <div class="form-group">
+              <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?></label>
+              <label for="post"><?=$lCustom["post"][LANG];?>:</label><br>
+              <textarea id="post" name="post" class="form-control tinymce" placeholder=""><?=$trece->post;?></textarea>
+            </div>
+
+          </div>
+
+          <div class="col-xs-12">
+
+            <div class="form-group">
+              <input type="hidden" id="cropData1" name="cropData1">
+              <input type="hidden" id="cropData2" name="cropData2">
+              <input type="hidden" id="imagebase64" name="imagebase64">
+              <input type="hidden" id="ids_breadcrumb_trail" name="ids_breadcrumb_trail" class="form-control" value="<?=$trece->ids_breadcrumb_trail;?>">
+              <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
+            </div>
+
+          </div>
+
         </div>
 
       </div>
@@ -533,12 +553,118 @@ EOD;
 
 
 
+  <script>
+  function sec1(sec1_id,sec2_id,sec3_id){
+    if(typeof sec1_id !== "undefined" && sec1_id !== 0){
+    $('#sec1').empty();
+    $("#sec1").append("<option>Loading...</option>");
+    sec2(sec1_id,sec2_id,sec3_id);
+    }else{
+    $('#sec1').empty();
+    $('#sec1').append("<option value='null'></option>");
+    $('#sec2').empty();
+    $('#sec2').append("<option value='null'></option>");
+    $('#sec3').empty();
+    $('#sec3').append("<option value='null'></option>");
+    }
+    $.ajax({
+      type:"GET",
+      url: "<?=REALPATHLANG.$action."?json&ref=".$trece->ref."&q=0";?>",
+      contentType:"application/json; charset=utf-8",
+      dataType:"json",
+      success: function(qqq){
+        $("#sec1").empty();
+        $("#sec1").append("<option value='null'></option>");
+        $.each(qqq,function(index,item){
+          $("#sec1").append('<option data-value="'+ item.value + '" data-url_title="/'+ item.url_title + '" value="'+ item.value +'"'+(sec1_id == item.value?" selected":"")+'>/'+ item.url_title +'</option>');
+        });
+      },complete: function(){}
+    });
+  }
+
+  function sec2(sec1_id,sec2_id,sec3_id){
+    if(typeof sec2_id !== "undefined" && sec2_id !== 0){
+    $('#sec2').empty();
+    $("#sec2").append("<option>Loading...</option>");
+    sec3(sec2_id,sec3_id);
+    }else{
+    $('#sec2').empty();
+    $('#sec2').append("<option value='null'></option>");
+    $("#sec3").empty();
+    $('#sec3').append("<option value='null'></option>");
+    }
+    $.ajax({
+      type: "GET",
+      url: "<?=REALPATHLANG.$action."?json&ref=".$trece->ref."&q=";?>"+sec1_id,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(qqq){
+        $("#sec2").empty();
+        $("#sec2").append("<option value='null'></option>");
+        $.each(qqq,function(index,item){
+          $("#sec2").append('<option data-value=",'+ item.value + '" data-url_title="/'+ item.url_title + '" value="'+ item.value +'"'+(sec2_id == item.value?" selected":"")+'>/'+ item.url_title +'</option>');
+        });
+      },error: function(){
+        $("#sec2").empty();
+        $("#sec2").append("<option value='null'></option>");
+      },complete: function(){}
+    });
+  }
+
+  function sec3(sec2_id,sec3_id){
+    $('#sec3').empty();
+    if(typeof sec3_id !== "undefined" && sec3_id !== 0){
+    $("#sec3").append("<option>Loading...</option>");
+    }else{
+    $('#sec3').append("<option value='null'></option>");
+    }
+    $.ajax({
+      type: "GET",
+      url: "<?=REALPATHLANG.$action."?json&ref=".$trece->ref."&q=";?>"+sec2_id,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(qqq) {
+        $("#sec3").empty();
+        $("#sec3").append("<option value='null'></option>");
+        $.each(qqq,function(index,item){
+        $("#sec3").append('<option data-value=",'+ item.value + '" data-url_title="/'+ item.url_title + '" value="'+ item.value +'"'+(sec3_id == item.value?" selected":"")+'>/'+ item.url_title +'</option>');
+        });
+      },error: function(){
+        $("#sec3").empty();
+        $("#sec3").append("<option value='null'></option>");
+      },complete: function(){}
+    });
+  }
+
+  function doWritePath(){
+    var path = "<?=REALPATH.LANG;?>";
+        path+= typeof $("#sec1").find(':selected').data('url_title') !== "undefined" ? $("#sec1").find(':selected').data('url_title') : "";
+        path+= typeof $("#sec2").find(':selected').data('url_title') !== "undefined" ? $("#sec2").find(':selected').data('url_title') : "";
+        path+= typeof $("#sec3").find(':selected').data('url_title') !== "undefined" ? $("#sec3").find(':selected').data('url_title') : "";
+        path+= "/<?=$trece->url_title;?>";
+    $("#path").val(path);
+    var ids_breadcrumb_trail = "";
+        ids_breadcrumb_trail+= typeof $("#sec1").find(':selected').data('value') !== "undefined" ? $("#sec1").find(':selected').data('value') : "";
+        ids_breadcrumb_trail+= typeof $("#sec2").find(':selected').data('value') !== "undefined" ? $("#sec2").find(':selected').data('value') : "";
+        ids_breadcrumb_trail+= typeof $("#sec3").find(':selected').data('value') !== "undefined" ? $("#sec3").find(':selected').data('value') : "";
+        ids_breadcrumb_trail+= ",<?=$trece->id;?>";
+        ids_breadcrumb_trail = ids_breadcrumb_trail.replace(/(^,)|(,$)/g,"");
+    $("#ids_breadcrumb_trail").val(ids_breadcrumb_trail);
+  }
+  </script>
+
+
+
   <!-- Latest compiled and minified jQuery Mask Plugin from http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/<?=$conf["version"]["jquery_mask"];?>/jquery.mask.min.js"></script>
 
   <script>
     $(document).ready(function() {
-      $('input[name="date"]').mask("00/00/0000"),{placeholder:"__/__/____"};
+
+      sec1(<?=$trece->ids_breadcrumb_trail;?>);
+      $("#sec1").change(function(){var sec1_id=$("#sec1").val();var sec2_id=null;var sec3_id=null;sec2(sec1_id,sec2_id,sec3_id);doWritePath()});
+      $("#sec2").change(function(){var sec2_id=$("#sec2").val();var sec3_id=null;sec3(sec2_id,sec3_id);doWritePath();});
+      $("#sec3").change(function(){doWritePath();});
 
       var text_max_title = 55; // https://seopressor.com/blog/google-title-meta-descriptions-length/
       var text_max_intro = 160;
@@ -583,8 +709,6 @@ EOD;
   <script>
     $("[href^=\\#div_tit]").on("shown.bs.tab",function(e){$("[href^=\\#div_tit]").removeClass("btn-primary");$(this).addClass("btn-primary");});
     $("[href^=\\#div_description]").on("shown.bs.tab",function(e){$("[href^=\\#div_description]").removeClass("btn-primary");$(this).addClass("btn-primary");});
-    $("#onte").click(function(){$('input[id="date"]').val(moment().subtract(1,"days").format("DD/MM/YYYY"));});
-    $("#hoxe").click(function(){$('input[id="date"]').val(moment().format("DD/MM/YYYY"));});
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
@@ -592,6 +716,7 @@ EOD;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
     var thePic="<?=$trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_w"]."x".$cconf["img"]["viewport_h"]."/?text=".$lCustom["singular"][LANG];?>";
+
     function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
   </script>
 
@@ -633,56 +758,6 @@ EOD;
     });
   </script>
 
-
-
-<!-- Selectize -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/css/selectize.bootstrap3.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Syone/selectize-bootswatch@1.0/css/selectize.<?=$conf["version"]["bootswatch"];?>.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/<?=$conf["version"]["selectize"];?>/js/standalone/selectize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/he/<?=$conf["version"]["he"];?>/he.min.js"></script>
-  <script>
-    var foraddItem = $("#ids_labels").data("foradditem");
-    var foraddOption = $("#ids_labels").data("foraddoption");
-    var xelect = $("#ids_labels").selectize({
-      maxItems: 5,
-      valueField: "value",
-      labelField: "name",
-      searchField: "name",
-      plugins: ["remove_button","drag_drop"], // "restore_on_backspace",
-      options: [<?=html_entity_decode($trece->jsonlabels);?>],
-      closeAfterSelect: true,
-      persist: true,
-      preload: true,
-      create: false,
-      initData: true,
-      hideSelected: true,
-      selectOnTab: true,
-      load: function(query,callback) {
-        $.ajax({
-          url: "<?=REALPATHLANG;?>bloglabels/alst?json",
-          type: "GET",
-          dataType: "json",
-          error: function(){callback();},
-          success: function(res){
-            for (var k in res){res[k].name = he.decode(res[k].name);}
-            callback(res);
-            }
-          });
-        },
-      });
-    var xelectize = xelect[0].selectize;
-    var foraddItem = JSON.parse('[' + foraddItem + ']');
-
-    for (var iz = 0; iz < foraddItem.length; iz++) {
-      if(foraddItem.indexOf(foraddOption[iz].value)!==-1){
-        var tocho = '[{"value":'+foraddOption[iz].value+',"name":"'+he.decode(foraddOption[iz].name)+'"}]';
-        var realtocho = JSON.parse(tocho);
-        xelectize.addOption(realtocho);
-        xelectize.addItem(foraddOption[iz].value);
-        }
-      }
-
-  </script>
 
 
 <?php

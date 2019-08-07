@@ -109,6 +109,7 @@
 
   if(isset($_POST["username"])) :
 
+    unset($_FILES);
     $msg = true;
 
 //  if(isset($_POST["id_status"]))     : $trece->id_status     = 1; else : $trece->id_status = 0;                                               endif;
@@ -144,7 +145,6 @@
           if(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$filename)) : unlink($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$filename); endif;
           if(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename)) : unlink($conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename); endif;
           if(file_exists($conf["dir"]["images"].$filename)) : unlink($conf["dir"]["images"].$filename); endif;
-          if(file_exists($conf["dir"]["images"]."og/".$filename)) : unlink($conf["dir"]["images"]."og/".$filename); endif;
 
         else :
 
@@ -271,10 +271,12 @@
       });
     </script>
     <script>
-      function deleteImage(who){$.post([location.protocol,'//',location.host,location.pathname].join(''),{deleteImage:true,object_who:who},function(data){
-      location.reload();
-//    alert(data);
-      });};
+      function deleteImage(who){
+        $.post([location.protocol,'//',location.host,location.pathname].join(''),{deleteImage:true,object_who:who},function(data){
+          location.reload();
+//        alert(data);
+          });
+        };
       $("a.delete").on("click",function(){
         var who = $(this).data("img")+"↲"+$(this).data("icon")+"↲"+$(this).data("thumb");
         $.confirm({
@@ -306,39 +308,39 @@
 
   $accepted_origins = array("http://localhost"); # Allowed origins to upload images
 //$accepted_origins = array("http://localhost", "http://xxx.xxx.xxx.xxx", "https://whatever.com");
-  reset($_FILES); $temp = current($_FILES);
 
-  if(is_uploaded_file($temp["tmp_name"])) :
+  if(isset($_FILES)) :
 
-    $filename = explode(".",$temp["name"]);
-    $filename = $conf["dir"]["images"]."bio-img-".$trece->ref."-".uniqid();
-    if(isset($_SERVER["HTTP_ORIGIN"])) : if(in_array($_SERVER["HTTP_ORIGIN"],$accepted_origins)) : header("Access-Control-Allow-Origin: ".$_SERVER["HTTP_ORIGIN"]); else : header("HTTP/1.1 403 Origin Denied"); return; endif; endif;
-    $extension = strtolower(pathinfo($temp["name"],PATHINFO_EXTENSION));
-    if(!in_array($extension,array("gif","jpg","jpeg","png"))) : header("HTTP/1.1 400 Invalid extension."); return; endif;
-    if($extension == "jpeg") : $extension = "jpg"; endif;
-    $extensionf = $extension == "jpg" ? "jpeg" : $extension;
-    $imagecreatefrom = "imagecreatefrom".$extensionf;
-    $image = "image".$extensionf;
+    reset($_FILES); $temp = current($_FILES);
 
-    move_uploaded_file($temp["tmp_name"],$filename.".".$extension);
-    $source = @$imagecreatefrom($filename.".".$extension);
-    fixImageOrientation($source,$filename.".".$extension);
-    if($source){$image($source,$filename.".".$extension); }
-    list($width,$height) = getimagesize($filename.".".$extension);
+    if(is_uploaded_file($temp["tmp_name"])) :
+      $filename = explode(".",$temp["name"]);
+      $filename = $conf["dir"]["images"]."bio-img-".$trece->ref."-".uniqid();
+      if(isset($_SERVER["HTTP_ORIGIN"])) : if(in_array($_SERVER["HTTP_ORIGIN"],$accepted_origins)) : header("Access-Control-Allow-Origin: ".$_SERVER["HTTP_ORIGIN"]); else : header("HTTP/1.1 403 Origin Denied"); return; endif; endif;
+      $extension = strtolower(pathinfo($temp["name"],PATHINFO_EXTENSION));
+      if(!in_array($extension,array("gif","jpg","jpeg","png"))) : header("HTTP/1.1 400 Invalid extension."); return; endif;
+      if($extension == "jpeg") : $extension = "jpg"; endif;
+      $extensionf = $extension == "jpg" ? "jpeg" : $extension;
+      $imagecreatefrom = "imagecreatefrom".$extensionf;
+      $image = "image".$extensionf;
+      move_uploaded_file($temp["tmp_name"],$filename.".".$extension);
+      $source = @$imagecreatefrom($filename.".".$extension);
+      fixImageOrientation($source,$filename.".".$extension);
+      if($source){$image($source,$filename.".".$extension); }
+      list($width,$height) = getimagesize($filename.".".$extension);
+      if($width>$height) : $max_height=$cconf["img"]["bio_max_img"];$max_width=floor($width*($max_height/$height)); endif;
+      if($height>$width || $height==$width) : $max_width=$cconf["img"]["bio_max_img"];$max_height=floor($height*($max_width/$width)); endif;
+      resizeImage($source,$filename."_img".".".$extension,$width,$height,$max_width,$max_height);
+      if($width>$height) : $max_height=$cconf["img"]["bio_max_icon"];$max_width=floor($width*($max_height/$height)); endif;
+      if($height>$width || $height==$width) : $max_width=$cconf["img"]["bio_max_icon"];$max_height=floor($height*($max_width/$width)); endif;
+      resizeImage($source,$filename."_icon".".".$extension,$width,$height,$max_width,$max_height);
+      resizeImage($source,$filename."_thumb".".".$extension,$width,$height,$cconf["img"]["bio_max_thumb"],$cconf["img"]["bio_max_thumb"]);
+      imagedestroy($source); if(file_exists($filename.".".$extension)) : unlink($filename.".".$extension); endif; # CLEAN THE CRIME SCENE
+      echo json_encode(array("location"=>$filename."_img".".".$extension));
+      die();
+    else : header("HTTP/1.1 500 Server Error");
+    endif;
 
-    if($width>$height) : $max_height=$cconf["img"]["bio_max_img"];$max_width=floor($width*($max_height/$height)); endif;
-    if($height>$width) : $max_width=$cconf["img"]["bio_max_img"];$max_height=floor($height*($max_width/$width)); endif;
-    resizeImage($source,$filename."_img".".".$extension,$width,$height,$max_width,$max_height);
-    if($width>$height) : $max_height=$cconf["img"]["bio_max_icon"];$max_width=floor($width*($max_height/$height)); endif;
-    if($height>$width) : $max_width=$cconf["img"]["bio_max_icon"];$max_height=floor($height*($max_width/$width)); endif;
-    resizeImage($source,$filename."_icon".".".$extension,$width,$height,$max_width,$max_height);
-    resizeImage($source,$filename."_thumb".".".$extension,$width,$height,$cconf["img"]["bio_max_thumb"],$cconf["img"]["bio_max_thumb"]);
-
-    imagedestroy($source); if(file_exists($filename.".".$extension)) : unlink($filename.".".$extension); endif; # CLEAN THE CRIME SCENE
-    echo json_encode(array("location"=>$filename."_img".".".$extension));
-    die();
-
-  else : header("HTTP/1.1 500 Server Error");
   endif;
 
 # .. END UPLOAD IMAGE
@@ -362,32 +364,6 @@
   $trece->gotGenderPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->ugender.".jpg") ? true : false;
   $trece->gotNeutralPic   = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg") ? true : false;
 
-/*
-  echo "<pre><small>";
-//print_r($trece);
-  echo "<br>id: ".$trece->id;
-  echo "<br>ref: ".$trece->ref;
-  echo "<br>id_status: ".$trece->id_status;
-  echo "<br>name: ".$trece->name;
-  echo "<br>surname: ".$trece->surname;
-  echo "<br>username: ".$trece->username;
-  echo "<br>email: ".$trece->email;
-  echo "<br>gender: ".$trece->gender;
-  echo "<br>uhierarchy: ".$trece->uhierarchy;
-  echo "<br>bio: ".$trece->bio;
-  echo "<br>wrongUsername: ".$trece->wrongUsername;
-  echo "<br>dupeUsername: ".$trece->dupeUsername;
-  echo "<br>wrongeMail: ".$trece->wrongeMail;
-  echo "<br>dupeeMail: ".$trece->dupeeMail;
-  echo "<br>gotPic: ".($trece->gotPic ? "true" : "false");
-  echo "<br>gotGenderPic: ".($trece->gotGenderPic ? "true" : "false");
-  echo "<br>gotNeutralPic: ".($trece->gotNeutralPic ? "true" : "false");
-  echo "<br>tablename: ".$trece->tablename;
-  echo "<br>tableletter: ".$trece->tableletter;
-  echo "<br>intimacy: ".$trece->intimacy;
-  echo "</small></pre>";
-*/
-
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
 
 
@@ -397,7 +373,6 @@
     /* whatever */
   </script>
 EOD;
-
   $customCSS = <<<EOD
   <style>
     div.mce-fullscreen{z-index:1050;}
@@ -410,10 +385,6 @@ EOD;
   require_once($conf["dir"]["includes"]."nav.php");
 
 ?>
-
-  <style>
-  div.mce-fullscreen { z-index: 1050; }
-  </style>
 
   <div class="container main-container">
 
@@ -457,7 +428,6 @@ EOD;
             <?php endif; ?>
           </div>
           <div id="crop-image"></div>
-
         </div>
 
       </div>
@@ -573,7 +543,8 @@ EOD;
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
-    var thePic="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>";function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
+    var thePic="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>";
+    function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
   </script>
 
 
@@ -615,8 +586,15 @@ EOD;
         formData.append("file",blobInfo.blob(),blobInfo.filename());
         xhr.send(formData);
       },
+      entity_encoding : "raw",
       paste_as_text: true,
+      paste_word_valid_elements: "b,strong,i,em,h1,h2",
+      paste_retain_style_properties: "color",
       height: 400,
+      content_css: [
+        "https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i",
+        "../css/tinymce.css?" + new Date().getTime(),
+        ],
     });
   </script>
 

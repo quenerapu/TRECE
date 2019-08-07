@@ -1,16 +1,16 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
-//BLOG
+//PAGES
 
-# ..........................................
-# ..########..##........#######...######....
-# ..##.....##.##.......##.....##.##....##...
-# ..##.....##.##.......##.....##.##.........
-# ..########..##.......##.....##.##...####..
-# ..##.....##.##.......##.....##.##....##...
-# ..##.....##.##.......##.....##.##....##...
-# ..########..########..#######...######....
-# ..........................................
+# ...................................................
+# ..########.....###.....######...########..######...
+# ..##.....##...##.##...##....##..##.......##....##..
+# ..##.....##..##...##..##........##.......##........
+# ..########..##.....##.##...####.######....######...
+# ..##........#########.##....##..##.............##..
+# ..##........##.....##.##....##..##.......##....##..
+# ..##........##.....##..######...########..######...
+# ...................................................
 
 // http://patorjk.com/software/taag/#p=display&f=Banner4&t=%20TRECE%20
 // http://patorjk.com/software/taag/#p=display&f=Bright&t=Deprecated
@@ -102,6 +102,7 @@
     $trece = new $action($db,$conf,$cconf);
     $trece->intimacy  = 1;
     $trece->search = isset($_GET["q"]) ? htmlspecialchars($_GET["q"]) : null;
+    $trece->ref = isset($_GET["ref"]) ? htmlspecialchars($_GET["ref"]) : null;
     $stmt = $trece->readAllJSON();
 
     if ($trece->rowcount>0):
@@ -110,7 +111,7 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"date\":\"".$trece->date[$i]."\",
+          \"id_parent\":\"".$trece->id_parent[$i]."\",
           \"title\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->title[$i]))."\",
           \"url_title\":\"".$trece->url_title[$i]."\"
         }";
@@ -191,8 +192,6 @@
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->title               = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title"]));
     $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title"]));
-    $trece->date                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["date"]));
-    $trece->id_author           = $app->getUserID();
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 
@@ -222,14 +221,10 @@
     $trece                      = new $action($db,$conf);
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->date                = date("Y-m-d");
     $trece->title               = mb_substr("Copy of ".$_POST["clone_title"],0,54);
-    $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$trece->date."-".$cconf["default"]["url_title"]));
+    $trece->url_title           = $cconf["default"]["url_title"];
     $trece->intro               = $_POST["clone_intro"];
     $trece->post                = $_POST["clone_post"];
-    $trece->ids_labels          = $_POST["clone_ids_labels"];
-//  $trece->id_author           = $_POST["clone_id_author"];
-    $trece->id_author           = $app->getUserID();
 
     $trece->addOne();
 
@@ -288,13 +283,11 @@
 
   $searchTarget     = false;
   $searchWhat       = "";
-  $searchBloglabel  = "";
 
   if(isset($conf["site"]["queryArray"]["wr"]) && $conf["site"]["queryArray"]["wr"]==$action) :
 
     $searchTarget     = true;
     $searchWhat       = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
-    $searchBloglabel  = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
 
   endif;
 
@@ -331,7 +324,7 @@
   endif;
 
   $trece->intimacy = 1;
-  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchBloglabel);
+  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat);
   $rowcount_page = $trece->rowcount;
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :
@@ -396,61 +389,7 @@ EOD;
 
 
 
-<?php
-# .............................................
-# ...####..######..####..#####...####..##..##..
-# ..##.....##.....##..##.##..##.##..##.##..##..
-# ...####..####...######.#####..##.....######..
-# ......##.##.....##..##.##..##.##..##.##..##..
-# ...####..######.##..##.##..##..####..##..##..
-# .............................................
-
-  if(!isset($included)) : $included = false; endif;
-
-?>
-
-    <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-        <div style="margin-bottom:20px;">
-          <form class="form-inline" action="" method="get">
-            <div class="panel panel-default">
-              <div class="panel-body">
-
-                <div class="pull-left">
-                  <div class="input-group" style="max-width:120px; max-width:250px;">
-                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
-                    <input type="hidden" name="wr" value="<?=$action;?>">
-                    <input type="text" name="wh" class="form-control input-sm" value="<?=$searchWhat;?>" style="max-width:100%;">
-                  </div>
-                </div>
-                <div class="pull-left">
-                  <select id="label" name="label" style="margin-left:5px;">
-                    <option value="0"<?=$searchBloglabel==0?" selected":"";?>><?=$lCustom["any_label"][LANG];?></option>
-                    <?php
-                      require_once($conf["dir"]["includes"]."bloglabels/".$conf["file"]["crud"].".php");
-                      $cconfBloglabels = require($conf["dir"]["includes"]."bloglabels/".$conf["file"]["conf"].".php");
-                      $bloglabels = new Bloglabels($db,$conf,$cconfBloglabels); $stmt = $bloglabels->readAllJSON();
-                    ?>
-                    <?php if ($bloglabels->rowcount>0): for($i=0;$i<$bloglabels->rowcount;$i++) : ?>
-                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchBloglabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->name[$i];?></option>
-                    <?php endfor; endif; ?>
-                  </select>
-                </div>
-                <div class="pull-left">
-                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </div>
-
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div><!-- row -->
-
-<?php
-# .. END SEARCH
-# .............................................
-?>
+<?php require $conf["dir"]["includes"]."search.php"; ?>
 
 
 
@@ -484,7 +423,7 @@ EOD;
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCustom["status"][LANG];?></th>
               <th><?=$lCommon["image"][LANG];?></th>
-              <th><?=$lCommon["date"][LANG];?>/<?=$lCommon["title"][LANG];?>/<?=$lCustom["intro"][LANG];?></th>
+              <th><?=$lCommon["title"][LANG];?>/<?=$lCustom["intro"][LANG];?></th>
               <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
@@ -499,16 +438,14 @@ EOD;
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title[$i]);?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Page"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title[$i]);?>">
                 </a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></small><br>
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
                   <strong><?=${"trece"}->{"title"}[$i];?></strong>
                 </a><br>
                 <small><?=doWordWrap(${"trece"}->{"intro"}[$i]);?></small><br>
-                <small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
@@ -516,12 +453,9 @@ EOD;
                   <ul class="dropdown-menu">
                     <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
-                           data-date="<?=$trece->date[$i];?>" 
                            data-title="<?=htmlspecialchars($trece->title[$i]);?>" 
                            data-intro="<?=htmlspecialchars($trece->intro[$i]);?>" 
                            data-post="<?=htmlspecialchars($trece->post[$i]);?>" 
-                           data-ids_labels="<?=htmlspecialchars($trece->ids_labels[$i]);?>" 
-                           data-id_author="<?=htmlspecialchars($trece->id_author[$i]);?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
@@ -603,22 +537,16 @@ EOD;
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
-      var date            =   $(this).data("date");
       var title           =   $(this).data("title");
       var intro           =   $(this).data("intro");
       var post            =   $(this).data("post");
-      var ids_labels      =   $(this).data("ids_labels");
-      var id_author       =   $(this).data("id_author");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
-        clone_date:date,
         clone_title:title,
         clone_intro:intro,
         clone_post:post,
-        clone_ids_labels:ids_labels,
-        clone_id_author:id_author,
         },function(data){
 //        alert(data);
           location.reload();
