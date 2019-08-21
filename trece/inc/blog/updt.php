@@ -468,8 +468,10 @@ EOD;
         <div class="form-group">
           <label class="sr-only" for="date"><?=$lCustom["date"][LANG];?></label>
           <label for="date"><?=$lCustom["date"][LANG];?>:</label><br>
-          <input type="text" id="date" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date("d/m/Y",strtotime($trece->date)));?>" placeholder="DD/MM/AAAA">
-          <p class="help-block" style="line-height:.8em;"><small><i class="fa fa-calendar" aria-hidden="true"></i> <a id="onte" style="cursor:pointer;">Onte</a> | <i class="fa fa-calendar-check-o" aria-hidden="true"></i> <a id="hoxe" style="cursor:pointer;">Hoxe</a></small></p>
+          <div class="input-group date col-xs-12 col-sm-5" id="date">
+            <input type="text" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date("d/m/Y",strtotime($trece->date)));?>" placeholder="DD/MM/AAAA">
+            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+          </div>
         </div>
 
         <div class="form-group">
@@ -533,13 +535,21 @@ EOD;
 
 
 
+  <!-- Latest compiled and minified Bootstrap-Date/Time Picker JS from https://github.com/Eonasdan/bootstrap-datetimepicker/ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/<?=$conf["version"]["bootstrap_datetimepicker"];?>/css/bootstrap-datetimepicker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/<?=$conf["version"]["moment"];?>/moment-with-locales.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/<?=$conf["version"]["bootstrap_datetimepicker"];?>/js/bootstrap-datetimepicker.min.js"></script>
+  <script>
+    $(function(){$("#date").datetimepicker({locale:"es",format:"DD/MM/YYYY"});});
+  </script>
+
+
+
   <!-- Latest compiled and minified jQuery Mask Plugin from http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/<?=$conf["version"]["jquery_mask"];?>/jquery.mask.min.js"></script>
 
   <script>
     $(document).ready(function() {
-      $('input[name="date"]').mask("00/00/0000"),{placeholder:"__/__/____"};
-
       var text_max_title = 55; // https://seopressor.com/blog/google-title-meta-descriptions-length/
       var text_max_intro = 160;
       $("#title_lettercounter").html((text_max_title - <?=mb_strlen($trece->title,"utf8");?>)+" remaining.");
@@ -564,7 +574,6 @@ EOD;
         }
         $("#intro_lettercounter").html(text_remaining_intro+" remaining.");
       });
-
     });
   </script>
 
@@ -583,8 +592,6 @@ EOD;
   <script>
     $("[href^=\\#div_tit]").on("shown.bs.tab",function(e){$("[href^=\\#div_tit]").removeClass("btn-primary");$(this).addClass("btn-primary");});
     $("[href^=\\#div_description]").on("shown.bs.tab",function(e){$("[href^=\\#div_description]").removeClass("btn-primary");$(this).addClass("btn-primary");});
-    $("#onte").click(function(){$('input[id="date"]').val(moment().subtract(1,"days").format("DD/MM/YYYY"));});
-    $("#hoxe").click(function(){$('input[id="date"]').val(moment().format("DD/MM/YYYY"));});
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
@@ -600,17 +607,31 @@ EOD;
   <!-- TinyMCE -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
   <script>
+    tinyMCE.PluginManager.add("stylebuttons",function(editor,url){["h1", "h2", "h3"].forEach(function(name){
+      editor.addButton("style-"+name,{
+        tooltip: "Toggle "+name,
+        text: name.toUpperCase(),
+        onClick: function(){editor.execCommand("mceToggleFormat",false,name);},
+        onPostRender: function(){var self=this,setup=function(){editor.formatter.formatChanged(name,function(state){self.active(state);});};editor.formatter?setup():editor.on('init',setup);}
+        })
+      });
+    });
+
     tinymce.init({
       selector: "textarea.tinymce",
       menubar: false,
-      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code" ],
-      toolbar: "fullscreen visualblocks bold italic strikethrough bullist numlist link image charmap code",
+      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code stylebuttons table" ],
+      toolbar: "fullscreen visualblocks | style-h1 style-h2 style-h3 | table | bold italic strikethrough | bullist numlist insert code",
+      table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
+      table_cell_advtab: false,
+  //  imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
       visualblocks_default_state: true,
       inline_boundaries: true,
-      image_dimensions: false,
-      image_class_list: [{title:"Responsive", value:"img-responsive"}],
-      file_browser_callback : function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"Insertar fichero",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
-      images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
+      image_dimensions: true,
+      image_class_list: [{title:"Responsive", value:"img-responsive"},{title:"Alin. izquerda", value:"img-pull-left pull-left"},{title:"Alin. derecha", value:"img-pull-right pull-right"}],
+      file_browser_callback: function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"Insertar fichero",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
+      images_upload_url: "<?=REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["site"]["virtualpathArray"][1];?>",
+//    images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
       images_upload_handler: function(blobInfo,success,failure){
         var xhr,formData;
         xhr=new XMLHttpRequest();
@@ -621,14 +642,14 @@ EOD;
         formData.append("file",blobInfo.blob(),blobInfo.filename());
         xhr.send(formData);
       },
-      entity_encoding : "raw",
+      entity_encoding: "raw",
       paste_as_text: true,
       paste_word_valid_elements: "b,strong,i,em,h1,h2",
       paste_retain_style_properties: "color",
       height: 400,
       content_css: [
         "https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i",
-        "../css/tinymce.css?" + new Date().getTime(),
+        "<?=REALPATH.$conf["dir"]["styles"];?>tinymce.css?" + new Date().getTime(),
         ],
     });
   </script>

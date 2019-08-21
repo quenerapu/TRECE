@@ -3,9 +3,9 @@
 <?php
 
   if(!isset($lCustom["pagetitle"][LANG])) :
-            $lCustom["pagetitle"][LANG] =             $conf["meta"]["title"][LANG]; endif;
+            $lCustom["pagetitle"][LANG] =             strip_tags($conf["meta"]["title"][LANG]); endif;
   if(!isset($lCustom["metadescription"][LANG])) :
-            $lCustom["metadescription"][LANG] =       $conf["meta"]["description"][LANG]; endif;
+            $lCustom["metadescription"][LANG] =       strip_tags($conf["meta"]["description"][LANG]); endif;
   if(!isset($lCustom["metakeywords"])) :
             $lCustom["metakeywords"] =                $conf["meta"]["keywords"]; endif;
   if(!isset($lCustom["charset"])) :
@@ -170,7 +170,7 @@
   <![endif]-->
 
 <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["styles"];?><?=$conf["file"]["style"];?>.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=REALPATH.$conf["dir"]["styles"].$conf["file"]["style"];?>.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
   <?=isset($customCSS)?$customCSS:"";?>
 
 <!-- Custom JS -->

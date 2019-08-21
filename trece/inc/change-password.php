@@ -64,7 +64,13 @@ EOD;
 
   $customCSS = <<<EOD
   <style>
-    /* whatever */
+    input:focus~.form-control-feedback{z-index:3;}
+    #password-progress{height:1.2em; width:100%; margin-top:0.4em;}
+    #password-progress-bar{width:0%; height:100%; transition:width 500ms linear;}
+    .password-progress-bar-nothing{background:#ddd;}
+    .password-progress-bar-danger{background:#d00;}
+    .password-progress-bar-warning{background:#f50;}
+    .password-progress-bar-success{background:#080;}
   </style>
 EOD;
 
@@ -74,17 +80,6 @@ EOD;
   require_once($conf['dir']['includes']."nav.php");
 
 ?>
-
-
-  <style>
-    input:focus~.form-control-feedback{z-index:3;}
-    #password-progress{height:1.2em; width:100%; margin-top:0.4em;}
-    #password-progress-bar{width:0%; height:100%; transition:width 500ms linear;}
-    .password-progress-bar-nothing{background:#ddd;}
-    .password-progress-bar-danger{background:#d00;}
-    .password-progress-bar-warning{background:#f50;}
-    .password-progress-bar-success{background:#080;}
- </style>
 
 
 
@@ -106,7 +101,7 @@ EOD;
   <?php if ( $trece->done ) : ?>
 
     <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
           <h1><strong>:-)</strong></h1>
         </div>
@@ -116,64 +111,61 @@ EOD;
   <?php else : ?>
 
     <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
           <h1><strong><?=$lCustom["pagetitle"][LANG]?></strong></h1>
         </div>
       </div>
-    </div><!-- row -->
 
-    <div class="row">
-
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
         <form action="" class="form-horizontal form-large" method="post" autocomplete="off" role="form">
 
-          <div class="first-step">
+        <div class="first-step">
 
-            <div class="form-group">
-              <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon['email_or_username'][LANG];?>:</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon['email_or_username'][LANG];?>" autocomplete="off" value="<?=isset($trece) && isset($trece->email_or_username) ? $trece->email_or_username : "";?>" style="margin-bottom:.5em" required>
-              </div>
+          <div class="form-group">
+            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon['email_or_username'][LANG];?>:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon['email_or_username'][LANG];?>" autocomplete="off" value="<?=isset($trece) && isset($trece->email_or_username) ? $trece->email_or_username : "";?>" style="margin-bottom:.5em" required>
             </div>
-
-            <div class="form-group has-feedback">
-              <label for="password" class="col-sm-6 control-label"><?=$lCommon["password"][LANG];?>:</label>
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="getNewPass glyphicon glyphicon-repeat" style="cursor:pointer;"></i></span>
-                  <input type="password" name="password" id="password" autocomplete="off" class="form-control" placeholder="" data-size="16" data-character-set="a-z,A-Z,0-9,#" required>
-                  <span class="showhide glyphicon glyphicon-eye-close form-control-feedback" aria-hidden="true"></span>
-                </div>
-                <div id="password-progress" class="password-progress-bar-nothing">
-                  <div id="password-progress-bar"></div>
-                </div>
-                <p class="help-block" style="line-height:1em;"><small>
-                  <strong><?=$lCommon["tip"][LANG];?>:</strong> <?=sprintf($lCommon["password_tip"][LANG],"<span class=\"glyphicon glyphicon-repeat\" aria-hidden=\"true\"></span>","<span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span>");?></small></p>
-              </div>
-            </div>
-
-
           </div>
 
-          <div class="last-step">
-
-            <div class="form-group">
-              <label for="g-recaptcha" class="col-sm-6 control-label"></label>
-              <div class="col-sm-6">
-                <div class="g-recaptcha" data-sitekey="<?=$conf["recaptcha"]["public"];?>"></div>
+          <div class="form-group has-feedback">
+            <label for="password" class="col-sm-6 control-label"><?=$lCommon["password"][LANG];?>:</label>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="getNewPass glyphicon glyphicon-repeat" style="cursor:pointer;"></i></span>
+                <input type="password" name="password" id="password" autocomplete="off" class="form-control" placeholder="" data-size="16" data-character-set="a-z,A-Z,0-9,#" required>
+                <span class="showhide glyphicon glyphicon-eye-close form-control-feedback" aria-hidden="true"></span>
               </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-6 col-sm-6">
-                <input type="hidden" name="password-strength" id="password-strength" value="0">
-                <button type="submit" name="forgot_password" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["change-password"][LANG];?></button>
+              <div id="password-progress" class="password-progress-bar-nothing">
+                <div id="password-progress-bar"></div>
               </div>
+              <p class="help-block" style="line-height:1em;"><small>
+                <strong><?=$lCommon["tip"][LANG];?>:</strong> <?=sprintf($lCommon["password_tip"][LANG],"<span class=\"glyphicon glyphicon-repeat\" aria-hidden=\"true\"></span>","<span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span>");?></small></p>
             </div>
-
           </div>
+
+
+        </div>
+
+        <div class="last-step">
+
+          <div class="form-group">
+            <label for="g-recaptcha" class="col-sm-6 control-label"></label>
+            <div class="col-sm-6">
+              <div class="g-recaptcha" data-sitekey="<?=$conf["recaptcha"]["public"];?>"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-6 col-sm-6">
+              <input type="hidden" name="password-strength" id="password-strength" value="0">
+              <button type="submit" name="forgot_password" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["change-password"][LANG];?></button>
+            </div>
+          </div>
+
+        </div>
 
         </form>
 

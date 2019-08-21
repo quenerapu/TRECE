@@ -384,6 +384,11 @@ return [
     "gal" => "Contacto",
     "en"  => "Contact",
     ],
+  "content" => [
+    "es"  => "Contenido",
+    "gal" => "Contido",
+    "en"  => "Content",
+    ],
   "copy" => [
     "es"  => "Copia",
     "gal" => "Copia",

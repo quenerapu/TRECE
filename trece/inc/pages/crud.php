@@ -451,8 +451,8 @@ class Pages{
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
                     (isset($this->ref)?" AND ".$this->tableletter.".`ref` <> '".$this->ref."' ":"") .
                     (isset($this->search)?" AND ".$this->tableletter.".`id_parent` = ".$this->search." ":"") .
-                    "AND ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
-                    "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci ASC ";
+                    "AND ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
+                    "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci ASC ";
 
 /*
 SELECT *
@@ -517,7 +517,7 @@ WHERE SUBSTRING_INDEX(SUBSTRING_INDEX(ids_breadcrumb_trail,',',-2),',',1) = "2"
     $this->rowcount_absolute = $stmt->rowCount();
 
     $this->query = "SELECT ".$this->query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci ASC " .
+                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci ASC " .
 //                 "ORDER BY ". $this->tableletter.".`id_status` ASC, `date` DESC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 

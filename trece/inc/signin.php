@@ -70,20 +70,16 @@ EOD;
 
     <?php endif; ?>
 
+    <form action="" class="form-horizontal form-large" method="post" autocomplete="off" role="form">
+
     <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
           <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
-    </div><!-- row -->
 
-    <form action="" class="form-horizontal form-large" method="post" autocomplete="off" role="form">
-
-    <div class="row">
-
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
           <div class="form-group">
             <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][LANG];?>:</label>

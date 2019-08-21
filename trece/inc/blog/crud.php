@@ -405,7 +405,7 @@ class Blog{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
+                    "AND ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
                     (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
                     "ORDER BY ". $this->tableletter.".`date` DESC";
 
@@ -471,7 +471,7 @@ class Blog{
     $this->rowcount_absolute = $stmt->rowCount();
 
     $this->query = "SELECT ".$this->query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-//                 "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_general_ci DESC " .
+//                 "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci DESC " .
                    "ORDER BY ". $this->tableletter.".`id_status` ASC, `date` DESC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 

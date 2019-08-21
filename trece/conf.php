@@ -5,7 +5,7 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.15.60",  # http://trece.io/changelog
+    "version"   =>  "0.15.70",  # http://trece.io/changelog
     "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
     "theme"     =>  $theme="basic",
     "logo"      =>  [
@@ -184,6 +184,7 @@ return [
                         ],
     "phone_no"      =>  "+xx xxxxxxxxx",
     "email"         =>  "email@domain.com",
+    "telegram"      =>  "yourtelegramusername", #Telegram URL without t.me
     "twitter"       =>  "yourtwitterusername", #Twitter username without @
     "instagram"     =>  "yourinstagramusername", #Instagram username without @
     "facebook"      =>  "yourfacebookusername", #Facebook username without @
@@ -245,7 +246,8 @@ return [
     "responsive_toolkit"                =>  "2.6.3",          # Responsive Bootstrap Toolkit https://github.com/maciej-gurban/responsive-bootstrap-toolkit/
     "selectize"                         =>  "0.12.6",         # Selectize https://selectize.github.io/selectize.js/
     "sprintf"                           =>  "1.1.2",          # sprintf.js https://github.com/alexei/sprintf.js/
-    "tinymce"                           =>  "4.9.3",          # TinyMCE http://www.tinymce.com/
+    "tinymce"                           =>  "4.9.5",          # TinyMCE http://www.tinymce.com/
+//  "tinymce"                           =>  "5.0.12",         # TinyMCE http://www.tinymce.com/ Warning: file_browser_callback is deprecated in TinyMCE 5
     "touchswipe"                        =>  "1.6.19",         # touchSwipe http://labs.skinkers.com/touchSwipe/
     "x-editable"                        =>  "1.5.1",          # X-editable https://vitalets.github.io/x-editable/
   ],

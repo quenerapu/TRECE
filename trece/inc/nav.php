@@ -5,7 +5,10 @@
           <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <p class="pull-left" style="color:white;">
-                <small style="margin-right:1em;">Whatever</small>
+                <small style="margin-right:1em;">
+                  <a href="<?=REALPATHLANG."";?>" style="color:white;">Whatever</a> | 
+                  <a href="<?=REALPATHLANG."";?>" style="color:white;">Whatever</a>
+                </small>
               </p>
               <p class="pull-right" style="color:white;">
                 <small style="margin-right:1em;">
@@ -19,17 +22,20 @@
               <?php if(isset($conf["contact"]["email"]) && strlen($conf["contact"]["email"])>0) : ?>
                 <a href="mailto:<?=$conf["contact"]["email"];?>" style="color:white;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
               <?php endif; ?>
+              <?php if(isset($conf["contact"]["telegram"]) && strlen($conf["contact"]["telegram"])>0) : ?>
+                <a href="https://t.me/<?=$conf["contact"]["telegram"];?>" target="_blank" style="color:white;"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+              <?php endif; ?>
               <?php if(isset($conf["contact"]["twitter"]) && strlen($conf["contact"]["twitter"])>0) : ?>
-                <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" style="color:white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" target="_blank" style="color:white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["facebook"]) && strlen($conf["contact"]["facebook"])>0) : ?>
-                <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" style="color:white;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" target="_blank" style="color:white;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["instagram"]) && strlen($conf["contact"]["instagram"])>0) : ?>
-                <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" style="color:white;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" target="_blank" style="color:white;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["youtube"]) && strlen($conf["contact"]["youtube"])>0) : ?>
-                <a href="https://youtube.com/<?=$conf["contact"]["youtube"];?>" style="color:white;"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                <a href="https://youtube.com/channel/<?=$conf["contact"]["youtube"];?>" target="_blank" style="color:white;"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
               <?php endif; ?>
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>

@@ -242,7 +242,7 @@ class Locations{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`name` COLLATE utf8mb4_general_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
+                    "AND ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
                     (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
                     "ORDER BY ". $this->tableletter.".`name` ASC";
 
@@ -312,7 +312,7 @@ class Locations{
     while($x=$stmt->fetch(PDO::FETCH_ASSOC)) : $this->parents[$x["id"]]=$x["name"]; endwhile;
 
     $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_general_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_general_ci ASC " .
+                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 
     $this->query = $this->queryBeautifier($this->query);
