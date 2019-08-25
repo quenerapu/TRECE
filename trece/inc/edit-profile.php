@@ -565,35 +565,49 @@ EOD;
   <!-- TinyMCE -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
   <script>
+    tinyMCE.PluginManager.add("stylebuttons",function(editor,url){["h1", "h2", "h3"].forEach(function(name){
+      editor.addButton("style-"+name,{
+        tooltip: "Toggle "+name,
+        text: name.toUpperCase(),
+        onClick: function(){editor.execCommand("mceToggleFormat",false,name);},
+        onPostRender: function(){var self=this,setup=function(){editor.formatter.formatChanged(name,function(state){self.active(state);});};editor.formatter?setup():editor.on('init',setup);}
+        })
+      });
+    });
+
     tinymce.init({
       selector: "textarea.tinymce",
       menubar: false,
-      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code" ],
-      toolbar: "fullscreen visualblocks bold italic strikethrough bullist numlist link image charmap code",
+      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code stylebuttons" ],
+      toolbar: "fullscreen visualblocks | style-h1 style-h2 style-h3 | bold italic strikethrough | bullist numlist insert code",
+//    table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
+//    table_cell_advtab: false,
+//    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
       visualblocks_default_state: true,
       inline_boundaries: true,
-      image_dimensions: false,
-      image_class_list: [{title:"Responsive", value:"img-responsive"}],
-      file_browser_callback : function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"Insertar fichero",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
-      images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
-      images_upload_handler: function(blobInfo,success,failure){
-        var xhr,formData;
-        xhr=new XMLHttpRequest();
-        xhr.withCredentials=false;
-        xhr.open("POST","<?=$conf["site"]["virtualpath"];?>");
-        xhr.onload=function(){var json;if(xhr.status!=200){failure("HTTP Error: "+xhr.status);return;}json=JSON.parse(xhr.responseText);if(!json||typeof json.location!="string"){failure("Invalid JSON: "+xhr.responseText);return;}success(json.location);};
-        formData = new FormData();
-        formData.append("file",blobInfo.blob(),blobInfo.filename());
-        xhr.send(formData);
-      },
-      entity_encoding : "raw",
+      image_dimensions: true,
+//    image_class_list: [{title:"Responsive", value:"img-responsive"}],
+//    file_browser_callback : function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"Insertar fichero",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
+//    images_upload_url: "<?=REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["site"]["virtualpathArray"][1];?>",
+//    images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
+//    images_upload_handler: function(blobInfo,success,failure){
+//      var xhr,formData;
+//      xhr=new XMLHttpRequest();
+//      xhr.withCredentials=false;
+//      xhr.open("POST","<?=$conf["site"]["virtualpath"];?>");
+//      xhr.onload=function(){var json;if(xhr.status!=200){failure("HTTP Error: "+xhr.status);return;}json=JSON.parse(xhr.responseText);if(!json||typeof json.location!="string"){failure("Invalid JSON: "+xhr.responseText);return;}success(json.location);};
+//      formData = new FormData();
+//      formData.append("file",blobInfo.blob(),blobInfo.filename());
+//      xhr.send(formData);
+//    },
+      entity_encoding: "raw",
       paste_as_text: true,
       paste_word_valid_elements: "b,strong,i,em,h1,h2",
       paste_retain_style_properties: "color",
       height: 400,
       content_css: [
         "https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i",
-        "../css/tinymce.css?" + new Date().getTime(),
+        "<?=REALPATH.$conf["dir"]["styles"];?>tinymce.css?" + new Date().getTime(),
         ],
     });
   </script>

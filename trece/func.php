@@ -127,3 +127,11 @@ function get_words($sentence,$count=10) { # Cleanly gets firsts $count words fro
 
 
 
+  function validateDate($date,$format ="Y-m-d") {
+    $d = DateTime::createFromFormat($format,$date);
+    return $d && $d->format($format)==$date;
+    }
+
+
+
+# -----------------------------------------------------------------------------------

@@ -12,6 +12,7 @@ $font_color    = "#5e5e5e";
 $sticky_footer = $_GET["sf"];
 $padding_top   = 125;
 echo <<<ENDCSS
+@charset "UTF-8";
 /*
 
 # Thank you Håkon Wium Lie (@wiumlie) for inventing CSS.

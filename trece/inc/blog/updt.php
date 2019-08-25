@@ -624,7 +624,7 @@ EOD;
       toolbar: "fullscreen visualblocks | style-h1 style-h2 style-h3 | table | bold italic strikethrough | bullist numlist insert code",
       table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
       table_cell_advtab: false,
-  //  imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+//    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
       visualblocks_default_state: true,
       inline_boundaries: true,
       image_dimensions: true,

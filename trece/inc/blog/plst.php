@@ -250,8 +250,8 @@ EOD;
 
             endif;
 
-            $sum = 1; $sum_total = 1;
-            for($i=0;$i<$rowcount_page;$i++) :
+          $sum = 1; $sum_total = 1;
+          for($i=0;$i<$rowcount_page;$i++) :
 
         ?>
         <?php if($sum==1) : ?>
