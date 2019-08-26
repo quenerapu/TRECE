@@ -466,7 +466,7 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-5">
 
         <div class="form-group">
-          <label class="sr-only" for="date"><?=$lCustom["date"][LANG];?></label>
+          <label class="sr-only" for="date"><?=$lCustom["date"][LANG];?>:</label>
           <label for="date"><?=$lCustom["date"][LANG];?>:</label><br>
           <div class="input-group date col-xs-12 col-sm-5" id="date">
             <input type="text" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date("d/m/Y",strtotime($trece->date)));?>" placeholder="DD/MM/AAAA">
@@ -475,14 +475,15 @@ EOD;
         </div>
 
         <div class="form-group">
-          <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
-          <label for="title"><?=$lCustom["title"][LANG];?>:</label><br>
+          <?php $title_length = 55 ;?>
+          <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?>:</label>
+          <label for="title"><?=$lCustom["title"][LANG];?>: <span id="title_lettercounter" style="font-weight:normal;"></span></label><br>
           <input type="text" id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>" value="<?=htmlspecialchars($trece->title);?>">
-          <span class="help-block" id="title_lettercounter"></span>
+          <small><span class="help-block"><i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></span></small>
         </div>
 
         <div class="form-group">
-          <label class="sr-only" for="ids_labels"><?=$lCustom["labels"][LANG];?></label>
+          <label class="sr-only" for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label>
           <label for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label><br>
           <input type="text" id="ids_labels" name="ids_labels" class="form-control" placeholder="" data-foradditem="<?=trim($trece->ids_labels,"'");?>" data-foraddoption='[<?=html_entity_decode($trece->jsonlabels);?>]' value="">
         </div>
@@ -492,14 +493,15 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="form-group">
-          <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?></label>
-          <label for="intro"><?=$lCustom["intro"][LANG];?>:</label><br>
+          <?php $intro_length = 164 ;?>
+          <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?>:</label>
+          <label for="intro"><?=$lCustom["intro"][LANG];?>: <span id="intro_lettercounter" style="font-weight:normal;"></span></label><br>
           <textarea id="intro" name="intro" class="form-control" placeholder=""><?=$trece->intro;?></textarea>
-          <span class="help-block" id="intro_lettercounter"></span>
+          <small><span class="help-block"><i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></span></small>
         </div>
 
         <div class="form-group">
-          <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?></label>
+          <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?>:</label>
           <label for="post"><?=$lCustom["post"][LANG];?>:</label><br>
           <textarea id="post" name="post" class="form-control tinymce" placeholder=""><?=$trece->post;?></textarea>
         </div>
@@ -550,10 +552,10 @@ EOD;
 
   <script>
     $(document).ready(function() {
-      var text_max_title = 55; // https://seopressor.com/blog/google-title-meta-descriptions-length/
-      var text_max_intro = 160;
-      $("#title_lettercounter").html((text_max_title - <?=mb_strlen($trece->title,"utf8");?>)+" remaining.");
-      $("#intro_lettercounter").html((text_max_intro - <?=mb_strlen($trece->intro,"utf8");?>)+" remaining.");
+      var text_max_title = <?=$title_length;?>;
+      var text_max_intro = <?=$intro_length;?>;
+      $("#title_lettercounter").html("("+(text_max_title-<?=mb_strlen($trece->title,"utf8");?>)+" remaining)");
+      $("#intro_lettercounter").html("("+(text_max_intro-<?=mb_strlen($trece->intro,"utf8");?>)+" remaining)");
 
       $('input[name="title"]').on("keyup",function(event){
         var len_title = $(this).val().length;
@@ -562,7 +564,7 @@ EOD;
         if (len_title >= text_max_title) {
           $(this).val($(this).val().substring(0,len_title-1));
         }
-        $("#title_lettercounter").html(text_remaining_title+" remaining.");
+        $("#title_lettercounter").html("("+text_remaining_title+" remaining)");
       });
 
       $('textarea[name="intro"]').on("keyup",function(event){
@@ -572,7 +574,7 @@ EOD;
         if (len_intro >= text_max_intro) {
           $(this).val($(this).val().substring(0,len_intro-1));
         }
-        $("#intro_lettercounter").html(text_remaining_intro+" remaining.");
+        $("#intro_lettercounter").html("("+text_remaining_intro+" remaining)");
       });
     });
   </script>
@@ -680,7 +682,7 @@ EOD;
       selectOnTab: true,
       load: function(query,callback) {
         $.ajax({
-          url: "<?=REALPATHLANG;?>bloglabels/alst?json",
+          url: "<?=REALPATHLANG."bloglabels/".$conf["file"]["adminlist"]."?json";?>",
           type: "GET",
           dataType: "json",
           error: function(){callback();},

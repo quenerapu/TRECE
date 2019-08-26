@@ -1,2 +1,10 @@
 .img-pull-left{float:left;margin-right:2em;margin-bottom:2em;}
 .img-pull-right{float:right;margin-left:2em;margin-bottom:2em;}
+
+table.dog,table.dog th,table.dog td{border:2px solid black;}
+table.cat{border-collapse:collapse;margin-bottom:2em;}
+table.cat th,table.cat td{padding:5px;}
+
+table.dog,table.dog th,table.dog td{border:1px dotted #ccc;}
+table.dog{border-collapse:collapse;margin-bottom:2em;}
+table.dog th,table.dog td{padding:5px;}

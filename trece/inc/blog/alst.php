@@ -52,8 +52,8 @@
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-//  header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
-    header("location:".REALPATHLANG.QUERYQ);
+    header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
+//  header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -484,7 +484,7 @@ EOD;
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCustom["status"][LANG];?></th>
               <th><?=$lCommon["image"][LANG];?></th>
-              <th><?=$lCommon["date"][LANG];?>/<?=$lCommon["title"][LANG];?>/<?=$lCustom["intro"][LANG];?></th>
+              <th><?=$lCommon["date"][LANG];?> / <?=$lCommon["title"][LANG];?> / <?=$lCustom["intro"][LANG];?> / <?=$lCustom["labels"][LANG];?></th>
               <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
@@ -503,12 +503,14 @@ EOD;
                 </a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></small><br>
-                <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                  <strong><?=${"trece"}->{"title"}[$i];?></strong>
-                </a><br>
-                <small><?=doWordWrap(${"trece"}->{"intro"}[$i]);?></small><br>
-                <small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small>
+                <div class="bs-callout bs-callout-default">
+                  <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></small><br>
+                  <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
+                    <strong><?=${"trece"}->{"title"}[$i];?></strong>
+                  </a><br>
+                  <small><?=doWordWrap(${"trece"}->{"intro"}[$i]);?></small><br>
+                  <?php if(${"trece"}->{"labels"}[$i] != "") : ?><small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small><?php endif; ?>
+                </div>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">

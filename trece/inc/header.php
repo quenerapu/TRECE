@@ -1,5 +1,7 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <!doctype html>
+
+  <!-- TRECE <?=$conf["trece"]["version"];?> -->
 <?php
 
   if(!isset($lCustom["pagetitle"][LANG])) :
@@ -56,14 +58,15 @@
   <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG];?></title>
   <link rel="canonical" href="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
   <base href="<?=REALPATH;?>" target="_self" />
+  <!-- https://metatags.io/ -->
   <meta charset="<?=$lCustom["charset"];?>" />
   <meta http-equiv="X-UA-Compatible" content="<?=$lCustom["x_ua_compatible"];?>" />
   <meta name="viewport" content="<?=$lCustom["viewport"];?>" />
   <meta name="lang" content="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" />
-  <meta name="generator" content="<?=$lCustom["generator"];?>" />
-  <meta name="robots" content="<?=$lCustom["robots"];?>" />
-  <meta name="description" content="<?=htmlspecialchars($lCustom["metadescription"][LANG]);?>" />
-  <meta name="keywords" content="<?=htmlspecialchars($lCustom["metakeywords"]);?>" />
+  <meta name="generator" content="<?=$lCustom["generator"];?>" /><!-- https://stackoverflow.com/a/3632220 -->
+  <meta name="robots" content="<?=$lCustom["robots"];?>" /><!-- https://developers.google.com/search/reference/robots_meta_tag -->
+  <meta name="description" content="<?=htmlspecialchars($lCustom["metadescription"][LANG]);?>" /><!-- https://blog.spotibo.com/meta-description-length/ -->
+  <meta name="keywords" content="<?=htmlspecialchars($lCustom["metakeywords"]);?>" /><!-- https://www.sistrix.es/blog/la-meta-keywords-un-bulo-con-19-anos-de-antiguedad/ -->
 
 <?php if((NPE) || (DEBUG)) : ?>
 <!-- DEBUG MODE -->

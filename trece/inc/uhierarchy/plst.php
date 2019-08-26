@@ -24,9 +24,7 @@
 
 
 
-
-
-
+//Included or not?
 
   if(!isset($included)) :
 
@@ -43,28 +41,22 @@
 
 //Not logged? Not admin? Get out of here!
 
-$intimacy = 2;
-
-#Intimacy 0 : For owner's eyes
-#Intimacy 1 : For admin's eyes
-#Intimacy 2 : Public
-
-  if (
-//    1+1==3 # Public for everyone
-      !$app->getUserSignInStatus() # Must be logged in
-      || $app->getUserHierarchy() != 1 # Must be admin
-     ) :
+  if(
+//  1+1==3 # Public for everyone
+    !$app->getUserSignInStatus() # Must be logged in
+    || $app->getUserHierarchy() != 1 # Must be admin
+    ) :
 
     header("location:".REALPATHLANG.QUERYQ);
     die();
 
-    endif;
+  endif;
 
 
 
 //No $what? Load page 1!
 
-  if ( !isset($what) ) :
+  if(!isset($what)) :
 
     header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
@@ -75,7 +67,11 @@ $intimacy = 2;
 
 //Still here? OK, let's talk.
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -102,18 +98,10 @@ $intimacy = 2;
 
 
 
-# ..............................................................
-# ..##.....######..####..######...######.##..##.######.##...##..
-# ..##.......##...##.......##.......##...##..##.##.....###.###..
-# ..##.......##....####....##.......##...######.####...##.#.##..
-# ..##.......##.......##...##.......##...##..##.##.....##...##..
-# ..######.######..####....##.......##...##..##.######.##...##..
-# ..............................................................
-
   require_once($conf["dir"]["includes"].$action."/".$conf["file"]["crud"].".php");
 
   $trece = new $action($db,$conf);
-  $trece->intimacy = $intimacy;
+  $trece->intimacy = 2; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
   $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat);
   $rowcount_page = $trece->rowcount;
 
@@ -171,132 +159,49 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
         </div>
       </div>
     </div><!-- End row -->
 
 
 
-    <?php require $conf["dir"]["includes"]."search.php"; ?>
+<?php require $conf["dir"]["includes"]."search.php"; ?>
 
 
 
     <div class="row" style="margin-top:1em;margin-bottom:3em;">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
-        <?php
-
-          if ($rowcount_page>0):
-
-            if($trece->rowcount_absolute > $records_per_page) :
-
-              require $conf["dir"]["includes"]."pager.php";
-
-            endif;
-
-            $sum = 1;
-            $sum_total = 1;
-
-            for($i=0;$i<$rowcount_page;$i++) :
-
-
-              if($sum==1) :
-
-        ?>
-
-        <div class="row grid-divider"><!-- Start row -->
-        <?php
-
-              endif;
-
-        ?>
-
-          <div class="col-sm-3">
+<?php if($rowcount_page>0): ?>
+        <?php if($trece->rowcount_absolute > $records_per_page) : require $conf["dir"]["includes"]."pager.php"; endif; ?>
+        <?php $sum = 1; ?>
+        <?php for($i=0;$i<$rowcount_page;$i++) : ?>
+          <?php if($sum==1) : ?><div class="row grid-divider"><!-- Start row --><?php endif; ?>
+          <div class="col-xs-6 col-sm-4 col-md-3">
             <div style="margin-bottom:20px;">
-              <div class="white-panel" style="margin-bottom:10px;">
+              <div class="side-corner-tag">
                 <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Hierarchy"));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name[$i];?>">
+                  <p><span style="background:#<?=$trece->color[$i];?>;width:160px;right:-50px;"></span></p>
+                  <img src="<?=file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$conf["css"]["avatar_prefix"]."0.jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$conf["css"]["avatar_prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Hierarchy";?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars($trece->name[$i]);?>">
                 </a>
               </div>
               <p style="line-height:.8em;"><small><strong><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>"><?=mb_strtoupper($trece->name[$i],"UTF-8");?></a></strong></small></p>
               <div class="clearfix"></div>
             </div>
           </div>
-
-        <?php
-
-              if($sum%4==0 || $sum_total == $rowcount_page) :
-
-        ?>
-
-        </div><!-- End row -->
-
-        <?php
-
-                if($sum_total < $rowcount_page) :
-
-        ?>
-
-
-        <div class="row grid-divider"><!-- Start row -->
-      <?php
-
-              endif;
-            endif;
-
-            $sum++;
-            $sum_total++;
-
-          endfor;
-
-      ?>
-
-
-
-<?php /*</div><!-- End of col-xs-12 col-sm-10 col-sm-offset-1 --> */ ?>
-
-
-
-
-        <?php
-
-            if($trece->rowcount_absolute > $records_per_page) :
-
-        ?>
-<!--    <div class="col-xs-12 col-sm-10 col-sm-offset-1"> -->
-        <?php
-
-              require $conf["dir"]["includes"]."pager.php";
-
-        ?>
-<!--    </div> -->
-        <?php
-
-            endif;
-
-        else:
-
-      ?>
-
+          <?php if($sum%4==0) : ?><div class="hidden-sm"><div class="clearfix"></div></div><?php endif; ?>
+          <?php if($sum%3==0) : ?><div class="visible-sm-block"><div class="clearfix"></div></div><?php endif; ?>
+          <?php if($sum%2==0 && $sum%4!=0) : ?><div class="visible-xs-block"><div class="clearfix"></div></div><?php endif; ?>
+        <?php $sum++; endfor; ?>
+        <?php if($sum > 0) : ?></div><?php endif; ?>
+        <?php if($trece->rowcount_absolute > $records_per_page) : require $conf["dir"]["includes"]."pager.php"; endif; ?>
+<?php else: ?>
         <div class="alert alert-danger">
-          <?php if($trece->rowcount_absolute > 0) : ?>
-              <?=$lCommon["few_data"][LANG];?>
-          <?php else : ?>
-              <?=$lCommon["no_data"][LANG];?>
-          <?php endif; ?>
+          <?php if($trece->rowcount_absolute > 0) : ?><?=$lCommon["few_data"][LANG];?><?php else : ?><?=$lCommon["no_data"][LANG];?><?php endif; ?>
         </div>
-
-      <?php
-
-        endif;
-
-      ?>
-
+<?php endif; ?>
       </div>
-
     </div><!-- End row -->
-
   </div><!-- End container main-container -->
 
 

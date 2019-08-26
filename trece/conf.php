@@ -202,7 +202,7 @@ return [
 
   "version"                             =>  [
 # --------------------------------------------------------------------
-    "min_php"                           =>  "5.5.0",          # 2013 vintage version of PHP
+    "min_php"                           =>  "7.1.30",
     "animatecss"                        =>  "3.7.0",          # Animate CSS http://daneden.github.io/animate.css/
     "blueimp_file_upload"               =>  "9.28.0",         # Blueimp jQuery File Upload https://blueimp.github.io/jQuery-File-Upload/
     "blueimp_gallery"                   =>  "2.33.0",         # Blueimp Gallery https://blueimp.github.io/Gallery/

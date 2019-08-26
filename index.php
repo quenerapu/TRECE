@@ -140,7 +140,7 @@ endif;
 
 # TRECE: A multilingual boilerplate framework for the brave.
 # BECAUSE WHAT COULD GO WRONG?
-# Version ".$conf["trece"]["version"]." '".$conf["trece"]["motto"]."'
+# Version ".$conf["trece"]["version"]." '".$conf["trece"]["motto"]."' https://trece.io
 # Created by Iñaki Quenerapú (@quenerapu)
 # MIT License https://choosealicense.com/licenses/mit/
 

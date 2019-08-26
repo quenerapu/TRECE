@@ -173,7 +173,7 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><a href="<?=REALPATHLANG.$action."/plst";?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
+          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
         </div>
       </div>
     </div><!-- End row -->
