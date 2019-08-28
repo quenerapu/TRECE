@@ -121,17 +121,25 @@
 # ...####..##.....#####..##..##...##...######...##.....##..##..####..##.....######.######.######..
 # ................................................................................................
 
-  if(isset($_POST["title"])) :
+  if(isset($_POST["title_en"])) :
 
     unset($_FILES);
     $msg = true;
 
-    if(isset($_POST["date"]))       : $trece->date       = $_POST["date"]!=""?date("Y-m-d",strtotime(str_replace("/","-",$_POST["date"]))):"0000-00-00";  endif;
-    if(isset($_POST["title"]))      : $trece->title      = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title"])));
-                                      $trece->url_title  = $trece->date."-".getUrlFriendlyString($trece->title);                                          endif;
-    if(isset($_POST["intro"]))      : $trece->intro      = $_POST["intro"];                                                                               endif;
-    if(isset($_POST["post"]))       : $trece->post       = $_POST["post"];                                                                                endif;
-    if(isset($_POST["ids_labels"])) : $trece->ids_labels = $_POST["ids_labels"];                                                                          endif;
+    if(isset($_POST["date"]))       : $trece->date          = $_POST["date"]!=""?date("Y-m-d",strtotime(str_replace("/","-",$_POST["date"]))):"0000-00-00"; endif;
+    if(isset($_POST["title_en"]))   : $trece->title_en      = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));
+                                      $trece->url_title_en  = $trece->date."-".getUrlFriendlyString($trece->title_en);                                      endif;
+    if(isset($_POST["intro_en"]))   : $trece->intro_en      = $_POST["intro_en"];                                                                           endif;
+    if(isset($_POST["post_en"]))    : $trece->post_en       = $_POST["post_en"];                                                                            endif;
+    if(isset($_POST["title_gal"]))  : $trece->title_gal     = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_gal"])));
+                                      $trece->url_title_gal = $trece->date."-".getUrlFriendlyString($trece->title_gal);                                     endif;
+    if(isset($_POST["intro_gal"]))  : $trece->intro_gal     = $_POST["intro_gal"];                                                                          endif;
+    if(isset($_POST["post_gal"]))   : $trece->post_gal      = $_POST["post_gal"];                                                                           endif;
+    if(isset($_POST["title_es"]))   : $trece->title_es      = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_es"])));
+                                      $trece->url_title_es  = $trece->date."-".getUrlFriendlyString($trece->title_es);                                      endif;
+    if(isset($_POST["intro_es"]))   : $trece->intro_es      = $_POST["intro_es"];                                                                           endif;
+    if(isset($_POST["post_es"]))    : $trece->post_es       = $_POST["post_es"];                                                                            endif;
+    if(isset($_POST["ids_labels"])) : $trece->ids_labels    = $_POST["ids_labels"];                                                                         endif;
 
     if($trece->updateOne()) :
 
@@ -388,13 +396,17 @@
 
   endif;
 
-  $title            = isset($trece->title)?$trece->title:$cconf["default"]["title"];
+  $title_en         = isset($trece->title_en)?$trece->title_en:$cconf["default"]["title_en"];
   $dupeTitle        = isset($trece->dupeTitle)?$trece->dupeTitle:0;
   $stmt             = $trece->readOne();
   $filename         = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
   $trece->gotPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg") ? true : false;
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
 
 
@@ -469,18 +481,35 @@ EOD;
           <label class="sr-only" for="date"><?=$lCustom["date"][LANG];?>:</label>
           <label for="date"><?=$lCustom["date"][LANG];?>:</label><br>
           <div class="input-group date col-xs-12 col-sm-5" id="date">
-            <input type="text" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date("d/m/Y",strtotime($trece->date)));?>" placeholder="DD/MM/AAAA">
+            <input type="text" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date($conf["site"]["langs"][LANG]["date-format"],strtotime($trece->date)));?>" placeholder="">
             <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
           </div>
         </div>
 
         <div class="form-group">
-          <?php $title_length = 55 ;?>
+          <?php $title_length = 55; ?>
           <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?>:</label>
-          <label for="title"><?=$lCustom["title"][LANG];?>: <span id="title_lettercounter" style="font-weight:normal;"></span></label><br>
-          <input type="text" id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>" value="<?=htmlspecialchars($trece->title);?>">
-          <small><span class="help-block"><i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></span></small>
+          <label for="title"><?=$lCustom["title"][LANG];?>:
+            <a href="#title_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+            <a href="#title_gal" class="btn-xs" data-toggle="tab">GAL</a>
+            <a href="#title_es" class="btn-xs" data-toggle="tab">ES</a>
+          </label><br>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="title_en">
+              <textarea name="title_en" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_en;?></textarea>
+              <p class="help-block"><span id="title_en_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="title_gal">
+              <textarea name="title_gal" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_gal;?></textarea>
+              <p class="help-block"><span id="title_gal_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="title_es">
+              <textarea name="title_es" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_es;?></textarea>
+              <p class="help-block"><span id="title_es_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
+            </div>
+          </div>
         </div>
+
 
         <div class="form-group">
           <label class="sr-only" for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label>
@@ -493,17 +522,47 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="form-group">
-          <?php $intro_length = 164 ;?>
+          <?php $intro_length = 164; ?>
           <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?>:</label>
-          <label for="intro"><?=$lCustom["intro"][LANG];?>: <span id="intro_lettercounter" style="font-weight:normal;"></span></label><br>
-          <textarea id="intro" name="intro" class="form-control" placeholder=""><?=$trece->intro;?></textarea>
-          <small><span class="help-block"><i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></span></small>
+          <label for="intro"><?=$lCustom["intro"][LANG];?>:
+            <a href="#intro_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+            <a href="#intro_gal" class="btn-xs" data-toggle="tab">GAL</a>
+            <a href="#intro_es" class="btn-xs" data-toggle="tab">ES</a>
+          </label><br>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="intro_en">
+              <textarea name="intro_en" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_en;?></textarea>
+              <p class="help-block"><span id="intro_en_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="intro_gal">
+              <textarea name="intro_gal" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_gal;?></textarea>
+              <p class="help-block"><span id="intro_gal_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="intro_es">
+              <textarea name="intro_es" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_es;?></textarea>
+              <p class="help-block"><span id="intro_es_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?>:</label>
-          <label for="post"><?=$lCustom["post"][LANG];?>:</label><br>
-          <textarea id="post" name="post" class="form-control tinymce" placeholder=""><?=$trece->post;?></textarea>
+          <label for="post"><?=$lCustom["post"][LANG];?>:
+            <a href="#post_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+            <a href="#post_gal" class="btn-xs" data-toggle="tab">GAL</a>
+            <a href="#post_es" class="btn-xs" data-toggle="tab">ES</a>
+          </label><br>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="post_en">
+              <textarea id="post_en" name="post_en" class="form-control tinymce" placeholder=""><?=$trece->post_en;?></textarea>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="post_gal">
+              <textarea id="post_gal" name="post_gal" class="form-control tinymce" placeholder=""><?=$trece->post_gal;?></textarea>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="post_es">
+              <textarea id="post_es" name="post_es" class="form-control tinymce" placeholder=""><?=$trece->post_es;?></textarea>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -542,7 +601,7 @@ EOD;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/<?=$conf["version"]["moment"];?>/moment-with-locales.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/<?=$conf["version"]["bootstrap_datetimepicker"];?>/js/bootstrap-datetimepicker.min.js"></script>
   <script>
-    $(function(){$("#date").datetimepicker({locale:"es",format:"DD/MM/YYYY"});});
+    $(function(){$("#date").datetimepicker({locale:"<?=$conf["site"]["langs"][LANG]["half-culture-name"];?>",format:"<?=$conf["site"]["langs"][LANG]["date-format2"];?>"});});
   </script>
 
 
@@ -551,31 +610,66 @@ EOD;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/<?=$conf["version"]["jquery_mask"];?>/jquery.mask.min.js"></script>
 
   <script>
-    $(document).ready(function() {
-      var text_max_title = <?=$title_length;?>;
-      var text_max_intro = <?=$intro_length;?>;
-      $("#title_lettercounter").html("("+(text_max_title-<?=mb_strlen($trece->title,"utf8");?>)+" remaining)");
-      $("#intro_lettercounter").html("("+(text_max_intro-<?=mb_strlen($trece->intro,"utf8");?>)+" remaining)");
+    $(document).ready(function(){
+      var text_en_max_title, text_gal_max_title, text_es_max_title;
+      var text_en_max_title = text_gal_max_title = text_es_max_title = <?=$title_length;?>;
+      var text_en_max_intro, text_gal_max_intro, text_es_max_intro;
+      var text_en_max_intro = text_gal_max_intro = text_es_max_intro = <?=$intro_length;?>;
+      $("#title_en_lettercounter").html("("+(text_en_max_title-<?=mb_strlen($trece->title_en,"utf8");?>)+" remaining)");
+      $("#title_gal_lettercounter").html("("+(text_gal_max_title-<?=mb_strlen($trece->title_gal,"utf8");?>)+" remaining)");
+      $("#title_es_lettercounter").html("("+(text_es_max_title-<?=mb_strlen($trece->title_es,"utf8");?>)+" remaining)");
+      $("#intro_en_lettercounter").html("("+(text_en_max_intro-<?=mb_strlen($trece->intro_en,"utf8");?>)+" remaining)");
+      $("#intro_gal_lettercounter").html("("+(text_gal_max_intro-<?=mb_strlen($trece->intro_gal,"utf8");?>)+" remaining)");
+      $("#intro_es_lettercounter").html("("+(text_es_max_intro-<?=mb_strlen($trece->intro_es,"utf8");?>)+" remaining)");
 
-      $('input[name="title"]').on("keyup",function(event){
-        var len_title = $(this).val().length;
-        var text_length_title = $('input[name="title"]').val().length;
-        var text_remaining_title = text_max_title-text_length_title;
-        if (len_title >= text_max_title) {
-          $(this).val($(this).val().substring(0,len_title-1));
-        }
-        $("#title_lettercounter").html("("+text_remaining_title+" remaining)");
-      });
+      $('textarea[name="title_en"]').on("keyup",function(event){
+        var len_en_title = $(this).val().length;
+        var text_en_length_title = $('textarea[name="title_en"]').val().length;
+        var text_en_remaining_title = text_en_max_title-text_en_length_title;
+        if (len_en_title >= text_en_max_title){$(this).val($(this).val().substring(0,len_en_title-1));}
+        $("#title_en_lettercounter").html("("+text_en_remaining_title+" remaining)");
+        });
 
-      $('textarea[name="intro"]').on("keyup",function(event){
-        var len_intro = $(this).val().length;
-        var text_length_intro = $('textarea[name="intro"]').val().length;
-        var text_remaining_intro = text_max_intro-text_length_intro;
-        if (len_intro >= text_max_intro) {
-          $(this).val($(this).val().substring(0,len_intro-1));
-        }
-        $("#intro_lettercounter").html("("+text_remaining_intro+" remaining)");
-      });
+      $('textarea[name="title_gal"]').on("keyup",function(event){
+        var len_gal_title = $(this).val().length;
+        var text_gal_length_title = $('textarea[name="title_gal"]').val().length;
+        var text_gal_remaining_title = text_gal_max_title-text_gal_length_title;
+        if (len_gal_title >= text_gal_max_title){$(this).val($(this).val().substring(0,len_gal_title-1));}
+        $("#title_gal_lettercounter").html("("+text_gal_remaining_title+" remaining)");
+        });
+
+      $('textarea[name="title_es"]').on("keyup",function(event){
+        var len_es_title = $(this).val().length;
+        var text_es_length_title = $('textarea[name="title_es"]').val().length;
+        var text_es_remaining_title = text_es_max_title-text_es_length_title;
+        if (len_es_title >= text_es_max_title){$(this).val($(this).val().substring(0,len_es_title-1));}
+        $("#title_es_lettercounter").html("("+text_es_remaining_title+" remaining)");
+        });
+
+      $('textarea[name="intro_en"]').on("keyup",function(event){
+        var len_en_intro = $(this).val().length;
+        var text_en_length_intro = $('textarea[name="intro_en"]').val().length;
+        var text_en_remaining_intro = text_en_max_intro-text_en_length_intro;
+        if (len_en_intro >= text_en_max_intro){$(this).val($(this).val().substring(0,len_en_intro-1));}
+        $("#intro_en_lettercounter").html("("+text_en_remaining_intro+" remaining)");
+        });
+
+      $('textarea[name="intro_gal"]').on("keyup",function(event){
+        var len_gal_intro = $(this).val().length;
+        var text_gal_length_intro = $('textarea[name="intro_gal"]').val().length;
+        var text_gal_remaining_intro = text_gal_max_intro-text_gal_length_intro;
+        if (len_gal_intro >= text_gal_max_intro){$(this).val($(this).val().substring(0,len_gal_intro-1));}
+        $("#intro_gal_lettercounter").html("("+text_gal_remaining_intro+" remaining)");
+        });
+
+      $('textarea[name="intro_es"]').on("keyup",function(event){
+        var len_es_intro = $(this).val().length;
+        var text_es_length_intro = $('textarea[name="intro_es"]').val().length;
+        var text_es_remaining_intro = text_es_max_intro-text_es_length_intro;
+        if (len_es_intro >= text_es_max_intro){$(this).val($(this).val().substring(0,len_es_intro-1));}
+        $("#intro_es_lettercounter").html("("+text_es_remaining_intro+" remaining)");
+        });
+
     });
   </script>
 
@@ -592,8 +686,9 @@ EOD;
   <?php endif; ?>
 
   <script>
-    $("[href^=\\#div_tit]").on("shown.bs.tab",function(e){$("[href^=\\#div_tit]").removeClass("btn-primary");$(this).addClass("btn-primary");});
-    $("[href^=\\#div_description]").on("shown.bs.tab",function(e){$("[href^=\\#div_description]").removeClass("btn-primary");$(this).addClass("btn-primary");});
+    $("[href^=\\#title_]").on("shown.bs.tab",function(e){$("[href^=\\#title_]").removeClass("btn-primary");$(this).addClass("btn-primary");});
+    $("[href^=\\#intro_]").on("shown.bs.tab",function(e){$("[href^=\\#intro_]").removeClass("btn-primary");$(this).addClass("btn-primary");});
+    $("[href^=\\#post_]").on("shown.bs.tab",function(e){$("[href^=\\#post_]").removeClass("btn-primary");$(this).addClass("btn-primary");});
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
@@ -669,8 +764,8 @@ EOD;
     var xelect = $("#ids_labels").selectize({
       maxItems: 5,
       valueField: "value",
-      labelField: "name",
-      searchField: "name",
+      labelField: "name_<?=LANG;?>",
+      searchField: "name_<?=LANG;?>",
       plugins: ["remove_button","drag_drop"], // "restore_on_backspace",
       options: [<?=html_entity_decode($trece->jsonlabels);?>],
       closeAfterSelect: true,
@@ -687,7 +782,7 @@ EOD;
           dataType: "json",
           error: function(){callback();},
           success: function(res){
-            for (var k in res){res[k].name = he.decode(res[k].name);}
+            for (var k in res){res[k].name_<?=LANG;?> = he.decode(res[k].name_<?=LANG;?>);}
             callback(res);
             }
           });
@@ -698,7 +793,7 @@ EOD;
 
     for (var iz = 0; iz < foraddItem.length; iz++) {
       if(foraddItem.indexOf(foraddOption[iz].value)!==-1){
-        var tocho = '[{"value":'+foraddOption[iz].value+',"name":"'+he.decode(foraddOption[iz].name)+'"}]';
+        var tocho = '[{"value":'+foraddOption[iz].value+',"name_<?=LANG;?>":"'+he.decode(foraddOption[iz].name_<?=LANG;?>)+'"}]';
         var realtocho = JSON.parse(tocho);
         xelectize.addOption(realtocho);
         xelectize.addItem(foraddOption[iz].value);

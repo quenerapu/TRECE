@@ -123,9 +123,12 @@ EOD;
 
 
 
-  $lCustom["og_image"] = file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?REALPATH.$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg":(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Novas");
+//metastuff
   $lCustom["pagetitle"][LANG] = ${"trece"}->{"title"};
-  $conf["meta"]["description"][LANG] = ${"trece"}->{"intro"};
+  $lCustom["metadescription"][LANG] = ${"trece"}->{"intro"}; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?REALPATH.$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg":(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Page");
+
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
 

@@ -75,7 +75,11 @@ $intimacy = 2;
 
 //Still here? OK, let's talk.
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
   $searchTarget     = false;
   $searchWhat       = "";
@@ -173,7 +177,7 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
+          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["list"][LANG];?></a></strong></h1>
         </div>
       </div>
     </div><!-- End row -->

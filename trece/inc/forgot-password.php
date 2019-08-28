@@ -35,7 +35,11 @@
 
 
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCommon["forgot-password"][LANG];
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 
@@ -119,7 +123,7 @@ EOD;
           </p></div>
           <?php endif; ?>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCommon["forgot-password"][LANG];?></strong></h1>
         </div>
       </div>
 

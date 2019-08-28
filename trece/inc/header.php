@@ -198,7 +198,7 @@
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/<?=$conf["version"]["cookieconsent2"];?>/cookieconsent.min.css" />
   <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/<?=$conf["version"]["cookieconsent2"];?>/cookieconsent.min.js"></script>
   <script>
-    window.addEventListener("load",function(){window.cookieconsent.initialise({"palette":{"popup":{"background":"#237afc"},"button":{"background":"#fff"}},"position":"bottom-right","content":{"message":"<?=$lCommon["gdpr"]["txt"][LANG];?>","dismiss":"<?=$lCommon["gdpr"]["accept"][LANG];?>","link":"<?=$lCommon["gdpr"]["more_info"][LANG];?>","href":"<?=REALPATHLANG.$conf["file"]["cookies-policy"];?>"}})});
+    window.addEventListener("load",function(){window.cookieconsent.initialise({"palette":{"popup":{"background":"#237afc"},"button":{"background":"#fff"}},"position":"bottom-right","content":{"message":"<?=$lCommon["gdpr"]["txt"][LANG];?>","dismiss":"<?=$lCommon["gdpr"]["accept"][LANG];?>","link":"<?=$lCommon["gdpr"]["more_info"][LANG];?>","href":"<?=REALPATHLANG.$conf["file"]["cookie-policy"];?>"}})});
   </script>
 
 </head>

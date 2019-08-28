@@ -22,6 +22,7 @@
 
 
 
+
 //Not logged? Not admin? Get out of here!
 
   if (
@@ -52,11 +53,12 @@ EOD;
 
 
 
-  $lCustom["pagetitle"]["es"] = "Panel de administración";
-  $lCustom["pagetitle"]["gal"] = "Panel de administración";
-  $lCustom["pagetitle"]["en"] = "Admin panel";
+//metastuff
+  $lCustom["pagetitle"][LANG] = strip_tags($lCommon["admin_panel"][LANG]);
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
-  $conf["meta"]["description"][LANG] = "Admin";
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
 
@@ -69,7 +71,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCommon["admin_panel"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

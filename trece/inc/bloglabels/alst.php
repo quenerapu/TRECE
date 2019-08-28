@@ -110,7 +110,7 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"name\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->name[$i]))."\"
+          \"name_en\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->name_en[$i]))."\"
         }";
 
       endfor;
@@ -187,8 +187,12 @@
     $trece                      = new $action($db,$conf);
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->name                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name"]));
-    $trece->url_name            = getUrlFriendlyString($trece->name);
+    $trece->name_en             = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name_en"]));
+    $trece->url_name_en         = getUrlFriendlyString($trece->name_en);
+    $trece->name_gal            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name_gal"]));
+    $trece->url_name_gal        = getUrlFriendlyString($trece->name_gal);
+    $trece->name_es             = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name_es"]));
+    $trece->url_name_es         = getUrlFriendlyString($trece->name_es);
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 
@@ -218,8 +222,12 @@
     $trece                      = new $action($db,$conf);
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->name                = "Copy of ".$_POST["clone_name"];
-    $trece->url_name            = getUrlFriendlyString($trece->name);
+    $trece->name_en             = "Copy of ".$_POST["clone_name_en"];
+    $trece->url_name_en         = getUrlFriendlyString($trece->name_en);
+    $trece->name_gal            = "Copia de ".$_POST["clone_name_gal"];
+    $trece->url_name_gal        = getUrlFriendlyString($trece->name_gal);
+    $trece->name_es             = "Copia de ".$_POST["clone_name_es"];
+    $trece->url_name_es         = getUrlFriendlyString($trece->name_es);
 
     $trece->addOne();
 
@@ -268,7 +276,11 @@
 
 
 
-  $lCustom["pagetitle"][LANG] = $lCustom["admin_list"][LANG];
+//metastuff
+  $lCustom["pagetitle"][LANG] = strip_tags($lCustom["admin_list"][LANG]);
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -370,7 +382,7 @@ EOD;
             <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?>
           </p></div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -410,7 +422,9 @@ EOD;
             <tr>
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCustom["status"][LANG];?></th>
-              <th><?=$lCommon["name"][LANG];?></th>
+              <th><?=$lCommon["name"][LANG];?> [EN]</th>
+              <th><?=$lCommon["name"][LANG];?> [GAL]</th>
+              <th><?=$lCommon["name"][LANG];?> [ES]</th>
               <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
@@ -424,14 +438,22 @@ EOD;
                 <a href="javascript:void(0);" class="change-status" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>"><span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span></a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name"><?=$trece->name[$i];?></a>
+                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name_en"><?=$trece->name_en[$i];?></a>
+              </td>
+              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
+                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name_gal"><?=$trece->name_gal[$i];?></a>
+              </td>
+              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
+                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name_es"><?=$trece->name_es[$i];?></a>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a data-ref="<?=$trece->ref[$i];?>"
-                           data-name="<?=htmlspecialchars($trece->name[$i]);?>" 
+                           data-name_en="<?=htmlspecialchars($trece->name_en[$i]);?>" 
+                           data-name_gal="<?=htmlspecialchars($trece->name_gal[$i]);?>" 
+                           data-name_es="<?=htmlspecialchars($trece->name_es[$i]);?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                   </ul>
                 </div>
@@ -511,12 +533,16 @@ EOD;
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
-      var name            =   $(this).data("name");
+      var name_en         =   $(this).data("name_en");
+      var name_gal        =   $(this).data("name_gal");
+      var name_es         =   $(this).data("name_es");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
-        clone_name:name,
+        clone_name_en:name_en,
+        clone_name_gal:name_gal,
+        clone_name_es:name_es,
         },function(data){
 //      alert(data);
         location.reload();

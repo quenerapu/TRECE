@@ -35,24 +35,26 @@
     $cconf    = require($conf["dir"]["includes"].$action."/".$conf["file"]["conf"].".php");
     $lCustom  = require($conf["dir"]["includes"].$action."/".$conf["file"]["i18n"].".php");
 
+    $conf["site"]["queryArray"]["back"] = $back;
+    $conf["site"]["queryq"] = "?".http_build_query($conf["site"]["queryArray"]);
+
   endif;
 
 
 
-/*
 //Not logged? Not admin? Get out of here!
 
   if(
-//  1+1==3 # Public for everyone
-    !$app->getUserSignInStatus() # Must be logged in
-    || $app->getUserHierarchy() != 1 # Must be admin
+    1+1==3 # Public for everyone
+//  !$app->getUserSignInStatus() # Must be logged in
+//  || $app->getUserHierarchy() != 1 # Must be admin
     ) :
 
+//  header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
     header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
-*/
 
 
 
@@ -69,21 +71,23 @@
 
 //Still here? OK, let's talk.
 
-//metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
-  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-  $lCustom["metakeywords"] = "key word keyword";
-  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  require_once($conf["dir"]["includes"].$action."/".$conf["file"]["crud"].".php");
 
-  $searchTarget     = false;
-  $searchWhat       = "";
-  $searchBloglabel  = "";
+//metastuff
+  $lCustom["pagetitle"][LANG] = strip_tags($lCustom["list"][LANG]);
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+
+  $searchTarget = false;
+  $searchWhat   = "";
+  $searchLabel  = "";
 
   if(isset($conf["site"]["queryArray"]["wr"]) && $conf["site"]["queryArray"]["wr"]==$action) :
 
-    $searchTarget     = true;
-    $searchWhat       = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
-    $searchBloglabel  = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
+    $searchTarget = true;
+    $searchWhat   = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
+    $searchLabel  = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
 
   endif;
 
@@ -94,7 +98,6 @@
 //Pagination Part 1
 
   $records_per_page = $included ? 200 : 20;
-  $max_columns = 3;
   $from_record_num = ($records_per_page*$page)-$records_per_page;
   $from_record_num_prev = ($records_per_page*($page-1))-$records_per_page;
 
@@ -102,14 +105,20 @@
 
 
 
-  require_once($conf["dir"]["includes"].$action."/".$conf["file"]["crud"].".php");
+# ..............................................................
+# ..##.....######..####..######...######.##..##.######.##...##..
+# ..##.......##...##.......##.......##...##..##.##.....###.###..
+# ..##.......##....####....##.......##...######.####...##.#.##..
+# ..##.......##.......##...##.......##...##..##.##.....##...##..
+# ..######.######..####....##.......##...##..##.######.##...##..
+# ..............................................................
 
   $trece = new $action($db,$conf);
   $trece->intimacy = 2; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
   $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchBloglabel);
   $rowcount_page = $trece->rowcount;
 
-  if($rowcount_page == 0 && $page>1) :
+  if(!$included && ($rowcount_page == 0 && $page>1)) :
 
     header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
@@ -136,8 +145,46 @@
 EOD;
 
   $customCSS = <<<EOD
+  <link href="https://fonts.googleapis.com/css?family=Amiko|Changa:700|Palanquin&display=swap" rel="stylesheet">
   <style>
-    /* whatever */
+    /* https://fontjoy.com/ */
+    h1{font-family:"Changa",sans-serif;}
+    h2{font-family:"Amiko",sans-serif;}
+    .post p,.post li{font-family:"Palanquin",sans-serif;}
+
+    /* vertical smartphones */
+    @media screen and (min-width:360px) and (max-width:752px){
+      .navbar-fixed-top>.container{padding-left:0;}
+      .navbar-text{margin-left:15px;}
+      .navbar-collapse{max-height:100% !important;}
+      .navbar-brand{padding:18px 0 0 15px;margin:0;}
+
+      .info-cal{font-size:1.3em;line-height:1.1em;letter-spacing:-.03em;margin-bottom:1em;font-weight:bold;}
+      .info-tit{font-size:2em;line-height:1.1em;letter-spacing:-.03em;margin-bottom:.3em;font-weight:bold;}
+      .info-intro{font-size:1.5em;line-height:1.1em;margin-bottom:.5em;}
+      .info-labels{font-size:1.3em;line-height:1.2em;margin-bottom:0;}
+    }
+    /* horizontal smartphones and vertical tablets */
+    @media screen and (min-width:753px) and (max-width:1023px){
+      .info-cal{font-size:1.3em;line-height:1.1em;letter-spacing:-.03em;margin-bottom:1em;font-weight:bold;}
+      .info-tit{font-size:1.3em;line-height:1.1em;letter-spacing:-.03em;margin-bottom:.3em;font-weight:bold;}
+      .info-intro{font-size:1.1em;line-height:1.2em;margin-bottom:.5em;}
+      .info-labels{font-size:1em;line-height:1.2em;margin-bottom:0;}
+    }
+    /* horizontal tablets and normal desktops */
+    @media screen and (min-width:1024px) and (max-width:1199px){
+      .info-cal{font-size:1.3em;line-height:1.1em;letter-spacing:-.03em;margin-bottom:1em;font-weight:bold;}
+      .info-tit{font-size:1.6em;line-height:1em;letter-spacing:-.03em;margin-bottom:.3em;font-weight:bold;}
+      .info-intro{font-size:1.1em;line-height:1.2em;margin-bottom:.5em;}
+      .info-labels{font-size:1em;line-height:1.2em;margin-bottom:0;}
+    }
+    /* big desktops */
+    @media screen and (min-width:1200px){
+      .info-cal{font-size:1.3em;line-height:1.1em;letter-spacing:-.03em;margin-bottom:1em;font-weight:bold;}
+      .info-tit{font-size:1.6em;line-height:1.2em;letter-spacing:-.03em;margin-bottom:.3em;font-weight:bold;}
+      .info-intro{font-size:1.1em;line-height:1.2em;margin-bottom:.5em;}
+      .info-labels{font-size:1em;line-height:1.2em;margin-bottom:0;}
+    }
   </style>
 EOD;
 
@@ -158,12 +205,13 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <?php if($app->getUserHierarchy() == 1) : ?>
+          <?php // $lacosa = "Questiontypes"; ?>
           <div class="pull-right"><p>
+<?php /*    <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?> */ ?>
             <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
-          </p>
-          </div>
+          </p></div>
           <?php endif; ?>
-          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
+          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["list"][LANG];?></a></strong></h1>
         </div>
       </div>
     </div><!-- End row -->
@@ -235,23 +283,25 @@ EOD;
         <?php $sum = 1; ?>
         <?php for($i=0;$i<$rowcount_page;$i++) : ?>
           <?php if($sum==1) : ?><div class="row grid-divider"><!-- Start row --><?php endif; ?>
-          <div class="col-xs-6 col-sm-4 col-md-3">
-            <div style="margin-bottom:20px;">
-              <p><small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></small></p>
-              <div class="white-panel" style="margin-bottom:10px;">
-                <a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars($trece->title[$i]);?>">
+          <div class="col-xs-12 col-sm-4"><?php /* <div class="col-xs-6 col-sm-4 col-md-3"> */ ?>
+            <div style="margin-bottom:3em;">
+              <p class="info-cal"><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></p>
+              <div class="white-panel" style="margin-bottom:1em;">
+                <a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]."_".LANG}[$i].QUERYQ;?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars(${"trece"}->{"title_".LANG}[$i]);?>">
                 </a>
               </div>
-              <p style="line-height:.8em;margin-bottom:.5em;"><small><strong><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>"><?=mb_strtoupper($trece->title[$i],"UTF-8");?></a></strong></small></p>
-              <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p style="line-height:.8em;margin-bottom:0;"><small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small></p><?php endif; ?>
+              <p class="info-tit"><a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]."_".LANG}[$i].QUERYQ;?>" style="text-decoration:none;"><?=${"trece"}->{"title_".LANG}[$i];?></a></p><!-- <?=mb_strtoupper(${"trece"}->{"title_".LANG}[$i],"UTF-8");?> -->
+              <?php if(${"trece"}->{"intro_".LANG}[$i] != "") : ?><p class="info-intro"><?=${"trece"}->{"intro_".LANG}[$i];?></p><?php endif; ?>
+              <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p class="info-labels"><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></p><?php endif; ?>
               <div class="clearfix"></div>
             </div>
           </div>
 
-          <?php if($sum%4==0) : ?><div class="hidden-sm"><div class="clearfix"></div></div><?php endif; ?>
-          <?php if($sum%3==0) : ?><div class="visible-sm-block"><div class="clearfix"></div></div><?php endif; ?>
-          <?php if($sum%2==0 && $sum%4!=0) : ?><div class="visible-xs-block"><div class="clearfix"></div></div><?php endif; ?>
+<?php /*  <?php if($sum%4==0) : ?><div class="hidden-sm"><div class="clearfix"></div></div><?php endif; ?> */ ?>
+          <?php if($sum%3==0) : ?><div class="visible-sm-block visible-md-block visible-lg-block"><div class="clearfix"></div></div><?php endif; ?>
+          <?php if($sum%1==0) : ?><div class="visible-xs-block"><div class="clearfix"></div></div><?php endif; ?>
+<?php /*  <?php if($sum%2==0 && $sum%4!=0) : ?><div class="visible-xs-block"><div class="clearfix"></div></div><?php endif; ?> */ ?>
         <?php $sum++; endfor; ?>
         <?php if($sum > 0) : ?></div><?php endif; ?>
         <?php if($trece->rowcount_absolute > $records_per_page) : require $conf["dir"]["includes"]."pager.php"; endif; ?>

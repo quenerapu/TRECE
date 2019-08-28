@@ -268,7 +268,11 @@
 
 
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["admin_list"][LANG];
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -370,7 +374,7 @@ EOD;
             <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?>
           </p></div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

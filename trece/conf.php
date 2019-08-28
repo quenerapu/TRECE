@@ -5,7 +5,7 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.15.70",  # http://trece.io/changelog
+    "version"   =>  "0.15.80",  # http://trece.io/changelog
     "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
     "theme"     =>  $theme="basic",
     "logo"      =>  [
@@ -64,7 +64,7 @@ return [
     "admin"             =>  "admin",
     "adminlist"         =>  "alst",
     "change-pass"       =>  $change_pass="change-password",
-    "cookies-policy"    =>  "cookies",
+    "cookie-policy"     =>  "cookies",
     "contact"           =>  "contact",
     "crud"              =>  "crud",
     "db"                =>  "db",
@@ -131,13 +131,14 @@ return [
     "viewport"          =>  "width=device-width, initial-scale=1", # Ref: https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag
     "generator"         =>  "Your favourite code editor",  # Ref: https://creativebloq.com/advice/5-top-code-editors-for-programmers
     "robots"            =>  "index, follow", # Ref: https://www.searchenginejournal.com/best-practices-setting-meta-robots-tags-robots-txt/
-    "langs"             =>  "en en-US|gal gl-ES|es es-ES",  # Order matters. First language is the main language
-                                                            # Examples: en en-US|es es-ES|gal gl-ES|ar ar-MA rtl|zh zh-CN ttb
+    "langs"             =>  "en en-US m/d/Y|gal gl-ES d/m/Y|es es-ES d/m/Y",
+                             # Order matters. First language is the main language
+                             # Examples: en en-US m/d/Y ltr|es es-ES d/m/Y ltr|gal gl-ES d/m/Y ltr|ar ar-MA d/m/Y rtl|zh zh-CN ttb Y-m-d
     "markdown"          =>  true,  # Use or not the Markdown syntax
     "homepage"          =>  $homepage="home",
     "homepage_redirect" =>  "", # date("Y") to match the present year
     "aftersignin_home"  =>  "admin_home", # Where to go after signing in. Leave empty to go $homepage or write the name of the page
-    "mainaction"        =>  "pages", # ie: if "users", then http://domain.com/quenerapu == http://domain.com/users/quenerapu == http://domain.com/users/read/quenerapu
+    "mainaction"        =>  "users", # ie: if "users", then http://domain.com/quenerapu == http://domain.com/users/quenerapu == http://domain.com/users/read/quenerapu
     "username_blacklst" =>  "trece|minitrece",
   ],
 
@@ -222,6 +223,7 @@ return [
     "croppie"                           =>  "2.6.3",          # Croppie http://foliotek.github.io/Croppie/
     "ekko_lightbox"                     =>  "5.3.0",          # Bootstrap Lightbox (Ekko Lightbox) http://ashleydw.github.io/lightbox/
     "exif_js"                           =>  "2.3.0",          # Exif.js https://github.com/exif-js/exif-js/
+    "fitty"                             =>  "2.2.6",          # Fitty https://rikschennink.github.io/fitty/
     "fontawesome"                       =>  "4.7.0",          # Font Awesome http://fontawesome.com/
 //  "fontawesome"                       =>  "5.8.1",          # Font Awesome http://fontawesome.com/
     "fullcalendar"                      =>  "3.10.0",         # Fullcalendar https://fullcalendar.io/
@@ -229,6 +231,7 @@ return [
     "html5shiv"                         =>  "3.7.3",          # HTML5 Shiv http://github.com/aFarkas/html5shiv/
     "hideshowpassword"                  =>  "2.1.1",          # hideShowPassword https://github.com/cloudfour/hideShowPassword/
     "i18next"                           =>  "14.0.1",         # i18next https://www.i18next.com/
+    "imagehovercss"                     =>  "2.0.0",          # Image Hover http://imagehover.io/
     "ion_rangeslider"                   =>  "2.3.0",          # Ion RangeSlider https://github.com/IonDen/ion.rangeSlider/
     "jquery"                            =>  "3.3.1",          # jQuery http://jquery.com/
     "jqueryui"                          =>  "1.12.1",         # jQuery UI http://jqueryui.com/

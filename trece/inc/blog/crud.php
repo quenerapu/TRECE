@@ -39,10 +39,18 @@ class Blog{
   public $id_author;
   public $id_status;
   public $date;
-  public $title;
-  public $url_title;
-  public $intro;
-  public $post;
+  public $title_en;
+  public $url_title_en;
+  public $intro_en;
+  public $post_en;
+  public $title_gal;
+  public $url_title_gal;
+  public $intro_gal;
+  public $post_gal;
+  public $title_es;
+  public $url_title_es;
+  public $intro_es;
+  public $post_es;
   public $ids_labels;
   public $date_reg;
   public $date_upd;
@@ -54,9 +62,9 @@ class Blog{
   public $query = "";
   public $query1 = "";
   public $query2 = "";
-  public $xx = ["id_status","date","title","url_title","intro","post","ids_labels","id_author","date_upd","ip_upd","ref","loops_ref"];
-  public $xx_updateOne = ["id_status","date","title","url_title","intro","post","ids_labels","id_author"];
-  public $xx_notinsearch = ["id_status","date","url_title","ids_labels","ref","loops_ref","date_upd","ip_upd"];
+  public $xx = ["id_status","date","title_en","url_title_en","intro_en","post_en","title_gal","url_title_gal","intro_gal","post_gal","title_es","url_title_es","intro_es","post_es","ids_labels","id_author","date_upd","ip_upd","ref","loops_ref"];
+  public $xx_updateOne = ["id_status","date","title_en","url_title_en","intro_en","post_en","title_gal","url_title_gal","intro_gal","post_gal","title_es","url_title_es","intro_es","post_es","ids_labels","id_author"];
+  public $xx_notinsearch = ["id_status","date","url_title_en","url_title_gal","url_title_es","ids_labels","ref","loops_ref","date_upd","ip_upd"];
 
 
 
@@ -224,8 +232,12 @@ class Blog{
 //  JSONLABELS
     $this->query.=
     "CONCAT(\"'\",".$this->tableletter.".`ids_labels`,\"'\") AS ids_labels, " .
+    "CONCAT((SELECT GROUP_CONCAT('{\"value\":',".$this->labels_tableletter.".`id`,',\"name_".LANG."\":',CONCAT('\"',REPLACE(REPLACE(".$this->labels_tableletter.".`name_".LANG."`,'\"','&#8243;'),'\\'','&#8242;'),'\"'),'}' ORDER BY FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ',''))) FROM `".$this->labels_tablename."` ".$this->labels_tableletter.", `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`id` = @id AND FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ','')))) AS jsonlabels, ";
+/*
+    $this->query.=
+    "CONCAT(\"'\",".$this->tableletter.".`ids_labels`,\"'\") AS ids_labels, " .
     "CONCAT((SELECT GROUP_CONCAT('{\"value\":',".$this->labels_tableletter.".`id`,',\"name\":',CONCAT('\"',REPLACE(REPLACE(".$this->labels_tableletter.".`name`,'\"','&#8243;'),'\\'','&#8242;'),'\"'),'}' ORDER BY FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ',''))) FROM `".$this->labels_tablename."` ".$this->labels_tableletter.", `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`id` = @id AND FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ','')))) AS jsonlabels, ";
-
+*/
     $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
                   ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
                    $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? " .
@@ -303,12 +315,12 @@ class Blog{
 
     $this->dupeTitle = 0;
 
-    if(isset($this->title)) :
+    if(isset($this->title_en)) :
 
       $this->query = "SELECT " .
                $this->tableletter.".`id` " .
                "FROM `".$this->tablename."` ".$this->tableletter." " .
-               "WHERE ".$this->tableletter.".`title` = :title , " .
+               "WHERE ".$this->tableletter.".`title_en` = :title_en , " .
                "AND ".$this->tableletter.".`ref` <> :ref " .
                "LIMIT 0,1";
 
@@ -316,7 +328,7 @@ class Blog{
 
       $stmt = $this->conn->prepare($this->query);
       $stmt->bindParam(":ref", $this->ref);
-      $stmt->bindParam(":title", $this->title);
+      $stmt->bindParam(":title_en", $this->title_en);
       $stmt->execute();
       $this->dupeTitle = $stmt->rowCount();
       $this->query = "";
@@ -405,7 +417,7 @@ class Blog{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["title"]."%' " .
+                    "AND ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["title_en"]."%' " .
                     (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
                     "ORDER BY ". $this->tableletter.".`date` DESC";
 
@@ -455,8 +467,10 @@ class Blog{
     endforeach;
 
 //  LABELS
+    $this->query1.= "CONCAT((SELECT GROUP_CONCAT('<a href=\"".$this->conf["site"]["fullpath"]."?wr=".$this->conf["site"]["action"]."&wh=&label=',".$this->labels_tableletter.".`id`,'\">',".$this->labels_tableletter.".`name_".LANG."`,'</a>' ORDER BY FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels) SEPARATOR ', ') FROM `".$this->labels_tablename."` ".$this->labels_tableletter." WHERE FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels))) as labels, ";
+/*
     $this->query1.= "CONCAT((SELECT GROUP_CONCAT('<a href=\"".$this->conf["site"]["fullpath"]."?wr=".$this->conf["site"]["action"]."&wh=&label=',".$this->labels_tableletter.".`id`,'\">',".$this->labels_tableletter.".`name`,'</a>' ORDER BY FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels) SEPARATOR ', ') FROM `".$this->labels_tablename."` ".$this->labels_tableletter." WHERE FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels))) as labels, ";
-
+*/
     $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
     ($where ? "CONCAT(".$this->query2.") LIKE '%".$where."%' " : " ") .
@@ -471,7 +485,7 @@ class Blog{
     $this->rowcount_absolute = $stmt->rowCount();
 
     $this->query = "SELECT ".$this->query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-//                 "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title` COLLATE utf8mb4_unicode_ci DESC " .
+//                 "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title_en"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci DESC " .
                    "ORDER BY ". $this->tableletter.".`id_status` ASC, `date` DESC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 

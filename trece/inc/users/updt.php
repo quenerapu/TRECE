@@ -177,7 +177,11 @@
   $trece->gotGenderPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->ugender.".jpg") ? true : false;
   $trece->gotNeutralPic   = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg") ? true : false;
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
 
 

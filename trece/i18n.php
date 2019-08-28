@@ -158,6 +158,11 @@ return [
     "gal" => "Listado do administrador/a",
     "en"  => "Admin list",
     ],
+  "admin_panel" => [
+    "es"  => "Panel de administración",
+    "gal" => "Panel de administración",
+    "en"  => "Admin panel",
+    ],
   "and_add_a_new_blank_file" => [
     "es"  => "...y crear una nueva ficha en blanco",
     "gal" => "...e crear unha nova ficha en branco",
@@ -605,6 +610,11 @@ return [
     "gal" => "Hora de remate",
     "en"  => "End time",
     ],
+  "error_404" => [
+    "es"  => "404",
+    "gal" => "404",
+    "en"  => "404",
+    ],
   "event" => [
     "es"  => "Evento",
     "gal" => "Evento",
@@ -736,6 +746,11 @@ return [
       "es"  => "Política de privacidad",
       "gal" => "Política de privacidade",
       "en"  => "Privacy policy",
+      ],
+    "legal_advice" => [
+      "es"  => "Aviso legal",
+      "gal" => "Aviso legal",
+      "en"  => "Legal advice",
       ],
     "txt" => [ # https://www.40defiebre.com/que-es/experiencia-usuario
       "es"  => "Utilizamos <em>cookies</em> propias y de terceros para mejorar tu experiencia como usuario/a y la seguridad.",

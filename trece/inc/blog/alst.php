@@ -24,9 +24,7 @@
 
 
 
-
-
-
+//Included or not?
 
   if(!isset($included)) :
 
@@ -46,11 +44,11 @@
 
 //Not logged? Not admin? Get out of here!
 
-  if (
-//    1+1==3 # Public for everyone
-      !$app->getUserSignInStatus() # Must be logged in
-      || $app->getUserHierarchy() != 1 # Must be admin
-     ) :
+  if(
+//  1+1==3 # Public for everyone
+    !$app->getUserSignInStatus() # Must be logged in
+    || $app->getUserHierarchy() != 1 # Must be admin
+    ) :
 
     header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
 //  header("location:".REALPATHLANG.QUERYQ);
@@ -62,7 +60,7 @@
 
 //No $what? Load page 1!
 
-  if ( !isset($what) ) :
+  if(!isset($what)) :
 
     header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
@@ -111,8 +109,8 @@
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
           \"date\":\"".$trece->date[$i]."\",
-          \"title\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->title[$i]))."\",
-          \"url_title\":\"".$trece->url_title[$i]."\"
+          \"title_en\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->title_en[$i]))."\",
+          \"url_title_en\":\"".$trece->url_title_en[$i]."\"
         }";
 
       endfor;
@@ -189,8 +187,12 @@
     $trece                      = new $action($db,$conf);
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->title               = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title"]));
-    $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title"]));
+    $trece->title_en            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title_en"]));
+    $trece->url_title_en        = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title_en"]));
+    $trece->title_gal           = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title_gal"]));
+    $trece->url_title_gal       = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title_gal"]));
+    $trece->title_es            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title_es"]));
+    $trece->url_title_es        = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title_es"]));
     $trece->date                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["date"]));
     $trece->id_author           = $app->getUserID();
 
@@ -223,12 +225,23 @@
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->date                = date("Y-m-d");
-    $trece->title               = mb_substr("Copy of ".$_POST["clone_title"],0,54);
-    $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$trece->date."-".$cconf["default"]["url_title"]));
-    $trece->intro               = $_POST["clone_intro"];
-    $trece->post                = $_POST["clone_post"];
+    $trece->title_en            = mb_substr("Copy of ".$_POST["clone_title_en"],0,54);
+    $trece->url_title_en        = trim(preg_replace("/[[:blank:]]+/"," ",$trece->date."-".$cconf["default"]["url_title_en"]));
+    $trece->intro_en            = $_POST["clone_intro_en"];
+    $trece->post_en             = $_POST["clone_post_en"];
+
+    $trece->title_gal           = mb_substr("Copia de ".$_POST["clone_title_gal"],0,54);
+    $trece->url_title_gal       = trim(preg_replace("/[[:blank:]]+/"," ",$trece->date."-".$cconf["default"]["url_title_gal"]));
+    $trece->intro_gal           = $_POST["clone_intro_gal"];
+    $trece->post_gal            = $_POST["clone_post_gal"];
+
+    $trece->title_es            = mb_substr("Copia de ".$_POST["clone_title_es"],0,54);
+    $trece->url_title_es        = trim(preg_replace("/[[:blank:]]+/"," ",$trece->date."-".$cconf["default"]["url_title_es"]));
+    $trece->intro_es            = $_POST["clone_intro_es"];
+    $trece->post_es             = $_POST["clone_post_es"];
+
     $trece->ids_labels          = $_POST["clone_ids_labels"];
-//  $trece->id_author           = $_POST["clone_id_author"];
+
     $trece->id_author           = $app->getUserID();
 
     $trece->addOne();
@@ -284,7 +297,15 @@
 
 
 
-  $lCustom["pagetitle"][LANG] = $lCustom["admin_list"][LANG];
+
+//metastuff
+  $lCustom["pagetitle"][LANG] = strip_tags($lCustom["admin_list"][LANG]);
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+
+
+
 
   $searchTarget     = false;
   $searchWhat       = "";
@@ -330,7 +351,7 @@
 
   endif;
 
-  $trece->intimacy = 1;
+  $trece->intimacy = 1; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
   $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchBloglabel);
   $rowcount_page = $trece->rowcount;
 
@@ -389,10 +410,10 @@ EOD;
             <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?>
           </p></div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
         </div>
       </div>
-    </div><!-- row -->
+    </div><!-- End row -->
 
 
 
@@ -432,7 +453,7 @@ EOD;
                       $bloglabels = new Bloglabels($db,$conf,$cconfBloglabels); $stmt = $bloglabels->readAllJSON();
                     ?>
                     <?php if ($bloglabels->rowcount>0): for($i=0;$i<$bloglabels->rowcount;$i++) : ?>
-                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchBloglabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->name[$i];?></option>
+                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchBloglabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->{"name_".LANG}[$i];?></option>
                     <?php endfor; endif; ?>
                   </select>
                 </div>
@@ -499,16 +520,16 @@ EOD;
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title[$i]);?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title_en[$i]);?>">
                 </a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <div class="bs-callout bs-callout-default">
-                  <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></small><br>
+                  <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date($conf["site"]["langs"][LANG]["date-format"],strtotime(${"trece"}->{"date"}[$i]));?></small><br>
                   <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                    <strong><?=${"trece"}->{"title"}[$i];?></strong>
+                    <strong><?=${"trece"}->{"title_".LANG}[$i];?></strong>
                   </a><br>
-                  <small><?=doWordWrap(${"trece"}->{"intro"}[$i]);?></small><br>
+                  <small><?=doWordWrap(${"trece"}->{"intro_".LANG}[$i]);?></small><br>
                   <?php if(${"trece"}->{"labels"}[$i] != "") : ?><small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small><?php endif; ?>
                 </div>
               </td>
@@ -519,9 +540,15 @@ EOD;
                     <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
                            data-date="<?=$trece->date[$i];?>" 
-                           data-title="<?=htmlspecialchars($trece->title[$i]);?>" 
-                           data-intro="<?=htmlspecialchars($trece->intro[$i]);?>" 
-                           data-post="<?=htmlspecialchars($trece->post[$i]);?>" 
+                           data-title_en="<?=htmlspecialchars($trece->title_en[$i]);?>" 
+                           data-intro_en="<?=htmlspecialchars($trece->intro_en[$i]);?>" 
+                           data-post_en="<?=htmlspecialchars($trece->post_en[$i]);?>" 
+                           data-title_gal="<?=htmlspecialchars($trece->title_gal[$i]);?>" 
+                           data-intro_gal="<?=htmlspecialchars($trece->intro_gal[$i]);?>" 
+                           data-post_gal="<?=htmlspecialchars($trece->post_gal[$i]);?>" 
+                           data-title_es="<?=htmlspecialchars($trece->title_es[$i]);?>" 
+                           data-intro_es="<?=htmlspecialchars($trece->intro_es[$i]);?>" 
+                           data-post_es="<?=htmlspecialchars($trece->post_es[$i]);?>" 
                            data-ids_labels="<?=htmlspecialchars($trece->ids_labels[$i]);?>" 
                            data-id_author="<?=htmlspecialchars($trece->id_author[$i]);?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
@@ -606,9 +633,15 @@ EOD;
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
       var date            =   $(this).data("date");
-      var title           =   $(this).data("title");
-      var intro           =   $(this).data("intro");
-      var post            =   $(this).data("post");
+      var title_en        =   $(this).data("title_en");
+      var intro_en        =   $(this).data("intro_en");
+      var post_en         =   $(this).data("post_en");
+      var title_gal       =   $(this).data("title_gal");
+      var intro_gal       =   $(this).data("intro_gal");
+      var post_gal        =   $(this).data("post_gal");
+      var title_es        =   $(this).data("title_es");
+      var intro_es        =   $(this).data("intro_es");
+      var post_es         =   $(this).data("post_es");
       var ids_labels      =   $(this).data("ids_labels");
       var id_author       =   $(this).data("id_author");
 
@@ -616,9 +649,15 @@ EOD;
         cloneThis:true,
         clone_ref:ref,
         clone_date:date,
-        clone_title:title,
-        clone_intro:intro,
-        clone_post:post,
+        clone_title_en:title_en,
+        clone_intro_en:intro_en,
+        clone_post_en:post_en,
+        clone_title_gal:title_gal,
+        clone_intro_gal:intro_gal,
+        clone_post_gal:post_gal,
+        clone_title_es:title_es,
+        clone_intro_es:intro_es,
+        clone_post_es:post_es,
         clone_ids_labels:ids_labels,
         clone_id_author:id_author,
         },function(data){

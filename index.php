@@ -150,13 +150,17 @@ endif;
   Thank you Adam Shaw for inventing FullCalendar. https://fullcalendar.io/
   Thank you Alexandru Mărășteanu for porting sprintf to Javascript. https://github.com/alexei/sprintf.js/
   Thank you Alexis Deveria (@fyrd) for inventing Can I use. https://caniuse.com/
+  Thank you Anita H Klock for inventing the syntax highlighting. https://en.wikipedia.org/wiki/Syntax_highlighting
   Thank you André Ruffert (@andreruffert) for inventing Rangeslider. http://rangeslider.js.org/
+  Thank you? Aza Raskin (@aza) for inventing the infinite scroll. https://bit.ly/343v4oR
   Thank you Blake Ross (@blakeross) for inventing Firefox. https://www.firefox.com/
   Thank you Boniface Pereira (@craftpip) for inventing jQuery Confirm. https://craftpip.github.io/jquery-confirm/
   Thank you Brendan Eich (@BrendanEich) for inventing JavaScript. https://www.javascript.com/
   Thank you Brent Matzelle (@bmatzelle) for inventing PHPMailer. https://github.com/PHPMailer/PHPMailer/
   Thank you Brian Reavis (@brianreavis) for inventing Selectize http://selectize.github.io/selectize.js/
+  Thank you Caleb Curry (@CalebCurry) for your wonderful tutorials. https://www.youtube.com/user/CalebTheVideoMaker2/
   Thank you Christian Robertson (@cr64) for inventing the Roboto fontface. https://fonts.google.com/specimen/Roboto/
+  Thank you Ciarán Walsh (@joomla51) for inventing the Imagehover.css library. http://imagehover.io/
   Thank you CJ Patoilo (@cjpatoilo) for inventing Milligram. https://milligram.io/
   Thank you Cloud Four (@cloudfour) for inventing hideShowPassword. https://cloudfour.github.io/hideShowPassword/
   Thank you Daniel Eden (@_dte) for inventing Animate.css. https://daneden.github.io/animate.css/
@@ -171,12 +175,14 @@ endif;
   Thank you Fabien Potencier (@fabpot) for inventing Symfony. https://www.symfony.com/
   Thank you Håkon Wium Lie (@wiumlie) for inventing CSS. https://www.w3.org/Style/CSS/
   Thank you Igor Escobar (@igorescobar) for inventing jQuery Mask Plugin. https://igorescobar.github.io/jQuery-Mask-Plugin/
+  Thank you Jakob Nielsen (@nngroup) for writing 'Be Succinct! (Writing for the Web)' https://bit.ly/24g1PJn and 'How Users Read on the Web' https://bit.ly/1plpY1w
   Thank you Jakub Vrána (@jakubvrana) for inventing Adminer. https://www.adminer.org/
   Thank you Javi Aguilar (@itsjaviaguilar) for inventing Bootstrap Colorpicker. https://farbelous.io/bootstrap-colorpicker/
   Thank you Jeff Atwood (@codinghorror) and Joel Spolsky (@spolsky) for inventing Stack Overflow. https://stackoverflow.com/
   Thank you Johan Sörlin (@spocke) for inventing TinyMCE. https://www.tinymce.com/
   Thank you John Gruber (@gruber) for inventing Markdown. https://daringfireball.net/projects/markdown/
   Thank you John Resig (@jeresig) for inventing jQuery. https://jquery.com/
+  Thank you Justin Hall (@jah) for inventing the blog. http://links.net/vita/web/original.html
   Thank you Linus Torvalds (@Linus__Torvalds) for inventing Linux. https://github.com/torvalds/linux/
   Thank you Maciej Gurban (@maciej_gurban) for inventing Responsive Bootstrap Toolkit. https://github.com/maciej-gurban/responsive-bootstrap-toolkit/
   Thank you Mark Otto (@mdo) and Jacob Thornton (@fat) for inventing Bootstrap. https://getbootstrap.com/
@@ -188,6 +194,7 @@ endif;
   Thank you Pasquale Vitiello (@pacovitiello) for inventing Sneakpeekit. https://sneakpeekit.com/
   Thank you Rasmus Lerdorf (@rasmus) for inventing PHP. http://php.net/
   Thank you Richard Stallman for founding the Free Software Foundation. https://www.fsf.org/
+  Thank you Rik Schennink (@rikschennink) for inventing Fitty. https://rikschennink.github.io/fitty/
   Thank you Ryan Kirkman (@ryan_kirkman) and Ajax Davis (@ajaxdavis) for inventing cdnjs. https://cdnjs.com/
   Thank you Sebastian Tschan for inventing jQuery File Upload. https://github.com/blueimp/jQuery-File-Upload/
   Thank you Silvio Moreto (@silviomoreto) for inventing Bootstrap-Select. https://silviomoreto.github.io/bootstrap-select/
@@ -199,6 +206,7 @@ endif;
   Thank you Tim Berners-Lee (@timberners_lee) for inventing the Web and HTML. https://www.w3.org/html/
   Thank you Tim Kosse (@TimKosse) for inventing FileZilla. https://filezilla-project.org/
   Thank you Tom Preston-Werner (@mojombo) for inventing GitHub. https://github.com/
+  Thank you Unicode Consortium (@unicode) for inventing the Unicode standard. https://unicode.org/
   Thank you Vinton Cerf (@vgcerf) for inventing the Internet. https://es.wikipedia.org/wiki/Vinton_Cerf/
   Thank you Vitaliy Potapov (@vitpotapov) for inventing X-editable. https://vitalets.github.io/x-editable/
   Thank you Ward Cunningham (@WardCunningham) for inventing the wiki. http://wiki.c2.com/
@@ -228,7 +236,9 @@ endif;
       "culture-name1"     => $langArray[1],       # example: gl-ES
       "culture-name2"     => $cultureName2,       # example: gl_ES
       "half-culture-name" => $halfCultureName[0], # example: gl
-      "direction"         => (isset($langArray[2])?$langArray[2]:"ltr"),
+      "date-format"       => $dateformat=(isset($langArray[2])?$langArray[2]:"Y-m-d"),
+      "date-format2"      => str_replace(array("d","m","Y","-"),array("DD","MM","YYYY","/"),$dateformat),
+      "direction"         => (isset($langArray[3])?$langArray[3]:"ltr"),
       ];
 
   endforeach;

@@ -68,7 +68,11 @@
 
 //Still here? OK, let's talk.
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $trece->name;
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
 
 
@@ -100,7 +104,7 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$trece->name;?></strong></h1>
         </div>
 
         <p>&nbsp;</p>

@@ -21,8 +21,10 @@ echo <<<ENDCSS
 
 */
 
+html,body{max-width:100%;overflow-x:hidden;}
 html{position:relative; min-height:100%;}
 body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !important;}
+
 
 
 /* BOOTSTRAP */
@@ -42,7 +44,13 @@ body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !
 .navbar-text a:active {text-decoration:none;color:white !important;}
 
 /* vertical smartphones */
-@media screen and (min-width:360px) and (max-width:752px){.navbar-fixed-top>.container{padding-left:0;}.navbar-text{margin-left:15px;}.navbar-collapse{max-height:100% !important;}.navbar-brand{padding:18px 0 0 15px;margin:0;}}
+@media screen and (min-width:360px) and (max-width:752px){
+  .navbar-fixed-top>
+  .container{padding-left:0;}
+  .navbar-text{margin-left:15px;}
+  .navbar-collapse{max-height:100% !important;}
+  .navbar-brand{padding:6px 0 0 15px;margin:0;}
+  }
 /* horizontal smartphones and vertical tablets */
 @media screen and (min-width:753px) and (max-width:1023px){}
 /* horizontal tablets and normal desktops */

@@ -36,8 +36,12 @@ return [
 
   "default" => [
     "id_status"      => 1,
-    "name"           => "New bloglabel",
-    "url_name"       => "new-bloglabel",
+    "name_en"        => "New bloglabel",
+    "url_name_en"    => "new-bloglabel",
+    "name_gal"       => "Nova bloglabel",
+    "url_name_gal"   => "nova-bloglabel",
+    "name_es"        => "Nueva bloglabel",
+    "url_name_es"    => "nueva-bloglabel",
     "max_new_items"  => 15,
     ],
 

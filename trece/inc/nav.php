@@ -104,6 +104,7 @@
                       <li><?=nav($lCommon["privileges"][LANG],"uprivileges");?></li>
                       <li><?=nav($lCommon["hierarchy"][LANG],"uhierarchy");?></li>
                       <li><?=nav($lCommon["users"][LANG],"users");?></li>
+                      <li role="separator" class="divider"></li>
                       <li><?=nav($lCommon["blog"][LANG],"blog");?></li>
                       <li><?=nav($lCommon["bloglabels"][LANG],"bloglabels");?></li>
                     </ul>

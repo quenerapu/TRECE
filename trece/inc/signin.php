@@ -37,7 +37,11 @@
 
 //OK. Let's talk.
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCommon["signin"][LANG];
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
   $msg = false;
 
@@ -98,7 +102,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCommon["signin"][LANG];?></strong></h1>
         </div>
       </div>
 

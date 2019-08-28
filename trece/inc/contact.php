@@ -171,12 +171,16 @@
 
 //Still here? OK, let's talk.
 
-  $lCustom["pagetitle"][LANG] = "Contacta con ".$conf["meta"]["name"][LANG];
-  $conf["meta"]["description"][LANG] = $conf["contact"]["email"];
+//metastuff
+  $lCustom["pagetitle"][LANG] = "Contacta con ".$conf["meta"]["name"][LANG]; # !!!
+  $lCustom["metadescription"][LANG] = strip_tags($conf["contact"]["email"]); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 
   $customJS = <<<EOD
+  <script src="https://www.google.com/recaptcha/api.js"></script>
   <script>
     /* whatever */
   </script>
@@ -210,7 +214,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
-          <h1><?=$lCustom["pagetitle"][LANG];?></h1>
+          <h1><?="Contacta con ".$conf["meta"]["name"][LANG];?></h1><!-- !!! -->
         </div>
       </div>
 
@@ -324,11 +328,6 @@ EOD;
     $(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});
   </script>
   <?php endif; ?>
-
-
-
-  <!-- reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js"></script>
 
 
 

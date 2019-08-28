@@ -36,8 +36,12 @@ return [
 
   "default" => [
     "id_status"         => 0,
-    "title"             => "New post",
-    "url_title"         => date("Y-m-d")."-new-post",
+    "title_en"          => "New post",
+    "url_title_en"      => date("Y-m-d")."-new-post",
+    "title_gal"         => "Nova entrada",
+    "url_title_gal"     => date("Y-m-d")."-nova-entrada",
+    "title_es"          => "Nueva entrada",
+    "url_title_es"      => date("Y-m-d")."-nueva-entrada",
     "date"              => date("Y-m-d"),
     "max_new_items"     => 15,
     ],

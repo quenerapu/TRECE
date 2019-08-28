@@ -171,9 +171,12 @@ EOD;
 
 
 
-  $lCustom["og_image"] = file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?REALPATH.$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg":(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Novas");
-  $lCustom["pagetitle"][LANG] = ${"trece"}->{"title"};
-  $conf["meta"]["description"][LANG] = ${"trece"}->{"intro"};
+//metastuff
+  $lCustom["pagetitle"][LANG] = strip_tags(${"trece"}->{"title_".LANG});
+  $lCustom["metadescription"][LANG] = strip_tags(${"trece"}->{"intro_".LANG});
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?REALPATH.$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg":(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Blog post");
+
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
 
@@ -188,8 +191,8 @@ EOD;
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
         <h1>
-          <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}));?></small><br>
-          <?=${"trece"}->{"title"};?>
+          <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date($conf["site"]["langs"][LANG]["date-format"],strtotime(${"trece"}->{"date"}));?></small><br>
+          <?=${"trece"}->{"title_".LANG};?>
         </h1>
 
       </div>
@@ -197,7 +200,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-        <img src="<?=(file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars(${"trece"}->{"title"});?>">
+        <img src="<?=$lCustom["og_image"];?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars(${"trece"}->{"title_".LANG});?>">
 
       </div>
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">

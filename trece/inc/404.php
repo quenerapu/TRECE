@@ -39,11 +39,12 @@ EOD;
 
 
 
-  $lCustom["pagetitle"]["es"] = "404";
-  $lCustom["pagetitle"]["gal"] = "404";
-  $lCustom["pagetitle"]["en"] = "404";
+//metastuff
+  $lCustom["pagetitle"][LANG] = strip_tags($lCommon["error_404"][LANG]);
+  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
-  $conf["meta"]["description"][LANG] = "Error 404";
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");
 
@@ -56,7 +57,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCommon["error_404"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

@@ -37,8 +37,12 @@ class Bloglabels{
   //object properties
   public $id;
   public $id_status;
-  public $name;
-  public $url_name;
+  public $name_en;
+  public $url_name_en;
+  public $name_gal;
+  public $url_name_gal;
+  public $name_es;
+  public $url_name_es;
   public $date_reg;
   public $date_upd;
   public $ip_upd;
@@ -49,7 +53,7 @@ class Bloglabels{
   public $query = "";
   public $query1 = "";
   public $query2 = "";
-  public $xx = ["id_status","name","url_name","date_upd","ip_upd","ref","loops_ref"];
+  public $xx = ["id_status","name_en","url_name_en","name_gal","url_name_gal","name_es","url_name_es","date_upd","ip_upd","ref","loops_ref"];
   public $xx_notinsearch = ["id_status","date_upd","ip_upd","ref","loops_ref"];
 
 
@@ -239,9 +243,9 @@ class Bloglabels{
 
     $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
+                    "AND ".$this->tableletter.".`name_en` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name_en"]."%' " .
                     (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
-                    "ORDER BY ". $this->tableletter.".`name` ASC";
+                    "ORDER BY ". $this->tableletter.".`name_en` ASC";
 
     $this->query = $this->queryBeautifier($this->query);
 
@@ -300,7 +304,7 @@ class Bloglabels{
     $this->rowcount_absolute = $stmt->rowCount();
 
     $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
+                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name_en` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name_en"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name_en` COLLATE utf8mb4_unicode_ci ASC " .
                    "LIMIT {$from_record_num}, {$records_per_page}";
 
     $this->query = $this->queryBeautifier($this->query);

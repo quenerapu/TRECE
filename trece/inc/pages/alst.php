@@ -279,7 +279,11 @@
 
 
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["admin_list"][LANG];
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
   $searchTarget     = false;
   $searchWhat       = "";
@@ -382,7 +386,7 @@ EOD;
             <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?>
           </p></div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

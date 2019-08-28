@@ -251,7 +251,11 @@
   $filename         = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
   $trece->gotPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg") ? true : false;
 
+//metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG].": ".$trece->name;
+  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+  $lCustom["metakeywords"] = "key word keyword";
+  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
 
 
@@ -291,7 +295,7 @@ EOD;
           <div class="pull-right"><p>
             <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
-          <h1><strong><?=$lCustom["edit"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["edit"][LANG].": ".$trece->name;?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
