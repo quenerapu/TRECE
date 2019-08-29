@@ -126,7 +126,9 @@
     unset($_FILES);
     $msg = true;
 
-    if(isset($_POST["date"]))       : $trece->date          = $_POST["date"]!=""?date("Y-m-d",strtotime(str_replace("/","-",$_POST["date"]))):"0000-00-00"; endif;
+    if(isset($_POST["date"]) && $_POST["date"]!="") : 
+                                      $trece->date          = DateTime::createFromFormat($conf["site"]["langs"][LANG]["date-format"],$_POST["date"]);
+                                      $trece->date          = $trece->date->format("Y-m-d");                                                                endif;
     if(isset($_POST["title_en"]))   : $trece->title_en      = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));
                                       $trece->url_title_en  = $trece->date."-".getUrlFriendlyString($trece->title_en);                                      endif;
     if(isset($_POST["intro_en"]))   : $trece->intro_en      = $_POST["intro_en"];                                                                           endif;

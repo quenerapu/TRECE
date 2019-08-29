@@ -229,8 +229,8 @@
     $trece->name_es             = "Copia de ".$_POST["clone_name_es"];
     $trece->url_name_es         = getUrlFriendlyString($trece->name_es);
 
-    $trece->addOne();
-
+    if(mb_strlen($trece->name_en)<100) : $trece->addOne(); die(); endif;
+    echo ":(";
     die();
 
   endif;
@@ -545,8 +545,11 @@ EOD;
         clone_name_es:name_es,
         },function(data){
 //      alert(data);
-        location.reload();
-        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
+        if(data==""){location.reload();}else{
+          $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["cannot_be_cloned"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+          }
+        }).fail(function(){$.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});}
+        );
       return false;
       });
   </script>
@@ -571,7 +574,7 @@ EOD;
           success:function(response,newValue){
 //          alert(JSON.stringify(params,null,4));
             if(response.length>0){
-              $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+              $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
               }
               id = $(this).data("pk")+""; /* https://stackoverflow.com/a/36483219 */
               if(id.indexOf("|")>=0){id=id.split("|");id=id[0];}

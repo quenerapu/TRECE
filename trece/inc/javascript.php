@@ -129,13 +129,7 @@
       howMany = who.split("|").length-1;
 
       if(howMany>0){
-        $.confirm({
-          content: sprintf("<?=$lCommon["you_are_going_to_delete"][LANG];?>",howMany,function(){return howMany>1?"<?=$lCommon["you_are_going_to_delete_plural"][LANG];?>":"";}),
-          buttons:{
-            confirm:{text:"<?=$lCommon["accept"][LANG];?>",action:function(){deleteThem(who);}},
-            cancel:{text:"<?=$lCommon["cancel"][LANG];?>",action:function(){}},
-            }
-          });
+        $.confirm({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"<?=$lCommon["warning"][LANG];?>",type:"red",content: sprintf("<?=$lCommon["you_are_about_to_delete"][LANG];?>",howMany,function(){return howMany>1?"<?=$lCommon["you_are_about_to_delete_plural"][LANG];?>":"";}),buttons:{confirm:{text:"<?=$lCommon["accept"][LANG];?>",action:function(){deleteThem(who);}},cancel:{text:"<?=$lCommon["cancel"][LANG];?>",action:function(){}},}});
         }
       });
   </script>

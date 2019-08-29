@@ -1642,6 +1642,11 @@ return [
 # ...###..###....................................................................................................
 # ...............................................................................................................
 
+  "warning" => [
+    "es"  => "Atención",
+    "gal" => "Atención",
+    "en"  => "Warning",
+    ],
   "website" => [
     "es"  => "Sitio web",
     "gal" => "Sitio web",
@@ -1702,12 +1707,12 @@ return [
     "gal" => "Si",
     "en"  => "Yes",
   ],
-  "you_are_going_to_delete" => [
+  "you_are_about_to_delete" => [
     "es"  => "Vas a eliminar %s elemento%s.",
     "gal" => "Vas eliminar %s elemento%s.",
-    "en"  => "You are going to delete %s item%s.",
+    "en"  => "You are about to delete %s item%s.",
     ],
-  "you_are_going_to_delete_plural" => [
+  "you_are_about_to_delete_plural" => [
     "es"  => "s",
     "gal" => "s",
     "en"  => "s",
