@@ -31,7 +31,7 @@
 return [
 
   "file" => [
-    "ref"               => "url_title",       # File ref
+    "ref"               => "url_title_en",  # File ref
     ],
 
   "default" => [
@@ -47,21 +47,21 @@ return [
     ],
 
   "img" => [
-    "ref"               => "ref",         # Image ref
-    "prefix"            => "blogpost_",   # Croppie prefix
-    "canvas_w"          => 1600,          # Croppie canvas width
-    "canvas_h"          => 900,           # Croppie canvas height
-    "viewport_w"        => 390,           # Croppie viewport width
-    "viewport_h"        => 219,           # Croppie viewport height
-    "img_w"             => 1600,          # PHP GD image width
-    "img_h"             => 900,           # PHP GD image height
-    "icon_w"            => 400,           # PHP GD icon width
-    "icon_h"            => 225,           # PHP GD icon height
-    "thumb_w"           => 160,           # PHP GD thumb width
-    "thumb_h"           => 90,            # PHP GD thumb height
-    "post_max_img"      => 1200,          # For images uploaded to post
-    "post_max_icon"     => 600,           # For images uploaded to post
-    "post_max_thumb"    => 120,           # For images uploaded to post
+    "ref"               => "ref",           # Image ref
+    "prefix"            => "blogpost_",     # Croppie prefix
+    "canvas_w"          => 1600,            # Croppie canvas width
+    "canvas_h"          => 900,             # Croppie canvas height
+    "viewport_w"        => 390,             # Croppie viewport width
+    "viewport_h"        => 219,             # Croppie viewport height
+    "img_w"             => 1600,            # PHP GD image width
+    "img_h"             => 900,             # PHP GD image height
+    "icon_w"            => 400,             # PHP GD icon width
+    "icon_h"            => 225,             # PHP GD icon height
+    "thumb_w"           => 160,             # PHP GD thumb width
+    "thumb_h"           => 90,              # PHP GD thumb height
+    "post_max_img"      => 1200,            # For images uploaded to post
+    "post_max_icon"     => 600,             # For images uploaded to post
+    "post_max_thumb"    => 120,             # For images uploaded to post
     ],
 
   ];

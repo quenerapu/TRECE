@@ -88,6 +88,85 @@
 
 
 
+
+
+  if(isset($_POST["qq"]) && isset($_POST["dir"])) :
+
+
+    /*
+     Folder Tree with PHP and jQuery.
+
+     R. Savoul Pelister
+     http://techlister.com
+
+    */
+
+
+    class treeview{
+
+      private $files;
+      private $folder;
+      
+      function __construct($path) {
+        
+        $files = array(); 
+        if(file_exists($path)) :
+          if($path[strlen($path)-1]== "/"){$this->folder = $path;}else{$this->folder = $path."/";}
+          $this->dir = opendir($path);
+          while(($file = readdir($this->dir))!=false):$this->files[] = $file; endwhile;
+          closedir($this->dir);
+        endif;
+      }
+
+      function create_tree(){
+          
+        if(count($this->files) > 2) : /* First 2 entries are . and ..  -skip them */
+          natcasesort($this->files);
+          $list = "<ul class=\"filetree\" style=\"display:none;\">";
+          // Group folders first
+          foreach($this->files as $file) :
+            if(file_exists($this->folder.$file) && $file != "." && $file != ".." && is_dir($this->folder.$file)) :
+              $list.= "<li class=\"folder collapsed\"><a href=\"#\" rel=\"".htmlentities($this->folder.$file)."/\">".htmlentities($file)."</a></li>";
+            endif;
+          endforeach;
+          // Group all files
+          foreach($this->files as $file) :
+            if(file_exists($this->folder.$file) && $file != "." && $file != ".." && !is_dir($this->folder.$file)) :
+              $ext = preg_replace("/^.*\./","",$file);
+              $list.= "<li class=\"ext_".$ext."\"><a class=\"file\" href=\"#\" rel=\"".htmlentities($this->folder.$file)."\">".htmlentities($file)."</a></li>";
+            endif;
+          endforeach;
+          $list.= "</ul>";  
+          return $list;
+        endif;
+      }
+
+    }
+
+    $path = urldecode($_REQUEST["dir"]);
+    $tree = new treeview($path);
+    echo $tree->create_tree();
+
+  die();
+  endif;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ...................................................................................
 # ..#####..######.##.....######.######.######...######.##...##..####...####..######..
 # ..##..##.##.....##.....##.......##...##.........##...###.###.##..##.##.....##......
@@ -250,6 +329,13 @@
 
   if(isset($_GET["filebrowser"])) : ?>
 
+
+
+
+
+
+
+<?php if(isset($_GET["type"]) && $_GET["type"]=="image") : ?>
     <style>
       a.file{cursor:pointer;}
       a.delete{cursor:pointer;}
@@ -274,6 +360,7 @@
     <script>
       jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
     </script>
+
     <div class="row">
       <div class="thumbs">
         <ul>
@@ -331,6 +418,165 @@
           });
         });
     </script>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php if(isset($_GET["type"]) && $_GET["type"]=="file") : ?>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
+    <style>
+
+/*    ul.filetree{font-family:Verdana, sans-serif;font-size:14px;line-height:20px;padding:0px;margin:0px;} */
+      ul.filetree{font-size:1em;line-height:1.5em;padding:0px;margin:0px;}
+      ul.filetree li{list-style:none;padding:0 0 0 .5em;margin:0 0 0 .2em;white-space:nowrap;}
+      ul.filetree a{color:#333;text-decoration:none;display:block;padding:0px 2px 0px 5px;margin-left:15px;}
+      .filetree ul{padding-left:.7em;}
+/*    .filetree li ul li:before{position:absolute;}
+      .filetree li ul li{position:relative;} */
+
+      ul.filetree li a:before
+/*    a[href$=".doc"]:before, */
+/*    a[href$=".pdf"]:before, */
+/*    a[href$=".zip"]:before */
+      {
+        display: inline-block;
+        font: normal normal normal 1em/1.5 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transform: translate(0,0);
+        width: .5em;
+        text-align: right;
+        margin-right: .8em;
+        }
+
+      ul.filetree li.collapsed a:before{content:"\f114";}
+      li.expanded a:before{content:"\f115";}
+      li a.file:before{content:"\f016";}
+      ul.filetree a:hover{background:#bdf;}
+
+/*    Office */
+      li.ext_txt a.file:before{content:"\f0f6";}
+      li.ext_doc a.file:before,
+      li.ext_docx a.file:before{content:"\f1c2";}
+      li.ext_xls a.file:before{content:"\f1c3";}
+      li.ext_pdf a.file:before{content:"\f1c1";}
+
+/*    Images */
+      li.ext_jpg a.file:before,
+      li.ext_png a.file:before,
+      li.ext_gif a.file:before,
+      li.ext_psd a.file:before{content:"\f1c5";}
+
+/*    Multimedia */
+      li.ext_wav a.file:before,
+      li.ext_mp3 a.file:before{content:"\f1c7";}
+      li.ext_mov a.file:before,
+      li.ext_avi a.file:before,
+      li.ext_mkv a.file:before,
+      li.ext_swf a.file:before,
+      li.ext_mp4 a.file:before{content:"\f1c8";}
+
+/*    Code */
+      li.ext_jar a.file:before,
+      li.ext_php a.file:before,
+      li.ext_asp a.file:before,
+      li.ext_sql a.file:before,
+      li.ext_css a.file:before,
+      li.ext_htm a.file:before,
+      li.ext_html a.file:before,
+      li.ext_js a.file:before{content:"\f1c9";}
+
+/*    Compressed */
+      li.ext_rar a.file:before,
+      li.ext_zip a.file:before{content:"\f1c6";}
+
+/*
+      a[href$=".doc"]:before{content:"\f1c2";}
+      a[href$=".pdf"]:before{content:"\f1c1";}
+      a[href$=".zip"]:before{content:"\f1c6";}
+*/
+    </style>
+  
+    <script>
+      $(document).ready(function(){
+      $("#container").html('<ul class="filetree start"><li class="wait">'+'Generating Tree...'+'<li></ul>');
+
+      getfilelist($("#container"),"download");
+
+      function getfilelist(cont,root){
+        $(cont).addClass("wait");
+        $.post([location.protocol,'//',location.host,location.pathname].join(''),{qq:true,dir:root},function(data){
+          $(cont).find(".start").html("");
+          $(cont).removeClass("wait").append(data);
+          if("download"==root){$(cont).find("ul:hidden").show();}else{$(cont).find("ul:hidden").slideDown({duration:300,easing:null});}
+        });
+      }
+      
+      $("#container").on("click","li a",function(){
+        var entry = $(this).parent();
+        if(entry.hasClass("folder")){
+          if(entry.hasClass("collapsed")){
+            entry.find("ul").remove();
+            getfilelist(entry,escape($(this).attr("rel")));
+            entry.removeClass("collapsed").addClass("expanded");
+            }
+          else{
+            entry.find("ul").slideUp({duration:300,easing:null});
+            entry.removeClass("expanded").addClass("collapsed");
+          }
+        }
+        else{
+          item_url = $(this).attr("rel");
+          var args = top.tinymce.activeEditor.windowManager.getParams();
+          win = (args.window);
+          input = (args.input);
+          win.document.getElementById(input).value = item_url;
+          top.tinymce.activeEditor.windowManager.close();
+        }
+      return false;
+      });
+
+    });
+    </script>
+
+<div id="container"></div>
+
+
+<?php /*
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
+  <h1>Fichero</h1>
+  <ul>
+<?php foreach(glob($conf["dir"]["download"]."*.{pdf,PDF,doc,DOC,docx,DOCX,zip,ZIP}",GLOB_BRACE) as $file): ?>
+    <li>
+      <?=$file;?>
+    </li>
+<?php endforeach; ?>
+  </ul>
+*/ ?>
+
+
+<?php endif; ?>
+
+
+
+
+
+
+
 <?php die(); endif;
 
 # .. END FILEBROWSER
@@ -727,8 +973,9 @@ EOD;
       visualblocks_default_state: true,
       inline_boundaries: true,
       image_dimensions: true,
+      file_picker_types: "file image media",
       image_class_list: [{title:"Responsive", value:"img-responsive"},{title:"Alin. izquerda", value:"img-pull-left pull-left"},{title:"Alin. derecha", value:"img-pull-right pull-right"}],
-      file_browser_callback: function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"Insertar fichero",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
+      file_browser_callback: function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"File browser",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
       images_upload_url: "<?=REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["site"]["virtualpathArray"][1];?>",
 //    images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
       images_upload_handler: function(blobInfo,success,failure){
@@ -741,12 +988,22 @@ EOD;
         formData.append("file",blobInfo.blob(),blobInfo.filename());
         xhr.send(formData);
       },
+/*
+      external_filemanager_path: "filemanager/",
+      filemanager_title: "Responsive Filemanager",
+      external_plugins: {
+        "responsivefilemanager": "../../tinymce/plugins/responsivefilemanager/plugin.min.js",
+        "filemanager": "../../filemanager/plugin.min.js"
+      },
+      extended_valid_elements: 'img[class="your-custom-class-name"|src|border=0|alt|title|hspace|vspace|align|onmouseover|onmouseout|name]',
+*/
       entity_encoding: "raw",
       paste_as_text: true,
       paste_word_valid_elements: "b,strong,i,em,h1,h2",
       paste_retain_style_properties: "color",
       height: 400,
       content_css: [
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css",
         "https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i",
         "<?=REALPATH.$conf["dir"]["styles"];?>tinymce.css?" + new Date().getTime(),
         ],

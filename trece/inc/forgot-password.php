@@ -36,7 +36,7 @@
 
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCommon["forgot-password"][LANG];
+  $lCustom["pagetitle"][LANG] = $lCommon["forgot_password"][LANG];
   $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
   $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
   $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
@@ -123,7 +123,7 @@ EOD;
           </p></div>
           <?php endif; ?>
           <?php endif; ?>
-          <h1><strong><?=$lCommon["forgot-password"][LANG];?></strong></h1>
+          <h1><strong><?=$lCommon["forgot_password"][LANG];?></strong></h1>
         </div>
       </div>
 
@@ -140,7 +140,7 @@ EOD;
 
           <div class="form-group">
             <div class="col-sm-offset-6 col-sm-6">
-              <button type="submit" name="forgot-password" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["change-password"][LANG];?></button>
+              <button type="submit" name="forgot_password" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["change-password"][LANG];?></button>
             </div>
           </div>
 

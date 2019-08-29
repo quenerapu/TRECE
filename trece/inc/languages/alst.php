@@ -554,7 +554,7 @@ EOD;
           success:function(response,newValue){
   //        alert(JSON.stringify(params,null,4));
             if(response.length>0){
-              $.alert({type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+              $.alert({type:"red",content:"<?=$lCommon["duplicated_name"][LANG];?>",closeIcon:true,closeIconClass:"fa fa-close",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
               }
               id = $(this).data("pk")+""; /* https://stackoverflow.com/a/36483219 */
               if(id.indexOf("|")>=0){id=id.split("|");id=id[0];}

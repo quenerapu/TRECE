@@ -196,6 +196,7 @@ endif;
   Thank you Richard Stallman for founding the Free Software Foundation. https://www.fsf.org/
   Thank you Rik Schennink (@rikschennink) for inventing Fitty. https://rikschennink.github.io/fitty/
   Thank you Ryan Kirkman (@ryan_kirkman) and Ajax Davis (@ajaxdavis) for inventing cdnjs. https://cdnjs.com/
+  Thank you Savoul Pelister (@techlister) for inventing Simple Folder tree with PHP and jQuery. http://techlister.com/
   Thank you Sebastian Tschan for inventing jQuery File Upload. https://github.com/blueimp/jQuery-File-Upload/
   Thank you Silvio Moreto (@silviomoreto) for inventing Bootstrap-Select. https://silviomoreto.github.io/bootstrap-select/
   Thank you Stefan Bohacek (@fourtonfish) for inventing Simple Sharing Buttons Generator. https://simplesharingbuttons.com/

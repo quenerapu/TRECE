@@ -44,11 +44,6 @@ return [
     "gal" => "Clonar privilexio",
     "en"  => "Clone privilege",
     ],
-  "duplicated_name" => [
-    "es" => "Nombre de privilegio repetido.",
-    "gal" => "Nome de privilexio repetido.",
-    "en" => "Duplicated privilege name.",
-    ],
   "edit" => [
     "es"  => "Editar privilegio",
     "gal" => "Editar privilexio",

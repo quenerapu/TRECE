@@ -8,7 +8,7 @@ Usage:
     "es"  => "Hola mundo",
     "gal" => "Ola mundo",
     "en"  => "Hello world",
-    ];
+    ],
 
   echo $lCommon["hello_world"][PAGE_LANGUAGE];
   echo $lCommon["hello_world"]["gal"];
@@ -26,7 +26,7 @@ or...
       "gal" => "Adeus mundo.",
       "en"  => "Good bye world.",
       ],
-    ];
+    ],
 
   echo $lCommon["greetings"]["hello_world"][PAGE_LANGUAGE];
   echo $lCommon["greetings"]["hello_world"]["gal"];
@@ -88,16 +88,6 @@ return [
     "gal" => "Sobre %s",
     "en"  => "All about %s",
     ],
-  "about_us" => [
-    "es"  => "Acerca de nosotros",
-    "gal" => "Sobre nós",
-    "en"  => "About us",
-    ],
-  "accreditations" => [
-    "es" => "Acreditaciones",
-    "gal" => "Acreditacións",
-    "en" => "Accreditations",
-    ],
   "accept" => [
     "es" => "Aceptar",
     "gal" => "Aceptar",
@@ -113,47 +103,22 @@ return [
     "gal" => "Activo",
     "en" => "Active",
     ],
-  "activity" => [
-    "es"  => "Actividad",
-    "gal" => "Actividade",
-    "en"  => "Activity",
-    ],
-  "activities" => [
-    "es"  => "Actividades",
-    "gal" => "Actividades",
-    "en"  => "Activities",
-    ],
-  "activity_list_admin" => [
-    "es"  => "Administración de actividades",
-    "gal" => "Administración de actividades",
-    "en"  => "Activity list",
-    ],
   "actual_page" => [
     "es" => "Página actual",
     "gal" => "Páxina actual",
     "en" => "Actual page",
     ],
   "add" => [
-    "es"  => "Anadir",
+    "es"  => "Añadir",
     "gal" => "Engadir",
     "en"  => "Add",
-    ],
-  "add_site" => [
-    "es"  => "Anadir sede",
-    "gal" => "Engadir sede",
-    "en"  => "Add site",
-    ],
-  "address" => [
-    "es"  => "Dirección",
-    "gal" => "Enderezo",
-    "en"  => "Address",
     ],
   "admin" => [
     "es"  => "Administración",
     "gal" => "Administración",
     "en"  => "Admin",
     ],
-  "admin_list" => [
+  "admin_list" => [ // !!!!
     "es"  => "Listado del administrador/a",
     "gal" => "Listado do administrador/a",
     "en"  => "Admin list",
@@ -163,50 +128,10 @@ return [
     "gal" => "Panel de administración",
     "en"  => "Admin panel",
     ],
-  "and_add_a_new_blank_file" => [
-    "es"  => "...y crear una nueva ficha en blanco",
-    "gal" => "...e crear unha nova ficha en branco",
-    "en"  => "...and ad a new blank file",
-    ],
-  "answers" => [
-    "es"  => "Posibles respuestas",
-    "gal" => "Posibles respostas",
-    "en"  => "Available answers",
-    ],
   "are_you_sure" => [
     "es"  => "¿Estás seguro/a?",
     "gal" => "Estás seguro/a?",
     "en"  => "Are you sure?",
-    ],
-  "area" => [
-    "es"  => "Área",
-    "gal" => "Área",
-    "en"  => "Area",
-    ],
-  "areas" => [
-    "es"  => "Áreas",
-    "gal" => "Áreas",
-    "en"  => "Areas",
-    ],
-  "areas_list_admin" => [
-    "es"  => "Administración de áreas",
-    "gal" => "Administración de áreas",
-    "en"  => "Areas list",
-    ],
-  "asoc" => [
-    "es"  => "Asociación",
-    "gal" => "Asociación",
-    "en"  => "Associantion",
-    ],
-  "asocs" => [
-    "es"  => "Asociaciones",
-    "gal" => "Asociacións",
-    "en"  => "Associantions",
-    ],
-  "asocs_list_admin" => [
-    "es"  => "Administración de asociaciones",
-    "gal" => "Administración de asociacións",
-    "en"  => "Associations list",
     ],
   "avatar" => [
     "es"  => "Avatar",
@@ -235,11 +160,6 @@ return [
     "es"  => "Etiquetas del blog",
     "gal" => "Etiquetas do blog",
     "en"  => "Blog labels",
-    ],
-  "board" => [
-    "es"  => "Junta Directiva",
-    "gal" => "Xunta Directiva",
-    "en"  => "Board of Directors",
     ],
 
 
@@ -284,140 +204,15 @@ return [
     "gal" => "Non se pode borrar",
     "en"  => "Cannot be deleted",
     ],
-  "cannot_be_labeled" => [
-    "es"  => "No se puede etiquetar",
-    "gal" => "Non se pode etiquetar",
-    "en"  => "Cannot be labeled",
-    ],
   "cannot_be_logged_out" => [
     "es"  => "No se puede cerrar la sesión",
     "gal" => "Non se pode pechar a sesión",
     "en"  => "Cannot be logged out",
     ],
-  "clic_here_to_change_your_password" => [
-    "es"  => "Haz clic aquí para crear/cambiar tu contraseña para %s:",
-    "gal" => "Fai clic aquí para crear/cambiar o teu contrasinal para %s:",
-    "en"  => "Do click here to create/change your password for %s:",
-    ],
   "clone" => [
     "es"  => "Clonar",
     "gal" => "Clonar",
     "en"  => "Clone",
-    ],
-  "clone_activity" => [
-    "es"  => "Clonar actividad",
-    "gal" => "Clonar actividade",
-    "en"  => "Clone activity",
-    ],
-  "clone_area" => [
-    "es"  => "Clonar área",
-    "gal" => "Clonar área",
-    "en"  => "Clone area",
-    ],
-  "clone_asoc" => [
-    "es"  => "Clonar asociación",
-    "gal" => "Clonar asociación",
-    "en"  => "Clone association",
-    ],
-  "clone_course" => [
-    "es"  => "Clonar curso",
-    "gal" => "Clonar curso",
-    "en"  => "Clone course",
-    ],
-  "clone_edition" => [
-    "es"  => "Clonar edición",
-    "gal" => "Clonar edición",
-    "en"  => "Clone edition",
-    ],
-  "clone_file" => [
-    "es"  => "Clonar archivo",
-    "gal" => "Clonar arquivo",
-    "en"  => "Clone file",
-    ],
-  "clone_filetype" => [
-    "es"  => "Clonar tipo de archivo",
-    "gal" => "Clonar tipo de arquivo",
-    "en"  => "Clone filetype",
-    ],
-  "clone_folder" => [
-    "es"  => "Clonar carpeta",
-    "gal" => "Clonar cartafol",
-    "en"  => "Clone folder",
-    ],
-  "clone_highlight_zone" => [
-    "es"  => "Clonar zona destacada",
-    "gal" => "Clonar zona destacada",
-    "en"  => "Clone highlight zone",
-    ],
-  "clone_post" => [
-    "es"  => "Clonar publicación",
-    "gal" => "Clonar publicación",
-    "en"  => "Clone post",
-    ],
-  "clone_site" => [
-    "es"  => "Clonar sede",
-    "gal" => "Clonar sede",
-    "en"  => "Clone site",
-    ],
-  "clone_subject" => [
-    "es"  => "Clonar tema",
-    "gal" => "Clonar tema",
-    "en"  => "Clone subject",
-    ],
-  "closed" => [
-    "es"  => "Cerrado",
-    "gal" => "Pechado",
-    "en"  => "Closed",
-    ],
-  "code" => [
-    "es"  => "Código",
-    "gal" => "Código",
-    "en"  => "Code",
-    ],
-  "coordinates" => [
-    "es"  => "Coordenadas",
-    "gal" => "Coordenadas",
-    "en"  => "Coordinates",
-    ],
-  "confirm" => [
-    "es"  => "Confirmar",
-    "gal" => "Confirmar",
-    "en"  => "Confirm",
-    ],
-  "contact" => [
-    "es"  => "Contacto",
-    "gal" => "Contacto",
-    "en"  => "Contact",
-    ],
-  "content" => [
-    "es"  => "Contenido",
-    "gal" => "Contido",
-    "en"  => "Content",
-    ],
-  "copy" => [
-    "es"  => "Copia",
-    "gal" => "Copia",
-    "en"  => "Copy",
-    ],
-  "counties" => [
-    "es"  => "Comarcas",
-    "gal" => "Comarcas",
-    "en"  => "Counties",
-    ],
-  "countries" => [
-    "es"  => "Países",
-    "gal" => "Países",
-    "en"  => "Countries",
-    ],
-  "courses" => [
-    "es"  => "Cursos",
-    "gal" => "Cursos",
-    "en"  => "Courses",
-    ],
-  "courses_list_admin" => [
-    "es"  => "Administración de cursos",
-    "gal" => "Administración de cursos",
-    "en"  => "Course list",
     ],
   "create_account" => [
     "es"  => "Crear cuenta",
@@ -442,35 +237,15 @@ return [
     "gal" => "Data",
     "en" => "Date",
     ],
-  "days" => [
+  "days" => [ // !!!!
     "es" => ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"],
     "gal" => ["Luns","Martes","Mércores","Xoves","Venres","Sábado","Domingo"],
     "en" => ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
     ],
-  "debug_url_on_facebook" => [
-    "es"  => "Depurar URL en Facebook",
-    "gal" => "Depurar URL no Facebook",
-    "en"  => "Debug URL on Facebook",
-  ],
-  "demo" => [
-    "es"  => "Demo",
-    "gal" => "Demo",
-    "en"  => "Demo",
-  ],
-  "delete" => [
-    "es" => "Borrar",
-    "gal" => "Borrar",
-    "en" => "Delete",
-    ],
-  "description" => [
-    "es" => "Descripción",
-    "gal" => "Descripción",
-    "en" => "Description",
-    ],
-  "download" => [
-    "es" => "Descargar",
-    "gal" => "Descargar",
-    "en" => "Download",
+  "duplicated_name" => [
+    "es" => "Nombre repetido.",
+    "gal" => "Nome repetido.",
+    "en" => "Duplicated name.",
     ],
   "duplicated_title" => [
     "es" => "Título repetido.",
@@ -495,67 +270,7 @@ return [
     "gal" => "Editar",
     "en"  => "Edit",
     ],
-  "edit_activity" => [
-    "es"  => "Editar actividad",
-    "gal" => "Editar actividade",
-    "en"  => "Edit activity",
-    ],
-  "edit_area" => [
-    "es"  => "Editar área",
-    "gal" => "Editar área",
-    "en"  => "Edit area",
-    ],
-  "edit_asoc" => [
-    "es"  => "Editar asociación",
-    "gal" => "Editar asociación",
-    "en"  => "Edit association",
-    ],
-  "edit_course" => [
-    "es"  => "Editar curso",
-    "gal" => "Editar curso",
-    "en"  => "Edit course",
-    ],
-  "edit_edition" => [
-    "es"  => "Editar edición",
-    "gal" => "Editar edición",
-    "en"  => "Edit edition",
-    ],
-  "edit_event" => [
-    "es"  => "Editar evento",
-    "gal" => "Editar evento",
-    "en"  => "Edit event",
-    ],
-  "edit_file" => [
-    "es"  => "Editar archivo",
-    "gal" => "Editar arquivo",
-    "en"  => "Edit file",
-    ],
-  "edit_filetype" => [
-    "es"  => "Editar tipo de archivo",
-    "gal" => "Editar tipo de arquivo",
-    "en"  => "Edit filetype",
-    ],
-  "edit_folder" => [
-    "es"  => "Editar carpeta",
-    "gal" => "Editar cartafol",
-    "en"  => "Edit folder",
-    ],
-  "edit_highlight_zone" => [
-    "es"  => "Editar zona destacada",
-    "gal" => "Editar zona destacada",
-    "en"  => "Edit highlight zone",
-    ],
-  "edit_instructor" => [
-    "es"  => "Editar ponente",
-    "gal" => "Editar relator/a",
-    "en"  => "Edit instructor",
-    ],
-  "edit_post" => [
-    "es"  => "Editar publicación",
-    "gal" => "Editar publicación",
-    "en"  => "Edit post",
-    ],
-  "edit-profile" => [
+  "edit_profile" => [
     "es"  => "Editar perfil",
     "gal" => "Editar perfil",
     "en"  => "Edit profile",
@@ -703,7 +418,7 @@ return [
     "gal" => "Listado de cartafois",
     "en"  => "Folders list",
     ],
-  "forgot-password" => [
+  "forgot_password" => [
     "es"  => "Olvidé o desconozco mi contraseña",
     "gal" => "Esquecín ou descoñezo o meu contrasinal",
     "en"  => "Forgot or don't know my password",
@@ -991,11 +706,6 @@ return [
     "gal" => "Listado",
     "en"  => "List",
     ],
-  "locations" => [
-    "es"  => "Localidades",
-    "gal" => "Concellos",
-    "en"  => "Locations",
-    ],
   "logo" => [
     "es"  => "Logo",
     "gal" => "Logo",
@@ -1031,7 +741,7 @@ return [
     ],
   "messages" => [
     "es"  => [
-      "forgot-password" => [
+      "forgot_password" => [
         "title" => "Tu contraseña",
         "body" => "Hola, %s.<br><br>Haz clic en el siguiente enlace para crear/cambiar tu contraseña para %s:<br>%s<br><br>Gracias.",
         ],
@@ -1042,7 +752,7 @@ return [
       ],
 
     "gal"  => [
-      "forgot-password" => [
+      "forgot_password" => [
         "title" => "O teu contrasinal",
         "body" => "Ola, %s.<br><br>Fai clic na seguinte ligazón para crear/cambiar o teu contrasinal para %s:<br>%s<br><br>Grazas.",
         ],
@@ -1053,7 +763,7 @@ return [
       ],
 
     "en"  => [
-      "forgot-password" => [
+      "forgot_password" => [
         "title" => "Your password",
         "body" => "Hello, %s.<br><br>Do click on the following link to create/change your password for %s:<br>%s<br><br>Thank you.",
         ],
@@ -1291,6 +1001,31 @@ return [
     "es"  => "Lugares",
     "gal" => "Lugares",
     "en"  => "Places",
+    "locations" => [
+      "es"  => "Localidades",
+      "gal" => "Concellos",
+      "en"  => "Locations",
+      ],
+    "counties" => [
+      "es"  => "Comarcas",
+      "gal" => "Comarcas",
+      "en"  => "Counties",
+      ],
+    "provinces" => [
+      "es"  => "Provincias",
+      "gal" => "Provincias",
+      "en"  => "Provinces",
+      ],
+    "regions" => [
+      "es"  => "Regiones",
+      "gal" => "Rexións",
+      "en"  => "Regions",
+      ],
+    "countries" => [
+      "es"  => "Países",
+      "gal" => "Países",
+      "en"  => "Countries",
+      ],
     ],
   "please_select" => [
     "es"  => "Por favor, elige",
@@ -1337,11 +1072,6 @@ return [
     "gal" => "Perfil",
     "en"  => "Profile",
     ],
-  "provinces" => [
-    "es"  => "Provincias",
-    "gal" => "Provincias",
-    "en"  => "Provinces",
-    ],
   "public_list" => [
     "es"  => "Listado público",
     "gal" => "Listado público",
@@ -1377,11 +1107,6 @@ return [
 # ..##.....##....................................................................................................
 # ...............................................................................................................
 
-  "regions" => [
-    "es"  => "Regiones",
-    "gal" => "Rexións",
-    "en"  => "Regions",
-    ],
   "replace" => [
     "es"  => "Sustituir",
     "gal" => "Substituir",
@@ -1465,25 +1190,27 @@ return [
     "gal" => "Enviar recordatorio",
     "en"  => "Send reminder",
     ],
-  "share_on" => [
-    "es"  => "Compartir en",
-    "gal" => "Compartir en",
-    "en"  => "Share on",
-    ],
-  "share_by" => [
-    "es"  => "Compartir vía",
-    "gal" => "Compartir vía",
-    "en"  => "Share by",
-    ],
-  "short_description" => [
-    "es"  => "Descripción breve",
-    "gal" => "Descripción breve",
-    "en"  => "Short description",
-    ],
-  "short_name" => [
-    "es"  => "Nombre breve",
-    "gal" => "Nome breve",
-    "en"  => "Short name",
+  "share" => [
+    "via_twitter" => [
+      "es"  => "Compartir en Twitter",
+      "gal" => "Compartir no Twitter",
+      "en"  => "Share on Twitter",
+      ],
+    "via_facebook" => [
+      "es"  => "Compartir en Facebook",
+      "gal" => "Compartir no Facebook",
+      "en"  => "Share on Facebook",
+      ],
+    "via_linkedin" => [
+      "es"  => "Compartir en LinkedIn",
+      "gal" => "Compartir no LinkedIn",
+      "en"  => "Share on LinkedIn",
+      ],
+    "via_email" => [
+      "es"  => "Compartir por correo electrónico",
+      "gal" => "Compartir por correo electrónico",
+      "en"  => "Share by eMail",
+      ],
     ],
   "signin" => [
     "es"  => "Iniciar sesión",

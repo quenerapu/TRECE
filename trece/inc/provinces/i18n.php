@@ -44,11 +44,6 @@ return [
     "gal" => "Clonar provincia",
     "en"  => "Clone province",
     ],
-  "duplicated_name" => [
-    "es" => "Nombre repetido.",
-    "gal" => "Nome repetido.",
-    "en" => "Duplicated name.",
-    ],
   "name" => [
     "es"  => "Nombre",
     "gal" => "Nome",

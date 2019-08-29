@@ -126,7 +126,7 @@ EOD;
           <div class="form-group">
             <div class="col-sm-offset-6 col-sm-6">
               <button type="submit" name="signin" class="btn btn-cons" style="margin-top:.75em;"><?=$lCommon["signin"][LANG];?></button>
-              <p style="margin-top:20px;"><span class="help-block"><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"].QUERYQ;?>"><?=$lCommon["forgot-password"][LANG];?></a></span></p>
+              <p style="margin-top:20px;"><span class="help-block"><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"].QUERYQ;?>"><?=$lCommon["forgot_password"][LANG];?></a></span></p>
             </div>
           </div>
 

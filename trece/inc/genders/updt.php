@@ -136,7 +136,7 @@
 
         $msgType = $trece->dupeName + $trece->dupeLetter > 0 ? "danger" : "success";
         $msgText = $trece->dupeName + $trece->dupeLetter > 0 ?
-                  ($trece->dupeName > 0 ? $lCustom["duplicated_name"][LANG]." " : "") .
+                  ($trece->dupeName > 0 ? $lCommon["duplicated_name"][LANG]." " : "") .
                   ($trece->dupeLetter > 0 ? $lCustom["duplicated_letter"][LANG]   ." " : "") :
                    $lCommon["general_ok"][LANG];
 
@@ -342,7 +342,7 @@ EOD;
             <div class="form-group<?=$dupeName>0?" has-error":"";?>">
               <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
               <input type="text" id="name" name="name" class="form-control" placeholder="<?=$trece->name;?>" value="<?=($cconf["default"]["name"]===$name)||(strpos($name,$cconf["default"]["name"])===0)?"":$name;?>" required>
-              <span class="help-block" style="line-height:1em;"><small><?=($dupeName>0?$lCustom["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></small></span>
+              <span class="help-block" style="line-height:1em;"><small><?=($dupeName>0?$lCommon["duplicated_name"][LANG]:" ").$lCommon["it_must_be_unique"][LANG];?></small></span>
             </div>
 
           </div>

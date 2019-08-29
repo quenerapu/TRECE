@@ -744,11 +744,11 @@ class Users {
 
       $to = $this->email;
 //    $from = $this->conf["mail"]["from"];
-      $subject = $this->conf["meta"]["name"][$this->conf["site"]["lang"]].": ".$this->lCommon["messages"][$this->conf["site"]["lang"]]["forgot-password"]["title"];
+      $subject = $this->conf["meta"]["name"][LANG].": ".$this->lCommon["messages"][LANG]["forgot_password"]["title"];
       $emessage = sprintf(
-        $this->lCommon["messages"][$this->conf["site"]["lang"]]["forgot-password"]["body"],
+        $this->lCommon["messages"][LANG]["forgot_password"]["body"],
         $this->name,
-        $this->conf["meta"]["name"][$this->conf["site"]["lang"]],
+        $this->conf["meta"]["name"][LANG],
         "<a href=\"".$this->conf["site"]["realpathLang"].$this->conf["file"]["change-pass"]."/".$this->password_change_hash."\">".$this->conf["site"]["realpathLang"].$this->conf["file"]["change-pass"]."/".$this->password_change_hash."</a>"
         );
 
@@ -920,11 +920,11 @@ class Users {
 
       $to = $this->email;
 //    $from = $this->conf["mail"]["from"];
-      $subject = $this->conf["meta"]["name"][$this->conf["site"]["lang"]].": ".$this->lCommon["messages"][$this->conf["site"]["lang"]]["change-password"]["title"]; // " có" " qué"
+      $subject = $this->conf["meta"]["name"][LANG].": ".$this->lCommon["messages"][LANG]["change-password"]["title"]; // " có" " qué"
       $emessage = sprintf(
-        $this->lCommon["messages"][$this->conf["site"]["lang"]]["change-password"]["body"],
+        $this->lCommon["messages"][LANG]["change-password"]["body"],
         $this->name,
-        $this->conf["meta"]["name"][$this->conf["site"]["lang"]],
+        $this->conf["meta"]["name"][LANG],
         "<a href=\"".$this->conf["site"]["realpathLang"].$this->conf["file"]["signin"]."\">".$this->conf["site"]["realpathLang"].$this->conf["file"]["signin"]."</a>"
         );
 
@@ -1094,9 +1094,9 @@ class Users {
         $mail->Password = $this->mail_password;
         $mail->SMTPSecure = $this->mail_tls_or_ssl;
         $mail->Port = $this->mail_port;
-        $mail->setFrom($this->mail_from,$this->conf["meta"]["name"][$this->conf["site"]["lang"]]);
+        $mail->setFrom($this->mail_from,$this->conf["meta"]["name"][LANG]);
         $mail->addAddress($this->mail_to);
-        $mail->addReplyTo($this->mail_from,$this->conf["meta"]["name"][$this->conf["site"]["lang"]]);
+        $mail->addReplyTo($this->mail_from,$this->conf["meta"]["name"][LANG]);
         $mail->isHTML(true);
         $mail->Subject = $this->mail_subject;
         $mail->Body = $this->mail_message;

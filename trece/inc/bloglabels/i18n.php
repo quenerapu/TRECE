@@ -44,11 +44,6 @@ return [
     "gal" => "Clonar etiqueta",
     "en"  => "Clone label",
     ],
-  "duplicated_name" => [
-    "es" => "Nombre repetido.",
-    "gal" => "Nome repetido.",
-    "en" => "Duplicated name.",
-    ],
   "name" => [
     "es"  => "Nombre",
     "gal" => "Nome",

@@ -49,11 +49,6 @@ return [
     "gal" => "Cor",
     "en"  => "Color",
     ],
-  "duplicated_name" => [
-    "es" => "Nombre repetido.",
-    "gal" => "Nome repetido.",
-    "en" => "Duplicated name.",
-    ],
   "edit" => [
     "es"  => "Editar jerarquía",
     "gal" => "Editar xerarquía",

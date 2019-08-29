@@ -129,6 +129,10 @@
 
 
 
+  $msg = false;
+
+
+
 # ......##....................................................
 # ...########..........########...#######...######..########..
 # ..##..##..##.........##.....##.##.....##.##....##....##.....
@@ -371,7 +375,14 @@ EOD;
 
   <div class="container main-container">
 
+    <?php if($msg) : ?>
 
+    <div class="alert alert-<?=$msgType;?> alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <?=$msgText;?>
+    </div>
+
+    <?php endif; ?>
 
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -548,7 +559,7 @@ EOD;
         if(data==""){location.reload();}else{
           $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["cannot_be_cloned"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
           }
-        }).fail(function(){$.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});}
+        }).fail(function(){$.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});}
         );
       return false;
       });
@@ -574,7 +585,7 @@ EOD;
           success:function(response,newValue){
 //          alert(JSON.stringify(params,null,4));
             if(response.length>0){
-              $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCustom["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
+              $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
               }
               id = $(this).data("pk")+""; /* https://stackoverflow.com/a/36483219 */
               if(id.indexOf("|")>=0){id=id.split("|");id=id[0];}

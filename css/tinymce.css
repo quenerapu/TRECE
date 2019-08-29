@@ -12,3 +12,26 @@ table.cat th,table.cat td{padding:5px;}
 table.dog,table.dog th,table.dog td{border:1px dotted #ccc;}
 table.dog{border-collapse:collapse;margin-bottom:2em;}
 table.dog th,table.dog td{padding:5px;}
+
+a[href^="http:"]:before,
+a[href^="https:"]:before,
+a[href$=".doc"]:before,
+a[href$=".pdf"]:before,
+a[href$=".zip"]:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0,0);
+  width: 1em;
+  text-align: right;
+  margin-right: .5em;
+  }
+
+a[href^="http:"]:before,
+a[href^="https:"]:before{content:"\f0a4";}
+a[href$=".doc"]:before{content:"\f1c2";}
+a[href$=".pdf"]:before{content:"\f1c1";}
+a[href$=".zip"]:before{content:"\f1c6";}

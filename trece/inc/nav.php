@@ -40,7 +40,7 @@
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>
                   <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><?=$_SESSION["name"];?></a> |
-                  <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon[$conf["file"]["me"]][LANG];?></a> |
+                  <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon["edit_profile"][LANG];?></a> |
                   <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><?=$lCommon["signout"][LANG];?></a>
                 <?php else : ?>
 <?php /*
@@ -89,11 +89,12 @@
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["places"][LANG];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><?=nav($lCommon["locations"][LANG],"locations");?></li>
-                      <li><?=nav($lCommon["counties"][LANG],"counties");?></li>
-                      <li><?=nav($lCommon["provinces"][LANG],"provinces");?></li>
-                      <li><?=nav($lCommon["regions"][LANG],"regions");?></li>
-                      <li><?=nav($lCommon["countries"][LANG],"countries");?></li>
+                      <li><?=nav($lCommon["places"]["locations"][LANG],"locations");?></li>
+                      <li><?=nav($lCommon["places"]["counties"][LANG],"counties");?></li>
+                      <li><?=nav($lCommon["places"]["provinces"][LANG],"provinces");?></li>
+                      <li><?=nav($lCommon["places"]["regions"][LANG],"regions");?></li>
+                      <li><?=nav($lCommon["places"]["countries"][LANG],"countries");?></li>
+                      <li role="separator" class="divider"></li>
                       <li><?=nav($lCommon["languages"][LANG],"languages");?></li>
                     </ul>
                   </li>

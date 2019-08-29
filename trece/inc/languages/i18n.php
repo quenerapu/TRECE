@@ -44,11 +44,6 @@ return [
     "gal" => "Clonar idioma",
     "en"  => "Clone language",
     ],
-  "duplicated_name" => [
-    "es" => "Nombre repetido.",
-    "gal" => "Nome repetido.",
-    "en" => "Duplicated name.",
-    ],
   "duplicated_url_name" => [
     "es" => "Código ISO 639-1 repetido.",
     "gal" => "Código ISO 639-1 repetido.",
