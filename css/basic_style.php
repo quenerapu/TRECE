@@ -2,15 +2,31 @@
 
 header("content-type:text/css");
 
-$navbar_color1 = "#333"; # Navbar background
-$navbar_color2 = "#666"; # Navbar bottomline
-$navbar_color3 = "#cccccc"; # Navbar text background hover ?
-$navbar_color4 = "#ffffff"; # Navbar texts hover
-$success_color = "#28a745";
-$danger_color  = "#dc3545";
-$font_color    = "#5e5e5e";
-$sticky_footer = $_GET["sf"];
-$padding_top   = 125;
+# Theme colors
+  $navbar_color1    = "#333"; # Navbar background
+  $navbar_color2    = "#666"; # Navbar bottomline
+  $navbar_color3    = "#cccccc"; # Navbar text background hover ?
+  $navbar_color4    = "#ffffff"; # Navbar texts hover
+  $success_color    = "#28a745";
+  $danger_color     = "#dc3545";
+  $font_color       = "#5e5e5e";
+
+# For common desktop/laptop screens
+  $sticky_footer    = $_GET["sf"];    
+  $padding_top      = 125;
+
+# For vertical smartphones
+  $sticky_footer_vs = $sticky_footer + 50;
+  $padding_top_vs   = $padding_top + 0;
+
+# For vertical tablets and horizontal smartphones
+  $sticky_footer_vt = $sticky_footer + 0;
+  $padding_top_vt   = $padding_top + 0;
+
+# For horizontal tablets and oldschool desktop/laptop screens
+  $sticky_footer_sd = $sticky_footer + 0;
+  $padding_top_sd   = $padding_top + 0;
+
 echo <<<ENDCSS
 @charset "UTF-8";
 /*
@@ -23,7 +39,27 @@ echo <<<ENDCSS
 
 html,body{max-width:100%;overflow-x:hidden;}
 html{position:relative; min-height:100%;}
-body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !important;}
+
+/* For vertical smartphones */
+   @media screen and (min-width:360px) and (max-width:752px){
+     body{padding-top:{$padding_top_vs}px !important;
+     margin-bottom:{$sticky_footer_vs}px !important;}
+     }
+/* For vertical tablets and horizontal smartphones  */
+   @media screen and (min-width:753px) and (max-width:1023px){
+     body{padding-top:{$padding_top_vt}px !important;
+     margin-bottom:{$sticky_footer_vt}px !important;}
+     }
+/* For horizontal tablets and oldschool desktop/laptop screens */
+   @media screen and (min-width:1024px) and (max-width:1199px){
+     body{padding-top:{$padding_top_ht}px !important;
+     margin-bottom:{$sticky_footer_ht}px !important;}
+     }
+/* For common desktop/laptop screens */
+   @media screen and (min-width:1200px){
+     body{padding-top:{$padding_top}px !important;
+     margin-bottom:{$sticky_footer}px !important;}
+     }
 
 
 
@@ -49,7 +85,7 @@ body{padding-top:{$padding_top}px !important; margin-bottom:{$sticky_footer}px !
   .container{padding-left:0;}
   .navbar-text{margin-left:15px;}
   .navbar-collapse{max-height:100% !important;}
-  .navbar-brand{padding:6px 0 0 15px;margin:0;}
+  .navbar-brand{padding:6px 0 0 15px !important;margin:0;}
   }
 /* horizontal smartphones and vertical tablets */
 @media screen and (min-width:753px) and (max-width:1023px){}
@@ -634,9 +670,30 @@ pastilla-fila1 {height:350px;}
 
 
 
-/* Sticky footer */
+/* 
+.............................................
+..######..####...####..######.######.#####...
+..##.....##..##.##..##...##...##.....##..##..
+..####...##..##.##..##...##...####...#####...
+..##.....##..##.##..##...##...##.....##..##..
+..##......####...####....##...######.##..##..
+.............................................
 
-footer{position:absolute; bottom:0; width:100%; height:{$sticky_footer}px; background-color:#f5f5f5; border-top:1px solid #ccc;}
+http://patorjk.com/software/taag/#p=display&f=Bright&t=%20footer%20%0A
+
+ */
+
+footer{position:absolute;bottom:0;width:100%;background-color:#f5f5f5;border-top:1px solid #ccc;}
+
+/* For vertical smartphones */
+   @media screen and (min-width:360px) and (max-width:752px){footer{height:{$sticky_footer_vs}px;}}
+/* For vertical tablets and horizontal smartphones  */
+   @media screen and (min-width:753px) and (max-width:1023px){footer{height:{$sticky_footer_vt}px;}}
+/* For horizontal tablets and oldschool desktop/laptop screens */
+   @media screen and (min-width:1024px) and (max-width:1199px){footer{height:{$sticky_footer_ht}px;}}
+/* For common desktop/laptop screens */
+   @media screen and (min-width:1200px){footer{height:{$sticky_footer}px;}}
+
 .container-footer {padding:0;}
 .container-footer h5 {}
 
