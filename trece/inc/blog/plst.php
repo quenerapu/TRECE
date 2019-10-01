@@ -115,7 +115,7 @@
 
   $trece = new $action($db,$conf);
   $trece->intimacy = 2; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
-  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchBloglabel);
+  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchLabel);
   $rowcount_page = $trece->rowcount;
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :
@@ -247,14 +247,14 @@ EOD;
                 </div>
                 <div class="pull-left">
                   <select id="label" name="label" style="margin-left:5px;">
-                    <option value="0"<?=$searchBloglabel==0?" selected":"";?>><?=$lCustom["any_subject"][LANG];?></option>
+                    <option value="0"<?=$searchLabel==0?" selected":"";?>><?=$lCustom["any_subject"][LANG];?></option>
                     <?php
                       require_once($conf["dir"]["includes"]."bloglabels/".$conf["file"]["crud"].".php");
                       $cconfBloglabels = require($conf["dir"]["includes"]."bloglabels/".$conf["file"]["conf"].".php");
                       $bloglabels = new Bloglabels($db,$conf,$cconfBloglabels); $stmt = $bloglabels->readAllJSON();
                     ?>
                     <?php if ($bloglabels->rowcount>0): for($i=0;$i<$bloglabels->rowcount;$i++) : ?>
-                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchBloglabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->name[$i];?></option>
+                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchLabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->{"name_".LANG}[$i];?></option>
                     <?php endfor; endif; ?>
                   </select>
                 </div>
@@ -287,11 +287,11 @@ EOD;
             <div style="margin-bottom:3em;">
               <p class="info-cal"><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></p>
               <div class="white-panel" style="margin-bottom:1em;">
-                <a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]."_".LANG}[$i].QUERYQ;?>">
+                <a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]}[$i].QUERYQ;?>">
                   <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars(${"trece"}->{"title_".LANG}[$i]);?>">
                 </a>
               </div>
-              <p class="info-tit"><a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]."_".LANG}[$i].QUERYQ;?>" style="text-decoration:none;"><?=${"trece"}->{"title_".LANG}[$i];?></a></p><!-- <?=mb_strtoupper(${"trece"}->{"title_".LANG}[$i],"UTF-8");?> -->
+              <p class="info-tit"><a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" style="text-decoration:none;"><?=${"trece"}->{"title_".LANG}[$i];?></a></p><!-- <?=mb_strtoupper(${"trece"}->{"title_".LANG}[$i],"UTF-8");?> -->
               <?php if(${"trece"}->{"intro_".LANG}[$i] != "") : ?><p class="info-intro"><?=${"trece"}->{"intro_".LANG}[$i];?></p><?php endif; ?>
               <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p class="info-labels"><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></p><?php endif; ?>
               <div class="clearfix"></div>

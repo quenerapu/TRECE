@@ -700,7 +700,7 @@ endif;
 
 
 function str_replace_plus($fl,$search,$replace,$subject) { # Replaces FIRST or LAST occurence of a string in a string
-  $pos=($fl=="lo"?strrpos($subject,$search):strpos($subject,$search)); # fo = strpos = first occurrence | lo = strrpos = last occurrence
+  $pos=($fl=="lo"?strrpos($subject,(string)$search):strpos($subject,(string)$search)); # fo = strpos = first occurrence | lo = strrpos = last occurrence
   if($pos!==false) :
     $subject=substr_replace($subject,$replace,$pos,strlen($search));
   endif;
