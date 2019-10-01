@@ -61,6 +61,7 @@
     The above 2 meta tags *must* come first in the <head>
     to consistently ensure proper document rendering.
     Any other head element should come *after* these tags.
+    https://htmlhead.dev
   -->
   <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG];?></title>
   <link rel="canonical" href="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
