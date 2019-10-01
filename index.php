@@ -261,7 +261,11 @@ endif;
 
 
   $conf["site"]["dir"] =                dirname(__FILE__);
+  if (getenv("DOCKER")) :
+  $conf["site"]["scheme"] =             getenv("SITE_SCHEME").":";
+  else :
   $conf["site"]["scheme"] =             isset($_SERVER["HTTPS"])&&filter_var($_SERVER["HTTPS"],FILTER_VALIDATE_BOOLEAN)?"https:":"http:";
+  endif;
   $conf["site"]["uri"] =                "{$conf["site"]["scheme"]}//{$_SERVER["HTTP_HOST"]}".$_SERVER["REQUEST_URI"];
   $conf["site"]["query"] =              isset($_SERVER["QUERY_STRING"])?$_SERVER["QUERY_STRING"]:""; parse_str($conf["site"]["query"],$conf["site"]["queryArray"]);
   $conf["site"]["queryq"] =             $conf["site"]["query"]!=""?"?".$conf["site"]["query"]:null;
@@ -645,7 +649,7 @@ endif;
 
         if(file_exists($conf["dir"]["includes"].$conf["file"]["nav"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["nav"].".php"); endif;
 
-      if($syntax == "md" && MARKDOWN) :
+        if($syntax == "md" && MARKDOWN) :
 
           $page = file($page,FILE_IGNORE_NEW_LINES);
           array_shift($page);
@@ -680,7 +684,17 @@ endif;
 
         endif;
 
-        if(file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["footer"].".php"); endif;
+        if(file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php")):
+          require_once($conf["dir"]["includes"].$conf["file"]["footer"].".php");
+        else :
+          echo "\n<pre>\n----\n
++-------------+\n
+| FAKE FOOTER |\n
++-------------+\n\n
+ ↳ Build a real one in ".$conf["dir"]["includes"].$conf["file"]["footer"].".php\n
+ ↳ Build a css file in ".$conf["dir"]["includes"].$conf["file"]["css"].".php\n
+ \n</pre>".BEGRATEFUL."\n</body>\n</html>";
+        endif;
 
       else :
 

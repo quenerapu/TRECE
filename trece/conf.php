@@ -158,7 +158,7 @@ return [
                             ],
     "description"       =>  [
                    "en" =>  "My website description",
-                  "gal" =>  "Descripción do sitio web",
+                  "gal" =>  "Descrición do sitio web",
                    "es" =>  "Descripción del sitio web",
                             ],
     "keywords"          =>  "word, another word, three more words, etc",
@@ -191,6 +191,7 @@ return [
     "facebook"      =>  "yourfacebookusername", #Facebook username without @
     "youtube"       =>  "youtube-channel",
     "fb_app_id"     =>  "123456789012345",  # Get yours at https://developers.facebook.com/apps
+    "disqus"        =>  "@yourdisqususername",
     "geo"           =>  [
            "region" =>  "xx",         # Georegion http://geo-tag.de/generator
          "latitude" =>  "00.000000",  # Geoposition (latitude) http://geo-tag.de/generator
