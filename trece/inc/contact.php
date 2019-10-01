@@ -253,7 +253,7 @@ EOD;
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="name">Name</label>
+          <label class="col-md-4 control-label" for="name"><?=$lCommon["name"][LANG];?></label>
           <div class="col-md-6">
           <input id="name" name="name" type="text" placeholder="" class="form-control input-md" required>
 
@@ -262,7 +262,7 @@ EOD;
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="email">eMail address</label>
+          <label class="col-md-4 control-label" for="email"><?=$lCommon["email"][LANG];?></label>
           <div class="col-md-6">
           <input id="email" name="email" type="email" placeholder="" class="form-control input-md" required>
 
@@ -271,7 +271,7 @@ EOD;
 
         <!-- Textarea -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="message">Message</label>
+          <label class="col-md-4 control-label" for="message"><?=$lCommon["message"][LANG];?></label>
           <div class="col-md-6">
             <textarea class="form-control" id="message" name="message" style="height:200px;" required></textarea>
           </div>
@@ -303,7 +303,7 @@ EOD;
         <div class="form-group">
           <label class="col-md-4 control-label" for="singlebutton"></label>
           <div class="col-md-6">
-            <button id="singlebutton" name="singlebutton" class="btn btn-cons">Send</button>
+            <button id="singlebutton" name="singlebutton" class="btn btn-cons"><?=$lCommon["send_form"][LANG];?></button>
           </div>
         </div>
 

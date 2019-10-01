@@ -69,9 +69,9 @@
               <div class="navbar-header pull-left">
                 <img src="<?=
                   file_exists($conf["dir"]["images"]."logo.svg") ?
-                  $conf["dir"]["images"]."logo.svg" :
+                  $conf["dir"]["images"]."logo.svg?".time() :
                   (file_exists($conf["dir"]["images"]."logo.png") ?
-                  $conf["dir"]["images"]."logo.png" :
+                  $conf["dir"]["images"]."logo.png?".time() :
                   "data:image/svg+xml;base64,".str_replace("[COLOR]",$conf["trece"]["logo"]["white"],$conf["trece"]["logo"]["img"]))
                   ;?>" alt="<?=$conf["meta"]["title"][LANG];?>" class="img-responsive">
               </div>

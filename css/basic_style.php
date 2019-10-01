@@ -13,11 +13,11 @@ header("content-type:text/css");
 
 # For common desktop/laptop screens
   $sticky_footer    = $_GET["sf"];    
-  $padding_top      = 125;
+  $padding_top      = $_GET["pt"];
 
 # For vertical smartphones
   $sticky_footer_vs = $sticky_footer + 50;
-  $padding_top_vs   = $padding_top + 0;
+  $padding_top_vs   = $padding_top - 10;
 
 # For vertical tablets and horizontal smartphones
   $sticky_footer_vt = $sticky_footer + 0;

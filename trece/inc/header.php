@@ -55,13 +55,18 @@
   <!--[if gt IE 8]><!--> <html class="no-js" dir="<?=$conf["site"]["langs"][LANG]["direction"];?>" lang="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" itemscope itemtype="http://schema.org/LocalBusiness"> <!--<![endif]-->
 
   <head prefix="og: http://ogp.me/ns#">
+  <meta http-equiv="X-UA-Compatible" content="<?=$lCustom["x_ua_compatible"];?>" />
+  <meta name="viewport" content="<?=$lCustom["viewport"];?>" />
+  <!--
+    The above 2 meta tags *must* come first in the <head>
+    to consistently ensure proper document rendering.
+    Any other head element should come *after* these tags.
+  -->
   <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG];?></title>
   <link rel="canonical" href="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
   <base href="<?=REALPATH;?>" target="_self" />
   <!-- https://metatags.io/ -->
   <meta charset="<?=$lCustom["charset"];?>" />
-  <meta http-equiv="X-UA-Compatible" content="<?=$lCustom["x_ua_compatible"];?>" />
-  <meta name="viewport" content="<?=$lCustom["viewport"];?>" />
   <meta name="lang" content="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" />
   <meta name="generator" content="<?=$lCustom["generator"];?>" /><!-- https://stackoverflow.com/a/3632220 -->
   <meta name="robots" content="<?=$lCustom["robots"];?>" /><!-- https://developers.google.com/search/reference/robots_meta_tag -->
@@ -99,23 +104,23 @@
   <meta name="geo.placename" content="<?=htmlspecialchars($lCustom["geo"]["placename"]);?>">
 
 <!-- Favicon https://favicon-generator.org -->
-  <link rel="apple-touch-icon" sizes="57x57" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/favicon-16x16.png">
-  <link rel="manifest" href="<?=REALPATH.$conf["dir"]["images"];?>favicon/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="<?=REALPATH.$conf["dir"]["images"];?>favicon/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-57x57.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="60x60" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-60x60.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="72x72" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-72x72.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="76x76" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-76x76.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="114x114" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-114x114.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="120x120" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-120x120.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="144x144" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-144x144.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="152x152" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-152x152.png?".time();?>">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?=REALPATH.$conf["dir"]["images"]."favicon/apple-icon-180x180.png?".time();?>">
+  <link rel="icon" type="image/png" sizes="192x192" href="<?=REALPATH.$conf["dir"]["images"]."favicon/android-icon-192x192.png?".time();?>">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?=REALPATH.$conf["dir"]["images"]."favicon/favicon-32x32.png?".time();?>">
+  <link rel="icon" type="image/png" sizes="96x96" href="<?=REALPATH.$conf["dir"]["images"]."favicon/favicon-96x96.png?".time();?>">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?=REALPATH.$conf["dir"]["images"]."favicon/favicon-16x16.png?".time();?>">
+  <link rel="manifest" href="<?=REALPATH.$conf["dir"]["images"]."favicon/manifest.json?";?>">
+  <meta name="msapplication-TileColor" content="#0079a7">
+  <meta name="msapplication-TileImage" content="<?=REALPATH.$conf["dir"]["images"]."favicon/ms-icon-144x144.png?".time();?>">
+  <meta name="theme-color" content="#0079a7">
 
 <!-- Normalize.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/<?=$conf["version"]["normalize_css"];?>/normalize.min.css">
@@ -173,7 +178,7 @@
   <![endif]-->
 
 <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=REALPATH.$conf["dir"]["styles"].$conf["file"]["style"];?>.php?sf=<?=$conf["css"]["stickyfooter_h"];?>">
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=REALPATH.$conf["dir"]["styles"].$conf["file"]["style"];?>.php?pt=<?=$conf["css"]["paddingtop_h"]."&sf=".$conf["css"]["stickyfooter_h"]."&".time();?>">
   <?=isset($customCSS)?$customCSS:"";?>
 
 <!-- Custom JS -->

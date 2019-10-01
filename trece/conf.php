@@ -45,7 +45,7 @@ return [
     "fonts"             =>  "fonts/",
     "includes"          =>  $core."inc/",
     "libraries"         =>  $core."lib/",
-    "images"            =>  "img/",
+    "images"            =>  $img="img/",
     "download"          =>  "download/",
     "scripts"           =>  "js/",
     "styles"            =>  "css/",
@@ -230,6 +230,7 @@ return [
     "he"                                =>  "1.2.0",          # he (for “HTML entities”) https://mths.be/he/
     "html5shiv"                         =>  "3.7.3",          # HTML5 Shiv http://github.com/aFarkas/html5shiv/
     "hideshowpassword"                  =>  "2.1.1",          # hideShowPassword https://github.com/cloudfour/hideShowPassword/
+    "hover_css"                         =>  "2.3.1",          # https://ianlunn.co.uk/portfolio/hover-css/
     "i18next"                           =>  "14.0.1",         # i18next https://www.i18next.com/
     "imagehovercss"                     =>  "2.0.0",          # Image Hover http://imagehover.io/
     "ion_rangeslider"                   =>  "2.3.0",          # Ion RangeSlider https://github.com/IonDen/ion.rangeSlider/
@@ -259,7 +260,8 @@ return [
 
   "css"               =>  [
 # --------------------------------------------------------------------
-    "stickyfooter_h"  =>  250,        # Height (pixels) for the Bootstrap Sticky Footer
+    "paddingtop_h"    =>  150,        # Padding-top (pixels) for the Body
+    "stickyfooter_h"  =>  200,        # Height (pixels) for the Bootstrap Sticky Footer
     "avatar_prefix"   =>  "avatar_",  # Avatar prefix
     "avatar_h"        =>  100,        # Avatar height (pixels)
     "avatar_w"        =>  100,        # Avatar width (pixels)

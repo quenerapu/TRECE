@@ -52,7 +52,8 @@
       || $app->getUserHierarchy() != 1 # Must be admin
      ) :
 
-    header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
+//  header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -61,9 +62,10 @@
 
 //No $what? Load page 1!
 
-  if ( !isset($what) ) :
+  if (!isset($what)) :
 
-    header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
+    header("location:".REALPATHLANG.$action."/".$conf["file"]["adminlist"]."/1".QUERYQ);
+//  header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -394,7 +396,7 @@ EOD;
 
 
 
-  <div class="container main-container">
+  <div class="container main-container" style="margin-bottom:10em;">
 
 
 
@@ -405,7 +407,7 @@ EOD;
           <?php // $lacosa = "Questiontypes"; ?>
           <div class="pull-right"><p>
             <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?>
-            <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?>
+<?php /*    <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?> */ ?>
           </p></div>
           <?php endif; ?>
           <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
@@ -494,8 +496,10 @@ EOD;
                            data-ugender="<?=$trece->ugender[$i];?>" 
                            data-uhierarchy="<?=$trece->uhierarchy[$i];?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+<?php /*
                     <li class="divider"></li>
                     <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
+*/ ?>
                   </ul>
                 </div>
               </td>

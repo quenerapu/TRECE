@@ -152,6 +152,7 @@ endif;
   Thank you Alexis Deveria (@fyrd) for inventing Can I use. https://caniuse.com/
   Thank you Anita H Klock for inventing the syntax highlighting. https://en.wikipedia.org/wiki/Syntax_highlighting
   Thank you André Ruffert (@andreruffert) for inventing Rangeslider. http://rangeslider.js.org/
+  Thank you Ashley White for inventing Lightbox for Bootstrap (aka ekko-lightbox). http://ashleydw.github.io/lightbox/
   Thank you? Aza Raskin (@aza) for inventing the infinite scroll. https://bit.ly/343v4oR
   Thank you Blake Ross (@blakeross) for inventing Firefox. https://www.firefox.com/
   Thank you Boniface Pereira (@craftpip) for inventing jQuery Confirm. https://craftpip.github.io/jquery-confirm/
@@ -174,6 +175,7 @@ endif;
   Thank you Eric Meyer (@meyerweb) for inventing Eric Meyer’s CSS Reset https://meyerweb.com/eric/tools/css/reset/
   Thank you Fabien Potencier (@fabpot) for inventing Symfony. https://www.symfony.com/
   Thank you Håkon Wium Lie (@wiumlie) for inventing CSS. https://www.w3.org/Style/CSS/
+  Thank you Ian Lunn (@IanLunn) for inventing Hover.css. https://ianlunn.co.uk/portfolio/hover-css/
   Thank you Igor Escobar (@igorescobar) for inventing jQuery Mask Plugin. https://igorescobar.github.io/jQuery-Mask-Plugin/
   Thank you Jakob Nielsen (@nngroup) for writing 'Be Succinct! (Writing for the Web)' https://bit.ly/24g1PJn and 'How Users Read on the Web' https://bit.ly/1plpY1w
   Thank you Jakub Vrána (@jakubvrana) for inventing Adminer. https://www.adminer.org/
@@ -182,6 +184,7 @@ endif;
   Thank you Johan Sörlin (@spocke) for inventing TinyMCE. https://www.tinymce.com/
   Thank you John Gruber (@gruber) for inventing Markdown. https://daringfireball.net/projects/markdown/
   Thank you John Resig (@jeresig) for inventing jQuery. https://jquery.com/
+  Thank you Josh Buchea (@joshbuchea) for creating HEAD, A free guide to HTML5 <head> elements. https://htmlhead.dev/
   Thank you Justin Hall (@jah) for inventing the blog. http://links.net/vita/web/original.html
   Thank you Linus Torvalds (@Linus__Torvalds) for inventing Linux. https://github.com/torvalds/linux/
   Thank you Maciej Gurban (@maciej_gurban) for inventing Responsive Bootstrap Toolkit. https://github.com/maciej-gurban/responsive-bootstrap-toolkit/
@@ -237,7 +240,7 @@ endif;
       "culture-name1"     => $langArray[1],       # example: gl-ES
       "culture-name2"     => $cultureName2,       # example: gl_ES
       "half-culture-name" => $halfCultureName[0], # example: gl
-      "date-format"       => $dateformat=(isset($langArray[2])?$langArray[2]:"Y-m-d"),
+      "date-format"       => $dateformat=(isset($langArray[2])?$langArray[2]:"d/m/Y H:i:s"),
       "date-format2"      => str_replace(array("d","m","Y","-"),array("DD","MM","YYYY","/"),$dateformat),
       "direction"         => (isset($langArray[3])?$langArray[3]:"ltr"),
       ];
@@ -530,6 +533,11 @@ endif;
     if(!$page && file_exists($conf["dir"]["includes"].$conf["site"]["virtualpathArray"][0].".php") && (
       in_array($conf["site"]["virtualpathArray"][0],array(
         $conf["file"]["change-pass"],
+//      "add",
+//      "your",
+//      "special",
+//      "pages",
+//      "here",
         ))
       )) :
 
