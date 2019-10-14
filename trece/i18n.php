@@ -734,6 +734,11 @@ return [
     "gal" => "Sobre min",
     "en"  => "About me",
     ],
+  "message" => [
+    "es"  => "Mensaje",
+    "gal" => "Mensaxe",
+    "en"  => "Message",
+    ],
   "message_sent" => [
     "es"  => "Mensaje enviado",
     "gal" => "Mensaxe enviada",
@@ -966,6 +971,11 @@ return [
     "es"  => "Página",
     "gal" => "Páxina",
     "en"  => "Page",
+    ],
+  "pages" => [
+    "es"  => "Páginas",
+    "gal" => "Páxinas",
+    "en"  => "Pages",
     ],
   "parent" => [
     "es"  => "Padre",

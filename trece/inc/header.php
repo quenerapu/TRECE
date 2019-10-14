@@ -188,7 +188,7 @@
 <?php if(NPE) : ?>
   <style>
     /* common */
-    .npe{text-align:center;transform:rotate(-45deg);background-color:red;color:white;z-index:9999999;font-weight:bold;letter-spacing:.1em;}
+    .npe{text-align:center;transform:rotate(-45deg);background-color:red;color:white;z-index:1047;font-weight:bold;letter-spacing:.1em;}
     /* vertical smartphones */
     @media screen and (min-width:360px) and (max-width:752px){.npe{position:fixed;width:200px;top:15px;left:-70px;padding:6px;}}
     /* horizontal smartphones and vertical tablets */

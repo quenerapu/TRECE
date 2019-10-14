@@ -70,9 +70,9 @@
 
 //metastuff
   $lCustom["pagetitle"][LANG] = $trece->name.(mb_strlen($trece->surname)>0?" ".$trece->surname:"");
-  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-  $lCustom["metakeywords"] = "key word keyword";
-  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+//$lCustom["metakeywords"] = "key word keyword";
+//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
 
 

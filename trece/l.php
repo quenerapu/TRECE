@@ -209,7 +209,6 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
 
     if($num>0) :
 
-
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
       if(isset($row["hash_pass"]) && password_verify($this->password,$row["hash_pass"])) :

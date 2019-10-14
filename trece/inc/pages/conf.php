@@ -31,12 +31,15 @@
 return [
 
   "file" => [
-    "ref"               => "ids_breadcrumb_trail",       # File ref
+//  "ref"               => "ids_breadcrumb_trail",       # File ref
+    "ref"               => "id",                         # File ref
     ],
 
   "default" => [
     "id_status"         => 0,
-    "title"             => "New page",
+    "title_en"          => "New page",
+    "title_gal"         => "Nova páxina",
+    "title_es"          => "Nueva página",
     "url_title"         => "new-page",
     "max_new_items"     => 15,
     ],

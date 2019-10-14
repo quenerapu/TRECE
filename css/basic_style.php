@@ -3,13 +3,14 @@
 header("content-type:text/css");
 
 # Theme colors
-  $navbar_color1    = "#333"; # Navbar background
-  $navbar_color2    = "#666"; # Navbar bottomline
-  $navbar_color3    = "#cccccc"; # Navbar text background hover ?
-  $navbar_color4    = "#ffffff"; # Navbar texts hover
-  $success_color    = "#28a745";
-  $danger_color     = "#dc3545";
-  $font_color       = "#5e5e5e";
+  $navbar_color1 = "#333"; # Navbar background
+  $navbar_color2 = "#666"; # Navbar bottomline
+  $navbar_color3 = "#cccccc"; # Navbar text background hover ?
+  $navbar_color4 = "#ffffff"; # Navbar texts hover
+  $success_color = "#28a745";
+  $danger_color  = "#dc3545";
+  $font_color    = "#5e5e5e";
+  $now           = time();
 
 # For common desktop/laptop screens
   $sticky_footer    = $_GET["sf"];    
@@ -17,15 +18,15 @@ header("content-type:text/css");
 
 # For vertical smartphones
   $sticky_footer_vs = $sticky_footer + 50;
-  $padding_top_vs   = $padding_top - 10;
+  $padding_top_vs   = $padding_top + 5;
 
 # For vertical tablets and horizontal smartphones
   $sticky_footer_vt = $sticky_footer + 0;
   $padding_top_vt   = $padding_top + 0;
 
 # For horizontal tablets and oldschool desktop/laptop screens
-  $sticky_footer_sd = $sticky_footer + 0;
-  $padding_top_sd   = $padding_top + 0;
+  $sticky_footer_st = $sticky_footer + 0;
+  $padding_top_st   = $padding_top + 0;
 
 echo <<<ENDCSS
 @charset "UTF-8";
@@ -52,8 +53,8 @@ html{position:relative; min-height:100%;}
      }
 /* For horizontal tablets and oldschool desktop/laptop screens */
    @media screen and (min-width:1024px) and (max-width:1199px){
-     body{padding-top:{$padding_top_ht}px !important;
-     margin-bottom:{$sticky_footer_ht}px !important;}
+     body{padding-top:{$padding_top_st}px !important;
+     margin-bottom:{$sticky_footer_st}px !important;}
      }
 /* For common desktop/laptop screens */
    @media screen and (min-width:1200px){
@@ -600,6 +601,7 @@ ul.error-list li:before {content:"»"; padding-right:8px;}
 .page-header{margin-top:0 !important;}
 .page-header h1{margin-top:0 !important;}
 .main-container{padding-bottom:8em;}
+/*.post p:first-of-type::first-letter{float:left; font-size:6em; margin:.1em .1em .1em 0;}*/
 
 .min_programa {margin-bottom:30px;}
 .pastilla {display:flex; justify-content:center; overflow: hidden; padding-bottom:0;}
@@ -690,7 +692,7 @@ footer{position:absolute;bottom:0;width:100%;background-color:#f5f5f5;border-top
 /* For vertical tablets and horizontal smartphones  */
    @media screen and (min-width:753px) and (max-width:1023px){footer{height:{$sticky_footer_vt}px;}}
 /* For horizontal tablets and oldschool desktop/laptop screens */
-   @media screen and (min-width:1024px) and (max-width:1199px){footer{height:{$sticky_footer_ht}px;}}
+   @media screen and (min-width:1024px) and (max-width:1199px){footer{height:{$sticky_footer_st}px;}}
 /* For common desktop/laptop screens */
    @media screen and (min-width:1200px){footer{height:{$sticky_footer}px;}}
 

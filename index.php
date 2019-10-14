@@ -240,7 +240,7 @@ endif;
       "culture-name1"     => $langArray[1],       # example: gl-ES
       "culture-name2"     => $cultureName2,       # example: gl_ES
       "half-culture-name" => $halfCultureName[0], # example: gl
-      "date-format"       => $dateformat=(isset($langArray[2])?$langArray[2]:"d/m/Y H:i:s"),
+      "date-format"       => $dateformat=(isset($langArray[2])?$langArray[2]:"Y-m-d"),
       "date-format2"      => str_replace(array("d","m","Y","-"),array("DD","MM","YYYY","/"),$dateformat),
       "direction"         => (isset($langArray[3])?$langArray[3]:"ltr"),
       ];

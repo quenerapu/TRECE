@@ -47,9 +47,9 @@
 
 //metastuff
   $lCustom["pagetitle"][LANG] = strip_tags($lCommon["change-password"][LANG]);
-  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
-  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
-  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+//$lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 

@@ -88,6 +88,85 @@
 
 
 
+
+
+  if(isset($_POST["qq"]) && isset($_POST["dir"])) :
+
+
+    /*
+     Folder Tree with PHP and jQuery.
+
+     R. Savoul Pelister
+     http://techlister.com
+
+    */
+
+
+    class treeview{
+
+      private $files;
+      private $folder;
+      
+      function __construct($path) {
+        
+        $files = array(); 
+        if(file_exists($path)) :
+          if($path[strlen($path)-1]== "/"){$this->folder = $path;}else{$this->folder = $path."/";}
+          $this->dir = opendir($path);
+          while(($file = readdir($this->dir))!=false):$this->files[] = $file; endwhile;
+          closedir($this->dir);
+        endif;
+      }
+
+      function create_tree(){
+          
+        if(count($this->files) > 2) : /* First 2 entries are . and ..  -skip them */
+          natcasesort($this->files);
+          $list = "<ul class=\"filetree\" style=\"display:none;\">";
+          // Group folders first
+          foreach($this->files as $file) :
+            if(file_exists($this->folder.$file) && $file != "." && $file != ".." && is_dir($this->folder.$file)) :
+              $list.= "<li class=\"folder collapsed\"><a href=\"#\" rel=\"".htmlentities($this->folder.$file)."/\">".htmlentities($file)."</a></li>";
+            endif;
+          endforeach;
+          // Group all files
+          foreach($this->files as $file) :
+            if(file_exists($this->folder.$file) && $file != "." && $file != ".." && !is_dir($this->folder.$file)) :
+              $ext = preg_replace("/^.*\./","",$file);
+              $list.= "<li class=\"ext_".$ext."\"><a class=\"file\" href=\"#\" rel=\"".htmlentities($this->folder.$file)."\">".htmlentities($file)."</a></li>";
+            endif;
+          endforeach;
+          $list.= "</ul>";  
+          return $list;
+        endif;
+      }
+
+    }
+
+    $path = urldecode($_REQUEST["dir"]);
+    $tree = new treeview($path);
+    echo $tree->create_tree();
+
+  die();
+  endif;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ...................................................................................
 # ..#####..######.##.....######.######.######...######.##...##..####...####..######..
 # ..##..##.##.....##.....##.......##...##.........##...###.###.##..##.##.....##......
@@ -99,7 +178,11 @@
   if(isset($_POST["deleteImage"]) && isset($_POST["object_who"])) :
 
     $items = explode("↲",$_POST["object_who"]);
-    foreach($items as $item) : if(file_exists($item)) : unlink($item); endif; endforeach;
+    foreach($items as $item) :
+      if(file_exists($item)) :
+        unlink($item);
+      endif;
+    endforeach;
     die();
 
   endif;
@@ -117,18 +200,30 @@
 # ...####..##.....#####..##..##...##...######...##.....##..##..####..##.....######.######.######..
 # ................................................................................................
 
-  if(isset($_POST["title"])) :
+  if(isset($_POST["title_en"])) :
 
     unset($_FILES);
     $msg = true;
 
-    if(isset($_POST["title"]))                : $trece->title                     = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title"])));
-                                                $trece->url_title                 = getUrlFriendlyString($trece->title);                                        endif;
-    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->ids_breadcrumb_trail      = $_POST["ids_breadcrumb_trail"];                                             
-                                                $trece->id_parent                 = explode(",",$trece->ids_breadcrumb_trail); end($trece->id_parent);
-                                                $trece->id_parent                 = prev($trece->id_parent);                                                    endif;
-    if(isset($_POST["intro"]))                : $trece->intro                     = $_POST["intro"];                                                            endif;
-    if(isset($_POST["post"]))                 : $trece->post                      = $_POST["post"];                                                             endif;
+    if(isset($_POST["title_en"]))             : $trece->title_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));   endif;
+    if(isset($_POST["title_gal"]))            : $trece->title_gal = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_gal"])));
+                                                $trece->url_title = getUrlFriendlyString($trece->title_gal);                                                endif;
+    if(isset($_POST["title_es"]))             : $trece->title_es  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_es"])));   endif;
+
+    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->parent_id = explode(",",$_POST["ids_breadcrumb_trail"]); end($trece->parent_id);
+                                                $trece->level     = count($trece->parent_id);
+                                                $trece->parent_id = prev($trece->parent_id);                                                                endif;
+
+    if(isset($_POST["path"]))                 : $trece->path      = str_replace_plus("fo",REALPATHLANG,"",$_POST["path"]);
+                                                $trece->path      = substr($trece->path,0,strrpos($trece->path,"/")).
+                                                                          ($trece->parent_id==""?"":"/").$trece->url_title;                                 endif;
+
+    if(isset($_POST["intro_en"]))             : $trece->intro_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_en"])));   endif;
+    if(isset($_POST["intro_gal"]))            : $trece->intro_gal = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_gal"])));  endif;
+    if(isset($_POST["intro_es"]))             : $trece->intro_es  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_es"])));   endif;
+    if(isset($_POST["post_en"]))              : $trece->post_en   = $_POST["post_en"];                                                                      endif;
+    if(isset($_POST["post_gal"]))             : $trece->post_gal  = $_POST["post_gal"];                                                                     endif;
+    if(isset($_POST["post_es"]))              : $trece->post_es   = $_POST["post_es"];                                                                      endif;
 
     if($trece->updateOne()) :
 
@@ -237,6 +332,13 @@
 
   if(isset($_GET["filebrowser"])) : ?>
 
+
+
+
+
+
+
+<?php if(isset($_GET["type"]) && $_GET["type"]=="image") : ?>
     <style>
       a.file{cursor:pointer;}
       a.delete{cursor:pointer;}
@@ -261,6 +363,7 @@
     <script>
       jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
     </script>
+
     <div class="row">
       <div class="thumbs">
         <ul>
@@ -318,6 +421,165 @@
           });
         });
     </script>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php if(isset($_GET["type"]) && $_GET["type"]=="file") : ?>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
+    <style>
+
+/*    ul.filetree{font-family:Verdana, sans-serif;font-size:14px;line-height:20px;padding:0px;margin:0px;} */
+      ul.filetree{font-size:1em;line-height:1.5em;padding:0px;margin:0px;}
+      ul.filetree li{list-style:none;padding:0 0 0 .5em;margin:0 0 0 .2em;white-space:nowrap;}
+      ul.filetree a{color:#333;text-decoration:none;display:block;padding:0px 2px 0px 5px;margin-left:15px;}
+      .filetree ul{padding-left:.7em;}
+/*    .filetree li ul li:before{position:absolute;}
+      .filetree li ul li{position:relative;} */
+
+      ul.filetree li a:before
+/*    a[href$=".doc"]:before, */
+/*    a[href$=".pdf"]:before, */
+/*    a[href$=".zip"]:before */
+      {
+        display: inline-block;
+        font: normal normal normal 1em/1.5 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transform: translate(0,0);
+        width: .5em;
+        text-align: right;
+        margin-right: .8em;
+        }
+
+      ul.filetree li.collapsed a:before{content:"\f114";}
+      li.expanded a:before{content:"\f115";}
+      li a.file:before{content:"\f016";}
+      ul.filetree a:hover{background:#bdf;}
+
+/*    Office */
+      li.ext_txt a.file:before{content:"\f0f6";}
+      li.ext_doc a.file:before,
+      li.ext_docx a.file:before{content:"\f1c2";}
+      li.ext_xls a.file:before{content:"\f1c3";}
+      li.ext_pdf a.file:before{content:"\f1c1";}
+
+/*    Images */
+      li.ext_jpg a.file:before,
+      li.ext_png a.file:before,
+      li.ext_gif a.file:before,
+      li.ext_psd a.file:before{content:"\f1c5";}
+
+/*    Multimedia */
+      li.ext_wav a.file:before,
+      li.ext_mp3 a.file:before{content:"\f1c7";}
+      li.ext_mov a.file:before,
+      li.ext_avi a.file:before,
+      li.ext_mkv a.file:before,
+      li.ext_swf a.file:before,
+      li.ext_mp4 a.file:before{content:"\f1c8";}
+
+/*    Code */
+      li.ext_jar a.file:before,
+      li.ext_php a.file:before,
+      li.ext_asp a.file:before,
+      li.ext_sql a.file:before,
+      li.ext_css a.file:before,
+      li.ext_htm a.file:before,
+      li.ext_html a.file:before,
+      li.ext_js a.file:before{content:"\f1c9";}
+
+/*    Compressed */
+      li.ext_rar a.file:before,
+      li.ext_zip a.file:before{content:"\f1c6";}
+
+/*
+      a[href$=".doc"]:before{content:"\f1c2";}
+      a[href$=".pdf"]:before{content:"\f1c1";}
+      a[href$=".zip"]:before{content:"\f1c6";}
+*/
+    </style>
+  
+    <script>
+      $(document).ready(function(){
+      $("#container").html('<ul class="filetree start"><li class="wait">'+'Generating Tree...'+'<li></ul>');
+
+      getfilelist($("#container"),"download");
+
+      function getfilelist(cont,root){
+        $(cont).addClass("wait");
+        $.post([location.protocol,'//',location.host,location.pathname].join(''),{qq:true,dir:root},function(data){
+          $(cont).find(".start").html("");
+          $(cont).removeClass("wait").append(data);
+          if("download"==root){$(cont).find("ul:hidden").show();}else{$(cont).find("ul:hidden").slideDown({duration:300,easing:null});}
+        });
+      }
+      
+      $("#container").on("click","li a",function(){
+        var entry = $(this).parent();
+        if(entry.hasClass("folder")){
+          if(entry.hasClass("collapsed")){
+            entry.find("ul").remove();
+            getfilelist(entry,escape($(this).attr("rel")));
+            entry.removeClass("collapsed").addClass("expanded");
+            }
+          else{
+            entry.find("ul").slideUp({duration:300,easing:null});
+            entry.removeClass("expanded").addClass("collapsed");
+          }
+        }
+        else{
+          item_url = $(this).attr("rel");
+          var args = top.tinymce.activeEditor.windowManager.getParams();
+          win = (args.window);
+          input = (args.input);
+          win.document.getElementById(input).value = item_url;
+          top.tinymce.activeEditor.windowManager.close();
+        }
+      return false;
+      });
+
+    });
+    </script>
+
+<div id="container"></div>
+
+
+<?php /*
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
+  <h1>Fichero</h1>
+  <ul>
+<?php foreach(glob($conf["dir"]["download"]."*.{pdf,PDF,doc,DOC,docx,DOCX,zip,ZIP}",GLOB_BRACE) as $file): ?>
+    <li>
+      <?=$file;?>
+    </li>
+<?php endforeach; ?>
+  </ul>
+*/ ?>
+
+
+<?php endif; ?>
+
+
+
+
+
+
+
 <?php die(); endif;
 
 # .. END FILEBROWSER
@@ -340,7 +602,7 @@
 
     reset($_FILES); $temp = current($_FILES);
 
-    if(is_uploaded_file($temp["tmp_name"])) :
+    if(!empty($temp) && is_uploaded_file($temp["tmp_name"])) :
       $filename = explode(".",$temp["name"]);
       $filename = $conf["dir"]["images"].$action."-img-".$trece->ref."-".uniqid();
       if(isset($_SERVER["HTTP_ORIGIN"])) : if(in_array($_SERVER["HTTP_ORIGIN"],$accepted_origins)) : header("Access-Control-Allow-Origin: ".$_SERVER["HTTP_ORIGIN"]); else : header("HTTP/1.1 403 Origin Denied"); return; endif; endif;
@@ -385,7 +647,7 @@
 
   endif;
 
-  $title            = isset($trece->title)?$trece->title:$cconf["default"]["title"];
+  $title_en         = isset($trece->title_en)?$trece->title_en:$cconf["default"]["title_en"];
   $dupeTitle        = isset($trece->dupeTitle)?$trece->dupeTitle:0;
   $stmt             = $trece->readOne();
   $filename         = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
@@ -399,9 +661,13 @@
 
 
 
-   $customJS = <<<EOD
+  $customJS = <<<EOD
+  <!-- jQuery Confirm -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/{$conf["version"]["jquery_confirm"]}/jquery-confirm.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/{$conf["version"]["jquery_confirm"]}/jquery-confirm.min.js"></script>
   <script>
     /* whatever */
+    jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
   </script>
 EOD;
   $customCSS = <<<EOD
@@ -478,6 +744,8 @@ EOD;
 
           <div class="col-xs-12 col-sm-12 col-lg-4">
 
+            <label class="sr-only" for="image"><?=$lCommon["image"][LANG];?></label>
+            <label for="image"><?=$lCommon["image"][LANG];?>:</label><br>
             <div style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;margin-bottom:1em;">
               <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
                 <div style="float:left;">
@@ -499,16 +767,48 @@ EOD;
 
             <div class="form-group">
               <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
-              <label for="title"><?=$lCustom["title"][LANG];?>:</label><br>
-              <input type="text" id="title" name="title" class="form-control input-lg" placeholder="<?=$lCustom["title"][LANG];?>" value="<?=htmlspecialchars($trece->title);?>">
-              <span class="help-block" id="title_lettercounter"></span>
+              <label for="title"><?=$lCustom["title"][LANG];?>:
+                <a href="#title_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+                <a href="#title_gal" class="btn-xs" data-toggle="tab">GAL</a>
+                <a href="#title_es" class="btn-xs" data-toggle="tab">ES</a>
+              </label><br>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="title_en">
+                  <textarea name="title_en" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_en;?></textarea>
+                  <span class="help-block" id="title_en_lettercounter"></span>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="title_gal">
+                  <textarea name="title_gal" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_gal;?></textarea>
+                  <span class="help-block" id="title_gal_lettercounter"></span>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="title_es">
+                  <textarea name="title_es" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_es;?></textarea>
+                  <span class="help-block" id="title_es_lettercounter"></span>
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
               <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?></label>
-              <label for="intro"><?=$lCustom["intro"][LANG];?>:</label><br>
-              <textarea id="intro" name="intro" class="form-control" placeholder=""><?=$trece->intro;?></textarea>
-              <span class="help-block" id="intro_lettercounter"></span>
+              <label for="intro"><?=$lCustom["intro"][LANG];?>:
+                <a href="#intro_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+                <a href="#intro_gal" class="btn-xs" data-toggle="tab">GAL</a>
+                <a href="#intro_es" class="btn-xs" data-toggle="tab">ES</a>
+              </label><br>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="intro_en">
+                  <textarea name="intro_en" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_en;?></textarea>
+                  <span class="help-block" id="intro_en_lettercounter"></span>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="intro_gal">
+                  <textarea name="intro_gal" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_gal;?></textarea>
+                  <span class="help-block" id="intro_gal_lettercounter"></span>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="intro_es">
+                  <textarea name="intro_es" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_es;?></textarea>
+                  <span class="help-block" id="intro_es_lettercounter"></span>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -517,8 +817,25 @@ EOD;
 
             <div class="form-group">
               <label class="sr-only" for="post"><?=$lCustom["post"][LANG];?></label>
-              <label for="post"><?=$lCustom["post"][LANG];?>:</label><br>
-              <textarea id="post" name="post" class="form-control tinymce" placeholder=""><?=$trece->post;?></textarea>
+              <label for="post"><?=$lCustom["post"][LANG];?>:
+                <a href="#post_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+                <a href="#post_gal" class="btn-xs" data-toggle="tab">GAL</a>
+                <a href="#post_es" class="btn-xs" data-toggle="tab">ES</a>
+              </label><br>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="post_en">
+                  <textarea name="post_en" class="form-control tinymce" style="height:7em;" placeholder=""><?=$trece->post_en;?></textarea>
+                  <span class="help-block" id="post_en_lettercounter"></span>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="post_gal">
+                  <textarea name="post_gal" class="form-control tinymce" style="height:7em;" placeholder=""><?=$trece->post_gal;?></textarea>
+                  <span class="help-block" id="post_gal_lettercounter"></span>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in" id="post_es">
+                  <textarea name="post_es" class="form-control tinymce" style="height:7em;" placeholder=""><?=$trece->post_es;?></textarea>
+                  <span class="help-block" id="post_es_lettercounter"></span>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -561,7 +878,8 @@ EOD;
   function sec1(sec1_id,sec2_id,sec3_id){
     if(typeof sec1_id !== "undefined" && sec1_id !== 0){
     $('#sec1').empty();
-    $("#sec1").append("<option>Loading...</option>");
+//  $("#sec1").append("<option>Loading...</option>");
+    $('#sec1').append("<option value='null'></option>");
     sec2(sec1_id,sec2_id,sec3_id);
     }else{
     $('#sec1').empty();
@@ -659,6 +977,16 @@ EOD;
 
 
 
+  <?php if($msg&&$msgType!="danger") : ?>
+  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
+  <?php endif; ?>
+
+  <script>
+    $("[href^=\\#title_]").on("shown.bs.tab",function(e){$("[href^=\\#title_]").removeClass("btn-primary");$(this).addClass("btn-primary");});
+    $("[href^=\\#intro_]").on("shown.bs.tab",function(e){$("[href^=\\#intro_]").removeClass("btn-primary");$(this).addClass("btn-primary");});
+    $("[href^=\\#post_]").on("shown.bs.tab",function(e){$("[href^=\\#post_]").removeClass("btn-primary");$(this).addClass("btn-primary");});
+  </script>
+
   <!-- Latest compiled and minified jQuery Mask Plugin from http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/<?=$conf["version"]["jquery_mask"];?>/jquery.mask.min.js"></script>
 
@@ -670,57 +998,91 @@ EOD;
       $("#sec2").change(function(){var sec2_id=$("#sec2").val();var sec3_id=null;sec3(sec2_id,sec3_id);doWritePath();});
       $("#sec3").change(function(){doWritePath();});
 
-      var text_max_title = 55; // https://seopressor.com/blog/google-title-meta-descriptions-length/
-      var text_max_intro = 160;
-      $("#title_lettercounter").html((text_max_title - <?=mb_strlen($trece->title,"utf8");?>)+" remaining.");
-      $("#intro_lettercounter").html((text_max_intro - <?=mb_strlen($trece->intro,"utf8");?>)+" remaining.");
+      var text_max_title_en = 150; // https://seopressor.com/blog/google-title-meta-descriptions-length/
+      var text_max_title_gal = 150;
+      var text_max_title_es = 150;
+      var text_max_intro_en = 150;
+      var text_max_intro_gal = 150;
+      var text_max_intro_es = 150;
 
-      $('input[name="title"]').on("keyup",function(event){
-        var len_title = $(this).val().length;
-        var text_length_title = $('input[name="title"]').val().length;
-        var text_remaining_title = text_max_title-text_length_title;
-        if (len_title >= text_max_title) {
-          $(this).val($(this).val().substring(0,len_title-1));
+      $("#title_en_lettercounter").html((text_max_title_en - <?=mb_strlen($trece->title_en,"utf8");?>) + " remaining.");
+      $("#title_gal_lettercounter").html((text_max_title_gal - <?=mb_strlen($trece->title_gal,"utf8");?>) + " remaining.");
+      $("#title_es_lettercounter").html((text_max_title_es - <?=mb_strlen($trece->title_es,"utf8");?>) + " remaining.");
+
+      $("#intro_en_lettercounter").html((text_max_intro_en - <?=mb_strlen($trece->intro_en,"utf8");?>) + " remaining.");
+      $("#intro_gal_lettercounter").html((text_max_intro_gal - <?=mb_strlen($trece->intro_gal,"utf8");?>) + " remaining.");
+      $("#intro_es_lettercounter").html((text_max_intro_es - <?=mb_strlen($trece->intro_es,"utf8");?>) + " remaining.");
+
+      $('textarea[name="title_en"]').on("keyup",function(event){
+        var len_title_en = $(this).val().length;
+        var text_length_title_en = $('textarea[name="title_en"]').val().length;
+        var text_remaining_title_en = text_max_title_en - text_length_title_en;
+        if (len_title_en >= text_max_title_en) {
+          $(this).val($(this).val().substring(0,len_title_en-1));
         }
-        $("#title_lettercounter").html(text_remaining_title+" remaining.");
+        $("#title_en_lettercounter").html(text_remaining_title_en + " remaining.");
       });
 
-      $('textarea[name="intro"]').on("keyup",function(event){
-        var len_intro = $(this).val().length;
-        var text_length_intro = $('textarea[name="intro"]').val().length;
-        var text_remaining_intro = text_max_intro-text_length_intro;
-        if (len_intro >= text_max_intro) {
-          $(this).val($(this).val().substring(0,len_intro-1));
+      $('textarea[name="title_gal"]').on("keyup",function(event){
+        var len_title_gal = $(this).val().length;
+        var text_length_title_gal = $('textarea[name="title_gal"]').val().length;
+        var text_remaining_title_gal = text_max_title_gal - text_length_title_gal;
+        if (len_title_gal >= text_max_title_gal) {
+          $(this).val($(this).val().substring(0,len_title_gal-1));
         }
-        $("#intro_lettercounter").html(text_remaining_intro+" remaining.");
+        $("#title_gal_lettercounter").html(text_remaining_title_gal + " remaining.");
+      });
+
+      $('textarea[name="title_es"]').on("keyup",function(event){
+        var len_title_es = $(this).val().length;
+        var text_length_title_es = $('textarea[name="title_es"]').val().length;
+        var text_remaining_title_es = text_max_title_es - text_length_title_es;
+        if (len_title_es >= text_max_title_es) {
+          $(this).val($(this).val().substring(0,len_title_es-1));
+        }
+        $("#title_es_lettercounter").html(text_remaining_title_es + " remaining.");
+      });
+
+      $('textarea[name="intro_en"]').on("keyup",function(event){
+        var len_intro_en = $(this).val().length;
+        var text_length_intro_en = $('textarea[name="intro_en"]').val().length;
+        var text_remaining_intro_en = text_max_intro_en - text_length_intro_en;
+        if (len_intro_en >= text_max_intro_en) {
+          $(this).val($(this).val().substring(0,len_intro_en-1));
+        }
+        $("#intro_en_lettercounter").html(text_remaining_intro_en + " remaining.");
+      });
+
+      $('textarea[name="intro_gal"]').on("keyup",function(event){
+        var len_intro_gal = $(this).val().length;
+        var text_length_intro_gal = $('textarea[name="intro_gal"]').val().length;
+        var text_remaining_intro_gal = text_max_intro_gal - text_length_intro_gal;
+        if (len_intro_gal >= text_max_intro_gal) {
+          $(this).val($(this).val().substring(0,len_intro_gal-1));
+        }
+        $("#intro_gal_lettercounter").html(text_remaining_intro_gal + " remaining.");
+      });
+
+      $('textarea[name="intro_es"]').on("keyup",function(event){
+        var len_intro_es = $(this).val().length;
+        var text_length_intro_es = $('textarea[name="intro_es"]').val().length;
+        var text_remaining_intro_es = text_max_intro_es - text_length_intro_es;
+        if (len_intro_es >= text_max_intro_es) {
+          $(this).val($(this).val().substring(0,len_intro_es-1));
+        }
+        $("#intro_es_lettercounter").html(text_remaining_intro_es + " remaining.");
       });
 
     });
   </script>
 
-<?php /*
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/<?=$conf["version"]["bootstrap_switch"];?>/js/bootstrap-switch.min.js"></script>
-  <script>
-    $('[name="id_status"]').bootstrapSwitch();
-    $('input[name="id_status"]').on("switchChange.bootstrapSwitch",function(event,state){if(state){$("#crop-image").removeClass("attenuate",500);}else{$("#crop-image").addClass("attenuate",500);}});
-  </script>
-*/ ?>
 
-  <?php if($msg&&$msgType!="danger") : ?>
-  <script>$(".alert-dismissable").fadeTo(2000,500).slideUp(500,function(){$(".alert-dismissable").slideUp(500);});</script>
-  <?php endif; ?>
-
-  <script>
-    $("[href^=\\#div_tit]").on("shown.bs.tab",function(e){$("[href^=\\#div_tit]").removeClass("btn-primary");$(this).addClass("btn-primary");});
-    $("[href^=\\#div_description]").on("shown.bs.tab",function(e){$("[href^=\\#div_description]").removeClass("btn-primary");$(this).addClass("btn-primary");});
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
     var thePic="<?=$trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_w"]."x".$cconf["img"]["viewport_h"]."/?text=".$lCustom["singular"][LANG];?>";
-
     function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
   </script>
 
@@ -729,17 +1091,32 @@ EOD;
   <!-- TinyMCE -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/<?=$conf["version"]["tinymce"];?>/tinymce.min.js"></script>
   <script>
+    tinyMCE.PluginManager.add("stylebuttons",function(editor,url){["h1", "h2", "h3"].forEach(function(name){
+      editor.addButton("style-"+name,{
+        tooltip: "Toggle "+name,
+        text: name.toUpperCase(),
+        onClick: function(){editor.execCommand("mceToggleFormat",false,name);},
+        onPostRender: function(){var self=this,setup=function(){editor.formatter.formatChanged(name,function(state){self.active(state);});};editor.formatter?setup():editor.on('init',setup);}
+        })
+      });
+    });
+
     tinymce.init({
       selector: "textarea.tinymce",
       menubar: false,
-      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code" ],
-      toolbar: "fullscreen visualblocks bold italic strikethrough bullist numlist link image charmap code",
+      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code stylebuttons table" ],
+      toolbar: "fullscreen visualblocks | style-h1 style-h2 style-h3 | table | bold italic strikethrough | bullist numlist insert code",
+      table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
+      table_cell_advtab: false,
+//    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
       visualblocks_default_state: true,
       inline_boundaries: true,
-      image_dimensions: false,
-      image_class_list: [{title:"Responsive", value:"img-responsive"}],
-      file_browser_callback : function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"Insertar fichero",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
-      images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
+      image_dimensions: true,
+      file_picker_types: "file image media",
+      image_class_list: [{title:"Responsive", value:"img-responsive"},{title:"Alin. izquerda", value:"img-pull-left pull-left"},{title:"Alin. derecha", value:"img-pull-right pull-right"}],
+      file_browser_callback: function(field_name,url,type,win){var filebrowser="<?=$conf["site"]["virtualpath"];?>?filebrowser";filebrowser+=(filebrowser.indexOf("?")<0)?"?type="+type:"&type="+type;tinymce.activeEditor.windowManager.open({title:"File browser",width:520,height:400,url:filebrowser},{window:win,input:field_name});return false;},
+      images_upload_url: "<?=REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["site"]["virtualpathArray"][1];?>",
+//    images_upload_url: "<?=$conf["site"]["virtualpath"];?>",
       images_upload_handler: function(blobInfo,success,failure){
         var xhr,formData;
         xhr=new XMLHttpRequest();
@@ -750,14 +1127,24 @@ EOD;
         formData.append("file",blobInfo.blob(),blobInfo.filename());
         xhr.send(formData);
       },
-      entity_encoding : "raw",
+/*
+      external_filemanager_path: "filemanager/",
+      filemanager_title: "Responsive Filemanager",
+      external_plugins: {
+        "responsivefilemanager": "../../tinymce/plugins/responsivefilemanager/plugin.min.js",
+        "filemanager": "../../filemanager/plugin.min.js"
+      },
+      extended_valid_elements: 'img[class="your-custom-class-name"|src|border=0|alt|title|hspace|vspace|align|onmouseover|onmouseout|name]',
+*/
+      entity_encoding: "raw",
       paste_as_text: true,
       paste_word_valid_elements: "b,strong,i,em,h1,h2",
       paste_retain_style_properties: "color",
       height: 400,
       content_css: [
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css",
         "https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i",
-        "../css/tinymce.css?" + new Date().getTime(),
+        "<?=REALPATH.$conf["dir"]["styles"];?>tinymce.css?" + new Date().getTime(),
         ],
     });
   </script>

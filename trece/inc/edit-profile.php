@@ -313,7 +313,7 @@
 
     reset($_FILES); $temp = current($_FILES);
 
-    if(is_uploaded_file($temp["tmp_name"])) :
+    if(!empty($temp) && is_uploaded_file($temp["tmp_name"])) :
       $filename = explode(".",$temp["name"]);
       $filename = $conf["dir"]["images"]."bio-img-".$trece->ref."-".uniqid();
       if(isset($_SERVER["HTTP_ORIGIN"])) : if(in_array($_SERVER["HTTP_ORIGIN"],$accepted_origins)) : header("Access-Control-Allow-Origin: ".$_SERVER["HTTP_ORIGIN"]); else : header("HTTP/1.1 403 Origin Denied"); return; endif; endif;
@@ -366,9 +366,9 @@
 
 //metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
-  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
-  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
-  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+//$lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 

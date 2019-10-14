@@ -24,9 +24,7 @@
 
 
 
-
-
-
+//Included or not?
 
   if(!isset($included)) :
 
@@ -62,7 +60,7 @@
 
 //No $what? Load page 1!
 
-  if ( !isset($what) ) :
+  if(!isset($what)) :
 
     header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
@@ -111,8 +109,8 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"id_parent\":\"".$trece->id_parent[$i]."\",
-          \"title\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->title[$i]))."\",
+          \"parent_id\":\"".$trece->parent_id[$i]."\",
+          \"title\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->title_en[$i]))."\",
           \"url_title\":\"".$trece->url_title[$i]."\"
         }";
 
@@ -190,7 +188,7 @@
     $trece                      = new $action($db,$conf);
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->title               = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title"]));
+    $trece->title_en            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title_en"]));
     $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title"]));
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
@@ -221,10 +219,16 @@
     $trece                      = new $action($db,$conf);
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->title               = mb_substr("Copy of ".$_POST["clone_title"],0,54);
-    $trece->url_title           = $cconf["default"]["url_title"];
-    $trece->intro               = $_POST["clone_intro"];
-    $trece->post                = $_POST["clone_post"];
+    $trece->title_en            = mb_substr("Copy of ".$_POST["clone_title_en"],0,54);
+    $trece->title_gal           = mb_substr("Copy of ".$_POST["clone_title_gal"],0,54);
+    $trece->title_es            = mb_substr("Copy of ".$_POST["clone_title_es"],0,54);
+    $trece->url_title           = getUrlFriendlyString($trece->title_en);
+    $trece->intro_en            = $_POST["clone_intro_en"];
+    $trece->intro_gal           = $_POST["clone_intro_gal"];
+    $trece->intro_es            = $_POST["clone_intro_es"];
+    $trece->post_en             = $_POST["clone_post_en"];
+    $trece->post_gal            = $_POST["clone_post_gal"];
+    $trece->post_es             = $_POST["clone_post_es"];
 
     $trece->addOne();
 
@@ -280,10 +284,13 @@
 
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["admin_list"][LANG];
-  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-  $lCustom["metakeywords"] = "key word keyword";
-  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  $lCustom["pagetitle"][LANG] = strip_tags($lCustom["admin_list"][LANG]);
+//$lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+
+
+
 
   $searchTarget     = false;
   $searchWhat       = "";
@@ -327,7 +334,7 @@
 
   endif;
 
-  $trece->intimacy = 1;
+  $trece->intimacy = 1; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
   $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat);
   $rowcount_page = $trece->rowcount;
 
@@ -442,14 +449,15 @@ EOD;
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Page"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->title[$i]);?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Page"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->{"title_".LANG}[$i]);?>">
                 </a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                  <strong><?=${"trece"}->{"title"}[$i];?></strong>
+                  <strong><?=${"trece"}->{"title_".LANG}[$i];?></strong>
                 </a><br>
-                <small><?=doWordWrap(${"trece"}->{"intro"}[$i]);?></small><br>
+                <small><code><?=REALPATHLANG.${"trece"}->{"path"}[$i];?></code></small><br>
+                <small><?=doWordWrap(${"trece"}->{"intro_".LANG}[$i]);?></small><br>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
@@ -457,9 +465,15 @@ EOD;
                   <ul class="dropdown-menu">
                     <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
-                           data-title="<?=htmlspecialchars($trece->title[$i]);?>" 
-                           data-intro="<?=htmlspecialchars($trece->intro[$i]);?>" 
-                           data-post="<?=htmlspecialchars($trece->post[$i]);?>" 
+                           data-title_en="<?=htmlspecialchars($trece->title_en[$i]);?>" 
+                           data-title_gal="<?=htmlspecialchars($trece->title_gal[$i]);?>" 
+                           data-title_es="<?=htmlspecialchars($trece->title_es[$i]);?>" 
+                           data-intro_en="<?=htmlspecialchars($trece->intro_en[$i]);?>" 
+                           data-intro_gal="<?=htmlspecialchars($trece->intro_gal[$i]);?>" 
+                           data-intro_es="<?=htmlspecialchars($trece->intro_es[$i]);?>" 
+                           data-post_en="<?=htmlspecialchars($trece->post_en[$i]);?>" 
+                           data-post_gal="<?=htmlspecialchars($trece->post_gal[$i]);?>" 
+                           data-post_es="<?=htmlspecialchars($trece->post_es[$i]);?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
@@ -541,16 +555,28 @@ EOD;
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
-      var title           =   $(this).data("title");
-      var intro           =   $(this).data("intro");
-      var post            =   $(this).data("post");
+      var title_en        =   $(this).data("title_en");
+      var title_gal       =   $(this).data("title_gal");
+      var title_es        =   $(this).data("title_es");
+      var intro_en        =   $(this).data("intro_en");
+      var intro_gal       =   $(this).data("intro_gal");
+      var intro_es        =   $(this).data("intro_es");
+      var post_en         =   $(this).data("post_en");
+      var post_gal        =   $(this).data("post_gal");
+      var post_es         =   $(this).data("post_es");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
-        clone_title:title,
-        clone_intro:intro,
-        clone_post:post,
+        clone_title_en:title_en,
+        clone_title_gal:title_gal,
+        clone_title_es:title_es,
+        clone_intro_en:intro_en,
+        clone_intro_gal:intro_gal,
+        clone_intro_es:intro_es,
+        clone_post_en:post_en,
+        clone_post_gal:post_gal,
+        clone_post_es:post_es,
         },function(data){
 //        alert(data);
           location.reload();

@@ -69,9 +69,9 @@
 
 //metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
-  $lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-  $lCustom["metakeywords"] = "key word keyword";
-  $lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
+//$lCustom["metakeywords"] = "key word keyword";
+//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
 
   $searchTarget = false;
   $searchWhat   = "";

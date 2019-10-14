@@ -47,7 +47,10 @@
       # $crudlpx equals $conf["file"]["adminlist"] or $conf["file"]["publiclist"]
       # and $what contains a positive integer (number page) or even nothing
       (
-        in_array($crudlpx,array($conf["file"]["adminlist"],$conf["file"]["publiclist"])) &&
+        in_array($crudlpx,array(
+          $conf["file"]["adminlist"],
+//        $conf["file"]["publiclist"],
+        )) &&
         (!isset($what) || (isset($what) && (is_numeric($what) && strlen(intval($what))>0)))
       )
 
@@ -57,7 +60,10 @@
       # $crudlpx equals $conf["file"]["update"] or $conf["file"]["read"] or $conf["file"]["new"]
       # and $what contains an alphanumeric reference (mandatory)
       (
-        in_array($crudlpx,array($conf["file"]["update"],$conf["file"]["read"])) &&
+        in_array($crudlpx,array(
+          $conf["file"]["update"],
+          $conf["file"]["read"],
+        )) &&
         (!isset($direct) && isset($what) && (is_string($what) && strlen($what)>0))
       )
 
@@ -82,37 +88,33 @@
 //    $trece->ref         = $what;
       $trece->intimacy    = 2;
 
-      $trece->getBreadcrumbTrail();
+      $trece->last_id_breadcrumb_trail = false;
+      $trece->in = "'".implode("','",$conf["site"]["virtualpathArray"])."'";
+      $trece->find_in_set = implode(",",$conf["site"]["virtualpathArray"]);
+      $trece->find_in_set_count = count($conf["site"]["virtualpathArray"]);
 
-      if(count(explode(",",$trece->ref)) == count($conf["site"]["virtualpathArray"])) :
+      if($trece->getBreadcrumbTrail()===true) :
 
-        $stmt = $trece->readOne();
-        $rowcount_page = $trece->rowcount;
+        if($trece->last_id_breadcrumb_trail && ($trece->real_thread_trail == $conf["site"]["virtualpathNoLang"])) :
+          $stmt = $trece->readOne();
+          $rowcount_page = $trece->rowcount;
+        endif;
+
+        if($rowcount_page > 0) :
+          require_once($crudlpx.".php");
+          die();
+        else:
+        endif;
 
       endif;
 
-
-      if($rowcount_page > 0) :
-
-        require_once($crudlpx.".php");
-        die();
-
-      else:
-
-        if(isset($direct) && $direct) :
-
-          if(file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
-
-            require_once($conf["dir"]["includes"].$conf["file"]["the404"].".php");
-            die();
-
-          endif;
-
-          echo "<h1>404</h1>";
+      if(isset($direct) && $direct) :
+        if(file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
+          require_once($conf["dir"]["includes"].$conf["file"]["the404"].".php");
           die();
-
         endif;
-
+        echo "<h1>404</h1>";
+        die();
       endif;
 
   endif;
@@ -122,7 +124,7 @@
 //No $crudlpx at all?
 //Well, show them the list, page 1
 
-header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"].QUERYQ);
+header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"]."/1".QUERYQ);
 die();
 
 ?>

@@ -111,7 +111,7 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"name\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->name[$i]))."\"
+          \"name\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),($trece->name[$i].($trece->surname[$i]!=""?" ":"").$trece->surname[$i])))."\"
         }";
 
       endfor;
