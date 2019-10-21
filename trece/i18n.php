@@ -214,6 +214,11 @@ return [
     "gal" => "Clonar",
     "en"  => "Clone",
     ],
+  "content" => [
+    "es"  => "Contenido",
+    "gal" => "Contido",
+    "en"  => "Content",
+    ],
   "create_account" => [
     "es"  => "Crear cuenta",
     "gal" => "Crear conta",

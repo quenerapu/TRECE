@@ -87,6 +87,15 @@
 <?php if ($app->getUserHierarchy() == 1) : ?>
                 <ul class="nav navbar-nav">
                   <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["content"][LANG];?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><?=nav($lCommon["blog"][LANG],"blog");?></li>
+                      <li><?=nav($lCommon["bloglabels"][LANG],"bloglabels");?></li>
+                      <li role="separator" class="divider"></li>
+                      <li><?=nav($lCommon["pages"][LANG],"pages");?></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["places"][LANG];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><?=nav($lCommon["places"]["locations"][LANG],"locations");?></li>
@@ -104,10 +113,8 @@
                       <li><?=nav($lCommon["genders"][LANG],"genders");?></li>
                       <li><?=nav($lCommon["privileges"][LANG],"uprivileges");?></li>
                       <li><?=nav($lCommon["hierarchy"][LANG],"uhierarchy");?></li>
-                      <li><?=nav($lCommon["users"][LANG],"users");?></li>
                       <li role="separator" class="divider"></li>
-                      <li><?=nav($lCommon["blog"][LANG],"blog");?></li>
-                      <li><?=nav($lCommon["bloglabels"][LANG],"bloglabels");?></li>
+                      <li><?=nav($lCommon["users"][LANG],"users");?></li>
                     </ul>
                   </li>
                 </ul>
