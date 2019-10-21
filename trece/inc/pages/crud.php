@@ -282,7 +282,7 @@ class Pages{
                         SELECT  @r AS _id,
                                 (
                                 SELECT  @r := parent_id
-                                FROM    ciugauesece2_pages
+                                FROM `".$this->tablename."`
                                 WHERE   id = _id
                                 ) AS parent_id,
                                 @l := @l + 1 AS level
@@ -291,7 +291,7 @@ class Pages{
                                         @l := 0,
                                         @cl := 0
                                 ) vars,
-                                ciugauesece2_pages h
+                                `".$this->tablename."` h
                         WHERE   @r <> 0
                         ORDER BY
                                 level DESC
@@ -305,6 +305,7 @@ class Pages{
       $stmt->execute();
       $this->real_rowcount = $stmt->rowCount();
       $this->real_breadcrumb_trail = $stmt->fetchColumn();
+
 /*
       echo " |  ".$this->real_rowcount;
       echo "<hr>";
@@ -312,11 +313,12 @@ class Pages{
       echo "<hr>";
       echo ">>".$this->real_breadcrumb_trail;
       echo "<hr>";
+      die();
 */
 
 
 
-      $this->query = "SELECT GROUP_CONCAT(h.`url_title` ORDER BY FIND_IN_SET(h.`id`,'".$this->real_breadcrumb_trail."') SEPARATOR '/') AS thread FROM `ciugauesece2_pages` h WHERE h.`id` IN (".$this->real_breadcrumb_trail.") ORDER BY FIND_IN_SET(h.`id`,'".$this->real_breadcrumb_trail."');";
+      $this->query = "SELECT GROUP_CONCAT(h.`url_title` ORDER BY FIND_IN_SET(h.`id`,'".$this->real_breadcrumb_trail."') SEPARATOR '/') AS thread FROM `".$this->tablename."` h WHERE h.`id` IN (".$this->real_breadcrumb_trail.") ORDER BY FIND_IN_SET(h.`id`,'".$this->real_breadcrumb_trail."');";
       $stmt = $this->conn->prepare($this->query);
       $stmt->execute();
       $this->real_thread_trail = $stmt->fetchColumn();

@@ -205,25 +205,25 @@
     unset($_FILES);
     $msg = true;
 
-    if(isset($_POST["title_en"]))             : $trece->title_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));   endif;
-    if(isset($_POST["title_gal"]))            : $trece->title_gal = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_gal"])));
-                                                $trece->url_title = getUrlFriendlyString($trece->title_gal);                                                endif;
-    if(isset($_POST["title_es"]))             : $trece->title_es  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_es"])));   endif;
+    if(isset($_POST["title_en"]))             : $trece->title_en                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));     endif;
+    if(isset($_POST["title_gal"]))            : $trece->title_gal                 = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_gal"])));    endif;
+    if(isset($_POST["title_es"]))             : $trece->title_es                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_es"])));     endif;
+    if(isset($_POST["speakingurl"]))          : $trece->url_title                 = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["speakingurl"])));  endif;
 
-    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->parent_id = explode(",",$_POST["ids_breadcrumb_trail"]); end($trece->parent_id);
-                                                $trece->level     = count($trece->parent_id);
-                                                $trece->parent_id = prev($trece->parent_id);                                                                endif;
+    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->parent_id                 = explode(",",$_POST["ids_breadcrumb_trail"]); end($trece->parent_id);
+                                                $trece->level                     = count($trece->parent_id);
+                                                $trece->parent_id                 = prev($trece->parent_id);                                                                  endif;
 
-    if(isset($_POST["path"]))                 : $trece->path      = str_replace_plus("fo",REALPATHLANG,"",$_POST["path"]);
-                                                $trece->path      = substr($trece->path,0,strrpos($trece->path,"/")).
-                                                                          ($trece->parent_id==""?"":"/").$trece->url_title;                                 endif;
+    if(isset($_POST["path"]))                 : $trece->path                      = str_replace_plus("fo",REALPATHLANG,"",$_POST["path"]);
+                                                $trece->path                      = substr($trece->path,0,strrpos($trece->path,"/")).
+                                                                                          ($trece->parent_id==""?"":"/").$trece->url_title;                                   endif;
 
-    if(isset($_POST["intro_en"]))             : $trece->intro_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_en"])));   endif;
-    if(isset($_POST["intro_gal"]))            : $trece->intro_gal = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_gal"])));  endif;
-    if(isset($_POST["intro_es"]))             : $trece->intro_es  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_es"])));   endif;
-    if(isset($_POST["post_en"]))              : $trece->post_en   = $_POST["post_en"];                                                                      endif;
-    if(isset($_POST["post_gal"]))             : $trece->post_gal  = $_POST["post_gal"];                                                                     endif;
-    if(isset($_POST["post_es"]))              : $trece->post_es   = $_POST["post_es"];                                                                      endif;
+    if(isset($_POST["intro_en"]))             : $trece->intro_en                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_en"])));     endif;
+    if(isset($_POST["intro_gal"]))            : $trece->intro_gal                 = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_gal"])));    endif;
+    if(isset($_POST["intro_es"]))             : $trece->intro_es                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_es"])));     endif;
+    if(isset($_POST["post_en"]))              : $trece->post_en                   = $_POST["post_en"];                                                                        endif;
+    if(isset($_POST["post_gal"]))             : $trece->post_gal                  = $_POST["post_gal"];                                                                       endif;
+    if(isset($_POST["post_es"]))              : $trece->post_es                   = $_POST["post_es"];                                                                        endif;
 
     if($trece->updateOne()) :
 
@@ -662,6 +662,8 @@
 
 
   $customJS = <<<EOD
+  <!-- SpeakingURL -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/{$conf["version"]["speakingurl"]}/speakingurl.min.js"></script>
   <!-- jQuery Confirm -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/{$conf["version"]["jquery_confirm"]}/jquery-confirm.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/{$conf["version"]["jquery_confirm"]}/jquery-confirm.min.js"></script>
@@ -788,6 +790,24 @@ EOD;
               </div>
             </div>
 
+
+
+            <div class="form-group">
+              <label class="sr-only" for="speakingurl">SpeakingURL:</label>
+              <label for="speakingurl">SpeakingURL:</label><br>
+              <div class="tab-content">
+                <input type="text" name="speakingurl" class="form-control" id="speakingurl" placeholder="" value="<?=$trece->url_title;?>">
+                <script>
+                  $('textarea[name="title_en"]').on("keyup",function(){ //change 
+                    var value = $(this).val();
+                    $("#speakingurl").val(getSlug(value));
+                  }); 
+                </script>
+              </div>
+            </div>
+
+
+
             <div class="form-group">
               <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?></label>
               <label for="intro"><?=$lCustom["intro"][LANG];?>:
@@ -810,6 +830,8 @@ EOD;
                 </div>
               </div>
             </div>
+
+
 
           </div>
 
@@ -1104,8 +1126,11 @@ EOD;
     tinymce.init({
       selector: "textarea.tinymce",
       menubar: false,
-      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code stylebuttons table" ],
+      plugins: [ "fullscreen visualblocks autolink charmap image link media hr paste wordcount lists code stylebuttons table" ],
       toolbar: "fullscreen visualblocks | style-h1 style-h2 style-h3 | table | bold italic strikethrough | bullist numlist insert code",
+      relative_urls : false,
+      remove_script_host : true,
+      document_base_url : "<?=REALPATH;?>",
       table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
       table_cell_advtab: false,
 //    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",

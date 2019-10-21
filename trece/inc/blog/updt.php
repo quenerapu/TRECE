@@ -965,8 +965,11 @@ EOD;
     tinymce.init({
       selector: "textarea.tinymce",
       menubar: false,
-      plugins: [ "fullscreen visualblocks autolink charmap image link media paste wordcount lists code stylebuttons table" ],
+      plugins: [ "fullscreen visualblocks autolink charmap image link media hr paste wordcount lists code stylebuttons table" ],
       toolbar: "fullscreen visualblocks | style-h1 style-h2 style-h3 | table | bold italic strikethrough | bullist numlist insert code",
+      relative_urls : false,
+      remove_script_host : true,
+      document_base_url : "<?=REALPATH;?>",
       table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
       table_cell_advtab: false,
 //    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",

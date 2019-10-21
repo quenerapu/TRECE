@@ -138,7 +138,7 @@ return [
     "homepage"          =>  $homepage="home",
     "homepage_redirect" =>  "", # date("Y") to match the present year
     "aftersignin_home"  =>  "admin_home", # Where to go after signing in. Leave empty to go $homepage or write the name of the page
-    "mainaction"        =>  "users", # ie: if "users", then http://domain.com/quenerapu == http://domain.com/users/quenerapu == http://domain.com/users/read/quenerapu
+    "mainaction"        =>  "pages", # ie: if "users", then http://domain.com/quenerapu == http://domain.com/users/quenerapu == http://domain.com/users/read/quenerapu
     "username_blacklst" =>  "trece|minitrece",
   ],
 
@@ -249,6 +249,7 @@ return [
     "rangesliders"                      =>  "2.3.2",          # Rangeslider.js https://github.com/andreruffert/rangeslider.js/
     "respond_js"                        =>  "1.4.2",          # Respond JS http://github.com/scottjehl/Respond/
     "responsive_toolkit"                =>  "2.6.3",          # Responsive Bootstrap Toolkit https://github.com/maciej-gurban/responsive-bootstrap-toolkit/
+    "speakingurl"                       =>  "14.0.1",         # SpeakingURL https://pid.github.io/speakingurl/
     "selectize"                         =>  "0.12.6",         # Selectize https://selectize.github.io/selectize.js/
     "sprintf"                           =>  "1.1.2",          # sprintf.js https://github.com/alexei/sprintf.js/
     "tinymce"                           =>  "4.9.5",          # TinyMCE http://www.tinymce.com/
