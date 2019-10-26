@@ -96,31 +96,31 @@ class Users {
 
     if(file_exists(dirname(__FILE__)."/tables.sql")) :
 
-      $this->query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
-      $stmt = $this->conn->prepare($this->query);
+      $query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
+      $stmt = $this->conn->prepare($query);
       $stmt->execute();
 
       if($stmt->rowCount() == 0 ) :
 
-        $this->query = "";
+        $query = "";
         $lines = file(dirname(__FILE__)."/tables.sql");
         foreach ($lines as $line) :
           $line = str_replace("inconceivable",ENTROPY,$line);
           if (substr($line,0,2)=="--"||$line=="") continue;
-          $this->query.= $line;
+          $query.= $line;
             if(substr(trim($line),-1, 1)==";") :
-              $stmt = $this->conn->prepare($this->query);
+              $stmt = $this->conn->prepare($query);
               $stmt->execute();
-              $this->query = "";
+              $query = "";
             endif;
         endforeach;
         unlink(dirname(__FILE__)."/tables.sql");
 
         if(file_exists(dirname(__FILE__)."/triggers.sql")) :
-          $this->query = "";
-          $this->query = file_get_contents(dirname(__FILE__)."/triggers.sql");
-          $this->query = str_replace("inconceivable",ENTROPY,$this->query);
-          $stmt = $this->conn->prepare($this->query);
+          $query = "";
+          $query = file_get_contents(dirname(__FILE__)."/triggers.sql");
+          $query = str_replace("inconceivable",ENTROPY,$query);
+          $stmt = $this->conn->prepare($query);
           if($stmt->execute()) : unlink(dirname(__FILE__)."/triggers.sql"); return true; endif;
           return false;
         endif;
@@ -156,9 +156,9 @@ class Users {
 
       else :
 
-        $this->query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`email` = :email LIMIT 0,1";
+        $query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`email` = :email LIMIT 0,1";
 
-        $stmt = $this->conn->prepare($this->query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":email",  $this->email);
         $stmt->execute();
         $this->dupeeMail = $stmt->rowCount();
@@ -174,73 +174,46 @@ class Users {
     else :
 
       $this->randomizer("ref");
-/*
-      $this->query = "INSERT INTO `".$this->tablename."` " .
-                                                "(" .
-                    (isset($this->name)          ? "`name`, "           : "") .
-                    (isset($this->surname)       ? "`surname`, "        : "") .
-                                                   "`username`, " .
-                    (isset($this->email)         ? "`email`, "          : "") .
-                    (isset($this->uhierarchy)    ? "`uhierarchy`, "     : "") .
-                    (isset($this->ugender)       ? "`ugender`, "        : "") .
-                                                   "`date_reg`, " .
-                                                   "`date_upd`, " .
-                                                   "`ip_upd`, " .
-                                                   "`ref`, " .
-                                                   "`loops_ref`, " .
-                                                   ") VALUES (" .
-                    (isset($this->name)          ? ":name, "            : "") .
-                    (isset($this->surname)       ? ":surname, "         : "") .
-                                                   ":username, " .
-                    (isset($this->email)         ? ":email, "           : "") .
-                    (isset($this->uhierarchy)    ? ":uhierarchy, "      : "") .
-                    (isset($this->ugender)       ? ":ugender, "         : "") .
-                                                   "now(), " .
-                                                   "now(), " .
-                                                   ":ip_upd, " .
-                                                   ":ref, " .
-                                                   ":loops_ref, " .
-                                                   ")";
-*/
-      $this->query = "INSERT INTO `".$this->tablename."` " .
-                                                "(" .
-                    (isset($this->name)          ? "`name`, "           : "") .
-                    (isset($this->surname)       ? "`surname`, "        : "") .
-                    (isset($this->email)         ? "`email`, "          : "") .
-                    (isset($this->uhierarchy)    ? "`uhierarchy`, "     : "") .
-                    (isset($this->ugender)       ? "`ugender`, "        : "") .
-                                                   "`username`, " .
-                                                   "`date_reg`, " .
-                                                   "`date_upd`, " .
-                                                   "`ip_upd`, " .
-                                                   "`ref`, " .
-                                                   "`loops_ref`, " .
-                                                   ") VALUES (" .
-                    (isset($this->name)          ? "'".$this->name."', "            : "") .
-                    (isset($this->surname)       ? "'".$this->surname."', "         : "") .
-                    (isset($this->email)         ? "'".$this->email."', "           : "") .
-                    (isset($this->uhierarchy)    ? "'".$this->uhierarchy."', "      : "") .
-                    (isset($this->ugender)       ? "'".$this->ugender."', "         : "") .
-                                                   "'".$this->ref."', " .
-                                                   "now(), " .
-                                                   "now(), " .
-                                                   "'".($_SERVER["REMOTE_ADDR"])."', " .
-                                                   "'".$this->ref."', " .
-                                                   "'".$this->loops_ref."', " .
-                                                   ")";
 
-      $this->query = $this->queryBeautifier($this->query);
+      $query = "INSERT INTO `".$this->tablename."` " .
+                                             "(" .
+                (isset($this->name)       ? "`name`, "                  : "") .
+                (isset($this->surname)    ? "`surname`, "               : "") .
+                (isset($this->email)      ? "`email`, "                 : "") .
+                (isset($this->uhierarchy) ? "`uhierarchy`, "            : "") .
+                (isset($this->ugender)    ? "`ugender`, "               : "") .
+                                            "`username`, " .
+                                            "`date_reg`, " .
+                                            "`date_upd`, " .
+                                            "`ip_upd`, " .
+                                            "`ref`, " .
+                                            "`loops_ref`, " .
+                                            ") VALUES (" .
+                (isset($this->name)       ? "'".$this->name."', "       : "") .
+                (isset($this->surname)    ? "'".$this->surname."', "    : "") .
+                (isset($this->email)      ? "'".$this->email."', "      : "") .
+                (isset($this->uhierarchy) ? "'".$this->uhierarchy."', " : "") .
+                (isset($this->ugender)    ? "'".$this->ugender."', "    : "") .
+                                            "'".$this->ref."', " .
+                                            "now(), " .
+                                            "now(), " .
+                                            "'".($_SERVER["REMOTE_ADDR"])."', " .
+                                            "'".$this->ref."', " .
+                                            "'".$this->loops_ref."', " .
+                                            ")";
 
-                                              $stmt = $this->conn->prepare($this->query);
-      if(isset($this->name))                : $stmt->bindParam(":name",           $this->name);              endif;
-      if(isset($this->surname))             : $stmt->bindParam(":surname",        $this->surname);           endif;
-      if(isset($this->email))               : $stmt->bindParam(":email",          $this->email);             endif;
-      if(isset($this->ugender))             : $stmt->bindParam(":ugender",        $this->ugender);           endif;
-      if(isset($this->uhierarchy))          : $stmt->bindParam(":uhierarchy",     $this->uhierarchy);        endif;
-                                              $stmt->bindParam(":ip_upd",         $_SERVER["REMOTE_ADDR"]);
-                                              $stmt->bindParam(":username",       $this->ref);
-                                              $stmt->bindParam(":ref",            $this->ref);
-                                              $stmt->bindParam(":loops_ref",      $this->loops_rand);
+      $query = $this->queryBeautifier($query);
+
+                                            $stmt= $this->conn->prepare($query);
+      if(isset($this->name))              : $stmt->bindParam(":name",       $this->name);       endif;
+      if(isset($this->surname))           : $stmt->bindParam(":surname",    $this->surname);    endif;
+      if(isset($this->email))             : $stmt->bindParam(":email",      $this->email);      endif;
+      if(isset($this->ugender))           : $stmt->bindParam(":ugender",    $this->ugender);    endif;
+      if(isset($this->uhierarchy))        : $stmt->bindParam(":uhierarchy", $this->uhierarchy); endif;
+                                            $stmt->bindParam(":ip_upd",     $_SERVER["REMOTE_ADDR"]);
+                                            $stmt->bindParam(":username",   $this->ref);
+                                            $stmt->bindParam(":ref",        $this->ref);
+                                            $stmt->bindParam(":loops_ref",  $this->loops_rand);
 
       if($stmt->execute()) : $this->lastid = $this->conn->lastInsertId(); return true; endif;
       return false;
@@ -264,19 +237,19 @@ class Users {
 
   function addOne() {
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
     $this->randomizer("ref");
     foreach ($this->xx as $x) :
-      $this->query1.= isset($this->$x) ? "`".$x."`, " : "";
-      $this->query2.= isset($this->$x) ? ":".$x.", " : "";
+      $query1.= isset($this->$x) ? "`".$x."`, " : "";
+      $query2.= isset($this->$x) ? ":".$x.", " : "";
     endforeach;
-    $this->query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$this->query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$this->query2."now(), now(), :ip_upd)");
-    $this->query1 = "";
-    $this->query2 = "";
+    $query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$query2."now(), now(), :ip_upd)");
+    $query1 = "";
+    $query2 = "";
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
 
     foreach ($this->xx as $x) :
       if(isset($this->$x)) : $stmt->bindParam(":".$x, $this->$x); endif;
@@ -307,13 +280,13 @@ class Users {
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
-                    ($this->intimacy == 2 ? $this->tableletter.".`id_status` = 1 AND " : "") .
-                    $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? LIMIT 0,1";
+    $query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
+              ($this->intimacy == 2 ? $this->tableletter.".`id_status` = 1 AND " : "") .
+              $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->ref);
     $stmt->execute();
 
@@ -344,21 +317,21 @@ class Users {
     $this->wrongeMail     = 0;
     $this->dupeeMail      = 0;
 
-    $this->query = "@id:=".$this->tableletter.".`id` as id, ";
+    $query = "@id:=".$this->tableletter.".`id` as id, ";
     foreach ($this->xx as $x) :
-      $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
+      $query.= $this->tableletter.".`".$x."` as ".$x.", ";
     endforeach;
 
-    $this->query.= "CONCAT((SELECT ".$this->uhierarchy_tableletter.".`color` FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy_color, ";
+    $query.= "CONCAT((SELECT ".$this->uhierarchy_tableletter.".`color` FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy_color, ";
 
-    $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
-                  ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
-                   $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? " .
-                   "LIMIT 0,1";
+    $query = "SELECT " .$query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
+              ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
+               $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? " .
+             "LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->ref);
     $stmt->execute();
 
@@ -395,17 +368,16 @@ class Users {
 
   function updateOneSingleField() {
 
-    $this->query = "UPDATE `".$this->tablename."` ".
-                              $this->tableletter." SET " .
-                              $this->tableletter.".`".$this->field."` = :value, " .
-                              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
-                              $this->tableletter.".`ip_upd` = :ip_upd, " .
-                              $this->tableletter.".`date_upd` = now(), " .
-                              "WHERE ".$this->tableletter.".`id` = :pk";
+    $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".
+              $this->tableletter.".`".$this->field."` = :value, " .
+              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
+              $this->tableletter.".`ip_upd` = :ip_upd, " .
+              $this->tableletter.".`date_upd` = now(), " .
+             "WHERE ".$this->tableletter.".`id` = :pk";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
                                   $stmt->bindParam(":value",      $this->value);
     if(isset($this->url_value)) : $stmt->bindParam(":url_value",  $this->url_value); endif;
                                   $stmt->bindParam(":pk",         $this->pk);
@@ -448,21 +420,21 @@ class Users {
 
       else :
 
-        $this->query = "SELECT " .
-                 $this->tableletter.".`id` " .
+        $query = "SELECT " .
+                  $this->tableletter.".`id` " .
                  "FROM `".$this->tablename."` ".$this->tableletter." " .
                  "WHERE ".$this->tableletter.".`username` = :username " .
                  "AND ".$this->tableletter.".`ref` <> :ref " .
                  "LIMIT 0,1";
 
-        $this->query = $this->queryBeautifier($this->query);
+        $query = $this->queryBeautifier($query);
 
-        $stmt = $this->conn->prepare($this->query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":ref", $this->ref);
         $stmt->bindParam(":username", $this->username);
         $stmt->execute();
         $this->dupeUsername = $stmt->rowCount();
-        $this->query = "";
+        $query = "";
 
       endif;
 
@@ -476,21 +448,21 @@ class Users {
 
       else :
 
-        $this->query = "SELECT " .
-                 $this->tableletter.".`id` " .
+        $query = "SELECT " .
+                  $this->tableletter.".`id` " .
                  "FROM `".$this->tablename."` ".$this->tableletter." " .
                  "WHERE ".$this->tableletter.".`email` = :email " .
                  "AND ".$this->tableletter.".`ref` <> :ref " .
                  "LIMIT 0,1";
 
-        $this->query = $this->queryBeautifier($this->query);
+        $query = $this->queryBeautifier($query);
 
-        $stmt = $this->conn->prepare($this->query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":ref", $this->ref);
         $stmt->bindParam(":email", $this->email);
         $stmt->execute();
         $this->dupeeMail = $stmt->rowCount();
-        $this->query = "";
+        $query = "";
 
       endif;
 
@@ -503,18 +475,18 @@ class Users {
     else :
 
       foreach ($this->xx_updateOne as $x) :
-        $this->query.= isset($this->$x) && $x!="ref" ? $this->tableletter.".`".$x."` = :".$x.", " : "";
+        $query.= isset($this->$x) && $x!="ref" ? $this->tableletter.".`".$x."` = :".$x.", " : "";
       endforeach;
 
-      $this->query = "UPDATE `".$this->tablename."` ".
-                                $this->tableletter." SET " .$this->query.
-                                $this->tableletter.".`date_upd` = now(), " .
-                                $this->tableletter.".`ip_upd` = :ip_upd, " .
-                                "WHERE ".$this->tableletter.".`ref` = :ref";
+      $query = "UPDATE `".$this->tablename."` ".
+                $this->tableletter." SET " .$query.
+                $this->tableletter.".`date_upd` = now(), " .
+                $this->tableletter.".`ip_upd` = :ip_upd, " .
+               "WHERE ".$this->tableletter.".`ref` = :ref";
 
-      $this->query = $this->queryBeautifier($this->query);
+      $query = $this->queryBeautifier($query);
 
-      $stmt = $this->conn->prepare($this->query);
+      $stmt = $this->conn->prepare($query);
       foreach ($this->xx_updateOne as $x) :
         if(isset($this->$x)) : $stmt->bindParam(":".$x , $this->$x); endif;
       endforeach;
@@ -544,8 +516,8 @@ class Users {
 
   function signoutOne() {
 
-    $this->query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".$this->tableletter.".`signed_in` = 0 WHERE ".$this->tableletter.".`id` = ?";
-    $stmt = $this->conn->prepare($this->query);
+    $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".$this->tableletter.".`signed_in` = 0 WHERE ".$this->tableletter.".`id` = ?";
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->who);
     if($result = $stmt->execute()) : return true; endif;
     return false;
@@ -567,8 +539,8 @@ class Users {
 
   function deleteOne() {
 
-    $this->query = "DELETE FROM `".$this->tablename."` WHERE `id` = ?";
-    $stmt = $this->conn->prepare($this->query);
+    $query = "DELETE FROM `".$this->tablename."` WHERE `id` = ?";
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->id);
     if($result = $stmt->execute()) : return true; endif;
     return false;
@@ -590,24 +562,24 @@ class Users {
 
   function readAllJSON() {
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
-    $this->query1.= $this->tableletter.".`id`, ";
+    $query1.= $this->tableletter.".`id`, ";
     foreach ($this->xx as $x) :
-      $this->query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
-      $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
+      $query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
+      $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
 
-    $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
-                    "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
-                    (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
-                    "ORDER BY ". $this->tableletter.".`name` ASC";
+    $query = "SELECT " .$query1." FROM `".$this->tablename."` ".$this->tableletter." " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 " .
+             "AND ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
+              (isset($this->search)?"AND CONCAT(".$query2.") LIKE '%".$this->search."%' ":"") .
+             "ORDER BY ". $this->tableletter.".`name` ASC";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount = $stmt->rowCount();
 
@@ -640,36 +612,36 @@ class Users {
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
-    $this->query1.= "@id:=".$this->tableletter.".`id` as id, ";
+    $query1.= "@id:=".$this->tableletter.".`id` as id, ";
     foreach ($this->xx as $x) :
-      $this->query1.= $this->tableletter.".`".$x."`, ";
-      $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
+      $query1.= $this->tableletter.".`".$x."`, ";
+      $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
 
-    $this->query1.= "CONCAT((SELECT CONCAT(".$this->uhierarchy_tableletter.".`name`,'|',".$this->uhierarchy_tableletter.".`color`) FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
+    $query1.= "CONCAT((SELECT CONCAT(".$this->uhierarchy_tableletter.".`name`,'|',".$this->uhierarchy_tableletter.".`color`) FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
 
     $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
-    ($where ? "CONCAT(".$this->query2.") LIKE '%".$where."%' " : " ");
+    ($where ? "CONCAT(".$query2.") LIKE '%".$where."%' " : " ");
 
-    $this->query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
+    $query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount_absolute = $stmt->rowCount();
 
-    $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
-                   "LIMIT {$from_record_num}, {$records_per_page}";
+    $query = "SELECT ".$query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
+             "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
+             "LIMIT {$from_record_num}, {$records_per_page}";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount = $stmt->rowCount();
 
@@ -697,19 +669,19 @@ class Users {
 
     $this->done = false;
 
-    $this->query = "SELECT " .
-                   $this->tableletter.".`name`, " .
-                   $this->tableletter.".`surname`, " .
-                   $this->tableletter.".`email`, " .
-                   "FROM `".$this->tablename."` ".$this->tableletter." " .
-                   "WHERE ".$this->tableletter.".`id_status` = 1 AND " .
-                   (isset($this->ref) ? $this->tableletter.".`ref` = :ref " : "") .
-                   (isset($this->email_or_username) ? "(".$this->tableletter.".`email` = :email_or_username OR ".$this->tableletter.".`username` = :email_or_username) " : "") .
-                   "LIMIT 0,1";
+    $query = "SELECT ".
+              $this->tableletter.".`name`, " .
+              $this->tableletter.".`surname`, " .
+              $this->tableletter.".`email`, " .
+             "FROM `".$this->tablename."` ".$this->tableletter." " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 AND " .
+              (isset($this->ref) ? $this->tableletter.".`ref` = :ref " : "") .
+              (isset($this->email_or_username) ? "(".$this->tableletter.".`email` = :email_or_username OR ".$this->tableletter.".`username` = :email_or_username) " : "") .
+             "LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
 
     if(isset($this->ref))                 : $stmt->bindParam(":ref", $this->ref);                               endif;
     if(isset($this->email_or_username))   : $stmt->bindParam(":email_or_username", $this->email_or_username);   endif;
@@ -726,15 +698,15 @@ class Users {
 
       $this->randomizer("password_change_hash",40);
 
-      $this->query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET " .
-                     $this->tableletter.".`password_change_hash` = :password_change_hash, " .
-                     $this->tableletter.".`ip_upd`= :ip_upd, " .
-                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                     "AND ".$this->tableletter.".`email` = :email";
+      $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".
+                $this->tableletter.".`password_change_hash` = :password_change_hash, " .
+                $this->tableletter.".`ip_upd`= :ip_upd, " .
+               "WHERE ".$this->tableletter.".`id_status` = 1 " .
+               "AND ".$this->tableletter.".`email` = :email";
 
-      $this->query = $this->queryBeautifier($this->query);
+      $query = $this->queryBeautifier($query);
 
-      $stmt = $this->conn->prepare($this->query);
+      $stmt = $this->conn->prepare($query);
       $stmt->bindParam(":password_change_hash", $this->password_change_hash);
       $stmt->bindParam(":email", $this->email);
       $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
@@ -777,16 +749,16 @@ class Users {
 
   function changePass1() {
 
-    $this->query = "SELECT " .
-                   $this->tableletter.".`id` " .
-                   "FROM `".$this->tablename."` ".$this->tableletter." " .
-                   "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                   "AND ".$this->tableletter.".`password_change_hash` = :password_change_hash " .
-                   "LIMIT 0,1";
+    $query = "SELECT " .
+              $this->tableletter.".`id` " .
+             "FROM `".$this->tablename."` ".$this->tableletter." " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 " .
+             "AND ".$this->tableletter.".`password_change_hash` = :password_change_hash " .
+             "LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(":password_change_hash", $this->password_change_hash);
     $stmt->execute();
 
@@ -866,19 +838,19 @@ class Users {
 
     endif;
 
-    $this->query = "SELECT " .
-                   $this->tableletter.".`name`, " .
-                   $this->tableletter.".`surname`, " .
-                   $this->tableletter.".`email` " .
-                   "FROM `".$this->tablename."` ".$this->tableletter." " .
-                   "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                   "AND ".$this->tableletter.".`password_change_hash` = :password_change_hash " .
-                   "AND (".$this->tableletter.".`email` = :email_or_username OR ".$this->tableletter.".`username` = :email_or_username) " .
-                   "LIMIT 0,1";
+    $query = "SELECT " .
+              $this->tableletter.".`name`, " .
+              $this->tableletter.".`surname`, " .
+              $this->tableletter.".`email` " .
+             "FROM `".$this->tablename."` ".$this->tableletter." " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 " .
+             "AND ".$this->tableletter.".`password_change_hash` = :password_change_hash " .
+             "AND (".$this->tableletter.".`email` = :email_or_username OR ".$this->tableletter.".`username` = :email_or_username) " .
+             "LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(":password_change_hash", $this->password_change_hash);
     $stmt->bindParam(":email_or_username", $this->email_or_username);
     $stmt->execute();
@@ -895,19 +867,19 @@ class Users {
       $this->surname = $row["surname"];
       $this->email = $row["email"];
 
-      $this->query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET " .
-                     $this->tableletter.".`hash_pass` = :hash_pass, " .
-                     $this->tableletter.".`password_change_hash` = NULL, " .
-                     $this->tableletter.".`password_change_timestamp` = now(), " .
-                     $this->tableletter.".`password_change_ip` = :password_change_ip, " .
-                     $this->tableletter.".`password_strength` = :password_strength " .
-                     "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                     "AND ".$this->tableletter.".`password_change_hash` = :password_change_hash " .
-                     "AND ".$this->tableletter.".`email` = :email";
+      $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".
+                $this->tableletter.".`hash_pass` = :hash_pass, " .
+                $this->tableletter.".`password_change_hash` = NULL, " .
+                $this->tableletter.".`password_change_timestamp` = now(), " .
+                $this->tableletter.".`password_change_ip` = :password_change_ip, " .
+                $this->tableletter.".`password_strength` = :password_strength " .
+               "WHERE ".$this->tableletter.".`id_status` = 1 " .
+               "AND ".$this->tableletter.".`password_change_hash` = :password_change_hash " .
+               "AND ".$this->tableletter.".`email` = :email";
 
-      $this->query = $this->queryBeautifier($this->query);
+      $query = $this->queryBeautifier($query);
 
-      $stmt = $this->conn->prepare($this->query);
+      $stmt = $this->conn->prepare($query);
       $stmt->bindParam(":email", $this->email);
       $stmt->bindParam(":password_change_hash", $this->password_change_hash);
       $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
@@ -993,8 +965,8 @@ class Users {
          $randomString .= $characters[rand(0,$charactersLength-1)];
        endfor;
        $this->$field = $randomString;
-       $this->query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
-       $stmt = $this->conn->prepare($this->query);
+       $query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
+       $stmt = $this->conn->prepare($query);
        $stmt->bindParam(1,$this->$field);
        $stmt->execute();
        $num = $stmt->rowCount();

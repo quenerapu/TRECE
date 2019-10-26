@@ -83,31 +83,31 @@ class Locations{
 
     if(file_exists(dirname(__FILE__)."/tables.sql")) :
 
-      $this->query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
-      $stmt = $this->conn->prepare($this->query);
+      $query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
+      $stmt = $this->conn->prepare($query);
       $stmt->execute();
 
       if($stmt->rowCount() == 0 ) :
 
-        $this->query = "";
+        $query = "";
         $lines = file(dirname(__FILE__)."/tables.sql");
         foreach ($lines as $line) :
           $line = str_replace("inconceivable",ENTROPY,$line);
           if (substr($line,0,2)=="--"||$line=="") continue;
-          $this->query.= $line;
+          $query.= $line;
             if(substr(trim($line),-1, 1)==";") :
-              $stmt = $this->conn->prepare($this->query);
+              $stmt = $this->conn->prepare($query);
               $stmt->execute();
-              $this->query = "";
+              $query = "";
             endif;
         endforeach;
         unlink(dirname(__FILE__)."/tables.sql");
 
         if(file_exists(dirname(__FILE__)."/triggers.sql")) :
-          $this->query = "";
-          $this->query = file_get_contents(dirname(__FILE__)."/triggers.sql");
-          $this->query = str_replace("inconceivable",ENTROPY,$this->query);
-          $stmt = $this->conn->prepare($this->query);
+          $query = "";
+          $query = file_get_contents(dirname(__FILE__)."/triggers.sql");
+          $query = str_replace("inconceivable",ENTROPY,$query);
+          $stmt = $this->conn->prepare($query);
           if($stmt->execute()) : unlink(dirname(__FILE__)."/triggers.sql"); return true; endif;
           return false;
         endif;
@@ -132,19 +132,19 @@ class Locations{
 
   function addOne() {
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
     $this->randomizer("ref");
     foreach ($this->xx as $x) :
-      $this->query1.= isset($this->$x) ? "`".$x."`, " : "";
-      $this->query2.= isset($this->$x) ? ":".$x.", " : "";
+      $query1.= isset($this->$x) ? "`".$x."`, " : "";
+      $query2.= isset($this->$x) ? ":".$x.", " : "";
     endforeach;
-    $this->query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$this->query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$this->query2."now(), now(), :ip_upd)");
-    $this->query1 = "";
-    $this->query2 = "";
+    $query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$query2."now(), now(), :ip_upd)");
+    $query1 = "";
+    $query2 = "";
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
 
     foreach ($this->xx as $x) :
       if(isset($this->$x)) : $stmt->bindParam(":".$x, $this->$x); endif;
@@ -170,17 +170,17 @@ class Locations{
 
   function updateOneSingleField() {
 
-    $this->query = "UPDATE `".$this->tablename."` ".
-                              $this->tableletter." SET " .
-                              $this->tableletter.".`".$this->field."` = :value, " .
-                              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
-                              $this->tableletter.".`ip_upd` = :ip_upd, " .
-                              $this->tableletter.".`date_upd` = now(), " .
-                              "WHERE ".$this->tableletter.".`id` = :pk";
+    $query = "UPDATE `".$this->tablename."` ".
+                        $this->tableletter." SET " .
+                        $this->tableletter.".`".$this->field."` = :value, " .
+                        (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
+                        $this->tableletter.".`ip_upd` = :ip_upd, " .
+                        $this->tableletter.".`date_upd` = now(), " .
+                       "WHERE ".$this->tableletter.".`id` = :pk";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
                                   $stmt->bindParam(":value",      $this->value);
     if(isset($this->url_value)) : $stmt->bindParam(":url_value",  $this->url_value); endif;
                                   $stmt->bindParam(":pk",         $this->pk);
@@ -207,8 +207,8 @@ class Locations{
 
   function deleteOne() {
 
-    $this->query = "DELETE FROM `".$this->tablename."` WHERE `id` = ?";
-    $stmt = $this->conn->prepare($this->query);
+    $query = "DELETE FROM `".$this->tablename."` WHERE `id` = ?";
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->id);
     if($result = $stmt->execute()) : return true; endif;
     return false;
@@ -230,25 +230,25 @@ class Locations{
 
   function readAllJSON() {
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
-    $this->query1.= $this->tableletter.".`id`, ";
+    $query1.= $this->tableletter.".`id`, ";
     foreach ($this->xx as $x) :
-      $this->query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
-      $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
+      $query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
+      $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
-      $this->query1.= "CONCAT((SELECT ".$this->parent_tableletter.".`name` FROM ".$this->parent_tablename." ".$this->parent_tableletter." WHERE ".$this->tableletter.".`id_parent` =".$this->parent_tableletter.".`id`)) AS parent, ";
+      $query1.= "CONCAT((SELECT ".$this->parent_tableletter.".`name` FROM ".$this->parent_tablename." ".$this->parent_tableletter." WHERE ".$this->tableletter.".`id_parent` =".$this->parent_tableletter.".`id`)) AS parent, ";
 
-    $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
-                    "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
-                    (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
-                    "ORDER BY ". $this->tableletter.".`name` ASC";
+    $query = "SELECT " .$query1." FROM `".$this->tablename."` ".$this->tableletter." " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 " .
+             "AND ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["name"]."%' " .
+              (isset($this->search)?"AND CONCAT(".$query2.") LIKE '%".$this->search."%' ":"") .
+             "ORDER BY ". $this->tableletter.".`name` ASC";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount = $stmt->rowCount();
 
@@ -281,43 +281,43 @@ class Locations{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
-    $this->query1.= "@id:=".$this->tableletter.".`id` as id, ";
-    $this->query1.= "@id_parent:=".$this->tableletter.".`id_parent` as id_parent, ";
+    $query1.= "@id:=".$this->tableletter.".`id` as id, ";
+    $query1.= "@id_parent:=".$this->tableletter.".`id_parent` as id_parent, ";
     foreach ($this->xx as $x) :
-      $this->query1.= $this->tableletter.".`".$x."`, ";
-      $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
+      $query1.= $this->tableletter.".`".$x."`, ";
+      $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
-    $this->query1.= "CONCAT((SELECT ".$this->parent_tableletter.".`name` FROM `".$this->parent_tablename."` ".$this->parent_tableletter." WHERE ".$this->parent_tableletter.".`id` = @id_parent)) AS parent_name ";
+    $query1.= "CONCAT((SELECT ".$this->parent_tableletter.".`name` FROM `".$this->parent_tablename."` ".$this->parent_tableletter." WHERE ".$this->parent_tableletter.".`id` = @id_parent)) AS parent_name ";
 
     $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
-    ($where ? "CONCAT(".$this->query2.") LIKE '%".$where."%' " : " ");
+    ($where ? "CONCAT(".$query2.") LIKE '%".$where."%' " : " ");
 
-    $this->query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
+    $query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount_absolute = $stmt->rowCount();
 
-    $this->query = "SELECT ".$this->parent_tableletter.".`id`, ".$this->parent_tableletter.".`name` FROM `".$this->parent_tablename."` ".$this->parent_tableletter." WHERE ".$this->parent_tableletter.".`id_status` = 1 ORDER BY ".$this->parent_tableletter.".`name`";
-    $this->query = $this->queryBeautifier($this->query);
-    $stmt = $this->conn->prepare($this->query);
+    $query = "SELECT ".$this->parent_tableletter.".`id`, ".$this->parent_tableletter.".`name` FROM `".$this->parent_tablename."` ".$this->parent_tableletter." WHERE ".$this->parent_tableletter.".`id_status` = 1 ORDER BY ".$this->parent_tableletter.".`name`";
+    $query = $this->queryBeautifier($query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->parent_rowcount = $stmt->rowCount();
     while($x=$stmt->fetch(PDO::FETCH_ASSOC)) : $this->parents[$x["id"]]=$x["name"]; endwhile;
 
-    $this->query = "SELECT ".$this->query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
-                   "LIMIT {$from_record_num}, {$records_per_page}";
+    $query = "SELECT ".$query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
+             "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
+             "LIMIT {$from_record_num}, {$records_per_page}";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount = $stmt->rowCount();
 
@@ -383,8 +383,8 @@ class Locations{
          $randomString .= $characters[rand(0,$charactersLength-1)];
        endfor;
        $this->$field = $randomString;
-       $this->query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
-       $stmt = $this->conn->prepare($this->query);
+       $query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
+       $stmt = $this->conn->prepare($query);
        $stmt->bindParam(1,$this->$field);
        $stmt->execute();
        $num = $stmt->rowCount();

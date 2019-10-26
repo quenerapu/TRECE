@@ -98,31 +98,31 @@ class Blog{
 
     if(file_exists(dirname(__FILE__)."/tables.sql")) :
 
-      $this->query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
-      $stmt = $this->conn->prepare($this->query);
+      $query = "SELECT 1 FROM `".$this->tablename."` LIMIT 1";
+      $stmt = $this->conn->prepare($query);
       $stmt->execute();
 
       if($stmt->rowCount() == 0 ) :
 
-        $this->query = "";
+        $query = "";
         $lines = file(dirname(__FILE__)."/tables.sql");
         foreach ($lines as $line) :
           $line = str_replace("inconceivable",ENTROPY,$line);
           if (substr($line,0,2)=="--"||$line=="") continue;
-          $this->query.= $line;
+          $query.= $line;
             if(substr(trim($line),-1, 1)==";") :
-              $stmt = $this->conn->prepare($this->query);
+              $stmt = $this->conn->prepare($query);
               $stmt->execute();
-              $this->query = "";
+              $query = "";
             endif;
         endforeach;
         unlink(dirname(__FILE__)."/tables.sql");
 
         if(file_exists(dirname(__FILE__)."/triggers.sql")) :
-          $this->query = "";
-          $this->query = file_get_contents(dirname(__FILE__)."/triggers.sql");
-          $this->query = str_replace("inconceivable",ENTROPY,$this->query);
-          $stmt = $this->conn->prepare($this->query);
+          $query = "";
+          $query = file_get_contents(dirname(__FILE__)."/triggers.sql");
+          $query = str_replace("inconceivable",ENTROPY,$query);
+          $stmt = $this->conn->prepare($query);
           if($stmt->execute()) : unlink(dirname(__FILE__)."/triggers.sql"); return true; endif;
           return false;
         endif;
@@ -147,19 +147,19 @@ class Blog{
 
   function addOne() {
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
     $this->randomizer("ref");
     foreach ($this->xx as $x) :
-      $this->query1.= isset($this->$x) ? "`".$x."`, " : "";
-      $this->query2.= isset($this->$x) ? ":".$x.", " : "";
+      $query1.= isset($this->$x) ? "`".$x."`, " : "";
+      $query2.= isset($this->$x) ? ":".$x.", " : "";
     endforeach;
-    $this->query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$this->query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$this->query2."now(), now(), :ip_upd)");
-    $this->query1 = "";
-    $this->query2 = "";
+    $query = $this->queryBeautifier("INSERT INTO `".$this->tablename."` (".$query1."`date_reg`, `date_upd`, `ip_upd`) VALUES (".$query2."now(), now(), :ip_upd)");
+    $query1 = "";
+    $query2 = "";
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
 
     foreach ($this->xx as $x) :
       if(isset($this->$x)) : $stmt->bindParam(":".$x, $this->$x); endif;
@@ -190,13 +190,13 @@ class Blog{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
-                    ($this->intimacy == 2 ? $this->tableletter.".`id_status` = 1 AND " : "") .
-                    $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? LIMIT 0,1";
+    $query = "SELECT ".$this->tableletter.".`id` FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
+              ($this->intimacy == 2 ? $this->tableletter.".`id_status` = 1 AND " : "") .
+              $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->ref);
     $stmt->execute();
 
@@ -224,28 +224,24 @@ class Blog{
 
     $this->dupeTitle = 0;
 
-    $this->query = "@id:=".$this->tableletter.".`id` as id, ";
+    $query = "@id:=".$this->tableletter.".`id` as id, ";
     foreach ($this->xx as $x) :
-      $this->query.= $this->tableletter.".`".$x."` as ".$x.", ";
+      $query.= $this->tableletter.".`".$x."` as ".$x.", ";
     endforeach;
 
 //  JSONLABELS
-    $this->query.=
+    $query.=
     "CONCAT(\"'\",".$this->tableletter.".`ids_labels`,\"'\") AS ids_labels, " .
     "CONCAT((SELECT GROUP_CONCAT('{\"value\":',".$this->labels_tableletter.".`id`,',\"name_".LANG."\":',CONCAT('\"',REPLACE(REPLACE(".$this->labels_tableletter.".`name_".LANG."`,'\"','&#8243;'),'\\'','&#8242;'),'\"'),'}' ORDER BY FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ',''))) FROM `".$this->labels_tablename."` ".$this->labels_tableletter.", `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`id` = @id AND FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ','')))) AS jsonlabels, ";
-/*
-    $this->query.=
-    "CONCAT(\"'\",".$this->tableletter.".`ids_labels`,\"'\") AS ids_labels, " .
-    "CONCAT((SELECT GROUP_CONCAT('{\"value\":',".$this->labels_tableletter.".`id`,',\"name\":',CONCAT('\"',REPLACE(REPLACE(".$this->labels_tableletter.".`name`,'\"','&#8243;'),'\\'','&#8242;'),'\"'),'}' ORDER BY FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ',''))) FROM `".$this->labels_tablename."` ".$this->labels_tableletter.", `".$this->tablename."` ".$this->tableletter." WHERE ".$this->tableletter.".`id` = @id AND FIND_IN_SET(".$this->labels_tableletter.".`id`, REPLACE(".$this->tableletter.".`ids_labels`,' ','')))) AS jsonlabels, ";
-*/
-    $this->query = "SELECT " .$this->query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
-                  ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
-                   $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? " .
-                   "LIMIT 0,1";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = "SELECT " .$query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
+              ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
+               $this->tableletter.".`".($this->intimacy == 2 ? $this->cconf["file"]["ref"] : "ref")."` = ? " .
+             "LIMIT 0,1";
 
-    $stmt = $this->conn->prepare($this->query);
+    $query = $this->queryBeautifier($query);
+
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->ref);
     $stmt->execute();
 
@@ -275,17 +271,17 @@ class Blog{
 
   function updateOneSingleField() {
 
-    $this->query = "UPDATE `".$this->tablename."` ".
-                              $this->tableletter." SET " .
-                              $this->tableletter.".`".$this->field."` = :value, " .
-                              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
-                              $this->tableletter.".`ip_upd` = :ip_upd, " .
-                              $this->tableletter.".`date_upd` = now(), " .
-                              "WHERE ".$this->tableletter.".`id` = :pk";
+    $query = "UPDATE `".$this->tablename."` ".
+              $this->tableletter." SET " .
+              $this->tableletter.".`".$this->field."` = :value, " .
+              (isset($this->url_value) ? $this->tableletter.".`url_".$this->field."` = :url_value, " : "" ) . 
+              $this->tableletter.".`ip_upd` = :ip_upd, " .
+              $this->tableletter.".`date_upd` = now(), " .
+             "WHERE ".$this->tableletter.".`id` = :pk";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
                                   $stmt->bindParam(":value",      $this->value);
     if(isset($this->url_value)) : $stmt->bindParam(":url_value",  $this->url_value); endif;
                                   $stmt->bindParam(":pk",         $this->pk);
@@ -317,21 +313,21 @@ class Blog{
 
     if(isset($this->title_en)) :
 
-      $this->query = "SELECT " .
-               $this->tableletter.".`id` " .
+      $query = "SELECT " .
+                $this->tableletter.".`id` " .
                "FROM `".$this->tablename."` ".$this->tableletter." " .
                "WHERE ".$this->tableletter.".`title_en` = :title_en , " .
                "AND ".$this->tableletter.".`ref` <> :ref " .
                "LIMIT 0,1";
 
-      $this->query = $this->queryBeautifier($this->query);
+      $query = $this->queryBeautifier($query);
 
-      $stmt = $this->conn->prepare($this->query);
+      $stmt = $this->conn->prepare($query);
       $stmt->bindParam(":ref", $this->ref);
       $stmt->bindParam(":title_en", $this->title_en);
       $stmt->execute();
       $this->dupeTitle = $stmt->rowCount();
-      $this->query = "";
+      $query = "";
 
     endif;
 
@@ -342,18 +338,18 @@ class Blog{
     else :
 
       foreach ($this->xx_updateOne as $x) :
-        $this->query.= isset($this->$x) && $x!="ref" ? $this->tableletter.".`".$x."` = :".$x.", " : "";
+        $query.= isset($this->$x) && $x!="ref" ? $this->tableletter.".`".$x."` = :".$x.", " : "";
       endforeach;
 
-      $this->query = "UPDATE `".$this->tablename."` ".
-                                $this->tableletter." SET " .$this->query.
-                                $this->tableletter.".`date_upd` = now(), " .
-                                $this->tableletter.".`ip_upd` = :ip_upd, " .
-                                "WHERE ".$this->tableletter.".`ref` = :ref";
+      $query = "UPDATE `".$this->tablename."` ".
+                $this->tableletter." SET " .$query.
+                $this->tableletter.".`date_upd` = now(), " .
+                $this->tableletter.".`ip_upd` = :ip_upd, " .
+               "WHERE ".$this->tableletter.".`ref` = :ref";
 
-      $this->query = $this->queryBeautifier($this->query);
+      $query = $this->queryBeautifier($query);
 
-      $stmt = $this->conn->prepare($this->query);
+      $stmt = $this->conn->prepare($query);
       foreach ($this->xx_updateOne as $x) :
         if(isset($this->$x)) : $stmt->bindParam(":".$x , $this->$x); endif;
       endforeach;
@@ -383,8 +379,8 @@ class Blog{
 
   function deleteOne() {
 
-    $this->query = "DELETE FROM `".$this->tablename."` WHERE `id` = ?";
-    $stmt = $this->conn->prepare($this->query);
+    $query = "DELETE FROM `".$this->tablename."` WHERE `id` = ?";
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->id);
     if($result = $stmt->execute()) : return true; endif;
     return false;
@@ -406,24 +402,24 @@ class Blog{
 
   function readAllJSON() {
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
-    $this->query1.= $this->tableletter.".`id`, ";
+    $query1.= $this->tableletter.".`id`, ";
     foreach ($this->xx as $x) :
-      $this->query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
-      $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
+      $query1.= $x!="ref" ? $this->tableletter.".`".$x."`, " : "";
+      $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
 
-    $this->query = "SELECT " .$this->query1." FROM `".$this->tablename."` ".$this->tableletter." " .
-                    "WHERE ".$this->tableletter.".`id_status` = 1 " .
-                    "AND ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["title_en"]."%' " .
-                    (isset($this->search)?"AND CONCAT(".$this->query2.") LIKE '%".$this->search."%' ":"") .
-                    "ORDER BY ". $this->tableletter.".`date` DESC";
+    $query = "SELECT " .$query1." FROM `".$this->tablename."` ".$this->tableletter." " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 " .
+             "AND ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci NOT LIKE '".$this->cconf["default"]["title_en"]."%' " .
+              (isset($this->search)?"AND CONCAT(".$query2.") LIKE '%".$this->search."%' ":"") .
+             "ORDER BY ". $this->tableletter.".`date` DESC";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount = $stmt->rowCount();
 
@@ -456,42 +452,40 @@ class Blog{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    $this->query1 = "";
-    $this->query2 = "";
+    $query1 = "";
+    $query2 = "";
 
-    $this->query1.= "@id:=".$this->tableletter.".`id` as id, ";
-    $this->query1.= "@ids_labels:=".$this->tableletter.".`ids_labels` as ids_labels, ";
+    $query1.= "@id:=".$this->tableletter.".`id` as id, ";
+    $query1.= "@ids_labels:=".$this->tableletter.".`ids_labels` as ids_labels, ";
     foreach ($this->xx as $x) :
-      $this->query1.= $this->tableletter.".`".$x."`, ";
-      $this->query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
+      $query1.= $this->tableletter.".`".$x."`, ";
+      $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
 
 //  LABELS
-    $this->query1.= "CONCAT((SELECT GROUP_CONCAT('<a href=\"".$this->conf["site"]["fullpath"]."?wr=".$this->conf["site"]["action"]."&wh=&label=',".$this->labels_tableletter.".`id`,'\">',".$this->labels_tableletter.".`name_".LANG."`,'</a>' ORDER BY FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels) SEPARATOR ', ') FROM `".$this->labels_tablename."` ".$this->labels_tableletter." WHERE FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels))) as labels, ";
-/*
-    $this->query1.= "CONCAT((SELECT GROUP_CONCAT('<a href=\"".$this->conf["site"]["fullpath"]."?wr=".$this->conf["site"]["action"]."&wh=&label=',".$this->labels_tableletter.".`id`,'\">',".$this->labels_tableletter.".`name`,'</a>' ORDER BY FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels) SEPARATOR ', ') FROM `".$this->labels_tablename."` ".$this->labels_tableletter." WHERE FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels))) as labels, ";
-*/
+    $query1.= "CONCAT((SELECT GROUP_CONCAT('<a href=\"".$this->conf["site"]["fullpath"]."?wr=".$this->conf["site"]["action"]."&wh=&label=',".$this->labels_tableletter.".`id`,'\">',".$this->labels_tableletter.".`name_".LANG."`,'</a>' ORDER BY FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels) SEPARATOR ', ') FROM `".$this->labels_tablename."` ".$this->labels_tableletter." WHERE FIND_IN_SET(". $this->labels_tableletter.".`id`,@ids_labels))) as labels, ";
+
     $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
-    ($where ? "CONCAT(".$this->query2.") LIKE '%".$where."%' " : " ") .
+    ($where ? "CONCAT(".$query2.") LIKE '%".$where."%' " : " ") .
     (!is_null($searchLabel) && !empty($searchLabel) ? ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " AND " : " WHERE ")." FIND_IN_SET(".$searchLabel.",".$this->tableletter.".`ids_labels`) " : " ");
 
-    $this->query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
+    $query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount_absolute = $stmt->rowCount();
 
-    $this->query = "SELECT ".$this->query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
-//                 "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title_en"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci DESC " .
-                   "ORDER BY ". $this->tableletter.".`id_status` ASC, `date` DESC " .
-                   "LIMIT {$from_record_num}, {$records_per_page}";
+    $query = "SELECT ".$query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
+//           "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["title_en"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`title_en` COLLATE utf8mb4_unicode_ci DESC " .
+             "ORDER BY ". $this->tableletter.".`id_status` ASC, `date` DESC " .
+             "LIMIT {$from_record_num}, {$records_per_page}";
 
-    $this->query = $this->queryBeautifier($this->query);
+    $query = $this->queryBeautifier($query);
 
-    $stmt = $this->conn->prepare($this->query);
+    $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $this->rowcount = $stmt->rowCount();
 
@@ -557,8 +551,8 @@ class Blog{
          $randomString .= $characters[rand(0,$charactersLength-1)];
        endfor;
        $this->$field = $randomString;
-       $this->query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
-       $stmt = $this->conn->prepare($this->query);
+       $query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
+       $stmt = $this->conn->prepare($query);
        $stmt->bindParam(1,$this->$field);
        $stmt->execute();
        $num = $stmt->rowCount();
