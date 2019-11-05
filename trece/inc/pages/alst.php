@@ -222,13 +222,16 @@
     $trece->title_en            = mb_substr("Copy of ".$_POST["clone_title_en"],0,54);
     $trece->title_gal           = mb_substr("Copy of ".$_POST["clone_title_gal"],0,54);
     $trece->title_es            = mb_substr("Copy of ".$_POST["clone_title_es"],0,54);
-    $trece->url_title           = getUrlFriendlyString($trece->title_en);
     $trece->intro_en            = $_POST["clone_intro_en"];
     $trece->intro_gal           = $_POST["clone_intro_gal"];
     $trece->intro_es            = $_POST["clone_intro_es"];
     $trece->post_en             = $_POST["clone_post_en"];
     $trece->post_gal            = $_POST["clone_post_gal"];
     $trece->post_es             = $_POST["clone_post_es"];
+    $trece->url_title           = $_POST["clone_url_title"];
+    $trece->parent_id           = $_POST["clone_parent_id"];
+    $trece->level               = $_POST["clone_level"];
+    $trece->path                = $_POST["clone_path"];
 
     $trece->addOne();
 
@@ -474,6 +477,10 @@ EOD;
                            data-post_en="<?=htmlspecialchars($trece->post_en[$i]);?>" 
                            data-post_gal="<?=htmlspecialchars($trece->post_gal[$i]);?>" 
                            data-post_es="<?=htmlspecialchars($trece->post_es[$i]);?>" 
+                           data-url_title="<?=$trece->url_title[$i]."-copy";?>" 
+                           data-parent_id="<?=$trece->parent_id[$i];?>" 
+                           data-level="<?=$trece->level[$i];?>" 
+                           data-path="<?=$trece->path[$i]."-copy";?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
                     <li><a href="<?=REALPATHLANG.${"trece"}->{"path"}[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
@@ -564,6 +571,10 @@ EOD;
       var post_en         =   $(this).data("post_en");
       var post_gal        =   $(this).data("post_gal");
       var post_es         =   $(this).data("post_es");
+      var url_title       =   $(this).data("url_title");
+      var parent_id       =   $(this).data("parent_id");
+      var level           =   $(this).data("level");
+      var path            =   $(this).data("path");
 
       $.post("",{
         cloneThis:true,
@@ -577,6 +588,10 @@ EOD;
         clone_post_en:post_en,
         clone_post_gal:post_gal,
         clone_post_es:post_es,
+        clone_url_title:url_title,
+        clone_parent_id:parent_id,
+        clone_level:level,
+        clone_path:path,
         },function(data){
 //        alert(data);
           location.reload();
