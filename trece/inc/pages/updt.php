@@ -729,6 +729,7 @@ EOD;
             </div>
             <div class="panel-body">
               <input type="text" id="path" name="path" class="form-control" value="<?=REALPATHLANG.$trece->path;?>" readonly>
+              <p id="ppath" style="margin:.6em 0 0 0;padding:0;"><a href="<?=REALPATHLANG.$trece->path;?>"><?=REALPATHLANG.$trece->path;?></a></p>
             </div>
           </div>
 
@@ -987,6 +988,7 @@ EOD;
         path+= typeof $("#sec3").find(':selected').data('url_title') !== "undefined" ? $("#sec3").find(':selected').data('url_title') : "";
         path+= "/<?=$trece->url_title;?>";
     $("#path").val(path);
+    $("#ppath").html('<a href="'+path+'">'+path+'</a>');
     var ids_breadcrumb_trail = "";
         ids_breadcrumb_trail+= typeof $("#sec1").find(':selected').data('value') !== "undefined" ? $("#sec1").find(':selected').data('value') : "";
         ids_breadcrumb_trail+= typeof $("#sec2").find(':selected').data('value') !== "undefined" ? $("#sec2").find(':selected').data('value') : "";
