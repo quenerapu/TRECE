@@ -106,18 +106,18 @@
       list($type,$item_img_mob_image)=explode(";",$item_img_mob_image);
       list(,$item_img_mob_image)=explode(",",$item_img_mob_image);
       $item_img_mob_image=base64_decode($item_img_mob_image);
-      file_put_contents($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg",$item_img_mob_image);
+      file_put_contents($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg",$item_img_mob_image);
 
-      $source=@imagecreatefromjpeg($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
-      fixImageOrientation($source,$conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
-      if($source){imagejpeg($source,$conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");}
-      list($width,$height)=getimagesize($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
-      resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$action."_".$trece->ref."_mob.jpg",$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
+      $source=@imagecreatefromjpeg($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+      fixImageOrientation($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+      if($source){imagejpeg($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");}
+      list($width,$height)=getimagesize($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+      resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg",$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
     endif;
 
-    if(isset($_POST["item-img-mob-remove"]) && file_exists($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg")):
-      unlink($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
-      unlink($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$action."_".$trece->ref."_mob.jpg");
+    if(isset($_POST["item-img-mob-remove"]) && file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg")):
+      unlink($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+      unlink($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
     endif;
 
     if(isset($_POST["item-img-web-image"]) && !empty($_POST["item-img-web-image"])):
@@ -125,11 +125,11 @@
       list($type,$item_img_web_image)=explode(";",$item_img_web_image);
       list(,$item_img_web_image)=explode(",",$item_img_web_image);
       $item_img_web_image=base64_decode($item_img_web_image);
-      file_put_contents($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg",$item_img_web_image);
+      file_put_contents($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg",$item_img_web_image);
     endif;
 
-    if(isset($_POST["item-img-web-remove"]) && file_exists($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg")):
-      unlink($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg");
+    if(isset($_POST["item-img-web-remove"]) && file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg")):
+      unlink($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg");
     endif;
 
     if(isset($_POST["title_en"]))             : $trece->title_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));     endif;
@@ -393,13 +393,13 @@ EOD;
               <label for="img-mob">Imaxe de fondo vertical (móbiles):</label><br>
               <label class="item-img-mob">
                 <figure>
-                  <img src="<?=file_exists($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg")?$conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_mob_w"]."x".$cconf["img"]["viewport_mob_h"]."/?text=Imaxe";?>" id="item-img-mob-output" class="img-responsive img-thumbnail">
+                  <img src="<?=file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_mob_w"]."x".$cconf["img"]["viewport_mob_h"]."/?text=Imaxe";?>" id="item-img-mob-output" class="img-responsive img-thumbnail">
                   <figcaption><i class="fa fa-camera"></i></figcaption>
                 </figure>
                 <input type="file" name="item-img-mob" id="item-img-mob" class="file center-block">
               </label>
               <div class="checkbox">
-                <label><input type="checkbox" name="item-img-mob-remove" id="item-img-mob-remove" value="1"<?=!file_exists($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg")?" checked":"";?>> Sen imaxe (usar xenérica)</label>
+                <label><input type="checkbox" name="item-img-mob-remove" id="item-img-mob-remove" value="1"<?=!file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg")?" checked":"";?>> Sen imaxe (usar xenérica)</label>
               </div>
               <input type="hidden" id="item-img-mob-image" name="item-img-mob-image" value="">
             </div>
@@ -413,13 +413,13 @@ EOD;
               <label for="img-web">Imaxe de fondo horizontal (ordenadores/tablets):</label><br>
               <label class="item-img-web">
                 <figure>
-                  <img src="<?=file_exists($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg")?$conf["dir"]["images"].$action."_".$trece->ref."_web.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_web_w"]."x".$cconf["img"]["viewport_web_h"]."/?text=Imaxe";?>" id="item-img-web-output" class="img-responsive img-thumbnail">
+                  <img src="<?=file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg")?$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_web_w"]."x".$cconf["img"]["viewport_web_h"]."/?text=Imaxe";?>" id="item-img-web-output" class="img-responsive img-thumbnail">
                   <figcaption><i class="fa fa-camera"></i></figcaption>
                 </figure>
                 <input type="file" name="item-img-web" id="item-img-web" class="file center-block">
               </label>
               <div class="checkbox">
-                <label><input type="checkbox" name="item-img-web-remove" id="item-img-web-remove" value="1"<?=!file_exists($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg")?" checked":"";?>> Sen imaxe (usar xenérica)</label>
+                <label><input type="checkbox" name="item-img-web-remove" id="item-img-web-remove" value="1"<?=!file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg")?" checked":"";?>> Sen imaxe (usar xenérica)</label>
               </div>
               <input type="hidden" id="item-img-web-image" name="item-img-web-image" value="">
             </div>

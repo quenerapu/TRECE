@@ -53,8 +53,8 @@ return [
 //  "viewport_w"        => 390,           # Croppie viewport width
 //  "viewport_h"        => 219,           # Croppie viewport height
 
-//  "img_w"             => $img_w=1600,   # PHP GD image width
-//  "img_h"             => $img_h = 900,  # PHP GD image height
+    "img_w"             => $img_w=1280,   # PHP GD image width
+    "img_h"             => $img_h=400,    # PHP GD image height
 
 //  "icon_w"            => $icon_w = $img_w/2,      # PHP GD icon width
 //  "icon_h"            => $icon_h = $img_h/2,      # PHP GD icon height
