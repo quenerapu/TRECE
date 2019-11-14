@@ -88,110 +88,6 @@
 
 
 
-
-
-  if(isset($_POST["qq"]) && isset($_POST["dir"])) :
-
-
-    /*
-     Folder Tree with PHP and jQuery.
-
-     R. Savoul Pelister
-     http://techlister.com
-
-    */
-
-
-    class treeview{
-
-      private $files;
-      private $folder;
-      
-      function __construct($path) {
-        
-        $files = array(); 
-        if(file_exists($path)) :
-          if($path[strlen($path)-1]== "/"){$this->folder = $path;}else{$this->folder = $path."/";}
-          $this->dir = opendir($path);
-          while(($file = readdir($this->dir))!=false):$this->files[] = $file; endwhile;
-          closedir($this->dir);
-        endif;
-      }
-
-      function create_tree(){
-          
-        if(count($this->files) > 2) : /* First 2 entries are . and ..  -skip them */
-          natcasesort($this->files);
-          $list = "<ul class=\"filetree\" style=\"display:none;\">";
-          // Group folders first
-          foreach($this->files as $file) :
-            if(file_exists($this->folder.$file) && $file != "." && $file != ".." && is_dir($this->folder.$file)) :
-              $list.= "<li class=\"folder collapsed\"><a href=\"#\" rel=\"".htmlentities($this->folder.$file)."/\">".htmlentities($file)."</a></li>";
-            endif;
-          endforeach;
-          // Group all files
-          foreach($this->files as $file) :
-            if(file_exists($this->folder.$file) && $file != "." && $file != ".." && !is_dir($this->folder.$file)) :
-              $ext = preg_replace("/^.*\./","",$file);
-              $list.= "<li class=\"ext_".$ext."\"><a class=\"file\" href=\"#\" rel=\"".htmlentities($this->folder.$file)."\">".htmlentities($file)."</a></li>";
-            endif;
-          endforeach;
-          $list.= "</ul>";  
-          return $list;
-        endif;
-      }
-
-    }
-
-    $path = urldecode($_REQUEST["dir"]);
-    $tree = new treeview($path);
-    echo $tree->create_tree();
-
-  die();
-  endif;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ...................................................................................
-# ..#####..######.##.....######.######.######...######.##...##..####...####..######..
-# ..##..##.##.....##.....##.......##...##.........##...###.###.##..##.##.....##......
-# ..##..##.####...##.....####.....##...####.......##...##.#.##.######.##.###.####....
-# ..##..##.##.....##.....##.......##...##.........##...##...##.##..##.##..##.##......
-# ..#####..######.######.######...##...######...######.##...##.##..##..####..######..
-# ...................................................................................
-
-  if(isset($_POST["deleteImage"]) && isset($_POST["object_who"])) :
-
-    $items = explode("↲",$_POST["object_who"]);
-    foreach($items as $item) :
-      if(file_exists($item)) :
-        unlink($item);
-      endif;
-    endforeach;
-    die();
-
-  endif;
-
-# .. END DELETE IMAGE
-# ...................................................................................
-
-
-
 # ................................................................................................
 # ..##..##.#####..#####...####..######.######...#####..#####...####..######.######.##.....######..
 # ..##..##.##..##.##..##.##..##...##...##.......##..##.##..##.##..##.##.......##...##.....##......
@@ -205,70 +101,70 @@
     unset($_FILES);
     $msg = true;
 
-    if(isset($_POST["title_en"]))             : $trece->title_en                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));     endif;
-    if(isset($_POST["title_gal"]))            : $trece->title_gal                 = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_gal"])));    endif;
-    if(isset($_POST["title_es"]))             : $trece->title_es                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_es"])));     endif;
-    if(isset($_POST["speakingurl"]))          : $trece->url_title                 = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["speakingurl"])));  endif;
+    if(isset($_POST["item-img-mob-image"]) && !empty($_POST["item-img-mob-image"])):
+      $item_img_mob_image = $_POST["item-img-mob-image"];
+      list($type,$item_img_mob_image)=explode(";",$item_img_mob_image);
+      list(,$item_img_mob_image)=explode(",",$item_img_mob_image);
+      $item_img_mob_image=base64_decode($item_img_mob_image);
+      file_put_contents($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg",$item_img_mob_image);
 
-    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->parent_id                 = explode(",",$_POST["ids_breadcrumb_trail"]); end($trece->parent_id);
-                                                $trece->level                     = count($trece->parent_id);
-                                                $trece->parent_id                 = prev($trece->parent_id);                                                                  endif;
+      $source=@imagecreatefromjpeg($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
+      fixImageOrientation($source,$conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
+      if($source){imagejpeg($source,$conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");}
+      list($width,$height)=getimagesize($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
+      resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$action."_".$trece->ref."_mob.jpg",$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
+    endif;
 
-    if(isset($_POST["path"]))                 : $trece->path                      = str_replace_plus("fo",REALPATHLANG,"",$_POST["path"]);
-                                                $trece->path                      = substr($trece->path,0,strrpos($trece->path,"/")).
-                                                                                          ($trece->parent_id==""?"":"/").$trece->url_title;                                   endif;
+    if(isset($_POST["item-img-mob-remove"]) && file_exists($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg")):
+      unlink($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg");
+      unlink($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$action."_".$trece->ref."_mob.jpg");
+    endif;
 
-    if(isset($_POST["intro_en"]))             : $trece->intro_en                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_en"])));     endif;
-    if(isset($_POST["intro_gal"]))            : $trece->intro_gal                 = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_gal"])));    endif;
-    if(isset($_POST["intro_es"]))             : $trece->intro_es                  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_es"])));     endif;
-    if(isset($_POST["post_en"]))              : $trece->post_en                   = $_POST["post_en"];                                                                        endif;
-    if(isset($_POST["post_gal"]))             : $trece->post_gal                  = $_POST["post_gal"];                                                                       endif;
-    if(isset($_POST["post_es"]))              : $trece->post_es                   = $_POST["post_es"];                                                                        endif;
+    if(isset($_POST["item-img-web-image"]) && !empty($_POST["item-img-web-image"])):
+      $item_img_web_image = $_POST["item-img-web-image"];
+      list($type,$item_img_web_image)=explode(";",$item_img_web_image);
+      list(,$item_img_web_image)=explode(",",$item_img_web_image);
+      $item_img_web_image=base64_decode($item_img_web_image);
+      file_put_contents($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg",$item_img_web_image);
+    endif;
+
+    if(isset($_POST["item-img-web-remove"]) && file_exists($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg")):
+      unlink($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg");
+    endif;
+
+    if(isset($_POST["title_en"]))             : $trece->title_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_en"])));     endif;
+    if(isset($_POST["title_gal"]))            : $trece->title_gal = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_gal"])));    endif;
+    if(isset($_POST["title_es"]))             : $trece->title_es  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["title_es"])));     endif;
+    if(isset($_POST["last_path"]))            : $trece->url_title = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["last_path"])));    endif;
+
+    if(isset($_POST["ids_breadcrumb_trail"])) : $trece->parent_id = explode(",",$_POST["ids_breadcrumb_trail"]); end($trece->parent_id);
+                                                $trece->level     = count($trece->parent_id);
+                                                $trece->parent_id = prev($trece->parent_id);                                                                  endif;
+
+    if(isset($_POST["path"]))                 : $trece->path      = str_replace_plus("fo",REALPATHLANG,"",$_POST["path"]);
+                                                $trece->path      = substr($trece->path,0,strrpos($trece->path,"/")).
+                                                                          ($trece->parent_id==""?"":"/").$trece->url_title;                                   endif;
+
+    if(isset($_POST["intro_en"]))             : $trece->intro_en  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_en"])));     endif;
+    if(isset($_POST["intro_gal"]))            : $trece->intro_gal = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_gal"])));    endif;
+    if(isset($_POST["intro_es"]))             : $trece->intro_es  = htmlspecialchars_decode(trim(preg_replace("/[[:blank:]]+/"," ",$_POST["intro_es"])));     endif;
+    if(isset($_POST["post_en"]))              : $trece->post_en   = $_POST["post_en"];                                                                        endif;
+    if(isset($_POST["post_gal"]))             : $trece->post_gal  = $_POST["post_gal"];                                                                       endif;
+    if(isset($_POST["post_es"]))              : $trece->post_es   = $_POST["post_es"];                                                                        endif;
+
+//  echo $_POST["ids_breadcrumb_trail"];
+//  die();
 
     if($trece->updateOne()) :
 
-      if($trece->dupeTitle > 0) :
+      if($trece->dupeURLTitle > 0) :
 
-        $msgType = $trece->dupeTitle > 0 ? "danger" : "success";
-        $msgText = $trece->dupeTitle > 0 ?
-                  ($trece->dupeTitle > 0 ? $lCustom["duplicated_title"][LANG]." " : "") :
+        $msgType = $trece->dupeURLTitle > 0 ? "danger" : "success";
+        $msgText = $trece->dupeURLTitle > 0 ?
+                  ($trece->dupeURLTitle > 0 ? "<strong>".$lCustom["duplicated_url_title"][LANG]."</strong> ".REALPATHLANG.$trece->path : "") :
                    $lCommon["general_ok"][LANG];
 
       else :
-
-        $imagebase64 = !isset($trece->{$cconf["img"]["ref"]}) ? "" : $_POST["imagebase64"];
-        $filename = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
-
-        if($imagebase64 == "") :
-
-        elseif($imagebase64 == "nopic") :
-
-          if(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$filename)) : unlink($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$filename); endif;
-          if(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename)) : unlink($conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename); endif;
-          if(file_exists($conf["dir"]["images"].$filename)) : unlink($conf["dir"]["images"].$filename); endif;
-
-        else :
-
-          list($type,$imagebase64) = explode(";",$imagebase64);
-          list(,$imagebase64) = explode(",",$imagebase64);
-          $imagebase64 = base64_decode($imagebase64);
-
-          file_put_contents($conf["dir"]["images"]."TC_".$filename,$imagebase64);
-
-          $source = @imagecreatefromjpeg($conf["dir"]["images"]."TC_".$filename);
-          fixImageOrientation($source,$conf["dir"]["images"]."TC_".$filename);
-          if($source){imagejpeg($source,$conf["dir"]["images"]."TC_".$filename);}
-          list($width,$height) = getimagesize($conf["dir"]["images"]."TC_".$filename);
-
-          resizeImage($source,$conf["dir"]["images"].$filename,$width,$height,$cconf["img"]["img_w"],$cconf["img"]["img_h"]);
-          resizeImage($source,$conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename,$width,$height,$cconf["img"]["icon_w"],$cconf["img"]["icon_h"]);
-          resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$filename,$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
-
-          // CLEAN THE CRIME SCENE
-          imagedestroy($source);
-          if(file_exists($conf["dir"]["images"]."TC_".$filename)) : unlink($conf["dir"]["images"]."TC_".$filename); endif;
-
-        endif;
 
         $msgType = "success";
         $msgText = $lCommon["general_ok"][LANG];
@@ -310,333 +206,6 @@
 
 
 
-# ......##..........................................
-# ...########...........######...########.########..
-# ..##..##..##.........##....##..##..........##.....
-# ..##..##.............##........##..........##.....
-# ...########..........##...####.######......##.....
-# ......##..##.........##....##..##..........##.....
-# ..##..##..##.........##....##..##..........##.....
-# ...########..#######..######...########....##.....
-# ......##..........................................
-
-
-
-# .................................................................................
-# ..######.######.##.....######.#####..#####...####..##...##..####..######.#####...
-# ..##.......##...##.....##.....##..##.##..##.##..##.##...##.##.....##.....##..##..
-# ..####.....##...##.....####...#####..#####..##..##.##.#.##..####..####...#####...
-# ..##.......##...##.....##.....##..##.##..##.##..##.#######.....##.##.....##..##..
-# ..##.....######.######.######.#####..##..##..####...##.##...####..######.##..##..
-# .................................................................................
-
-  if(isset($_GET["filebrowser"])) : ?>
-
-
-
-
-
-
-
-<?php if(isset($_GET["type"]) && $_GET["type"]=="image") : ?>
-    <style>
-      a.file{cursor:pointer;}
-      a.delete{cursor:pointer;}
-/*    .file img{max-height:100px;max-width:100px;} */
-      div.thumbs ul{list-style-type:none;padding:0;}
-      div.thumbs li{display:inline-block;position:relative;}
-      div.thumbs li img{border:2px solid #fff;transition-duration:0.2s;transform-origin:50% 50%;}
-      div.thumbs li div.check div.rightblock{text-align:right;visibility:hidden;opacity:0;transition:visibility 0s,opacity 0.3s linear;position:absolute;display:inline-block;bottom:.2em;right:.2em;line-height:1em;z-index:1000 !important;}
-      div.thumbs li div.check div.leftblock{text-align:left;visibility:hidden;opacity:0;transition:visibility 0s,opacity 0.3s linear;position:absolute;display:inline-block;bottom:.2em;left:.2em;line-height:1em;z-index:1000 !important;}
-      div.thumbs li div.check:hover img{box-shadow:0 0 5px #333;transform:scale(1.1);z-index:1000 !important;}
-      div.thumbs li div.check:hover div.rightblock{visibility:visible;opacity:1;}
-      div.thumbs li div.check:hover div.leftblock{visibility:visible;opacity:1;}
-      div.thumbs li div.rightblock span,div.thumbs li div.leftblock span{background-color:grey;padding:.2em;}
-      div.thumbs li div.rightblock a,div.thumbs li div.leftblock a{text-decoration:none;font-family:sans-serif;font-size:.6em;margin:1em 0;}
-      div.thumbs li div.rightblock a:hover span{background-color:yellow;}
-      div.thumbs li div.leftblock a:hover span{background-color:red;}
-    </style>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/<?=$conf["version"]["jquery"];?>/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.js"></script>
-    <script>
-      jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
-    </script>
-
-    <div class="row">
-      <div class="thumbs">
-        <ul>
-<?php foreach(glob($conf["dir"]["images"]."*.{jpg,JPG,jpeg,JPEG,png,PNG}",GLOB_BRACE) as $file): ?>
-<?php if((substr(basename($file),0,13+(strlen($action)))===$action."-img-".$trece->ref) && (substr(substr(basename($file),0,strrpos(basename($file),".")),-6) === "_thumb")) : ?>
-  <?php $ext = substr($file,strrpos($file,".")+1); ?>
-  <?php $base = substr($file,0,strrpos($file,".")); $base = str_replace_plus("lo","_thumb","",$base); ?>
-          <li>
-            <div class="check">
-              <img src="<?=REALPATH.$conf["dir"]["images"].basename($file);?>">
-              <div class="rightblock">
-                <a class="file" data-src="<?=$base."_img.".$ext;?>" href=""><span><?=$cconf["img"]["post_max_img"];?> px.</span></a><br>
-                <a class="file" data-src="<?=$base."_icon.".$ext;?>" href=""><span><?=$cconf["img"]["post_max_icon"];?> px.</span></a><br>
-                <a class="file" data-src="<?=$base."_thumb.".$ext;?>" href=""><span><?=$cconf["img"]["post_max_thumb"];?> px.</span></a>
-              </div>
-              <div class="leftblock">
-                <a class="delete" data-img="<?=$base."_img.".$ext;?>" data-icon="<?=$base."_icon.".$ext;?>" data-thumb="<?=$base."_thumb.".$ext;?>"><span>Delete</span></a>
-              </div>
-            </div>
-          </li>
-<?php endif; ?>
-<?php endforeach; ?>
-        </ul>
-      </div>
-    </div><!-- row -->
-
-    <script>
-      $("a.file").on("click",function(){
-        item_url = $(this).data("src");
-        var args = top.tinymce.activeEditor.windowManager.getParams();
-        win = (args.window);
-        input = (args.input);
-        win.document.getElementById(input).value = item_url;
-        top.tinymce.activeEditor.windowManager.close();
-      });
-    </script>
-    <script>
-      function deleteImage(who){
-        $.post([location.protocol,'//',location.host,location.pathname].join(''),{deleteImage:true,object_who:who},function(data){
-          location.reload();
-//        alert(data);
-          });
-        };
-      $("a.delete").on("click",function(){
-        var who = $(this).data("img")+"↲"+$(this).data("icon")+"↲"+$(this).data("thumb");
-        $.confirm({
-          content: "<div style=\"float:left;\"><h3>Delete?</h3></div>"+
-                   "<div style=\"float:right;\"><img src=\"<?=REALPATH;?>"+$(this).data("thumb")+"\" style=\"width:80px;\"></div>",
-          boxWidth: "50%",
-          useBootstrap: false,
-          buttons:{
-            confirm:{text:"<?=$lCommon["accept"][LANG];?>",action:function(){deleteImage(who);}},
-            cancel:{text:"<?=$lCommon["cancel"][LANG];?>",action:function(){}},
-            }
-          });
-        });
-    </script>
-<?php endif; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php if(isset($_GET["type"]) && $_GET["type"]=="file") : ?>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
-    <style>
-
-/*    ul.filetree{font-family:Verdana, sans-serif;font-size:14px;line-height:20px;padding:0px;margin:0px;} */
-      ul.filetree{font-size:1em;line-height:1.5em;padding:0px;margin:0px;}
-      ul.filetree li{list-style:none;padding:0 0 0 .5em;margin:0 0 0 .2em;white-space:nowrap;}
-      ul.filetree a{color:#333;text-decoration:none;display:block;padding:0px 2px 0px 5px;margin-left:15px;}
-      .filetree ul{padding-left:.7em;}
-/*    .filetree li ul li:before{position:absolute;}
-      .filetree li ul li{position:relative;} */
-
-      ul.filetree li a:before
-/*    a[href$=".doc"]:before, */
-/*    a[href$=".pdf"]:before, */
-/*    a[href$=".zip"]:before */
-      {
-        display: inline-block;
-        font: normal normal normal 1em/1.5 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        transform: translate(0,0);
-        width: .5em;
-        text-align: right;
-        margin-right: .8em;
-        }
-
-      ul.filetree li.collapsed a:before{content:"\f114";}
-      li.expanded a:before{content:"\f115";}
-      li a.file:before{content:"\f016";}
-      ul.filetree a:hover{background:#bdf;}
-
-/*    Office */
-      li.ext_txt a.file:before{content:"\f0f6";}
-      li.ext_doc a.file:before,
-      li.ext_docx a.file:before{content:"\f1c2";}
-      li.ext_xls a.file:before{content:"\f1c3";}
-      li.ext_pdf a.file:before{content:"\f1c1";}
-
-/*    Images */
-      li.ext_jpg a.file:before,
-      li.ext_png a.file:before,
-      li.ext_gif a.file:before,
-      li.ext_psd a.file:before{content:"\f1c5";}
-
-/*    Multimedia */
-      li.ext_wav a.file:before,
-      li.ext_mp3 a.file:before{content:"\f1c7";}
-      li.ext_mov a.file:before,
-      li.ext_avi a.file:before,
-      li.ext_mkv a.file:before,
-      li.ext_swf a.file:before,
-      li.ext_mp4 a.file:before{content:"\f1c8";}
-
-/*    Code */
-      li.ext_jar a.file:before,
-      li.ext_php a.file:before,
-      li.ext_asp a.file:before,
-      li.ext_sql a.file:before,
-      li.ext_css a.file:before,
-      li.ext_htm a.file:before,
-      li.ext_html a.file:before,
-      li.ext_js a.file:before{content:"\f1c9";}
-
-/*    Compressed */
-      li.ext_rar a.file:before,
-      li.ext_zip a.file:before{content:"\f1c6";}
-
-/*
-      a[href$=".doc"]:before{content:"\f1c2";}
-      a[href$=".pdf"]:before{content:"\f1c1";}
-      a[href$=".zip"]:before{content:"\f1c6";}
-*/
-    </style>
-  
-    <script>
-      $(document).ready(function(){
-      $("#container").html('<ul class="filetree start"><li class="wait">'+'Generating Tree...'+'<li></ul>');
-
-      getfilelist($("#container"),"download");
-
-      function getfilelist(cont,root){
-        $(cont).addClass("wait");
-        $.post([location.protocol,'//',location.host,location.pathname].join(''),{qq:true,dir:root},function(data){
-          $(cont).find(".start").html("");
-          $(cont).removeClass("wait").append(data);
-          if("download"==root){$(cont).find("ul:hidden").show();}else{$(cont).find("ul:hidden").slideDown({duration:300,easing:null});}
-        });
-      }
-      
-      $("#container").on("click","li a",function(){
-        var entry = $(this).parent();
-        if(entry.hasClass("folder")){
-          if(entry.hasClass("collapsed")){
-            entry.find("ul").remove();
-            getfilelist(entry,escape($(this).attr("rel")));
-            entry.removeClass("collapsed").addClass("expanded");
-            }
-          else{
-            entry.find("ul").slideUp({duration:300,easing:null});
-            entry.removeClass("expanded").addClass("collapsed");
-          }
-        }
-        else{
-          item_url = $(this).attr("rel");
-          var args = top.tinymce.activeEditor.windowManager.getParams();
-          win = (args.window);
-          input = (args.input);
-          win.document.getElementById(input).value = item_url;
-          top.tinymce.activeEditor.windowManager.close();
-        }
-      return false;
-      });
-
-    });
-    </script>
-
-<div id="container"></div>
-
-
-<?php /*
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
-  <h1>Fichero</h1>
-  <ul>
-<?php foreach(glob($conf["dir"]["download"]."*.{pdf,PDF,doc,DOC,docx,DOCX,zip,ZIP}",GLOB_BRACE) as $file): ?>
-    <li>
-      <?=$file;?>
-    </li>
-<?php endforeach; ?>
-  </ul>
-*/ ?>
-
-
-<?php endif; ?>
-
-
-
-
-
-
-
-<?php die(); endif;
-
-# .. END FILEBROWSER
-# .................................................................................
-
-
-
-# ...................................................................................
-# ..##..##.#####..##......####...####..#####....######.##...##..####...####..######..
-# ..##..##.##..##.##.....##..##.##..##.##..##.....##...###.###.##..##.##.....##......
-# ..##..##.#####..##.....##..##.######.##..##.....##...##.#.##.######.##.###.####....
-# ..##..##.##.....##.....##..##.##..##.##..##.....##...##...##.##..##.##..##.##......
-# ...####..##.....######..####..##..##.#####....######.##...##.##..##..####..######..
-# ...................................................................................
-
-  $accepted_origins = array("http://localhost"); # Allowed origins to upload images
-//$accepted_origins = array("http://localhost", "http://xxx.xxx.xxx.xxx", "https://whatever.com");
-
-  if(isset($_FILES)) :
-
-    reset($_FILES); $temp = current($_FILES);
-
-    if(!empty($temp) && is_uploaded_file($temp["tmp_name"])) :
-      $filename = explode(".",$temp["name"]);
-      $filename = $conf["dir"]["images"].$action."-img-".$trece->ref."-".uniqid();
-      if(isset($_SERVER["HTTP_ORIGIN"])) : if(in_array($_SERVER["HTTP_ORIGIN"],$accepted_origins)) : header("Access-Control-Allow-Origin: ".$_SERVER["HTTP_ORIGIN"]); else : header("HTTP/1.1 403 Origin Denied"); return; endif; endif;
-      $extension = strtolower(pathinfo($temp["name"],PATHINFO_EXTENSION));
-      if(!in_array($extension,array("gif","jpg","jpeg","png"))) : header("HTTP/1.1 400 Invalid extension."); return; endif;
-      if($extension == "jpeg") : $extension = "jpg"; endif;
-      $extensionf = $extension == "jpg" ? "jpeg" : $extension;
-      $imagecreatefrom = "imagecreatefrom".$extensionf;
-      $image = "image".$extensionf;
-      move_uploaded_file($temp["tmp_name"],$filename.".".$extension);
-      $source = @$imagecreatefrom($filename.".".$extension);
-      fixImageOrientation($source,$filename.".".$extension);
-      if($source){$image($source,$filename.".".$extension); }
-      list($width,$height) = getimagesize($filename.".".$extension);
-      if($width>$height) : $max_height=$cconf["img"]["post_max_img"];$max_width=floor($width*($max_height/$height)); endif;
-      if($height>$width || $height==$width) : $max_width=$cconf["img"]["post_max_img"];$max_height=floor($height*($max_width/$width)); endif;
-      resizeImage($source,$filename."_img".".".$extension,$width,$height,$max_width,$max_height);
-      if($width>$height) : $max_height=$cconf["img"]["post_max_icon"];$max_width=floor($width*($max_height/$height)); endif;
-      if($height>$width || $height==$width) : $max_width=$cconf["img"]["post_max_icon"];$max_height=floor($height*($max_width/$width)); endif;
-      resizeImage($source,$filename."_icon".".".$extension,$width,$height,$max_width,$max_height);
-      resizeImage($source,$filename."_thumb".".".$extension,$width,$height,$cconf["img"]["post_max_thumb"],$cconf["img"]["post_max_thumb"]);
-      imagedestroy($source); if(file_exists($filename.".".$extension)) : unlink($filename.".".$extension); endif; # CLEAN THE CRIME SCENE
-      echo json_encode(array("location"=>$filename."_img".".".$extension));
-      die();
-    else : header("HTTP/1.1 500 Server Error");
-    endif;
-
-  endif;
-
-# .. END UPLOAD IMAGE
-# ...................................................................................
-
-
-
 //Still here? OK, let's talk.
 
   $included = false;
@@ -648,10 +217,12 @@
   endif;
 
   $title_en         = isset($trece->title_en)?$trece->title_en:$cconf["default"]["title_en"];
-  $dupeTitle        = isset($trece->dupeTitle)?$trece->dupeTitle:0;
+  $dupeURLTitle     = isset($trece->dupeURLTitle)?$trece->dupeURLTitle:0;
+  $url_title        = isset($trece->dupeURLTitle)?$trece->dupeURLTitleTxt:$trece->url_title;
+  $path             = isset($trece->dupeURLTitle)?$trece->path:"";
   $stmt             = $trece->readOne();
-  $filename         = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
-  $trece->gotPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg") ? true : false;
+//$filename         = $cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";
+//$trece->gotPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg") ? true : false;
 
 //metastuff
   $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
@@ -667,6 +238,9 @@
   <!-- jQuery Confirm -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/{$conf["version"]["jquery_confirm"]}/jquery-confirm.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/{$conf["version"]["jquery_confirm"]}/jquery-confirm.min.js"></script>
+  <!-- Croppie -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/{$conf["version"]["croppie"]}/croppie.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/{$conf["version"]["croppie"]}/croppie.min.js"></script>
   <script>
     /* whatever */
     jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
@@ -677,6 +251,14 @@ EOD;
     div.mce-fullscreen{z-index:1050;}
     a.tit-btn{text-decoration:none;}
     a.tit-btn:hover:not(.btn-primary){background:#eee;}
+    label.item-img-mob,label.item-img-web{display:block;cursor:pointer;padding:0 !important;}
+    label.item-img-mob input.file,label.item-img-web input.file{position:relative;height:100%;width:auto;opacity:0;-moz-opacity:0;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);margin-top:-30px;}
+    #modal-mob-img{width:{$cconf["img"]["w_mob"]}px;height:{$cconf["img"]["h_mob"]}px;}
+    #modal-web-img{width:{$cconf["img"]["w_web"]}px;height:{$cconf["img"]["h_web"]}px;}
+    figure figcaption{position:relative;top:-27px;left:10px;margin-bottom:-50px;color:#fff;width:100%;text-shadow:0 0 10px #000;}
+    #crop-modal-mob-img .modal-dialog,#crop-modal-mob-img .modal-dialog{position:relative;display:table;overflow-y:auto;overflow-x:auto;width:auto;min-width:300px;}
+    #crop-modal-mob-img .modal-body{height:{$cconf["img"]["modal_mob_h"]}px;}
+    #crop-modal-web-img .modal-body{height:{$cconf["img"]["modal_web_h"]}px;}
   </style>
 EOD;
 
@@ -715,25 +297,84 @@ EOD;
 
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
-        <div class="form-group">
-          <label class="sr-only" for="title"><?=$lCustom["breadcrum_trail"][LANG];?></label>
-          <label for="id_breadcrum_trail"><?=$lCustom["breadcrum_trail"][LANG];?>:</label><br>
 
+
+        <div class="form-group">
+          <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
+          <label for="title"><?=$lCustom["title"][LANG];?>:
+            <a href="#title_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
+            <a href="#title_gal" class="btn-xs" data-toggle="tab">GAL</a>
+            <a href="#title_es" class="btn-xs" data-toggle="tab">ES</a>
+          </label><br>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="title_en">
+              <textarea name="title_en" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_en;?></textarea>
+              <span class="help-block" id="title_en_lettercounter"></span>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="title_gal">
+              <textarea name="title_gal" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_gal;?></textarea>
+              <span class="help-block" id="title_gal_lettercounter"></span>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="title_es">
+              <textarea name="title_es" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_es;?></textarea>
+              <span class="help-block" id="title_es_lettercounter"></span>
+            </div>
+          </div>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <span><?=REALPATH;?><?=LANG;?></span>
+              <div class="form-inline">
+              <span><?=rtrim(REALPATHLANG,"/");?></span>
               <select id="sec1" name="sec1" class=""></select>
               <select id="sec2" name="sec2" class=""></select>
               <select id="sec3" name="sec3" class=""></select>
-              <span>/<?=$trece->url_title;?></span>
+              <span>/
+                <input type="text" name="speakingurl" id="speakingurl" placeholder="" class="form-control"<?=$dupeURLTitle?" style=\"background-color:#f2dede;\"":"";?> value="<?=$dupeURLTitle ? $url_title : $trece->url_title;?>">
+                <input type="checkbox" name="dontTouchMe[]" id="dontTouchMe" value="1">
+                <script>
+                  $(function(){
+                    $("#dontTouchMe").change(function(){if($("#dontTouchMe:checked").length){$("#speakingurl").attr("readonly",true);}else{$("#speakingurl").attr("readonly",false);}});
+                    });
+                  $('textarea[name="title_en"]').on("keyup",function()  {
+                    if($('input[name="dontTouchMe[]"]:checked').length===0){
+                      var value=$(this).val();
+                      $("#speakingurl").val(getSlug(value));
+                      $("#last_path").val(getSlug(value));
+                      $("#ppath span").text(getSlug(value));
+                      var value=$("#ppath").text();
+                      $("#path").val(value);
+                      }
+                    });
+                  $('input[name="speakingurl"]').on("keyup",function()  {
+                    var value=$(this).val();
+                    $("#last_path").val(getSlug(value));
+                    $("#ppath span").text(getSlug(value));
+                    var value=$("#ppath").text();
+                    $("#path").val(value);
+                    });
+                  $('input[name="speakingurl"]').focusout(function()    {
+                    var value=$(this).val();
+                    $("#speakingurl").val(getSlug(value));
+                    $("#last_path").val(getSlug(value));
+                    $("#ppath span").text(getSlug(value));
+                    var value=$("#ppath").text();
+                    $("#path").val(value);
+                    });
+                </script>
+              </span>
+              </div>
             </div>
             <div class="panel-body">
-              <input type="text" id="path" name="path" class="form-control" value="<?=REALPATHLANG.$trece->path;?>" readonly>
-              <p id="ppath" style="margin:.6em 0 0 0;padding:0;"><a href="<?=REALPATHLANG.$trece->path;?>"><?=REALPATHLANG.$trece->path;?></a></p>
+              <span id="ppath"><?=REALPATHLANG.rtrim($trece->path,$trece->url_title);?><span><?=$dupeURLTitle ? $url_title : $trece->url_title;?></span></span><br>
+              <input type="hidden" id="path" name="path" style="width:600px;" value="<?=REALPATHLANG.rtrim($trece->path,$trece->url_title).($dupeURLTitle ? $url_title : $trece->url_title);?>">
+              <input type="hidden" id="last_path" name="last_path" style="width:600px;" value="<?=$dupeURLTitle ? $url_title : $trece->url_title;?>">
             </div>
           </div>
-
         </div>
+
+
+
+
+
   
       </div>
 
@@ -745,66 +386,42 @@ EOD;
 
         <div class="row">
 
-          <div class="col-xs-12 col-sm-12 col-lg-4">
+          <div class="col-xs-12 col-sm-4">
 
-            <label class="sr-only" for="image"><?=$lCommon["image"][LANG];?></label>
-            <label for="image"><?=$lCommon["image"][LANG];?>:</label><br>
-            <div style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;margin-bottom:1em;">
-              <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
-                <div style="float:left;">
-                  <input id="upload" name="upload" type="file" style="display:none;">
-                  <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
-                </div>
-                <?php if($trece->gotPic) : ?>
-                <div style="float:left;">
-                  <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fa fa-trash" aria-hidden="true"></i></label>
-                </div>
-                <?php endif; ?>
+            <div class="form-group">
+              <label class="sr-only" for="img-mob">Imaxe de fondo vertical (móbiles):</label>
+              <label for="img-mob">Imaxe de fondo vertical (móbiles):</label><br>
+              <label class="item-img-mob">
+                <figure>
+                  <img src="<?=file_exists($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg")?$conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_mob_w"]."x".$cconf["img"]["viewport_mob_h"]."/?text=Imaxe";?>" id="item-img-mob-output" class="img-responsive img-thumbnail">
+                  <figcaption><i class="fa fa-camera"></i></figcaption>
+                </figure>
+                <input type="file" name="item-img-mob" id="item-img-mob" class="file center-block">
+              </label>
+              <div class="checkbox">
+                <label><input type="checkbox" name="item-img-mob-remove" id="item-img-mob-remove" value="1"<?=!file_exists($conf["dir"]["images"].$action."_".$trece->ref."_mob.jpg")?" checked":"";?>> Sen imaxe (usar xenérica)</label>
               </div>
-              <div id="crop-image"></div>
+              <input type="hidden" id="item-img-mob-image" name="item-img-mob-image" value="">
             </div>
 
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-lg-7 col-lg-offset-1">
+          <div class="col-xs-12 col-sm-8">
 
             <div class="form-group">
-              <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?></label>
-              <label for="title"><?=$lCustom["title"][LANG];?>:
-                <a href="#title_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
-                <a href="#title_gal" class="btn-xs" data-toggle="tab">GAL</a>
-                <a href="#title_es" class="btn-xs" data-toggle="tab">ES</a>
-              </label><br>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="title_en">
-                  <textarea name="title_en" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_en;?></textarea>
-                  <span class="help-block" id="title_en_lettercounter"></span>
-                </div>
-                <div role="tabpanel" class="tab-pane fade in" id="title_gal">
-                  <textarea name="title_gal" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_gal;?></textarea>
-                  <span class="help-block" id="title_gal_lettercounter"></span>
-                </div>
-                <div role="tabpanel" class="tab-pane fade in" id="title_es">
-                  <textarea name="title_es" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_es;?></textarea>
-                  <span class="help-block" id="title_es_lettercounter"></span>
-                </div>
+              <label class="sr-only" for="img-web">Imaxe de fondo horizontal (ordenadores/tablets):</label>
+              <label for="img-web">Imaxe de fondo horizontal (ordenadores/tablets):</label><br>
+              <label class="item-img-web">
+                <figure>
+                  <img src="<?=file_exists($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg")?$conf["dir"]["images"].$action."_".$trece->ref."_web.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_web_w"]."x".$cconf["img"]["viewport_web_h"]."/?text=Imaxe";?>" id="item-img-web-output" class="img-responsive img-thumbnail">
+                  <figcaption><i class="fa fa-camera"></i></figcaption>
+                </figure>
+                <input type="file" name="item-img-web" id="item-img-web" class="file center-block">
+              </label>
+              <div class="checkbox">
+                <label><input type="checkbox" name="item-img-web-remove" id="item-img-web-remove" value="1"<?=!file_exists($conf["dir"]["images"].$action."_".$trece->ref."_web.jpg")?" checked":"";?>> Sen imaxe (usar xenérica)</label>
               </div>
-            </div>
-
-
-
-            <div class="form-group">
-              <label class="sr-only" for="speakingurl">SpeakingURL:</label>
-              <label for="speakingurl">SpeakingURL:</label><br>
-              <div class="tab-content">
-                <input type="text" name="speakingurl" class="form-control" id="speakingurl" placeholder="" value="<?=$trece->url_title;?>">
-                <script>
-                  $('textarea[name="title_en"]').on("keyup",function(){ //change 
-                    var value = $(this).val();
-                    $("#speakingurl").val(getSlug(value));
-                  }); 
-                </script>
-              </div>
+              <input type="hidden" id="item-img-web-image" name="item-img-web-image" value="">
             </div>
 
 
@@ -831,8 +448,6 @@ EOD;
                 </div>
               </div>
             </div>
-
-
 
           </div>
 
@@ -866,10 +481,7 @@ EOD;
           <div class="col-xs-12">
 
             <div class="form-group">
-              <input type="hidden" id="cropData1" name="cropData1">
-              <input type="hidden" id="cropData2" name="cropData2">
-              <input type="hidden" id="imagebase64" name="imagebase64">
-              <input type="hidden" id="ids_breadcrumb_trail" name="ids_breadcrumb_trail" class="form-control" value="<?=$trece->ids_breadcrumb_trail;?>">
+              <input type="text" id="ids_breadcrumb_trail" name="ids_breadcrumb_trail" class="form-control" value="<?=$trece->ids_breadcrumb_trail;?>">
               <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
             </div>
 
@@ -889,6 +501,42 @@ EOD;
 
   <div class="clearfix"></div>
 
+
+
+  <div class="modal fade" id="crop-modal-mob-img" tabindex="-1" role="dialog" aria-labelledby="crop-modal-mob-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="crop-modal-mob-label">Recortar imaxe</h4>
+        </div>
+        <div class="modal-body">
+          <div id="modal-mob-img" class="center-block"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cropImageBtn-mob" class="btn btn-primary">Recortar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="crop-modal-web-img" tabindex="-1" role="dialog" aria-labelledby="crop-modal-web-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="crop-modal-web-label">Recortar imaxe</h4>
+        </div>
+        <div class="modal-body">
+          <div id="modal-web-img" class="center-block"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cropImageBtn-web" class="btn btn-primary">Recortar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <script>
@@ -982,18 +630,19 @@ EOD;
   }
 
   function doWritePath(){
-    var path = "<?=REALPATH.LANG;?>";
+    var path = "<?=defined("MULTILANG")?rtrim(REALPATHLANG,"/"):rtrim(REALPATH,"/");?>";
         path+= typeof $("#sec1").find(':selected').data('url_title') !== "undefined" ? $("#sec1").find(':selected').data('url_title') : "";
         path+= typeof $("#sec2").find(':selected').data('url_title') !== "undefined" ? $("#sec2").find(':selected').data('url_title') : "";
         path+= typeof $("#sec3").find(':selected').data('url_title') !== "undefined" ? $("#sec3").find(':selected').data('url_title') : "";
-        path+= "/<?=$trece->url_title;?>";
-    $("#path").val(path);
-    $("#ppath").html('<a href="'+path+'">'+path+'</a>');
+        path+= "/" + "<span>" + getSlug($("#speakingurl").val()) + "</span>";
+//      alert(path);
+    $("#ppath").html(path);
+    $("#path").val($("#ppath").text());
     var ids_breadcrumb_trail = "";
         ids_breadcrumb_trail+= typeof $("#sec1").find(':selected').data('value') !== "undefined" ? $("#sec1").find(':selected').data('value') : "";
         ids_breadcrumb_trail+= typeof $("#sec2").find(':selected').data('value') !== "undefined" ? $("#sec2").find(':selected').data('value') : "";
         ids_breadcrumb_trail+= typeof $("#sec3").find(':selected').data('value') !== "undefined" ? $("#sec3").find(':selected').data('value') : "";
-        ids_breadcrumb_trail+= ",<?=$trece->id;?>";
+        ids_breadcrumb_trail+= "," + getSlug($("#speakingurl").val());
         ids_breadcrumb_trail = ids_breadcrumb_trail.replace(/(^,)|(,$)/g,"");
     $("#ids_breadcrumb_trail").val(ids_breadcrumb_trail);
   }
@@ -1102,12 +751,90 @@ EOD;
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/<?=$conf["version"]["croppie"];?>/croppie.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/<?=$conf["version"]["exif_js"];?>/exif.min.js"></script>
   <script>
-    var thePic="<?=$trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():"https://fakeimg.pl/".$cconf["img"]["viewport_w"]."x".$cconf["img"]["viewport_h"]."/?text=".$lCustom["singular"][LANG];?>";
-    function resetCroppie(){destroyCroppie();initCroppie();}function destroyCroppie(){$uploadCrop.croppie("destroy");}function deleteCroppie(){$.post("",{deleteImage:true,object_who:"<?=$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>↲<?=$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg";?>"},function(data){$("#img-delete").remove();$uploadCrop.croppie("bind",{url:"https://fakeimg.pl/<?=$cconf["img"]["viewport_w"];?>x<?=$cconf["img"]["viewport_h"];?>/?text=<?=$lCustom["singular"][LANG];?>"});}).fail(function(){alert("<?=addslashes($lCommon["cannot_be_deleted"][LANG]);?>");});}function initCroppie(){$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});}$uploadCrop=$("#crop-image").croppie({enableExif:true,viewport:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>,type:"square"},boundary:{width:<?=$cconf["img"]["viewport_w"];?>,height:<?=$cconf["img"]["viewport_h"];?>}});$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));$uploadCrop.croppie("bind",{url:thePic},function(){$("#cropData1").val(JSON.stringify($("#crop-image").croppie("get")));});$("#img-delete").on("click",function(ev){var q=confirm("<?=$lCommon["are_you_sure"][LANG];?>");if(q==true){$("#imagebase64").val("nopic");deleteCroppie();}return false;});$("#img-delete").hover(function(){$(this).animate({fontSize:"3.8rem"});},function(){$(this).animate({fontSize:"2.8rem"});});$("#upload").on("change",function(){resetCroppie();var reader=new FileReader();reader.onload=function(e){$uploadCrop.croppie("bind",{url:e.target.result}).then(function(){console.log("jQuery bind complete");});};reader.readAsDataURL(this.files[0]);});$("#img-upload").hover(function(){$(this).animate({fontSize:"4rem"});},function(){$(this).animate({fontSize:"3rem"});});$(".confirm-image").on("click",function(ev){if(($("#cropData1").val()!=$("#cropData2").val())&&($("#imagebase64").val!=""||$("#imagebase64").val!="nopic")){ev.preventDefault();$uploadCrop.croppie("result",{type:"canvas",size:{width:<?=$cconf["img"]["canvas_w"];?>,height:<?=$cconf["img"]["canvas_h"];?>},format:"jpeg",quality:0.9}).then(function(resp){$("#imagebase64").val(resp);});};setTimeout(function(){$("#form").submit();},10);});$("#crop-image").on("update.croppie",function(ev,cropData){$("#cropData2").val(JSON.stringify(cropData));});
+
+    window.onclick = e => {
+      var qq = e.target.getAttribute("id");
+      var arr=["item-img-mob","item-img-web"];
+
+      if(arr.indexOf(qq) != -1){
+
+        switch (qq) {
+        case "item-img-mob":
+          var w = <?=$cconf["img"]["w_mob"];?>;                                      // console.log("w: "+w);
+          var h = <?=$cconf["img"]["h_mob"];?>;                                      // console.log("h: "+h);
+          var viewport_w = <?=$cconf["img"]["viewport_mob_w"];?>;                    // console.log("viewport_w: "+viewport_w);
+          var viewport_h = <?=$cconf["img"]["viewport_mob_h"];?>;                    // console.log("viewport_h: "+viewport_h);
+          break;
+        case "item-img-web":
+          var w = <?=$cconf["img"]["w_web"];?>;                                      // console.log("w: "+w);
+          var h = <?=$cconf["img"]["h_web"];?>;                                      // console.log("h: "+h);
+          var viewport_w = <?=$cconf["img"]["viewport_web_w"];?>;                    // console.log("viewport_w: "+viewport_w);
+          var viewport_h = <?=$cconf["img"]["viewport_web_h"];?>;                    // console.log("viewport_h: "+viewport_h);
+          break;
+        }
+
+        var $uploadCrop,tempFilename,rawImg,imageId;
+        function readFile(input){
+          if(input.files && input.files[0]){
+            var reader=new FileReader();
+            reader.onload=function(e){
+              $("#modal-"+qq.slice(qq.length -3)+"-img").addClass("ready");          // console.log("#modal-"+qq.slice(qq.length -3)+"-img >> ready");
+              $("#crop-modal-"+qq.slice(qq.length -3)+"-img").modal("show");         // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img >> show");
+              rawImg=e.target.result;
+              }
+            reader.readAsDataURL(input.files[0]);
+            }else{swal("Sorry - you're browser doesn't support the FileReader API");}
+          }
+
+        function createCroppie(viewportWidth,viewportHeight){
+          $uploadCrop = $("#modal-"+qq.slice(qq.length -3)+"-img").croppie({
+            viewport:{width:viewportWidth,height:viewportHeight},
+            enforceBoundary:true,enableExif:true,enableOrientation:true,
+          });
+          $uploadCrop.croppie("bind",{url:rawImg});
+          }
+
+                                                                                     // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+
+
+        function resizeCroppie(width,height){
+          if(qq!=""){
+            $("#modal-"+qq.slice(qq.length -3)+"-img").croppie("destroy");
+            createCroppie(width,height);
+            }
+          }
+
+                                                                                     // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+
+
+        $("#crop-modal-"+qq.slice(qq.length -3)+"-img").on("shown.bs.modal",function(){resizeCroppie(w,h);});
+
+                                                                                     // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img");
+
+        $("#"+qq).on("change",function(){
+          imageId=$(this).data("id");
+          tempFilename=$(this).val();
+          readFile(this);
+          });
+
+        $("#cropImageBtn-"+qq.slice(qq.length -3)).on("click",function(ev){
+          if(qq!=""){
+            $uploadCrop.croppie("result",{type:"base64",format:"jpeg",size:{width:viewport_w,height:viewport_h}}).then(function(resp){
+                $("#"+qq+"-output").attr("src",resp);                                // console.log("#"+qq+"-output");
+                $("#"+qq+"-image").val(resp);                                        // console.log("#"+qq+"-image");
+                $("#"+qq+"-remove").attr("checked",false);                           // console.log("#"+qq+"-remove");
+                $("#modal-"+qq.slice(qq.length -3)+"-img").removeClass("ready");     // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+                $("#crop-modal-"+qq.slice(qq.length -3)+"-img").modal("hide");       // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img");
+                $("#modal-"+qq.slice(qq.length -3)+"-img").croppie("destroy");       // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+                qq = "";
+            });
+            }
+          });
+
+      }
+    }
+
   </script>
 
 

@@ -38,6 +38,8 @@ echo <<<ENDCSS
 
 */
 
+@import url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+
 html,body{max-width:100%;overflow-x:hidden;}
 html{position:relative; min-height:100%;}
 
@@ -89,14 +91,109 @@ html{position:relative; min-height:100%;}
   .navbar-brand{padding:6px 0 0 15px !important;margin:0;}
   }
 /* horizontal smartphones and vertical tablets */
-@media screen and (min-width:753px) and (max-width:1023px){}
+@media screen and (min-width:753px) and (max-width:1023px){
+  }
 /* horizontal tablets and normal desktops */
-@media screen and (min-width:1024px) and (max-width:1199px){}
+@media screen and (min-width:1024px) and (max-width:1199px){
+  }
 /* big desktops */
-@media screen and (min-width:1200px){}
+@media screen and (min-width:1200px){
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MARKDOWN */
+
+.markdown img.fullrow{width:100vw;position:relative;margin-top:3em;margin-bottom:3em;margin-left:-50vw;left:50%;}
+
+.markdown p img.row {margin-left:0;margin-top:1em;width:100%;padding-bottom:1em;}
+.markdown p img.row + em {font-style:normal;display:inherit;text-align:center;font-size:90%;padding-bottom:1em;}
+
+.markdown .map-responsive.fullrow{position:relative;overflow:hidden;margin-left:-50vw;left:50%;top:0;width:100vw;padding-bottom:0;}
+.markdown .map-responsive.fullrow iframe{width:100vw;position:relative;padding-bottom:2em;}
+.markdown .map-responsive.row{margin-left:0;margin-top:2em;position:relative;overflow:hidden;width:100%;padding-bottom:0;}
+.markdown .map-responsive.row iframe{width:100%;position:relative;padding-bottom:2em;}
+
+.markdown .gallery{margin-bottom:1em;}
+.markdown .gallery img{width:50%;}
+.markdown .gallery img.left{float:left;padding:0 .5em 1.3em 0;}
+.markdown .gallery img.right{float:right;padding:0 0 1.3em .5em;}
+.markdown .gallery::after{content:'';clear:both;display:table;}
+
+.markdown h1,.markdown h2,.markdown h3{margin-top:2em;margin-bottom:.5em;}
+.markdown h1 + h2,.markdown h1 + h3{margin-top:0;margin-bottom:1em;}
+
+
+/* vertical smartphones */
+@media screen and (min-width:360px) and (max-width:752px){
+  .markdown img.top{margin-top:-4.7em !important;}
+  .markdown img.mobile{display:block;}
+  .markdown img.desktop,.markdown img.tablet{display:none;}
+  .markdown .gallery{margin-bottom:1.2em;}
+  .markdown .gallery img{width:100%;}
+  .markdown .gallery img.left{padding:0;margin-bottom:2em;}
+  .markdown .gallery img.right{padding:0;margin-bottom:2em;}
+  }
+/* horizontal smartphones and vertical tablets */
+@media screen and (min-width:753px) and (max-width:1023px){
+  .markdown img.top{margin-top:-4.7em !important;}
+  .markdown img.tablet{display:block;}
+  .markdown img.desktop,.markdown img.mobile{display:none;}
+  blockquote{margin:6em 0 4em -1.1em;border-style:none;} 
+  blockquote:before{position:absolute;font:20em/0 "Staatliches",cursive;color:pink;content:"\\201C";margin-left:-.4em;margin-top:.32em;}
+  h4.blockquote::before{content:"¶ ";color:#d14;}
+  }
+/* horizontal tablets and normal desktops */
+@media screen and (min-width:1024px) and (max-width:1199px){
+  .markdown img.top{margin-top:-4.7em !important;}
+  .markdown img.desktop{display:block;}
+  .markdown img.mobile,.markdown img.tablet{display:none;}
+  blockquote{margin:6em 0 4em -1.1em;border-style:none;} 
+  blockquote:before{position:absolute;font:20em/0 "Staatliches",cursive;color:pink;content:"\\201C";margin-left:-.4em;margin-top:.32em;}
+  h4.blockquote::before{content:"¶ ";color:#d14;}
+  }
+/* big desktops */
+@media screen and (min-width:1200px){
+  .markdown img.top{margin-top:-4.7em !important;}
+  .markdown img.desktop{display:block;}
+  .markdown img.mobile,.markdown img.tablet{display:none;}
+  blockquote{margin:6em 0 4em -1.1em;border-style:none;} 
+  blockquote:before{position:absolute;font:20em/0 "Staatliches",cursive;color:pink;content:"\\201C";margin-left:-.4em;margin-top:.32em;}
+  h4.blockquote::before{content:"¶ ";color:#d14;}
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .img-pull-left{float:left;margin:.7em 1.3em 1em 0;}
 .img-pull-right{float:right;margin:.5em 0 1em 1.3em;}
+
+
+
+
 
 .bs-callout{padding:20px;margin:20px 0;border:1px solid #eee;border-left-width:5px;border-radius:3px;}
 .bs-callout h4{margin-top:0;margin-bottom:5px;}

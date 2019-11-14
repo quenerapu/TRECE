@@ -83,7 +83,8 @@
 
       $rowcount_page      = 0;
       $trece              = new $action($db,$conf,$cconf,$lCommon,$lCustom);
-      $what               = !isset($direct) ? $crudlpx : $what; // POCO ELEGANTE
+//    $what               = !isset($direct) ? $crudlpx : $what; // POCO ELEGANTE
+      $what               = !isset($direct) ? $conf["site"]["virtualpathNoLang"] : $what; // POCO ELEGANTE
       $crudlpx            = $conf["file"]["read"];
 //    $trece->ref         = $what;
       $trece->intimacy    = 2;
@@ -96,6 +97,7 @@
       if($trece->getBreadcrumbTrail()===true) :
 
         if($trece->last_id_breadcrumb_trail && ($trece->real_thread_trail == $conf["site"]["virtualpathNoLang"])) :
+          $trece->ref = $conf["site"]["virtualpathNoLang"];
           $stmt = $trece->readOne();
           $rowcount_page = $trece->rowcount;
         endif;

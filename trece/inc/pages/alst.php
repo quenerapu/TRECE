@@ -190,6 +190,7 @@
     $trece->id_status           = $cconf["default"]["id_status"];
     $trece->title_en            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["title_en"]));
     $trece->url_title           = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title"]));
+    $trece->path                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["url_title"]));
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 

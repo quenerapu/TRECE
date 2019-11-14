@@ -54,6 +54,11 @@ return [
     "gal" => "Título duplicado",
     "en"  => "Duplicated title",
     ],
+  "duplicated_url_title" => [
+    "es"  => "URL duplicada",
+    "gal" => "URL duplicada",
+    "en"  => "Duplicated URL",
+    ],
   "edit" => [
     "es"  => "Editar página",
     "gal" => "Editar páxina",

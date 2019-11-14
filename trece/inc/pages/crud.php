@@ -335,7 +335,8 @@ class Pages{
     #Intimacy 1 : For admin's eyes
     #Intimacy 2 : Public
 
-    if(isset($this->last_id_breadcrumb_trail)) : $this->ref = $this->id = $this->last_id_breadcrumb_trail; endif;
+//  if(isset($this->last_id_breadcrumb_trail)) : $this->ref = $this->id = $this->last_id_breadcrumb_trail; endif;
+    if(isset($this->last_id_breadcrumb_trail)) : $this->id = $this->last_id_breadcrumb_trail; endif;
 
     $this->dupeTitle = 0;
 
@@ -366,8 +367,6 @@ class Pages{
                    "LIMIT 0,1";
 
     $query = $this->queryBeautifier($query);
-//  echo $query;
-//  die();
 
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1,$this->ref);
@@ -437,14 +436,14 @@ class Pages{
 
   function updateOne() {
 
-    $this->dupeTitle = 0;
+    $this->dupeURLTitle = 0;
 
-    if(isset($this->title_en)) :
+    if(isset($this->path)) :
 
       $query = "SELECT " .
                 $this->tableletter.".`id` " .
                "FROM `".$this->tablename."` ".$this->tableletter." " .
-               "WHERE ".$this->tableletter.".`title_en` = :title_en , " .
+               "WHERE ".$this->tableletter.".`path` = :path , " .
                "AND ".$this->tableletter.".`ref` <> :ref " .
                "LIMIT 0,1";
 
@@ -452,14 +451,15 @@ class Pages{
 
       $stmt = $this->conn->prepare($query);
       $stmt->bindParam(":ref", $this->ref);
-      $stmt->bindParam(":title_en", $this->title_en);
+      $stmt->bindParam(":path", $this->path);
       $stmt->execute();
-      $this->dupeTitle = $stmt->rowCount();
+      $this->dupeURLTitle = $stmt->rowCount();
+      $this->dupeURLTitleTxt = $this->url_title;
       $query = "";
 
     endif;
 
-    if($this->dupeTitle > 0) :
+    if($this->dupeURLTitle > 0) :
 
       return true;
 
