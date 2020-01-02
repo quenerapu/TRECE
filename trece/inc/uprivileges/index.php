@@ -47,7 +47,10 @@
       # $crudlpx equals $conf["file"]["adminlist"] or $conf["file"]["publiclist"]
       # and $what contains a positive integer (number page) or even nothing
       (
-        in_array($crudlpx,array($conf["file"]["adminlist"],$conf["file"]["publiclist"])) &&
+        in_array($crudlpx,array(
+          $conf["file"]["adminlist"],
+          $conf["file"]["publiclist"],
+        )) &&
         (!isset($what) || (isset($what) && (is_numeric($what) && strlen(intval($what))>0)))
       )
 
@@ -57,7 +60,10 @@
       # $crudlpx equals $conf["file"]["update"] or $conf["file"]["read"] or $conf["file"]["new"]
       # and $what contains an alphanumeric reference (mandatory)
       (
-        in_array($crudlpx,array($conf["file"]["update"],$conf["file"]["read"])) &&
+        in_array($crudlpx,array(
+          $conf["file"]["update"],
+          $conf["file"]["read"],
+        )) &&
         (!isset($direct) && isset($what) && (is_string($what) && strlen($what)>0))
       )
 
@@ -114,7 +120,7 @@
 //No $crudlpx at all?
 //Well, show them the list, page 1
 
-header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"].QUERYQ);
+header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"]."/1".QUERYQ);
 die();
 
 ?>

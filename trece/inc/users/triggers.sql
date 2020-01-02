@@ -1,4 +1,4 @@
-CREATE TRIGGER `inconceivable_serialize_username` BEFORE INSERT ON `inconceivable_users` FOR EACH ROW BEGIN
+CREATE TRIGGER `inconceivable_users_serialize_username_email` BEFORE INSERT ON `inconceivable_users` FOR EACH ROW BEGIN
      DECLARE original_username varchar(191);
      DECLARE original_email varchar(191);
      DECLARE username_counter int;

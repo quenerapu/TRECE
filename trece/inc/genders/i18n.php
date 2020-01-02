@@ -49,6 +49,11 @@ return [
     "gal" => "Letra repetida.",
     "en" => "Duplicated letter.",
     ],
+  "duplicated_name" => [
+    "es" => "Nombre repetido.",
+    "gal" => "Nome repetido.",
+    "en" => "Duplicated name.",
+    ],
   "edit" => [
     "es"  => "Editar género",
     "gal" => "Editar xénero",

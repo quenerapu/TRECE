@@ -38,7 +38,7 @@ echo <<<ENDCSS
 
 */
 
-@import url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Staatliches&display=swap");
 
 html,body{max-width:100%;overflow-x:hidden;}
 html{position:relative; min-height:100%;}
@@ -88,7 +88,7 @@ html{position:relative; min-height:100%;}
   .container{padding-left:0;}
   .navbar-text{margin-left:15px;}
   .navbar-collapse{max-height:100% !important;}
-  .navbar-brand{padding:6px 0 0 15px !important;margin:0;}
+  .navbar-brand{padding:18px 0 0 15px !important;margin:0;}
   }
 /* horizontal smartphones and vertical tablets */
 @media screen and (min-width:753px) and (max-width:1023px){
@@ -190,10 +190,6 @@ html{position:relative; min-height:100%;}
 
 .img-pull-left{float:left;margin:.7em 1.3em 1em 0;}
 .img-pull-right{float:right;margin:.5em 0 1em 1.3em;}
-
-
-
-
 
 .bs-callout{padding:20px;margin:20px 0;border:1px solid #eee;border-left-width:5px;border-radius:3px;}
 .bs-callout h4{margin-top:0;margin-bottom:5px;}

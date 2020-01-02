@@ -49,8 +49,8 @@
       (
         in_array($crudlpx,array(
           $conf["file"]["adminlist"],
-//        $conf["file"]["publiclist"],
-          )) &&
+          $conf["file"]["publiclist"],
+        )) &&
         (!isset($what) || (isset($what) && (is_numeric($what) && strlen(intval($what))>0)))
       )
 
@@ -62,7 +62,7 @@
       (
         in_array($crudlpx,array(
           $conf["file"]["update"],
-//        $conf["file"]["read"],
+          $conf["file"]["read"],
         )) &&
         (!isset($direct) && isset($what) && (is_string($what) && strlen($what)>0))
       )
@@ -132,7 +132,7 @@
 //No $crudlpx at all?
 //Well, show them the list, page 1
 
-header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"]."/1",QUERYQ);
+header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"]."/1".QUERYQ);
 die();
 
 ?>

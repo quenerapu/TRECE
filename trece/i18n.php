@@ -156,11 +156,6 @@ return [
     "gal" => "Blog",
     "en"  => "Blog",
     ],
-  "bloglabels" => [
-    "es"  => "Etiquetas del blog",
-    "gal" => "Etiquetas do blog",
-    "en"  => "Blog labels",
-    ],
 
 
 

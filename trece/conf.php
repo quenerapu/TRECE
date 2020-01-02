@@ -5,8 +5,11 @@ return [
 
   "trece"       =>  [
 # --------------------------------------------------------------------
-    "version"   =>  "0.15.90",  # http://trece.io/changelog
-    "motto"     =>  "The humblest start", # In other words: "Nailing perfection" ;-)
+    "version"   =>  "0.16.00 - Chaguazoso",
+# --------------------------------------------------------------------
+                    # https://gl.wikipedia.org/wiki/Chaguazoso,_Vilariño_de_Conso
+
+    "motto"     =>  "An even humbler start", # Nailing perfection ;-)
     "theme"     =>  $theme="basic",
     "logo"      =>  [
         "black" =>  "zAwMCI",
@@ -54,6 +57,19 @@ return [
     "uhierarchy"        =>  $uhierarchy="uhierarchy",
     "uprivileges"       =>  $uprivileges="uprivileges",
     "users"             =>  $users="users",
+    "organizations"     =>  $organizations="organizations",
+    "blog"              =>  $blog="blog",
+    "labels"            =>  $labels="labels",
+    "pages"             =>  $pages="pages",
+    "locations"         =>  $locations="locations",
+    "counties"          =>  $counties="counties",
+    "provinces"         =>  $provinces="provinces",
+    "regions"           =>  $regions="regions",
+    "countries"         =>  $countries="countries",
+    "languages"         =>  $languages="languages",
+
+
+
   ],
 
 
@@ -102,16 +118,16 @@ return [
     "uhierarchy"        =>  $entropy."_".$uhierarchy."|uh",
     "uprivileges"       =>  $entropy."_".$uprivileges."|pv",
     "users"             =>  $entropy."_".$users."|u",
-# ----
-    "blog"              =>  $entropy."_blog|bg",
-    "bloglabels"        =>  $entropy."_bloglabels|bl",
-    "pages"             =>  $entropy."_pages|pg",
-    "locations"         =>  $entropy."_locations|lc",
-    "counties"          =>  $entropy."_counties|ct",
-    "provinces"         =>  $entropy."_provinces|pr",
-    "regions"           =>  $entropy."_regions|rg",
-    "countries"         =>  $entropy."_countries|cs",
-    "languages"         =>  $entropy."_languages|lg",
+    "organizations"     =>  $entropy."_".$organizations."|org",
+    "blog"              =>  $entropy."_".$blog."|bg",
+    "labels"            =>  $entropy."_".$labels."|lb",
+    "pages"             =>  $entropy."_".$pages."|pg",
+    "locations"         =>  $entropy."_".$locations."|lc",
+    "counties"          =>  $entropy."_".$counties."|ct",
+    "provinces"         =>  $entropy."_".$provinces."|pr",
+    "regions"           =>  $entropy."_".$regions."|rg",
+    "countries"         =>  $entropy."_".$countries."|cs",
+    "languages"         =>  $entropy."_".$languages."|lg",
   ],
 
 
@@ -163,7 +179,7 @@ return [
                             ],
     "keywords"          =>  "word, another word, three more words, etc",
     "image"             =>  [
-                 "file" =>  "https://trece.io/img/og/trece.jpg",
+                 "file" =>  "https://trece.boa.gal/img/og/trece.jpg",
           "description" =>  [
                    "en" =>  "Image description",
                   "gal" =>  "Descripción da imaxe",
@@ -185,6 +201,7 @@ return [
                         ],
     "phone_no"      =>  "+xx xxxxxxxxx",
     "email"         =>  "email@domain.com",
+    "whatsapp"      =>  "+xx xxxxxxxxx",
     "telegram"      =>  "yourtelegramusername", #Telegram URL without t.me
     "twitter"       =>  "yourtwitterusername", #Twitter username without @
     "instagram"     =>  "yourinstagramusername", #Instagram username without @

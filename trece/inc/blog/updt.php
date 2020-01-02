@@ -328,13 +328,6 @@
 # .................................................................................
 
   if(isset($_GET["filebrowser"])) : ?>
-
-
-
-
-
-
-
 <?php if(isset($_GET["type"]) && $_GET["type"]=="image") : ?>
     <style>
       a.file{cursor:pointer;}
@@ -360,7 +353,6 @@
     <script>
       jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
     </script>
-
     <div class="row">
       <div class="thumbs">
         <ul>
@@ -735,7 +727,7 @@ EOD;
         </div>
 
         <div class="form-group">
-          <?php $title_length = 55; ?>
+          <?php $title_length = 55;?>
           <label class="sr-only" for="title"><?=$lCustom["title"][LANG];?>:</label>
           <label for="title"><?=$lCustom["title"][LANG];?>:
             <a href="#title_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
@@ -758,7 +750,6 @@ EOD;
           </div>
         </div>
 
-
         <div class="form-group">
           <label class="sr-only" for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label>
           <label for="ids_labels"><?=$lCustom["labels"][LANG];?>:</label><br>
@@ -770,7 +761,7 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="form-group">
-          <?php $intro_length = 164; ?>
+          <?php $intro_length = 164;?>
           <label class="sr-only" for="intro"><?=$lCustom["intro"][LANG];?>:</label>
           <label for="intro"><?=$lCustom["intro"][LANG];?>:
             <a href="#intro_en" class="btn-xs btn-primary" data-toggle="tab">EN</a>
@@ -859,9 +850,9 @@ EOD;
 
   <script>
     $(document).ready(function(){
-      var text_en_max_title, text_gal_max_title, text_es_max_title;
+//    var text_en_max_title, text_gal_max_title, text_es_max_title;
       var text_en_max_title = text_gal_max_title = text_es_max_title = <?=$title_length;?>;
-      var text_en_max_intro, text_gal_max_intro, text_es_max_intro;
+//    var text_en_max_intro, text_gal_max_intro, text_es_max_intro;
       var text_en_max_intro = text_gal_max_intro = text_es_max_intro = <?=$intro_length;?>;
       $("#title_en_lettercounter").html("("+(text_en_max_title-<?=mb_strlen($trece->title_en,"utf8");?>)+" remaining)");
       $("#title_gal_lettercounter").html("("+(text_gal_max_title-<?=mb_strlen($trece->title_gal,"utf8");?>)+" remaining)");
@@ -917,7 +908,6 @@ EOD;
         if (len_es_intro >= text_es_max_intro){$(this).val($(this).val().substring(0,len_es_intro-1));}
         $("#intro_es_lettercounter").html("("+text_es_remaining_intro+" remaining)");
         });
-
     });
   </script>
 
@@ -1039,7 +1029,7 @@ EOD;
       selectOnTab: true,
       load: function(query,callback) {
         $.ajax({
-          url: "<?=REALPATHLANG."bloglabels/".$conf["file"]["adminlist"]."?json";?>",
+          url: "<?=REALPATHLANG."labels/".$conf["file"]["adminlist"]."?json";?>",
           type: "GET",
           dataType: "json",
           error: function(){callback();},

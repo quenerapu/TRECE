@@ -1,5 +1,11 @@
-# TRECE 0.15.90 now with installer!!
+# TRECE 0.16.00 - Chaguazoso now with installer!!
 A Content Management System for the brave. Because what could go wrong?
+
+From **TRECE 0.16.00** onwards, each new version will be assigned the name of a village in Galicia.
+
+  - TRECE 0.16.00 - Chaguazoso https://gl.wikipedia.org/wiki/Chaguazoso,_Vilariño_de_Conso
+
+----
 
 ## Prerequisites
 

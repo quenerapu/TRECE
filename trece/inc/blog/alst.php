@@ -44,14 +44,14 @@
 
 //Not logged? Not admin? Get out of here!
 
-  if(
-//  1+1==3 # Public for everyone
-    !$app->getUserSignInStatus() # Must be logged in
-    || $app->getUserHierarchy() != 1 # Must be admin
-    ) :
+  if (
+//    1+1==3 # Public for everyone
+      !$app->getUserSignInStatus() # Must be logged in
+      || $app->getUserHierarchy() != 1 # Must be admin
+     ) :
 
-    header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
-//  header("location:".REALPATHLANG.QUERYQ);
+//  header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
+    header("location:".REALPATHLANG.QUERYQ);
     die();
 
   endif;
@@ -241,7 +241,6 @@
     $trece->post_es             = $_POST["clone_post_es"];
 
     $trece->ids_labels          = $_POST["clone_ids_labels"];
-
     $trece->id_author           = $app->getUserID();
 
     $trece->addOne();
@@ -309,13 +308,13 @@
 
   $searchTarget     = false;
   $searchWhat       = "";
-  $searchBloglabel  = "";
+  $searchLabel      = "";
 
   if(isset($conf["site"]["queryArray"]["wr"]) && $conf["site"]["queryArray"]["wr"]==$action) :
 
     $searchTarget     = true;
     $searchWhat       = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
-    $searchBloglabel  = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
+    $searchLabel      = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
 
   endif;
 
@@ -345,14 +344,14 @@
 
   if($trece->firstTime()) :
 
-    echo "<html><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
+    echo "<html style=\"padding:0;margin:0;\"><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" /></head><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
 //  header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
 
   $trece->intimacy = 1; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
-  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchBloglabel);
+  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchLabel);
   $rowcount_page = $trece->rowcount;
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :
@@ -446,14 +445,14 @@ EOD;
                 </div>
                 <div class="pull-left">
                   <select id="label" name="label" style="margin-left:5px;">
-                    <option value="0"<?=$searchBloglabel==0?" selected":"";?>><?=$lCustom["any_label"][LANG];?></option>
+                    <option value="0"<?=$searchLabel==0?" selected":"";?>><?=$lCustom["any_label"][LANG];?></option>
                     <?php
-                      require_once($conf["dir"]["includes"]."bloglabels/".$conf["file"]["crud"].".php");
-                      $cconfBloglabels = require($conf["dir"]["includes"]."bloglabels/".$conf["file"]["conf"].".php");
-                      $bloglabels = new Bloglabels($db,$conf,$cconfBloglabels); $stmt = $bloglabels->readAllJSON();
+                      require_once($conf["dir"]["includes"]."labels/".$conf["file"]["crud"].".php");
+                      $cconfLabels = require($conf["dir"]["includes"]."labels/".$conf["file"]["conf"].".php");
+                      $labels = new Labels($db,$conf,$cconfLabels); $stmt = $labels->readAllJSON();
                     ?>
-                    <?php if ($bloglabels->rowcount>0): for($i=0;$i<$bloglabels->rowcount;$i++) : ?>
-                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchBloglabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->{"name_".LANG}[$i];?></option>
+                    <?php if ($labels->rowcount>0): for($i=0;$i<$labels->rowcount;$i++) : ?>
+                    <option value="<?=$labels->id[$i];?>"<?=$searchLabel==$labels->id[$i]?" selected":"";?>><?=$labels->{"name_".LANG}[$i];?></option>
                     <?php endfor; endif; ?>
                   </select>
                 </div>

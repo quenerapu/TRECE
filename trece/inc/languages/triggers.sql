@@ -1,4 +1,4 @@
-CREATE TRIGGER `inconceivable_serialize_language_name` BEFORE INSERT ON `inconceivable_languages` FOR EACH ROW BEGIN
+CREATE TRIGGER `inconceivable_languages_serialize_name` BEFORE INSERT ON `inconceivable_languages` FOR EACH ROW BEGIN
      DECLARE original_name varchar(120);
      DECLARE name_counter int;
      SET original_name = new.name;

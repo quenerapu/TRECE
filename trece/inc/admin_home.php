@@ -70,7 +70,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div class="page-header">
-          <h1><strong><?=$lCommon["admin_panel"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

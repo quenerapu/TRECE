@@ -1,4 +1,4 @@
-CREATE TRIGGER `inconceivable_serialize_gender_name` BEFORE INSERT ON `inconceivable_genders` FOR EACH ROW BEGIN
+CREATE TRIGGER `inconceivable_genders_serialize_name` BEFORE INSERT ON `inconceivable_genders` FOR EACH ROW BEGIN
      DECLARE original_name varchar(191);
      DECLARE name_counter int;
      SET original_name = new.name;

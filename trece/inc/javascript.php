@@ -6,6 +6,7 @@
       location.replace("<?=$conf["site"]["uri"];?>");
 //    location.reload();
 //    alert(data);
+//    console.log(data);
       }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_added"][LANG]);?>");});};
 
     $(document).on("click",".add<?=isset($parental)?"AndSelect":"";?>Them",function(e){

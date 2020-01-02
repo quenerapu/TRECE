@@ -232,7 +232,7 @@ EOD;
           <div class="pull-right"><p>
             <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
-          <h1><strong><?=$lCustom["edit"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

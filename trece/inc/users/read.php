@@ -104,7 +104,7 @@ EOD;
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div class="page-header">
-          <h1><strong><?=$trece->name.(mb_strlen($trece->surname)>0?" ".$trece->surname:"");?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
 
         <p>&nbsp;</p>

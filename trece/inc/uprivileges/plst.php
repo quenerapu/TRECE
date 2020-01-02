@@ -175,7 +175,7 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["list"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- End row -->

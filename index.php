@@ -88,7 +88,7 @@ endif;
       if (!file_exists($conf["dir"]["includes"].$conf["site"]["homepage"].".php")) :
 
         $script = fopen($conf["dir"]["includes"].$conf["site"]["homepage"].".php","w") or die();
-        fwrite($script,"<?php /* md\n\n# TRECE ".$conf["trece"]["version"]." **".$conf["trece"]["motto"]."**.\n\n*/");
+        fwrite($script,"<?php /* md\n\n# TRECE ".$conf["trece"]["version"]."<br>**".$conf["trece"]["motto"]."**.\n\n*/");
         fclose($script);
 
       endif;
@@ -181,6 +181,7 @@ endif;
   Thank you Jakub Vrána (@jakubvrana) for inventing Adminer. https://www.adminer.org/
   Thank you Javi Aguilar (@itsjaviaguilar) for inventing Bootstrap Colorpicker. https://farbelous.io/bootstrap-colorpicker/
   Thank you Jeff Atwood (@codinghorror) and Joel Spolsky (@spolsky) for inventing Stack Overflow. https://stackoverflow.com/
+  Thank you Jeremy Burge (@jeremyburge) for inventing the Emojipedia. https://emojipedia.org/
   Thank you Johan Sörlin (@spocke) for inventing TinyMCE. https://www.tinymce.com/
   Thank you John Gruber (@gruber) for inventing Markdown. https://daringfireball.net/projects/markdown/
   Thank you John Resig (@jeresig) for inventing jQuery. https://jquery.com/
@@ -378,7 +379,22 @@ endif;
 
 
 
-  $usertables = array($conf["dir"]["genders"],$conf["dir"]["uhierarchy"],$conf["dir"]["uprivileges"],$conf["dir"]["users"]);
+  $usertables = array(
+//  BASIC PACK
+    $conf["dir"]["blog"],
+    $conf["dir"]["genders"],
+    $conf["dir"]["labels"],
+    $conf["dir"]["languages"],
+    $conf["dir"]["organizations"],
+    $conf["dir"]["pages"],
+    $conf["dir"]["uhierarchy"],
+    $conf["dir"]["uprivileges"],
+    $conf["dir"]["users"],
+//  -------
+//  $conf["dir"]["whatever1"],
+//  $conf["dir"]["whatever2"],
+//  $conf["dir"]["whatever3"],
+    );
 
   foreach($usertables as $usertable) :
 

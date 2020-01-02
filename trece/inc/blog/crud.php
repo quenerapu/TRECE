@@ -78,7 +78,7 @@ class Blog{
     $this->tablename           = explode("|",$this->conf["table"]["blog"]);
     $this->tableletter         = $this->tablename[1];
     $this->tablename           = $this->tablename[0];
-    $this->labels_tablename    = explode("|",$this->conf["table"]["bloglabels"]);
+    $this->labels_tablename    = explode("|",$this->conf["table"]["labels"]);
     $this->labels_tableletter  = $this->labels_tablename[1];
     $this->labels_tablename    = $this->labels_tablename[0];
 
@@ -540,7 +540,7 @@ class Blog{
 # ..##..##.##..##.##..##.#####...####..##...##.######.######.######.##..##..
 # ..........................................................................
 
-  private function randomizer($field,$max=8) {
+  private function randomizer($field,$max=8,$tableprefix="") {
 
     $this->loops_ref=0;
     do {
@@ -551,7 +551,7 @@ class Blog{
          $randomString .= $characters[rand(0,$charactersLength-1)];
        endfor;
        $this->$field = $randomString;
-       $query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
+       $query = "SELECT `".$field."` FROM `".$this->{$tableprefix."tablename"}."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
        $stmt = $this->conn->prepare($query);
        $stmt->bindParam(1,$this->$field);
        $stmt->execute();

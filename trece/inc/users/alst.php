@@ -345,7 +345,7 @@
 
   if($trece->firstTime()) :
 
-    echo "<html><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
+    echo "<html style=\"padding:0;margin:0;\"><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" /></head><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
 //  header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
@@ -410,7 +410,7 @@ EOD;
 <?php /*    <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?> */ ?>
           </p></div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

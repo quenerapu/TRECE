@@ -12,7 +12,13 @@ $basedir = $conf["site"]["dir"]."/".$conf["dir"]["includes"];
 $subdirs = array();
 $dirtocheck = scandir($basedir);
 foreach($dirtocheck as $item) :
-  if($item!=".." && $item!="." && is_dir($basedir."/".$item) && file_exists($basedir."/".$item."/tables.sql")) :
+  if(
+       $item!=".." 
+    && $item!="." 
+    && is_dir($basedir."/".$item) 
+    && $item[0]!="_" 
+    && file_exists($basedir."/".$item."/tables.sql")
+    ) :
     array_push($subdirs,$item);
   endif;
 endforeach;

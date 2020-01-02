@@ -230,28 +230,36 @@ EOD;
 
     <div class="row">
 
-      <div class="col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-2">
+      <div class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-2">
 
-        <div class="side-corner-tag" style="width:<?=$cconf["img"]["viewport_w"];?>px; position:relative;margin-bottom:10em;">
+        <div class="side-corner-tag" style="width:100%;position:relative;margin-bottom:10em;">
           <div id="avatar" class="<?=$trece->id_status == 0?"attenuate":"";?>">
             <p><span style="background:#<?=$trece->hierarchy_color;?>;?>;width:160px;right:-50px;"></span></p>
-            <img src="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>" class="img-thumbnail img-responsive" alt="<?=$trece->name;?>">
+            <img src="<?=($trece->gotPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg?".time():($trece->gotGenderPic||$trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].($trece->gotGenderPic?$trece->ugender:"0").".jpg?".time():($trece->gotNeutralPic?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=".$trece->ugender)));?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=$trece->name;?>">
           </div>
         </div>
 
       </div>
 
-      <div class="col-sm-6 col-md-5">
+      <div class="col-xs-12 col-sm-7 col-md-6">
 
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="organization">Organización:</label><br>
+              <p style="font-size:2em;line-height:1em;letter-spacing:-.04em;padding:.2em;background:#eee;"><?=$trece->organization_name;?></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="id_status"><?=$lCustom["status"][LANG];?>:</label><br>
               <input type="checkbox" id="id_status" name="id_status" data-on-color="success" data-on-text="<?=$lCommon["active"][LANG];?>" data-off-color="danger" data-off-text="<?=$lCommon["inactive"][LANG];?>" class="form-control"<?=$trece->id_status==1?" checked":"";?>>
             </div>
           </div>
-
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="uhierarchy"><?=$lCustom["hierarchy"][LANG];?>:</label><br>
               <select name="uhierarchy" id="uhierarchy" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
@@ -269,13 +277,13 @@ EOD;
         </div>
 
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="name"><?=$lCustom["name"][LANG];?>:</label><br>
               <input type="text" id="name" name="name" class="form-control" value="<?=$trece->name;?>" required>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="surname"><?=$lCustom["surname"][LANG];?>:</label><br>
               <input type="text" id="surname" name="surname" class="form-control" value="<?=$trece->surname;?>">
@@ -284,14 +292,14 @@ EOD;
         </div>
 
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group<?=$wrongUsername+$dupeUsername>0?" has-error":"";?>">
               <label for="username"><?=$lCustom["username"][LANG];?>:</label><br>
                <input type="text" id="username" name="username" class="form-control" value="<?=$username;?>" required>
               <?=($wrongUsername+$dupeUsername>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($wrongUsername>0?$lCustom["wrong_username"][LANG]." ":($dupeUsername>0?$lCustom["duplicated_username"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"")).$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
             </div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="ugender"><?=$lCustom["gender"][LANG];?>:</label><br>
               <select name="ugender" id="ugender" class="form-control selectpicker dropup" data-style="btn-info" data-header="<?=$lCommon["please_select"][LANG];?>" data-live-search="true" required>
@@ -308,14 +316,22 @@ EOD;
           </div>
         </div>
 
-        <div class="form-group<?=$wrongeMail+$dupeeMail>0?" has-error":"";?>">
-          <label for="email"><?=$lCommon["email"][LANG];?>:</label><br>
-          <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][LANG]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
-          <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"").$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group<?=$wrongeMail+$dupeeMail>0?" has-error":"";?>">
+              <label for="email"><?=$lCommon["email"][LANG];?>:</label><br>
+              <input type="email" id="email" name="email" class="form-control" placeholder="<?=$wrongeMail+$dupeeMail>0?$lCustom["no_email"][LANG]:"";?>" value="<?=strpos($email,"@")!==false?$email:"";?>" required>
+              <?=($wrongeMail+$dupeeMail>0?"<span class=\"help-block\"><span class=\"text-danger\">* ".($dupeeMail>0?$lCustom["duplicated_email"][LANG]." ".$lCommon["it_must_be_unique"][LANG]." ":"").$lCustom["mandatory_field"][LANG]."</span></span>":"");?>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
+            </div>
+          </div>
         </div>
 
       </div>

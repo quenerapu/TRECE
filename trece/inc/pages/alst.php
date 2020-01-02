@@ -332,7 +332,7 @@
 
   if($trece->firstTime()) :
 
-    echo "<html><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
+    echo "<html style=\"padding:0;margin:0;\"><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" /></head><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
 //  header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
@@ -453,7 +453,7 @@ EOD;
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
-                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i]."_mob.jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i]."_mob.jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Page"));?>" class="img-thumbnail img-responsive" alt="<?=htmlspecialchars($trece->{"title_".LANG}[$i]);?>">
+                  <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."generic.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"]."generic.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["thumb_w"]."x".$cconf["img"]["thumb_h"]."/?text=Page"));?>" class="img-thumbnail img-responsive" style="max-width:200px;" alt="<?=htmlspecialchars($trece->{"title_".LANG}[$i]);?>">
                 </a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
@@ -617,7 +617,7 @@ EOD;
 
 
 
-<?php require_once($conf["dir"]["includes"]."javascript.php"); ?>
+<?php require_once($conf["dir"]["includes"].$conf["file"]["javascript"].".php"); ?>
 
 
 

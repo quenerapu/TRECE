@@ -40,7 +40,7 @@ return [
     "name"              => "Name",
     "surname"           => "Surname",
     "username"          => "new-user",
-    "ugender"           => "m",
+    "ugender"           => "w",
     "email"             => "NO_EMAIL",
     "max_new_items"     => 15,
     ],

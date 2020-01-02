@@ -47,44 +47,27 @@ return [
   "img" => [
     "ref"               => "ref",         # Image ref
     "prefix"            => "page_",       # Croppie prefix
-//  "canvas_w"          => 1600,          # Croppie canvas width
-//  "canvas_h"          => 900,           # Croppie canvas height
-
-//  "viewport_w"        => 390,           # Croppie viewport width
-//  "viewport_h"        => 219,           # Croppie viewport height
 
     "img_w"             => $img_w=1280,   # PHP GD image width
     "img_h"             => $img_h=400,    # PHP GD image height
+    "thumb_w"           => 300,           # PHP GD thumb width
+    "thumb_h"           => 200,           # PHP GD thumb height
 
-//  "icon_w"            => $icon_w = $img_w/2,      # PHP GD icon width
-//  "icon_h"            => $icon_h = $img_h/2,      # PHP GD icon height
+    "post_max_img"      => 1200,          # For images uploaded in post field
+    "post_max_icon"     => 600,           # For images uploaded in post field
+    "post_max_thumb"    => 120,           # For images uploaded in post field
 
-//  "modal_h"           => $icon_h+600,
+    "w_mob"             => 160,           # For the modal window
+    "h_mob"             => $h_mob=260,    # For the modal window
+    "modal_mob_h"       => $h_mob+75,     # For the modal window
+    "w_web"             => 427,           # For the modal window
+    "h_web"             => $h_web=133,    # For the modal window
+    "modal_web_h"       => $h_web+75,     # For the modal window
 
-    "thumb_w"           => 150,           # PHP GD thumb width
-    "thumb_h"           => 150,           # PHP GD thumb height
-
-
-
-
-
-
-    "post_max_img"      => 1200,          # For images uploaded to post
-    "post_max_icon"     => 600,           # For images uploaded to post
-    "post_max_thumb"    => 120,           # For images uploaded to post
-
-
-    "w_mob"             => 160,
-    "h_mob"             => $h_mob=260,
-    "w_web"             => 427,
-    "h_web"             => $h_web=133,
-    "viewport_mob_w"    => 320,
-    "viewport_mob_h"    => 520,
-    "viewport_web_w"    => 1280,
-    "viewport_web_h"    => 400,
-    "modal_mob_h"       => $h_mob+75,
-    "modal_web_h"       => $h_web+75,
-
+    "viewport_mob_w"    => 320,           # Croppie viewport
+    "viewport_mob_h"    => 520,           # Croppie viewport
+    "viewport_web_w"    => 1280,          # Croppie viewport
+    "viewport_web_h"    => 400,           # Croppie viewport
 
     ],
 

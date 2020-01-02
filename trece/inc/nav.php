@@ -90,7 +90,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["content"][LANG];?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><?=nav($lCommon["blog"][LANG],"blog");?></li>
-                      <li><?=nav($lCommon["bloglabels"][LANG],"bloglabels");?></li>
+                      <li><?=nav($lCommon["labels"][LANG],"labels");?></li>
                       <li role="separator" class="divider"></li>
                       <li><?=nav($lCommon["pages"][LANG],"pages");?></li>
                     </ul>

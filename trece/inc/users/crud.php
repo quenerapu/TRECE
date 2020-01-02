@@ -37,6 +37,7 @@ class Users {
   //object properties
   public $id;
   public $id_status;
+  public $id_organization;
   public $name;
   public $surname;
   public $username;
@@ -61,24 +62,27 @@ class Users {
   public $query = "";
   public $query1 = "";
   public $query2 = "";
-  public $xx = ["id_status","name","surname","username","email","ugender","uhierarchy","bio","date_upd","ip_upd","ref","loops_ref"];
-  public $xx_updateOne = ["id_status","name","surname","username","email","ugender","uhierarchy","bio"];
-  public $xx_notinsearch = ["id_status","ugender","uhierarchy","date_upd","ip_upd","ref","loops_ref"];
+  public $xx = ["id_status","id_organization","name","surname","username","email","ugender","uhierarchy","bio","date_upd","ip_upd","ref","loops_ref"];
+  public $xx_updateOne = ["id_status","id_organization","name","surname","username","email","ugender","uhierarchy","bio"];
+  public $xx_notinsearch = ["id_status","id_organization","ugender","uhierarchy","date_upd","ip_upd","ref","loops_ref"];
 
 
   public function __construct($db,$conf=null,$cconf=null,$lCommon=null,$lCustom=null) {
 
-    $this->conn                   = $db;
-    $this->conf                   = $conf;
-    $this->cconf                  = $cconf;
-    $this->lCommon                = $lCommon;
-    $this->lCustom                = $lCustom;
-    $this->tablename              = explode("|",$this->conf["table"]["users"]);
-    $this->tableletter            = $this->tablename[1];
-    $this->tablename              = $this->tablename[0];
-    $this->uhierarchy_tablename   = explode("|",$this->conf["table"][$this->conf["dir"]["uhierarchy"]]);
-    $this->uhierarchy_tableletter = $this->uhierarchy_tablename[1];
-    $this->uhierarchy_tablename   = $this->uhierarchy_tablename[0];
+    $this->conn                       = $db;
+    $this->conf                       = $conf;
+    $this->cconf                      = $cconf;
+    $this->lCommon                    = $lCommon;
+    $this->lCustom                    = $lCustom;
+    $this->tablename                  = explode("|",$this->conf["table"]["users"]);
+    $this->tableletter                = $this->tablename[1];
+    $this->tablename                  = $this->tablename[0];
+    $this->uhierarchy_tablename       = explode("|",$this->conf["table"]["uhierarchy"]);
+    $this->uhierarchy_tableletter     = $this->uhierarchy_tablename[1];
+    $this->uhierarchy_tablename       = $this->uhierarchy_tablename[0];
+    $this->organizations_tablename    = explode("|",$this->conf["table"]["organizations"]);
+    $this->organizations_tableletter  = $this->organizations_tablename[1];
+    $this->organizations_tablename    = $this->organizations_tablename[0];
 
     }
 
@@ -323,6 +327,8 @@ class Users {
     endforeach;
 
     $query.= "CONCAT((SELECT ".$this->uhierarchy_tableletter.".`color` FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy_color, ";
+
+    $query.= "CONCAT((SELECT ".$this->organizations_tableletter.".`name` FROM `".$this->organizations_tablename."` ".$this->organizations_tableletter." WHERE ".$this->organizations_tableletter.".`id` = ".$this->tableletter.".`id_organization`)) AS organization_name, ";
 
     $query = "SELECT " .$query."FROM `".$this->tablename."` ".$this->tableletter." WHERE " .
               ($this->intimacy == 2 ? $this->tableletter.".`id_status` > 0 AND " : "") .
@@ -623,9 +629,11 @@ class Users {
 
     $query1.= "CONCAT((SELECT CONCAT(".$this->uhierarchy_tableletter.".`name`,'|',".$this->uhierarchy_tableletter.".`color`) FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
 
-    $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " WHERE " : " ") .
+    $query1.= "CONCAT((SELECT ".$this->organizations_tableletter.".`name` FROM `".$this->organizations_tablename."` ".$this->organizations_tableletter." WHERE ".$this->organizations_tableletter.".`id` = ".$this->tableletter.".`id_organization`)) AS organization_name, ";
+
+    $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " HAVING " : " ") .
     (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
-    ($where ? "CONCAT(".$query2.") LIKE '%".$where."%' " : " ");
+    ($where ? "CONCAT(".$query2."organization_name) LIKE '%".$where."%' " : " ");
 
     $query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
 
@@ -954,7 +962,7 @@ class Users {
 # ..##..##.##..##.##..##.#####...####..##...##.######.######.######.##..##..
 # ..........................................................................
 
-  private function randomizer($field,$max=8) {
+  private function randomizer($field,$max=8,$tableprefix="") {
 
     $this->loops_ref=0;
     do {
@@ -965,7 +973,7 @@ class Users {
          $randomString .= $characters[rand(0,$charactersLength-1)];
        endfor;
        $this->$field = $randomString;
-       $query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
+       $query = "SELECT `".$field."` FROM `".$this->{$tableprefix."tablename"}."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
        $stmt = $this->conn->prepare($query);
        $stmt->bindParam(1,$this->$field);
        $stmt->execute();
@@ -1073,7 +1081,6 @@ class Users {
         $mail->Subject = $this->mail_subject;
         $mail->Body = $this->mail_message;
         $mail->AltBody = strip_tags(str_replace(array("<br>","<br/>","<br />"),"\r\n",$this->mail_message));
-        $mail->CharSet = "utf-8";
         $mail->send();
         return true;
         } catch (Exception $e) { echo "Message could not be sent. Mailer Error: " . $mail->ErrorInfo; }

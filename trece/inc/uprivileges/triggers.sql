@@ -1,4 +1,4 @@
-CREATE TRIGGER `inconceivable_serialize_privilege_name` BEFORE INSERT ON `inconceivable_uprivileges` FOR EACH ROW BEGIN
+CREATE TRIGGER `inconceivable_uprivileges_serialize_name_url_name` BEFORE INSERT ON `inconceivable_uprivileges` FOR EACH ROW BEGIN
      DECLARE original_name varchar(120);
      DECLARE original_url_name varchar(120);
      DECLARE name_counter int;

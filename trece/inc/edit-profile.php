@@ -407,7 +407,7 @@ EOD;
           <div class="pull-right"><p>
             <?=btn($lCommon["change-password"][LANG],"^".REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->email,"","fa-key");?>
           </p></div>
-          <h1><strong><?=$lCustom["edit"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

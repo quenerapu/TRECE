@@ -49,7 +49,7 @@
       (
         in_array($crudlpx,array(
           $conf["file"]["adminlist"],
-//        $conf["file"]["publiclist"],
+          $conf["file"]["publiclist"],
         )) &&
         (!isset($what) || (isset($what) && (is_numeric($what) && strlen(intval($what))>0)))
       )

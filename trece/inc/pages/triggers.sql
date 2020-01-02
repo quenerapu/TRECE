@@ -1,4 +1,4 @@
-CREATE TRIGGER `inconceivable_serialize_pages_url_title` BEFORE INSERT ON `inconceivable_pages` FOR EACH ROW BEGIN
+CREATE TRIGGER `inconceivable_pages_serialize_url_title` BEFORE INSERT ON `inconceivable_pages` FOR EACH ROW BEGIN
      DECLARE original_url_title varchar(200);
      DECLARE url_title_counter int;
      SET original_url_title = new.url_title;

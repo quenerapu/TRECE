@@ -372,7 +372,7 @@ class Provinces{
 # ..##..##.##..##.##..##.#####...####..##...##.######.######.######.##..##..
 # ..........................................................................
 
-  private function randomizer($field,$max=8) {
+  private function randomizer($field,$max=8,$tableprefix="") {
 
     $this->loops_ref=0;
     do {
@@ -383,7 +383,7 @@ class Provinces{
          $randomString .= $characters[rand(0,$charactersLength-1)];
        endfor;
        $this->$field = $randomString;
-       $query = "SELECT `".$field."` FROM `".$this->tablename."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
+       $query = "SELECT `".$field."` FROM `".$this->{$tableprefix."tablename"}."` WHERE BINARY `".$field."` = ? LIMIT 0,1";
        $stmt = $this->conn->prepare($query);
        $stmt->bindParam(1,$this->$field);
        $stmt->execute();

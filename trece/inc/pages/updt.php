@@ -107,12 +107,15 @@
       list(,$item_img_mob_image)=explode(",",$item_img_mob_image);
       $item_img_mob_image=base64_decode($item_img_mob_image);
       file_put_contents($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg",$item_img_mob_image);
-
+/*
       $source=@imagecreatefromjpeg($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
-      fixImageOrientation($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
-      if($source){imagejpeg($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");}
-      list($width,$height)=getimagesize($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
-      resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg",$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
+      if($source):
+        fixImageOrientation($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+        imagejpeg($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+        list($width,$height)=getimagesize($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg");
+        resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ref.".jpg",$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
+      endif;
+*/
     endif;
 
     if(isset($_POST["item-img-mob-remove"]) && file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_mob.jpg")):
@@ -126,6 +129,14 @@
       list(,$item_img_web_image)=explode(",",$item_img_web_image);
       $item_img_web_image=base64_decode($item_img_web_image);
       file_put_contents($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg",$item_img_web_image);
+
+      $source=@imagecreatefromjpeg($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg");
+      if($source):
+        fixImageOrientation($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg");
+        imagejpeg($source,$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg");
+        list($width,$height)=getimagesize($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg");
+        resizeImage($source,$conf["dir"]["images"].$conf["css"]["thumb_prefix"].$cconf["img"]["prefix"].$trece->ref.".jpg",$width,$height,$cconf["img"]["thumb_w"],$cconf["img"]["thumb_h"]);
+      endif;
     endif;
 
     if(isset($_POST["item-img-web-remove"]) && file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->ref."_web.jpg")):
@@ -481,7 +492,7 @@ EOD;
           <div class="col-xs-12">
 
             <div class="form-group">
-              <input type="text" id="ids_breadcrumb_trail" name="ids_breadcrumb_trail" class="form-control" value="<?=$trece->ids_breadcrumb_trail;?>">
+              <input type="hidden" id="ids_breadcrumb_trail" name="ids_breadcrumb_trail" class="form-control" value="<?=$trece->ids_breadcrumb_trail;?>">
               <button type="submit" class="btn btn-cons confirm-image"><?=$lCommon["save_changes"][LANG];?></button>
             </div>
 
@@ -761,16 +772,16 @@ EOD;
 
         switch (qq) {
         case "item-img-mob":
-          var w = <?=$cconf["img"]["w_mob"];?>;                                      // console.log("w: "+w);
-          var h = <?=$cconf["img"]["h_mob"];?>;                                      // console.log("h: "+h);
-          var viewport_w = <?=$cconf["img"]["viewport_mob_w"];?>;                    // console.log("viewport_w: "+viewport_w);
-          var viewport_h = <?=$cconf["img"]["viewport_mob_h"];?>;                    // console.log("viewport_h: "+viewport_h);
+          var w = <?=$cconf["img"]["w_mob"];?>;                                   <?= "\n" // console.log("w: "+w); ?>
+          var h = <?=$cconf["img"]["h_mob"];?>;                                   <?= "\n" // console.log("h: "+h); ?>
+          var viewport_w = <?=$cconf["img"]["viewport_mob_w"];?>;                 <?= "\n" // console.log("viewport_w: "+viewport_w); ?>
+          var viewport_h = <?=$cconf["img"]["viewport_mob_h"];?>;                 <?= "\n" // console.log("viewport_h: "+viewport_h); ?>
           break;
         case "item-img-web":
-          var w = <?=$cconf["img"]["w_web"];?>;                                      // console.log("w: "+w);
-          var h = <?=$cconf["img"]["h_web"];?>;                                      // console.log("h: "+h);
-          var viewport_w = <?=$cconf["img"]["viewport_web_w"];?>;                    // console.log("viewport_w: "+viewport_w);
-          var viewport_h = <?=$cconf["img"]["viewport_web_h"];?>;                    // console.log("viewport_h: "+viewport_h);
+          var w = <?=$cconf["img"]["w_web"];?>;                                   <?= "\n" // console.log("w: "+w); ?>
+          var h = <?=$cconf["img"]["h_web"];?>;                                   <?= "\n" // console.log("h: "+h); ?>
+          var viewport_w = <?=$cconf["img"]["viewport_web_w"];?>;                 <?= "\n" // console.log("viewport_w: "+viewport_w); ?>
+          var viewport_h = <?=$cconf["img"]["viewport_web_h"];?>;                 <?= "\n" // console.log("viewport_h: "+viewport_h); ?>
           break;
         }
 
@@ -779,12 +790,12 @@ EOD;
           if(input.files && input.files[0]){
             var reader=new FileReader();
             reader.onload=function(e){
-              $("#modal-"+qq.slice(qq.length -3)+"-img").addClass("ready");          // console.log("#modal-"+qq.slice(qq.length -3)+"-img >> ready");
-              $("#crop-modal-"+qq.slice(qq.length -3)+"-img").modal("show");         // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img >> show");
+              $("#modal-"+qq.slice(qq.length -3)+"-img").addClass("ready");       <?= "\n" // console.log("#modal-"+qq.slice(qq.length -3)+"-img >> ready"); ?>
+              $("#crop-modal-"+qq.slice(qq.length -3)+"-img").modal("show");      <?= "\n" // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img >> show"); ?>
               rawImg=e.target.result;
               }
             reader.readAsDataURL(input.files[0]);
-            }else{swal("Sorry - you're browser doesn't support the FileReader API");}
+            }else{alert("Sorry - you're browser doesn't support the FileReader API");}
           }
 
         function createCroppie(viewportWidth,viewportHeight){
@@ -795,7 +806,7 @@ EOD;
           $uploadCrop.croppie("bind",{url:rawImg});
           }
 
-                                                                                     // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+                                                                                  <?= "\n" // console.log("#modal-"+qq.slice(qq.length -3)+"-img"); ?>
 
 
         function resizeCroppie(width,height){
@@ -805,12 +816,12 @@ EOD;
             }
           }
 
-                                                                                     // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+                                                                                  <?= "\n" // console.log("#modal-"+qq.slice(qq.length -3)+"-img"); ?>
 
 
         $("#crop-modal-"+qq.slice(qq.length -3)+"-img").on("shown.bs.modal",function(){resizeCroppie(w,h);});
 
-                                                                                     // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img");
+                                                                                  <?= "\n" // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img"); ?>
 
         $("#"+qq).on("change",function(){
           imageId=$(this).data("id");
@@ -821,12 +832,12 @@ EOD;
         $("#cropImageBtn-"+qq.slice(qq.length -3)).on("click",function(ev){
           if(qq!=""){
             $uploadCrop.croppie("result",{type:"base64",format:"jpeg",size:{width:viewport_w,height:viewport_h}}).then(function(resp){
-                $("#"+qq+"-output").attr("src",resp);                                // console.log("#"+qq+"-output");
-                $("#"+qq+"-image").val(resp);                                        // console.log("#"+qq+"-image");
-                $("#"+qq+"-remove").attr("checked",false);                           // console.log("#"+qq+"-remove");
-                $("#modal-"+qq.slice(qq.length -3)+"-img").removeClass("ready");     // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
-                $("#crop-modal-"+qq.slice(qq.length -3)+"-img").modal("hide");       // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img");
-                $("#modal-"+qq.slice(qq.length -3)+"-img").croppie("destroy");       // console.log("#modal-"+qq.slice(qq.length -3)+"-img");
+                $("#"+qq+"-output").attr("src",resp);                             <?= "\n" // console.log("#"+qq+"-output"); ?>
+                $("#"+qq+"-image").val(resp);                                     <?= "\n" // console.log("#"+qq+"-image"); ?>
+                $("#"+qq+"-remove").attr("checked",false);                        <?= "\n" // console.log("#"+qq+"-remove"); ?>
+                $("#modal-"+qq.slice(qq.length -3)+"-img").removeClass("ready");  <?= "\n" // console.log("#modal-"+qq.slice(qq.length -3)+"-img"); ?>
+                $("#crop-modal-"+qq.slice(qq.length -3)+"-img").modal("hide");    <?= "\n" // console.log("#crop-modal-"+qq.slice(qq.length -3)+"-img"); ?>
+                $("#modal-"+qq.slice(qq.length -3)+"-img").croppie("destroy");    <?= "\n" // console.log("#modal-"+qq.slice(qq.length -3)+"-img"); ?>
                 qq = "";
             });
             }

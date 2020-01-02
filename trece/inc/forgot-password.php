@@ -123,7 +123,7 @@ EOD;
           </p></div>
           <?php endif; ?>
           <?php endif; ?>
-          <h1><strong><?=$lCommon["forgot_password"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
         </div>
       </div>
 

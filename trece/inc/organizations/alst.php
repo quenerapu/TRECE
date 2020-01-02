@@ -1,16 +1,16 @@
 <?php if(!defined("TRECE")):header("location:/");die();endif; ?>
 <?php
-//BLOGLABELS
+//ORGANIZATIONS
 
-# ..................................................................................................
-# ..########..##........#######...######...##..........###....########..########.##........######...
-# ..##.....##.##.......##.....##.##....##..##.........##.##...##.....##.##.......##.......##....##..
-# ..##.....##.##.......##.....##.##........##........##...##..##.....##.##.......##.......##........
-# ..########..##.......##.....##.##...####.##.......##.....##.########..######...##........######...
-# ..##.....##.##.......##.....##.##....##..##.......#########.##.....##.##.......##.............##..
-# ..##.....##.##.......##.....##.##....##..##.......##.....##.##.....##.##.......##.......##....##..
-# ..########..########..#######...######...########.##.....##.########..########.########..######...
-# ..................................................................................................
+# ......................................................................................................................
+# ...#######..########...######......###....##....##.####.########....###....########.####..#######..##....##..######...
+# ..##.....##.##.....##.##....##....##.##...###...##..##.......##....##.##......##.....##..##.....##.###...##.##....##..
+# ..##.....##.##.....##.##.........##...##..####..##..##......##....##...##.....##.....##..##.....##.####..##.##........
+# ..##.....##.########..##...####.##.....##.##.##.##..##.....##....##.....##....##.....##..##.....##.##.##.##..######...
+# ..##.....##.##...##...##....##..#########.##..####..##....##.....#########....##.....##..##.....##.##..####.......##..
+# ..##.....##.##....##..##....##..##.....##.##...###..##...##......##.....##....##.....##..##.....##.##...###.##....##..
+# ...#######..##.....##..######...##.....##.##....##.####.########.##.....##....##....####..#######..##....##..######...
+# ......................................................................................................................
 
 // http://patorjk.com/software/taag/#p=display&f=Banner4&t=%20TRECE%20
 // http://patorjk.com/software/taag/#p=display&f=Bright&t=Deprecated
@@ -24,9 +24,7 @@
 
 
 
-
-
-
+//Included or not?
 
   if(!isset($included)) :
 
@@ -62,7 +60,7 @@
 
 //No $what? Load page 1!
 
-  if ( !isset($what) ) :
+  if(!isset($what)) :
 
     header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
@@ -110,7 +108,9 @@
 
         $rows[] = "\n{
           \"value\":\"".$trece->id[$i]."\",
-          \"name_en\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->name_en[$i]))."\"
+          \"date\":\"".$trece->date[$i]."\",
+          \"title_en\":\"".html_entity_decode(str_replace(array('"',"'"),array('&#8243;','&#8242;'),$trece->title_en[$i]))."\",
+          \"url_title_en\":\"".$trece->url_title_en[$i]."\"
         }";
 
       endfor;
@@ -126,10 +126,6 @@
 
 # .. END JSON
 # ...............................
-
-
-
-  $msg = false;
 
 
 
@@ -159,6 +155,7 @@
     $trece->field       = $_POST["name"];
     $trece->value       = isset($_POST["value"])?(is_array($_POST["value"])?implode(",",$_POST["value"]):$_POST["value"]):0;
     $trece->pk          = $_POST["pk"];
+    $trece->id_who      = $app->getUserID();
 
     if (strpos($trece->pk,"|") !== false) :
       $trece->pk        = explode("|",$trece->pk);
@@ -166,7 +163,7 @@
       $trece->url_value = getUrlFriendlyString($trece->value);
     endif;
 
-    if(!$trece->updateOneSingleField()) :
+    if(!$trece->approveOrganization()) :
       echo "error";
     endif;
     die();
@@ -191,12 +188,8 @@
     $trece                      = new $action($db,$conf);
     $howMany                    = $_POST["add_howMany"]>0?$_POST["add_howMany"]:1;
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->name_en             = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name_en"]));
-    $trece->url_name_en         = getUrlFriendlyString($trece->name_en);
-    $trece->name_gal            = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name_gal"]));
-    $trece->url_name_gal        = getUrlFriendlyString($trece->name_gal);
-    $trece->name_es             = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name_es"]));
-    $trece->url_name_es         = getUrlFriendlyString($trece->name_es);
+    $trece->name                = trim(preg_replace("/[[:blank:]]+/"," ",$cconf["default"]["name"]));
+    $trece->url_name            = getUrlFriendlyString($trece->name);
 
     if($howMany > 0 && $howMany <= $cconf["default"]["max_new_items"]) :
 
@@ -226,15 +219,10 @@
     $trece                      = new $action($db,$conf);
     $trece->ref                 = $_POST["clone_ref"];
     $trece->id_status           = $cconf["default"]["id_status"];
-    $trece->name_en             = "Copy of ".$_POST["clone_name_en"];
-    $trece->url_name_en         = getUrlFriendlyString($trece->name_en);
-    $trece->name_gal            = "Copia de ".$_POST["clone_name_gal"];
-    $trece->url_name_gal        = getUrlFriendlyString($trece->name_gal);
-    $trece->name_es             = "Copia de ".$_POST["clone_name_es"];
-    $trece->url_name_es         = getUrlFriendlyString($trece->name_es);
+    $trece->name                = mb_substr("Clon de ".$_POST["clone_name"],0,54);
+    $trece->url_name            = $_POST["clone_url_name"];
+    $trece->addOne();
 
-    if(mb_strlen($trece->name_en)<100) : $trece->addOne(); die(); endif;
-    echo ":(";
     die();
 
   endif;
@@ -269,6 +257,12 @@
       if(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename)):unlink($conf["dir"]["images"].$conf["css"]["icon_prefix"].$filename);endif;
       if(file_exists($conf["dir"]["images"].$filename)):unlink($conf["dir"]["images"].$filename);endif;
 
+      foreach(glob($conf["dir"]["images"]."*.{jpg,JPG,jpeg,JPEG,png,PNG}",GLOB_BRACE) as $file):
+        if((substr(basename($file),0,13+(strlen($action)))===$action."-img-".$trece->{$cconf["img"]["ref"]})) :
+          unlink($conf["dir"]["images"].basename($file));
+        endif;
+      endforeach;
+
     endforeach;
 
     die();
@@ -280,19 +274,25 @@
 
 
 
+
 //metastuff
   $lCustom["pagetitle"][LANG] = strip_tags($lCustom["admin_list"][LANG]);
   $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
   $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
   $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
-  $searchTarget = false;
-  $searchWhat   = "";
+
+
+
+  $searchTarget     = false;
+  $searchWhat       = "";
+  $searchLabel      = "";
 
   if(isset($conf["site"]["queryArray"]["wr"]) && $conf["site"]["queryArray"]["wr"]==$action) :
 
-    $searchTarget = true;
-    $searchWhat   = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
+    $searchTarget     = true;
+    $searchWhat       = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
+    $searchLabel      = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
 
   endif;
 
@@ -322,14 +322,14 @@
 
   if($trece->firstTime()) :
 
-    echo "<html><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
+    echo "<html style=\"padding:0;margin:0;\"><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" /></head><body style=\"padding:0;margin:0;\"><img src=\"https://fakeimg.pl/250x100/?text=".$action."\"></body></html>";
 //  header("location:".REALPATHLANG.$action."/".$crudlpx."/1".QUERYQ);
     die();
 
   endif;
 
-  $trece->intimacy = 1;
-  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat);
+  $trece->intimacy = 1; #Intimacy 0 : For owner's eyes | Intimacy 1 : For admin's eyes | Intimacy 2 : Public
+  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchLabel);
   $rowcount_page = $trece->rowcount;
 
   if(!$included && ($rowcount_page == 0 && $page>1)) :
@@ -375,14 +375,7 @@ EOD;
 
   <div class="container main-container">
 
-    <?php if($msg) : ?>
 
-    <div class="alert alert-<?=$msgType;?> alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <?=$msgText;?>
-    </div>
-
-    <?php endif; ?>
 
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -391,12 +384,13 @@ EOD;
           <?php // $lacosa = "Questiontypes"; ?>
           <div class="pull-right"><p>
             <?=btn("!".$lCustom["new"][LANG],null,"add".(isset($lacosa)?"AndSelect":"")."Them","fa-plus");?>
+<?php /*    <?=btn($lCommon["public_list"][LANG],"!".$action."/".$conf["file"]["publiclist"],"","fa-list");?> */ ?>
           </p></div>
           <?php endif; ?>
           <h1><strong><?=$lCustom["admin_list"][LANG];?></strong></h1>
         </div>
       </div>
-    </div><!-- row -->
+    </div><!-- End row -->
 
 
 
@@ -433,9 +427,7 @@ EOD;
             <tr>
               <th><input type="checkbox" id="allnone"></th>
               <th><?=$lCustom["status"][LANG];?></th>
-              <th><?=$lCommon["name"][LANG];?> [EN]</th>
-              <th><?=$lCommon["name"][LANG];?> [GAL]</th>
-              <th><?=$lCommon["name"][LANG];?> [ES]</th>
+              <th><?=$lCommon["name"][LANG];?></th>
               <th style="text-align:right;"><!-- <?=$lCommon["actions"][LANG];?> --></th>
             </tr>
           </thead>
@@ -449,23 +441,24 @@ EOD;
                 <a href="javascript:void(0);" class="change-status" style="text-decoration:none !important;" data-pk="<?=$trece->id[$i];?>" data-name="id_status" data-value="<?=$trece->id_status[$i];?>"><span class="label label-<?=$trece->id_status[$i]==1?"success":"danger";?>" style="padding-bottom:.1em;"><?=$trece->id_status[$i]==1?"ON":"OFF";?></span></a>
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name_en"><?=$trece->name_en[$i];?></a>
-              </td>
-              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name_gal"><?=$trece->name_gal[$i];?></a>
-              </td>
-              <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
-                <a href="javascript:void(0);" class="name editable editable-click" data-type="text" data-pk="<?=$trece->id[$i];?>|true" data-name="name_es"><?=$trece->name_es[$i];?></a>
+                <div class="bs-callout bs-callout-default">
+                  <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
+                    <strong><?=${"trece"}->{"name"}[$i];?></strong>
+                  </a><br>
+                  <small><?=doWordWrap(${"trece"}->{"intro"}[$i]);?></small><br>
+                </div>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a data-ref="<?=$trece->ref[$i];?>"
-                           data-name_en="<?=htmlspecialchars($trece->name_en[$i]);?>" 
-                           data-name_gal="<?=htmlspecialchars($trece->name_gal[$i]);?>" 
-                           data-name_es="<?=htmlspecialchars($trece->name_es[$i]);?>" 
+                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a data-ref="<?=$trece->ref[$i];?>" 
+                           data-name="<?=htmlspecialchars($trece->name[$i]);?>" 
+                           data-url_name="<?=htmlspecialchars($trece->url_name[$i]);?>" 
                            class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>
@@ -530,7 +523,7 @@ EOD;
         name:name,
         value:value,
         },function(data){
-//      alert(data);
+        alert(data);
         $("#tr_"+pk).closest("tbody").load(location.href+" #tr_"+pk);
         setTimeout(startxEditable,2000);
         }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_changed"][LANG]);?>");});
@@ -544,23 +537,18 @@ EOD;
   <script>
     $(document).on("click",".clone-object",function(){
       var ref             =   $(this).data("ref");
-      var name_en         =   $(this).data("name_en");
-      var name_gal        =   $(this).data("name_gal");
-      var name_es         =   $(this).data("name_es");
+      var name            =   $(this).data("name");
+      var url_name        =   $(this).data("url_name");
 
       $.post("",{
         cloneThis:true,
         clone_ref:ref,
-        clone_name_en:name_en,
-        clone_name_gal:name_gal,
-        clone_name_es:name_es,
+        clone_name:name,
+        clone_url_name:url_name,
         },function(data){
-//      alert(data);
-        if(data==""){location.reload();}else{
-          $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["cannot_be_cloned"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
-          }
-        }).fail(function(){$.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});}
-        );
+//        alert(data);
+          location.reload();
+        }).fail(function(){alert("<?=addslashes($lCommon["cannot_be_cloned"][LANG]);?>");});
       return false;
       });
   </script>
@@ -575,27 +563,6 @@ EOD;
     $(document).ready(function(){startxEditable();});
 
     function startxEditable(){
-
-      $(".name").editable(
-        {
-          url:window.location.href,
-          mode:"inline", //popup
-//        placement:"right",
-          showbuttons:false,
-          success:function(response,newValue){
-//          alert(JSON.stringify(params,null,4));
-            if(response.length>0){
-              $.alert({boxWidth:"300px",useBootstrap:false,icon:"fa fa-warning",closeIcon:true,closeIconClass:"fa fa-close",title:"Error",type:"red",content:"<?=$lCommon["duplicated_name"][LANG];?>",buttons:{confirm:{text:"OK",btnClass:"btn-red",keys:["enter"],action:function(){}}}});
-              }
-              id = $(this).data("pk")+""; /* https://stackoverflow.com/a/36483219 */
-              if(id.indexOf("|")>=0){id=id.split("|");id=id[0];}
-              $(this).closest("tbody").load(location.href+" #tr_"+id);
-              setTimeout(startxEditable,2000);
-            }
-        }
-        ).on("shown",function(ev,editable){setTimeout(function(){editable.input.$input.select();},0);}
-        ).on("save",function(e,params){
-          });
       };
 
   </script>

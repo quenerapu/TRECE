@@ -14,7 +14,7 @@
 
       <div class="row">
         <div class="col-xs-8 col-sm-6 col-sm-offset-1">
-          <p style="line-height:1em;"><small><strong>TRECE <?=$conf["trece"]["version"];?>:</strong> <?=$conf["trece"]["motto"];?></small></p>
+          <p style="line-height:1em;"><small><strong>TRECE <?=$conf["trece"]["version"];?>:</strong><br><?=$conf["trece"]["motto"];?></small></p>
           <p style="letter-spacing:-.03em;"><small>
             <a href="<?=REALPATHLANG."";?>" target="_blank">Whatever</a> |
             <a href="<?=REALPATHLANG."";?>" target="_blank">Whatever</a> |

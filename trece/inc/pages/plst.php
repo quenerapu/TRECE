@@ -83,13 +83,13 @@ $intimacy = 2;
 
   $searchTarget     = false;
   $searchWhat       = "";
-  $searchBloglabel  = "";
+  $searchLabel      = "";
 
   if(isset($conf["site"]["queryArray"]["wr"]) && $conf["site"]["queryArray"]["wr"]==$action) :
 
     $searchTarget     = true;
     $searchWhat       = isset($conf["site"]["queryArray"]["wh"]) ? $conf["site"]["queryArray"]["wh"] : "" ;
-    $searchBloglabel  = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
+    $searchLabel      = isset($conf["site"]["queryArray"]["label"]) ? $conf["site"]["queryArray"]["label"] : "" ;
 
   endif;
 
@@ -120,7 +120,7 @@ $intimacy = 2;
 
   $trece = new $action($db,$conf);
   $trece->intimacy = $intimacy;
-  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchBloglabel);
+  $stmt = $trece->readAll($records_per_page,$page,$from_record_num,$searchWhat,$searchLabel);
   $rowcount_page = $trece->rowcount;
 
   if($rowcount_page == 0 && $page>1) :
@@ -213,14 +213,14 @@ EOD;
                 </div>
                 <div class="pull-left">
                   <select id="label" name="label" style="margin-left:5px;">
-                    <option value="0"<?=$searchBloglabel==0?" selected":"";?>><?=$lCustom["any_subject"][LANG];?></option>
+                    <option value="0"<?=$searchLabel==0?" selected":"";?>><?=$lCustom["any_subject"][LANG];?></option>
                     <?php
-                      require_once($conf["dir"]["includes"]."bloglabels/".$conf["file"]["crud"].".php");
-                      $cconfBloglabels = require($conf["dir"]["includes"]."bloglabels/".$conf["file"]["conf"].".php");
-                      $bloglabels = new Bloglabels($db,$conf,$cconfBloglabels); $stmt = $bloglabels->readAllJSON();
+                      require_once($conf["dir"]["includes"]."labels/".$conf["file"]["crud"].".php");
+                      $cconfLabels = require($conf["dir"]["includes"]."labels/".$conf["file"]["conf"].".php");
+                      $labels = new Labels($db,$conf,$cconfLabels); $stmt = $labels->readAllJSON();
                     ?>
-                    <?php if ($bloglabels->rowcount>0): for($i=0;$i<$bloglabels->rowcount;$i++) : ?>
-                    <option value="<?=$bloglabels->id[$i];?>"<?=$searchBloglabel==$bloglabels->id[$i]?" selected":"";?>><?=$bloglabels->name[$i];?></option>
+                    <?php if ($labels->rowcount>0): for($i=0;$i<$labels->rowcount;$i++) : ?>
+                    <option value="<?=$labels->id[$i];?>"<?=$searchLabel==$labels->id[$i]?" selected":"";?>><?=$labels->name[$i];?></option>
                     <?php endfor; endif; ?>
                   </select>
                 </div>
