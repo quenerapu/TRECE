@@ -706,7 +706,7 @@ EOD;
             </div>
             <?php if($trece->gotPic) : ?>
             <div style="float:left;">
-              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="far fa-trash"></i></label>
+              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fas fa-trash"></i></label>
             </div>
             <?php endif; ?>
           </div>
@@ -1029,7 +1029,7 @@ EOD;
       selectOnTab: true,
       load: function(query,callback) {
         $.ajax({
-          url: "<?=REALPATHLANG."labels/".$conf["file"]["adminlist"]."?json";?>",
+          url: "<?=REALPATHLANG.$conf["dir"]["labels"]."/".$conf["file"]["adminlist"]."?json";?>",
           type: "GET",
           dataType: "json",
           error: function(){callback();},
@@ -1041,7 +1041,7 @@ EOD;
         },
       });
     var xelectize = xelect[0].selectize;
-    var foraddItem = JSON.parse('[' + foraddItem + ']');
+    var foraddItem = JSON.parse("["+foraddItem+"]");
 
     for (var iz = 0; iz < foraddItem.length; iz++) {
       if(foraddItem.indexOf(foraddOption[iz].value)!==-1){

@@ -438,7 +438,7 @@ EOD;
 
                 <div class="pull-left">
                   <div class="input-group" style="max-width:120px; max-width:250px;">
-                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="far fa-trash"></i></a></div>
+                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fas fa-trash"></i></a></div>
                     <input type="hidden" name="wr" value="<?=$action;?>">
                     <input type="text" name="wh" class="form-control input-sm" value="<?=$searchWhat;?>" style="max-width:100%;">
                   </div>
@@ -447,9 +447,9 @@ EOD;
                   <select id="label" name="label" style="margin-left:5px;">
                     <option value="0"<?=$searchLabel==0?" selected":"";?>><?=$lCustom["any_label"][LANG];?></option>
                     <?php
-                      require_once($conf["dir"]["includes"]."labels/".$conf["file"]["crud"].".php");
-                      $cconfLabels = require($conf["dir"]["includes"]."labels/".$conf["file"]["conf"].".php");
-                      $labels = new Labels($db,$conf,$cconfLabels); $stmt = $labels->readAllJSON();
+                      require_once($conf["dir"]["includes"].$conf["dir"]["labels"]."/".$conf["file"]["crud"].".php");
+                      $cconfLabels = require($conf["dir"]["includes"].$conf["dir"]["labels"]."/".$conf["file"]["conf"].".php");
+                      $labels = new $conf["dir"]["labels"]($db,$conf,$cconfLabels); $stmt = $labels->readAllJSON();
                     ?>
                     <?php if ($labels->rowcount>0): for($i=0;$i<$labels->rowcount;$i++) : ?>
                     <option value="<?=$labels->id[$i];?>"<?=$searchLabel==$labels->id[$i]?" selected":"";?>><?=$labels->{"name_".LANG}[$i];?></option>
@@ -493,7 +493,7 @@ EOD;
           <strong><?=$trece->rowcount_absolute;?> <?=$trece->rowcount_absolute == 1 ? $lCommon["result"][LANG] : $lCommon["results"][LANG];?></strong>
         </p></div>
         <h4>
-          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="far fa-trash"></i></a>
+          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="fas fa-trash"></i></a>
         </h4>
 
 

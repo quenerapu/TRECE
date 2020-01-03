@@ -427,7 +427,7 @@ EOD;
             </div>
             <?php if($trece->gotPic) : ?>
             <div style="float:left;">
-              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="far fa-trash"></i></label>
+              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fas fa-trash"></i></label>
             </div>
             <?php endif; ?>
           </div>

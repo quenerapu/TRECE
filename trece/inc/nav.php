@@ -39,9 +39,9 @@
               <?php endif; ?>
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>
-                  <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><i class="fas fa-user-alt"></i> <?=$_SESSION["name"];?></a> |
+                  <i class="fas fa-user-alt"></i> <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><?=$_SESSION["name"];?></a> |
                   <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon["edit_profile"][LANG];?></a> |
-                  <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><i class="fas fa-sign-out-alt"></i> <?=$lCommon["signout"][LANG];?></a>
+                  <i class="fas fa-sign-out-alt"></i> <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><?=$lCommon["signout"][LANG];?></a>
                 <?php else : ?>
 <?php /*
                   <a href="<?=REALPATHLANG;?>new" style="color:white;"><?=$lCommon["create_account"][LANG];?></a> |

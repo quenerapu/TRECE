@@ -87,6 +87,7 @@
 
 
   $customJS = <<<EOD
+  <script src="https://www.google.com/recaptcha/api.js"></script>
   <script>
     /* whatever */
   </script>
@@ -106,8 +107,8 @@ EOD;
 
 
 
-  require_once($conf['dir']['includes']."header.php");
-  require_once($conf['dir']['includes']."nav.php");
+  require_once($conf["dir"]["includes"]."header.php");
+  require_once($conf["dir"]["includes"]."nav.php");
 
 ?>
 
@@ -154,9 +155,9 @@ EOD;
         <div class="first-step">
 
           <div class="form-group">
-            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon['email_or_username'][LANG];?>:</label>
+            <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][LANG];?>:</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon['email_or_username'][LANG];?>" autocomplete="off" value="<?=isset($trece) && isset($trece->email_or_username) ? $trece->email_or_username : "";?>" style="margin-bottom:.5em" required>
+              <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon["email_or_username"][LANG];?>" autocomplete="off" value="<?=isset($trece) && isset($trece->email_or_username) ? $trece->email_or_username : "";?>" style="margin-bottom:.5em" required>
             </div>
           </div>
 
@@ -210,13 +211,6 @@ EOD;
 
 
   <?php if ( !$trece->done ) : ?>
-
-
-
-  <!-- reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js"></script>
-
-
 
   <script>
 

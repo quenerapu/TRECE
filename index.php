@@ -147,7 +147,7 @@ endif;
 
   BE GRATEFUL. Make someone happy by tweeting at least one of these lines
   =======================================================================
-  Thank you Adam Shaw for inventing FullCalendar. https://fullcalendar.io/
+  Thank you Adam Shaw (@adamrshaw) for inventing FullCalendar. https://fullcalendar.io/
   Thank you Alexandru Mărășteanu for porting sprintf to Javascript. https://github.com/alexei/sprintf.js/
   Thank you Alexis Deveria (@fyrd) for inventing Can I use. https://caniuse.com/
   Thank you Anita H Klock for inventing the syntax highlighting. https://en.wikipedia.org/wiki/Syntax_highlighting
@@ -157,7 +157,7 @@ endif;
   Thank you Blake Ross (@blakeross) for inventing Firefox. https://www.firefox.com/
   Thank you Boniface Pereira (@craftpip) for inventing jQuery Confirm. https://craftpip.github.io/jquery-confirm/
   Thank you Brendan Eich (@BrendanEich) for inventing JavaScript. https://www.javascript.com/
-  Thank you Brent Matzelle (@bmatzelle) for inventing PHPMailer. https://github.com/PHPMailer/PHPMailer/
+  Thank you Brent Matzelle (@bmatzelle) for inventing PHPMailer and Marcus Bointon (@SynchroM) for maintaining it. https://github.com/PHPMailer/PHPMailer/
   Thank you Brian Reavis (@brianreavis) for inventing Selectize http://selectize.github.io/selectize.js/
   Thank you Caleb Curry (@CalebCurry) for your wonderful tutorials. https://www.youtube.com/user/CalebTheVideoMaker2/
   Thank you Christian Robertson (@cr64) for inventing the Roboto fontface. https://fonts.google.com/specimen/Roboto/
