@@ -83,10 +83,10 @@
       $line = fgets($reading);
 
       # database
-      if (stristr($line,"private \$host     = \"localhost\";")) : $line = "    private \$host     = \"".$_POST["database_host"]."\";\n"; $replaced = true; endif;
-      if (stristr($line,"private \$db_name  = \"db_name\";")) : $line = "    private \$db_name  = \"".$_POST["database_name"]."\";\n"; $replaced = true; endif;
-      if (stristr($line,"private \$username = \"db_username\";")) : $line = "    private \$username = \"".$_POST["database_username"]."\";\n"; $replaced = true; endif;
-      if (stristr($line,"private \$password = \"1234\";")) : $line = "    private \$password = \"".$_POST["database_password"]."\";\n"; $replaced = true; endif;
+      if (stristr($line,"private \$host     = \"localhost\";")) : $line = "    private \$host     = \"".$_POST["database_host"]."\";\n";        $replaced = true;   endif;
+      if (stristr($line,"private \$db_name  = \"db_name\";")) : $line = "    private \$db_name  = \"".$_POST["database_name"]."\";\n";          $replaced = true;   endif;
+      if (stristr($line,"private \$username = \"db_username\";")) : $line = "    private \$username = \"".$_POST["database_username"]."\";\n";  $replaced = true;   endif;
+      if (stristr($line,"private \$password = \"1234\";")) : $line = "    private \$password = \"".$_POST["database_password"]."\";\n";         $replaced = true;   endif;
 
       fputs($writing, $line);
 
@@ -118,7 +118,7 @@
       $line = fgets($reading);
 
       # table
-      if (stristr($line,"email@domain.com")) : $line = "(1, 1,  0,  1,  0,  'The Boss', 'Is In The House',  '".$_POST["admin_username"]."',  'm',  '".$_POST["admin_email"]."', '', NULL, '0000-00-00 00:00:00',  '0.0.0.0',  0,  '', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 0);\";\n"; $replaced = true; endif;
+      if (stristr($line,"email@domain.com")) : $line = "(1, 1, 1,  0,  1,  0,  'The Boss', 'Is In The House',  '".$_POST["admin_username"]."',  'm',  '".$_POST["admin_email"]."', '', NULL, '0000-00-00 00:00:00',  '0.0.0.0',  0,  '', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 0);\";\n"; $replaced = true; endif;
 
       fputs($writing, $line);
 
