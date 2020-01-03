@@ -139,7 +139,7 @@
   <script src="https://cdn.jsdelivr.net/npm/responsive-toolkit@2.6.3/src/bootstrap-toolkit.min.js"></script>
 
 <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/<?=$conf["version"]["fontawesome"];?>/css/all.min.css" />
 
 <!-- Google Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin+Condensed:400,600">

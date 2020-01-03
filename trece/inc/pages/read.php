@@ -233,9 +233,9 @@ EOD;
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
         <div class="social-share">
-          <div class="icon social fb"><a href="https://www.facebook.com/sharer/sharer.php?u=<?=$conf["site"]["fullpath"];?>&quote=<?=htmlspecialchars(${"trece"}->{"intro_".LANG});?>" target="_blank" title="Compartir en Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></div>
-          <div class="icon social tw"><a href="https://twitter.com/intent/tweet?source=<?=$conf["site"]["fullpath"];?>&text=<?=$conf["site"]["fullpath"];?>%20<?=htmlspecialchars(${"trece"}->{"intro_".LANG});?>%20--%20&via=<?=$conf["contact"]["twitter"];?>" target="_blank" title="Compartir en Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></div>
-          <div class="icon social em"><a href="mailto:?subject=&body=<?=htmlspecialchars(${"trece"}->{"intro_".LANG});?>%20<?=$conf["site"]["fullpath"];?>" target="_blank" title="Enviar por correo electrónico"><i class="fa fa-envelope" aria-hidden="true"></i></a></div>
+          <div class="icon social fb"><a href="https://www.facebook.com/sharer/sharer.php?u=<?=$conf["site"]["fullpath"];?>&quote=<?=htmlspecialchars(${"trece"}->{"intro_".LANG});?>" target="_blank" title="Compartir en Facebook"><i class="far fa-facebook-square"></i></a></div>
+          <div class="icon social tw"><a href="https://twitter.com/intent/tweet?source=<?=$conf["site"]["fullpath"];?>&text=<?=$conf["site"]["fullpath"];?>%20<?=htmlspecialchars(${"trece"}->{"intro_".LANG});?>%20--%20&via=<?=$conf["contact"]["twitter"];?>" target="_blank" title="Compartir en Twitter"><i class="far fa-twitter"></i></a></div>
+          <div class="icon social em"><a href="mailto:?subject=&body=<?=htmlspecialchars(${"trece"}->{"intro_".LANG});?>%20<?=$conf["site"]["fullpath"];?>" target="_blank" title="Enviar por correo electrónico"><i class="far fa-envelope"></i></a></div>
         </div>
 
       </div>

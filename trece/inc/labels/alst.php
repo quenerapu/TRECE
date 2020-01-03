@@ -421,7 +421,7 @@ EOD;
           <strong><?=$trece->rowcount_absolute;?> <?=$trece->rowcount_absolute == 1 ? $lCommon["result"][LANG] : $lCommon["results"][LANG];?></strong>
         </p></div>
         <h4>
-          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="far fa-trash"></i></a>
         </h4>
 
 
@@ -463,7 +463,7 @@ EOD;
                            data-name_en="<?=htmlspecialchars($trece->name_en[$i]);?>" 
                            data-name_gal="<?=htmlspecialchars($trece->name_gal[$i]);?>" 
                            data-name_es="<?=htmlspecialchars($trece->name_es[$i]);?>" 
-                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                           class="clone-object" style="cursor:pointer;"><i class="far fa-clone fa-fw"></i> <?=$lCommon["clone"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>

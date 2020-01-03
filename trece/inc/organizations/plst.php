@@ -240,7 +240,7 @@ EOD;
 
                 <div class="pull-left">
                   <div class="input-group" style="max-width:120px; max-width:250px;">
-                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
+                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="far fa-trash"></i></a></div>
                     <input type="hidden" name="wr" value="<?=$action;?>">
                     <input type="text" name="wh" class="form-control input-sm" value="<?=$searchWhat;?>" style="max-width:100%;">
                   </div>
@@ -259,7 +259,7 @@ EOD;
                   </select>
                 </div>
                 <div class="pull-left">
-                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fas fa-search"></i></button>
                 </div>
 
               </div>
@@ -293,7 +293,7 @@ EOD;
               </div>
               <p class="info-tit"><a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" style="text-decoration:none;"><?=${"trece"}->{"title_".LANG}[$i];?></a></p><!-- <?=mb_strtoupper(${"trece"}->{"title_".LANG}[$i],"UTF-8");?> -->
               <?php if(${"trece"}->{"intro_".LANG}[$i] != "") : ?><p class="info-intro"><?=${"trece"}->{"intro_".LANG}[$i];?></p><?php endif; ?>
-              <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p class="info-labels"><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></p><?php endif; ?>
+              <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p class="info-labels"><i class="fas fa-tag"></i> <?=${"trece"}->{"labels"}[$i];?></p><?php endif; ?>
               <div class="clearfix"></div>
             </div>
           </div>

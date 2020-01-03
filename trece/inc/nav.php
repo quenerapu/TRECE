@@ -17,31 +17,31 @@
               <?php endforeach; endif; ?>
                 </small>
               <?php if(isset($conf["contact"]["phone_no"]) && strlen($conf["contact"]["phone_no"])>0) : ?>
-                <a href="tel:<?=$conf["contact"]["phone_no"];?>" style="color:white;"><i class="fa fa-phone-square" aria-hidden="true"></i></a>
+                <a href="tel:<?=$conf["contact"]["phone_no"];?>" style="color:white;"><i class="fas fa-mobile-alt"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["email"]) && strlen($conf["contact"]["email"])>0) : ?>
-                <a href="mailto:<?=$conf["contact"]["email"];?>" style="color:white;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                <a href="mailto:<?=$conf["contact"]["email"];?>" style="color:white;"><i class="fas fa-envelope"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["telegram"]) && strlen($conf["contact"]["telegram"])>0) : ?>
-                <a href="https://t.me/<?=$conf["contact"]["telegram"];?>" target="_blank" style="color:white;"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+                <a href="https://t.me/<?=$conf["contact"]["telegram"];?>" target="_blank" style="color:white;"><i class="fab fa-telegram-plane"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["twitter"]) && strlen($conf["contact"]["twitter"])>0) : ?>
-                <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" target="_blank" style="color:white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" target="_blank" style="color:white;"><i class="fab fa-twitter"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["facebook"]) && strlen($conf["contact"]["facebook"])>0) : ?>
-                <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" target="_blank" style="color:white;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" target="_blank" style="color:white;"><i class="fab fa-facebook-square"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["instagram"]) && strlen($conf["contact"]["instagram"])>0) : ?>
-                <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" target="_blank" style="color:white;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" target="_blank" style="color:white;"><i class="fab fa-instagram"></i></a>
               <?php endif; ?>
               <?php if(isset($conf["contact"]["youtube"]) && strlen($conf["contact"]["youtube"])>0) : ?>
-                <a href="https://youtube.com/channel/<?=$conf["contact"]["youtube"];?>" target="_blank" style="color:white;"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                <a href="https://youtube.com/channel/<?=$conf["contact"]["youtube"];?>" target="_blank" style="color:white;"><i class="fab fa-youtube"></i></a>
               <?php endif; ?>
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>
-                  <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><?=$_SESSION["name"];?></a> |
+                  <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><i class="fas fa-user-alt"></i> <?=$_SESSION["name"];?></a> |
                   <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon["edit_profile"][LANG];?></a> |
-                  <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><?=$lCommon["signout"][LANG];?></a>
+                  <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><i class="fas fa-sign-out-alt"></i> <?=$lCommon["signout"][LANG];?></a>
                 <?php else : ?>
 <?php /*
                   <a href="<?=REALPATHLANG;?>new" style="color:white;"><?=$lCommon["create_account"][LANG];?></a> |

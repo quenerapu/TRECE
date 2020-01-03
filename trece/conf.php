@@ -242,8 +242,7 @@ return [
     "ekko_lightbox"                     =>  "5.3.0",          # Bootstrap Lightbox (Ekko Lightbox) http://ashleydw.github.io/lightbox/
     "exif_js"                           =>  "2.3.0",          # Exif.js https://github.com/exif-js/exif-js/
     "fitty"                             =>  "2.2.6",          # Fitty https://rikschennink.github.io/fitty/
-    "fontawesome"                       =>  "4.7.0",          # Font Awesome http://fontawesome.com/
-//  "fontawesome"                       =>  "5.8.1",          # Font Awesome http://fontawesome.com/
+    "fontawesome"                       =>  "5.11.2",         # Font Awesome http://fontawesome.com/
     "fullcalendar"                      =>  "3.10.0",         # Fullcalendar https://fullcalendar.io/
     "he"                                =>  "1.2.0",          # he (for “HTML entities”) https://mths.be/he/
     "html5shiv"                         =>  "3.7.3",          # HTML5 Shiv http://github.com/aFarkas/html5shiv/

@@ -293,7 +293,7 @@ EOD;
               <label class="sr-only" for="name"><?=$lCommon["name"][LANG];?>:</label>
               <label for="name"><?=$lCommon["name"][LANG];?>:</label><br>
               <textarea name="name" class="form-control" style="height:4.5em;font-size:1.4em;" placeholder=""><?=$trece->name;?></textarea>
-              <p class="help-block"><span id="name_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">Acerca del tamaño de los títulos</a></p>
+              <p class="help-block"><span id="name_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">Acerca del tamaño de los títulos</a></p>
             </div>
 
           </div>

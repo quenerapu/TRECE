@@ -438,7 +438,7 @@ EOD;
 
                 <div class="pull-left">
                   <div class="input-group" style="max-width:120px; max-width:250px;">
-                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
+                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="far fa-trash"></i></a></div>
                     <input type="hidden" name="wr" value="<?=$action;?>">
                     <input type="text" name="wh" class="form-control input-sm" value="<?=$searchWhat;?>" style="max-width:100%;">
                   </div>
@@ -457,7 +457,7 @@ EOD;
                   </select>
                 </div>
                 <div class="pull-left">
-                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fas fa-search"></i></button>
                 </div>
 
               </div>
@@ -493,7 +493,7 @@ EOD;
           <strong><?=$trece->rowcount_absolute;?> <?=$trece->rowcount_absolute == 1 ? $lCommon["result"][LANG] : $lCommon["results"][LANG];?></strong>
         </p></div>
         <h4>
-          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="far fa-trash"></i></a>
         </h4>
 
 
@@ -524,19 +524,19 @@ EOD;
               </td>
               <td<?=$trece->id_status[$i]==0?" class=\"attenuate\"":"";?>>
                 <div class="bs-callout bs-callout-default">
-                  <small><i class="fa fa-calendar" aria-hidden="true"></i> <?=date($conf["site"]["langs"][LANG]["date-format"],strtotime(${"trece"}->{"date"}[$i]));?></small><br>
+                  <small><i class="far fa-calendar-alt"></i> <?=date($conf["site"]["langs"][LANG]["date-format"],strtotime(${"trece"}->{"date"}[$i]));?></small><br>
                   <a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>">
                     <strong><?=${"trece"}->{"title_".LANG}[$i];?></strong>
                   </a><br>
                   <small><?=doWordWrap(${"trece"}->{"intro_".LANG}[$i]);?></small><br>
-                  <?php if(${"trece"}->{"labels"}[$i] != "") : ?><small><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></small><?php endif; ?>
+                  <?php if(${"trece"}->{"labels"}[$i] != "") : ?><small><i class="fas fa-tag"></i> <?=${"trece"}->{"labels"}[$i];?></small><?php endif; ?>
                 </div>
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fas fa-edit fa-fw"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
                            data-date="<?=$trece->date[$i];?>" 
                            data-title_en="<?=htmlspecialchars($trece->title_en[$i]);?>" 
@@ -550,9 +550,9 @@ EOD;
                            data-post_es="<?=htmlspecialchars($trece->post_es[$i]);?>" 
                            data-ids_labels="<?=htmlspecialchars($trece->ids_labels[$i]);?>" 
                            data-id_author="<?=htmlspecialchars($trece->id_author[$i]);?>" 
-                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                           class="clone-object" style="cursor:pointer;"><i class="far fa-clone fa-fw"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
-                    <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="far fa-eye fa-fw"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>

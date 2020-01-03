@@ -27,7 +27,7 @@ function nav($bt="Link",$ru=false,$bc=false,$fa=false) { # Creates nav link
 
   $lnk = "<a";
   $lnk.= " href=\"".(($ru && !in_array(mb_substr(ltrim($ru,"!)"),0,1),["^"]))||(!$ru && !in_array(mb_substr(ltrim($bt,"!)"),0,1),["^"]))?REALPATHLANG:REALPATH).($ru?(!in_array(mb_substr(ltrim($ru,"^)"),0,1),["!"])?getUrlFriendlyString($ru):ltrim($ru,"^!)")):(!in_array(mb_substr(ltrim($bt,"^)"),0,1),["!"])?getUrlFriendlyString($bt):ltrim($bt,"^!)"))).($ru?(!in_array(mb_substr(ltrim($ru,"^!"),0,1),[")"])?QUERYQ:""):(!in_array(mb_substr(ltrim($bt,"^!"),0,1),[")"])?QUERYQ:""))."\"";
-  $lnk.= ($bc?" class=\"".$bc."\"":"").">".($fa?"<i class=\"fa".$fa."\" aria-hidden=\"true\"></i>":"").ltrim($bt,"^!)")."</a>";
+  $lnk.= ($bc?" class=\"".$bc."\"":"").">".($fa?"<i class=\"fas fa".($fa?" ".$fa:"")."\"></i>":"").ltrim($bt,"^!)")."</a>";
   return $lnk;
   }
 
@@ -40,7 +40,7 @@ function nav($bt="Link",$ru=false,$bc=false,$fa=false) { # Creates nav link
 function btn($qqq,$q=false,$bc=false,$fa=false,$queryd=false) { # Creates button link
   $btn = "<a";
   $btn.= (!in_array(mb_substr($qqq,0,1),["!"]) ? " href=\"".($q && mb_substr($q,0,1)!="^"?REALPATHLANG:"").($q?(!in_array(mb_substr($q,0,1),["^","!"])?getUrlFriendlyString($q):ltrim($q,"^!")) : getUrlFriendlyString($qqq)).(mb_substr($q,0,1)!="^"?$queryd:"")."\"" :"");
-  $btn.= " class=\"btn".($bc?" ".$bc:"")." btn-sm\" role=\"button\"><i class=\"fa".($fa?" ".$fa:"")."\" aria-hidden=\"true\"></i> ".ltrim($qqq,"^!")."</a>";
+  $btn.= " class=\"btn".($bc?" ".$bc:"")." btn-sm\" role=\"button\"><i class=\"fas".($fa?" ".$fa:"")."\"></i> ".ltrim($qqq,"^!")."</a>";
   return $btn;
   }
 

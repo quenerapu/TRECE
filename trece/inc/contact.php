@@ -225,25 +225,25 @@ EOD;
         <fieldset style="margin-bottom:3em;">
           <p style="margin:0;font-size:2em;">
           <?php if(isset($conf["contact"]["phone_no"]) && strlen($conf["contact"]["phone_no"])>0) : ?>
-            <a href="tel:<?=$conf["contact"]["phone_no"];?>"><i class="fa fa-phone-square" aria-hidden="true"></i></a>
+            <a href="tel:<?=$conf["contact"]["phone_no"];?>"><i class="fas fa-mobile-alt"></i></a>
           <?php endif; ?>
           <?php if(isset($conf["contact"]["email"]) && strlen($conf["contact"]["email"])>0) : ?>
-            <a href="mailto:<?=$conf["contact"]["email"];?>"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+            <a href="mailto:<?=$conf["contact"]["email"];?>"><i class="far fa-envelope"></i></a>
           <?php endif; ?>
           <?php if(isset($conf["contact"]["telegram"]) && strlen($conf["contact"]["telegram"])>0) : ?>
-            <a href="https://t.me/<?=$conf["contact"]["telegram"];?>" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+            <a href="https://t.me/<?=$conf["contact"]["telegram"];?>" target="_blank"><i class="far fa-telegram-plane"></i></a>
           <?php endif; ?>
           <?php if(isset($conf["contact"]["twitter"]) && strlen($conf["contact"]["twitter"])>0) : ?>
-            <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://twitter.com/<?=$conf["contact"]["twitter"];?>" target="_blank"><i class="far fa-twitter"></i></a>
           <?php endif; ?>
           <?php if(isset($conf["contact"]["facebook"]) && strlen($conf["contact"]["facebook"])>0) : ?>
-            <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" target="_blank"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/<?=$conf["contact"]["facebook"];?>" target="_blank"><i class="far fa-facebook-square"></i></a>
           <?php endif; ?>
           <?php if(isset($conf["contact"]["instagram"]) && strlen($conf["contact"]["instagram"])>0) : ?>
-            <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://instagram.com/<?=$conf["contact"]["instagram"];?>" target="_blank"><i class="far fa-instagram"></i></a>
           <?php endif; ?>
           <?php if(isset($conf["contact"]["youtube"]) && strlen($conf["contact"]["youtube"])>0) : ?>
-            <a href="https://youtube.com/channel/<?=$conf["contact"]["youtube"];?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+            <a href="https://youtube.com/channel/<?=$conf["contact"]["youtube"];?>" target="_blank"><i class="far fa-youtube"></i></a>
           <?php endif; ?>
           </p>
         </fieldset>
@@ -282,7 +282,7 @@ EOD;
           <label class="col-md-4 control-label" for="textarea"><abbr title="General Data Protection Regulation">GDPR</abbr>:</label>
           <div class="col-md-6">
             <label class="checkbox-inline">
-            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> General Data Protection Regulation:<br>Yes, I've read and accept the <a href="<?=REALPATHLANG.$conf["file"]["privacy-policy"];?>" target="_blank">privacy policy</a> <i class="fa fa-external-link" aria-hidden="true"></i>.</p>
+            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> General Data Protection Regulation:<br>Yes, I've read and accept the <a href="<?=REALPATHLANG.$conf["file"]["privacy-policy"];?>" target="_blank">privacy policy</a> <i class="fas fa-external-link-alt"></i>.</p>
             </label>
           </div>
         </div>

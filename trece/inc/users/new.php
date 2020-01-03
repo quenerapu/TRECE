@@ -219,7 +219,7 @@
           <div class="col-sm-12">
             <!-- RXPD -->
             <label class="checkbox-inline">
-            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> Regulamento Xeral de Protección de Datos: confirmo que lin a <a href="<?=REALPATHLANG."privacy";?>" target="_blank"><strong>política de privacidade</strong> <i class="fa fa-external-link" aria-hidden="true"></i></a> e acepto enviar os datos contidos neste formulario.</p>
+            <p><input class="checkbox" type="checkbox" onchange="toggleDisable(this);" id="check"> Regulamento Xeral de Protección de Datos: confirmo que lin a <a href="<?=REALPATHLANG."privacy";?>" target="_blank"><strong>política de privacidade</strong> <i class="fas fa-external-link-alt"></i></a> e acepto enviar os datos contidos neste formulario.</p>
             </label>
           </div>
         </div>

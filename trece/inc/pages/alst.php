@@ -427,7 +427,7 @@ EOD;
           <strong><?=$trece->rowcount_absolute;?> <?=$trece->rowcount_absolute == 1 ? $lCommon["result"][LANG] : $lCommon["results"][LANG];?></strong>
         </p></div>
         <h4>
-          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="far fa-trash"></i></a>
         </h4>
 
 
@@ -467,7 +467,7 @@ EOD;
                 <div class="btn-group">
                   <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].$conf["site"]["queryq"];?>"><i class="fas fa-edit fa-fw"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
                            data-title_en="<?=htmlspecialchars($trece->title_en[$i]);?>" 
                            data-title_gal="<?=htmlspecialchars($trece->title_gal[$i]);?>" 
@@ -482,9 +482,9 @@ EOD;
                            data-parent_id="<?=$trece->parent_id[$i];?>" 
                            data-level="<?=$trece->level[$i];?>" 
                            data-path="<?=$trece->path[$i]."-copy";?>" 
-                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                           class="clone-object" style="cursor:pointer;"><i class="far fa-clone fa-fw"></i> <?=$lCommon["clone"][LANG];?></a></li>
                     <li class="divider"></li>
-                    <li><a href="<?=REALPATHLANG.${"trece"}->{"path"}[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.${"trece"}->{"path"}[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="far fa-eye fa-fw"></i> <?=$lCommon["see"][LANG];?></a></li>
                   </ul>
                 </div>
               </td>

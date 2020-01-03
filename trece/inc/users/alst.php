@@ -440,7 +440,7 @@ EOD;
           <strong><?=$trece->rowcount_absolute;?> <?=$trece->rowcount_absolute == 1 ? $lCommon["result"][LANG] : $lCommon["results"][LANG];?></strong>
         </p></div>
         <h4>
-          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          <a id="deleteThem" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["multiple_delete"][LANG];?>"><i class="far fa-trash"></i></a>
         </h4>
 
 
@@ -483,22 +483,22 @@ EOD;
               </td>
               <td style="white-space:nowrap;text-align:right;">
                 <div class="btn-group">
-                  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> <?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
+                  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-alt"></i> <?=$lCommon["actions"][LANG];?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> <?=$lCommon["edit"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$conf["file"]["update"]."/".$trece->ref[$i].QUERYQ;?>"><i class="fas fa-edit fa-fw"></i> <?=$lCommon["edit"][LANG];?></a></li>
                     <li class="divider"></li>
-                    <li><a data-id="<?=$trece->id[$i];?>" class="signout-object" style="cursor:pointer;"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <?=$lCommon["signout"][LANG];?></a></li>
-                    <li><a href="mailto:<?=$trece->email[$i];?>" target="_blank"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> <?=$lCommon["send_email"][LANG];?></a></li>
-                    <li><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-key fa-fw" aria-hidden="true"></i> <?=$lCommon["password"][LANG];?></a></li>
+                    <li><a data-id="<?=$trece->id[$i];?>" class="signout-object" style="cursor:pointer;"><i class="fas fa-sign-out-alt fa-fw"></i> <?=$lCommon["signout"][LANG];?></a></li>
+                    <li><a href="mailto:<?=$trece->email[$i];?>" target="_blank"><i class="fas fa-envelope fa-fw"></i> <?=$lCommon["send_email"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->username[$i];?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fas fa-key fa-fw"></i> <?=$lCommon["password"][LANG];?></a></li>
                     <li><a data-ref="<?=$trece->ref[$i];?>" 
                            data-name="<?=htmlspecialchars($trece->name[$i]);?>" 
                            data-surname="<?=htmlspecialchars($trece->surname[$i]);?>" 
                            data-ugender="<?=$trece->ugender[$i];?>" 
                            data-uhierarchy="<?=$trece->uhierarchy[$i];?>" 
-                           class="clone-object" style="cursor:pointer;"><i class="fa fa-files-o fa-fw" aria-hidden="true"></i> <?=$lCommon["clone"][LANG];?></a></li>
+                           class="clone-object" style="cursor:pointer;"><i class="far fa-clone fa-fw"></i> <?=$lCommon["clone"][LANG];?></a></li>
 <?php /*
                     <li class="divider"></li>
-                    <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="fa fa-eye fa-fw" aria-hidden="true"></i> <?=$lCommon["see"][LANG];?></a></li>
+                    <li><a href="<?=REALPATHLANG.$action."/".$trece->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" class="<?=$trece->id_status[$i]==0?"disabled ":"";?>"><i class="far fa-eye fa-fw"></i> <?=$lCommon["see"][LANG];?></a></li>
 */ ?>
                   </ul>
                 </div>

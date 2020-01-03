@@ -311,11 +311,11 @@ EOD;
           <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
             <div style="float:left;">
               <input id="upload" name="upload" type="file" style="display:none;">
-              <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
+              <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fas fa-cloud-upload-alt"></i></label>
             </div>
             <?php if($trece->gotPic) : ?>
             <div style="float:left;">
-              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fa fa-trash" aria-hidden="true"></i></label>
+              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="far fa-trash"></i></label>
             </div>
             <?php endif; ?>
           </div>

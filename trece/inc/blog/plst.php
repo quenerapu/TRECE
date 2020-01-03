@@ -242,7 +242,7 @@ EOD;
 
                 <div class="pull-left">
                   <div class="input-group" style="max-width:120px; max-width:250px;">
-                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="fa fa-trash" aria-hidden="true"></i></a></div>
+                    <div class="input-group-addon"><a href="<?=REALPATHLANG.($included?$back:$action)."/".$crudlpx;?>" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["reset_search"][LANG];?>"><i class="far fa-trash"></i></a></div>
                     <input type="hidden" name="wr" value="<?=$action;?>">
                     <input type="text" name="wh" class="form-control input-sm" value="<?=$searchWhat;?>" style="max-width:100%;">
                   </div>
@@ -261,7 +261,7 @@ EOD;
                   </select>
                 </div>
                 <div class="pull-left">
-                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  <button type="submit" data-toggle="tooltip" data-placement="bottom" title="<?=$lCommon["search"][LANG];?>" class="btn btn-sm" style="margin-left:5px;"><i class="fas fa-search"></i></button>
                 </div>
 
               </div>
@@ -287,7 +287,7 @@ EOD;
           <?php if($sum==1) : ?><div class="row grid-divider"><!-- Start row --><?php endif; ?>
           <div class="col-xs-12 col-sm-4"><?php /* <div class="col-xs-6 col-sm-4 col-md-3"> */ ?>
             <div style="margin-bottom:3em;">
-              <p class="info-cal"><i class="fa fa-calendar" aria-hidden="true"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></p>
+              <p class="info-cal"><i class="far fa-calendar-alt"></i> <?=date("d/m/Y",strtotime(${"trece"}->{"date"}[$i]));?></p>
               <div class="white-panel" style="margin-bottom:1em;">
                 <a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]}[$i].QUERYQ;?>">
                   <img src="<?=(file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg")?$conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}[$i].".jpg?".time():(file_exists($conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg?".time():"https://fakeimg.pl/".$cconf["img"]["icon_w"]."x".$cconf["img"]["icon_h"]."/?text=Blog post"));?>" class="img-thumbnail img-responsive" style="width:100%;" alt="<?=htmlspecialchars(${"trece"}->{"title_".LANG}[$i]);?>">
@@ -295,7 +295,7 @@ EOD;
               </div>
               <p class="info-tit"><a href="<?=REALPATHLANG.$action."/".${"trece"}->{$cconf["file"]["ref"]}[$i].QUERYQ;?>" style="text-decoration:none;"><?=${"trece"}->{"title_".LANG}[$i];?></a></p><!-- <?=mb_strtoupper(${"trece"}->{"title_".LANG}[$i],"UTF-8");?> -->
               <?php if(${"trece"}->{"intro_".LANG}[$i] != "") : ?><p class="info-intro"><?=${"trece"}->{"intro_".LANG}[$i];?></p><?php endif; ?>
-              <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p class="info-labels"><i class="fa fa-tag" aria-hidden="true"></i> <?=${"trece"}->{"labels"}[$i];?></p><?php endif; ?>
+              <?php if(${"trece"}->{"labels"}[$i] != "") : ?><p class="info-labels"><i class="fas fa-tag"></i> <?=${"trece"}->{"labels"}[$i];?></p><?php endif; ?>
               <div class="clearfix"></div>
             </div>
           </div>

@@ -702,11 +702,11 @@ EOD;
           <div style="z-index:2; position:absolute; bottom:35px; left:0; padding:0 10px;">
             <div style="float:left;">
               <input id="upload" name="upload" type="file" style="display:none;">
-              <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
+              <label id="img-upload" for="upload" style="font-size:3rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer; padding: 0 .15em 0 0;"><i class="fas fa-cloud-upload-alt"></i></label>
             </div>
             <?php if($trece->gotPic) : ?>
             <div style="float:left;">
-              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="fa fa-trash" aria-hidden="true"></i></label>
+              <label id="img-delete" for="delete" style="font-size:2.8rem; color:white; line-height:1rem; text-shadow:0 0 10px #000; cursor:pointer;"><i class="far fa-trash"></i></label>
             </div>
             <?php endif; ?>
           </div>
@@ -722,7 +722,7 @@ EOD;
           <label for="date"><?=$lCustom["date"][LANG];?>:</label><br>
           <div class="input-group date col-xs-12 col-sm-5" id="date">
             <input type="text" name="date" class="form-control date" value="<?=$trece->date=="0000-00-00"?"":(date($conf["site"]["langs"][LANG]["date-format"],strtotime($trece->date)));?>" placeholder="">
-            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+            <span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
           </div>
         </div>
 
@@ -737,15 +737,15 @@ EOD;
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="title_en">
               <textarea name="title_en" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_en;?></textarea>
-              <p class="help-block"><span id="title_en_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
+              <p class="help-block"><span id="title_en_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
             </div>
             <div role="tabpanel" class="tab-pane fade in" id="title_gal">
               <textarea name="title_gal" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_gal;?></textarea>
-              <p class="help-block"><span id="title_gal_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
+              <p class="help-block"><span id="title_gal_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
             </div>
             <div role="tabpanel" class="tab-pane fade in" id="title_es">
               <textarea name="title_es" class="form-control" style="height:3.5em;font-size:2em;" placeholder=""><?=$trece->title_es;?></textarea>
-              <p class="help-block"><span id="title_es_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
+              <p class="help-block"><span id="title_es_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://seopressor.com/blog/google-title-meta-descriptions-length/" target="_blank">About title length</a></p>
             </div>
           </div>
         </div>
@@ -771,15 +771,15 @@ EOD;
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="intro_en">
               <textarea name="intro_en" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_en;?></textarea>
-              <p class="help-block"><span id="intro_en_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
+              <p class="help-block"><span id="intro_en_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
             </div>
             <div role="tabpanel" class="tab-pane fade in" id="intro_gal">
               <textarea name="intro_gal" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_gal;?></textarea>
-              <p class="help-block"><span id="intro_gal_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
+              <p class="help-block"><span id="intro_gal_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
             </div>
             <div role="tabpanel" class="tab-pane fade in" id="intro_es">
               <textarea name="intro_es" class="form-control" style="height:7em;" placeholder=""><?=$trece->intro_es;?></textarea>
-              <p class="help-block"><span id="intro_es_lettercounter"></span> <i class="fa fa-external-link" aria-hidden="true"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
+              <p class="help-block"><span id="intro_es_lettercounter"></span> <i class="fas fa-external-link-alt"></i> <a href="https://blog.spotibo.com/meta-description-length/" target="_blank">Meta description length checker</a></p>
             </div>
           </div>
         </div>
