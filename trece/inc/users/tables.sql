@@ -33,7 +33,7 @@ CREATE TABLE `inconceivable_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `inconceivable_users` (`id`, `id_status`, `id_organization`, `signed_in`, `uhierarchy`, `id_language`, `name`, `surname`, `username`, `ugender`, `email`, `hash_pass`, `password_change_hash`, `password_change_timestamp`, `password_change_ip`, `password_strength`, `bio`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
-(1, 1,  1,  1,  1,  0,  'The Boss', 'Is In The House',  'theboss',  'w',  'email@domain.com', '', NULL, '0000-00-00 00:00:00',  '0.0.0.0',  0,  '', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1);
+(1, 1,  1,  0,  1,  0,  'The Boss', 'Is In The House',  'theboss',  'w',  'email@domain.com', '', NULL, '0000-00-00 00:00:00',  '0.0.0.0',  0,  '', NOW(),  NOW(),  '0.0.0.0',  LEFT(UUID(),8), 1);
 
 DROP TABLE IF EXISTS `inconceivable_log`;
 CREATE TABLE `inconceivable_log` (
