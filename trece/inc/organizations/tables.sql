@@ -35,5 +35,5 @@ CREATE TABLE `inconceivable_organizations` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `inconceivable_organizations` (`id`, `id_status`, `id_approved`, `id_approver`, `id_disapprover`, `id_delegate`, `name`, `url_name`, `contact_person_name`, `contact_person_surname`, `contact_person_email`, `intro`, `id_region`, `first_message`, `whatwedo`, `ids_labels`, `website`, `phones`, `date_reg`, `date_upd`, `ip_upd`, `ref`, `loops_ref`) VALUES
-(1, 1,  1,  1,  0,  1,  'Fixing.es',  'fixing', '', '', '', '', 0,  '', '', '', '', '', NOW(),  NOW(),  '0.0.0.0', LEFT(UUID(),8), 1);
+(1, 1,  1,  1,  0,  1,  'Your project',  'your-project', '', '', '', '', 0,  '', '', '', '', '', NOW(),  NOW(),  '0.0.0.0', LEFT(UUID(),8), 1);
 
