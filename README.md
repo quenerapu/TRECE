@@ -1,13 +1,16 @@
 ![TRECE](https://trece.boa.gal/img/og/download_TRECE_0-15-10.jpg "TRECE")
 
-# TRECE 0.16.00 - Chaguazoso now with installer!!
-A Content Management System for the brave. Because what could go wrong?
+# TRECE 0.16.00 - Chaguazoso is out!
+TRECE is a content management system for the brave. Because what could go wrong?
 
 From **TRECE 0.16.00** onwards, each new version will be assigned the name of a village in Galicia.
 
   - TRECE 0.16.00 - Chaguazoso https://gl.wikipedia.org/wiki/Chaguazoso,_Vilariño_de_Conso
 
 ----
+
+## TL;DR
+With TRECE you can manage a blog, a page-based website or any other data. Includes a user management system.
 
 ## Prerequisites
 
