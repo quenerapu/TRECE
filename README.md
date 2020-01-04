@@ -1,3 +1,5 @@
+![TRECE](https://trece.boa.gal/img/og/download_TRECE_0-15-10.jpg "TRECE")
+
 # TRECE 0.16.00 - Chaguazoso now with installer!!
 A Content Management System for the brave. Because what could go wrong?
 
