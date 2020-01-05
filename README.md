@@ -12,6 +12,8 @@ From **TRECE 0.16.00** onwards, each new version will be assigned the name of a 
 ## TL;DR
 With TRECE you can manage a blog, a page-based website or any other data. Includes a user management system.
 
+----
+
 ## Prerequisites
 
 - An Apache PHP friendly hosting
