@@ -33,4 +33,8 @@ Run it in your browser.
 
 ### Step 4
 
+Follow instructions at the ugliest installer in the world.
+
+### Step 5
+
 That's all! :) Click on «Sign In» and then click on «Forgot or don't know my password». Follow instructions to generate your password, sign in and test the site.
