@@ -62,7 +62,7 @@ Create/upload there a file named `trece.php` with this content:
 
 ### Step 3
 
-Run it in your browser. This script will download all the files and start the installer.
+Run it in your browser. This script will automatically download all the files and run the installer.
 
 ### Step 4
 
