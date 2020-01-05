@@ -3,11 +3,7 @@
 # TRECE 0.16.00 - Chaguazoso is out!
 TRECE is a content management system for the brave. Because what could go wrong?
 
-## TL;DR
-
-> With TRECE you can manage a blog, a page-based website or any other data. Includes a user management system.
- 
- 
+With TRECE you can manage a blog, a page-based website or any other data. Includes a user management system.
  
 From **TRECE 0.16.00** onwards, each new version will be assigned the name of a village in Galicia.
 
