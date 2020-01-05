@@ -37,7 +37,6 @@ Create/upload there a file named 'trece.php' with this content:
     }
 
   function rcopy($src,$dst){
-//  if(file_exists($dst)): rrmdir($dst); endif;
     if(is_dir($src)): mkdir($dst); $files=scandir($src); foreach($files as $file): if($file != "." && $file != ".."): rcopy("$src/$file","$dst/$file"); endif; endforeach;
     elseif(file_exists($src)): copy($src,$dst);
     endif;
