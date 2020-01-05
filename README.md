@@ -11,17 +11,17 @@ From **TRECE 0.16.00** onwards, each new version will be assigned the name of a 
 
 ## Prerequisites
 
-- An Apache PHP friendly hosting
-- A MySQL/MariaDB database
-- A [reCAPTCHA](https://google.com/recaptcha) v2 pair of keys (soon it won't be mandatory anymore)
-- An eMail account just for sending automatic eMails (the classic `noreply@domain.com` account)
-- One eMail account for you, the administrator
+- An Apache PHP friendly hosting.
+- A MySQL/MariaDB database.
+- A [reCAPTCHA](https://google.com/recaptcha) v2 pair of keys (soon it won't be mandatory anymore).
+- An eMail account just for sending automatic eMails (the classic `noreply@domain.com` account).
+- One eMail account for you, the administrator.
 
 ## Installation
 
 ### Step 1
 
-Create/Open the empty directory where you want to install TRECE.
+Create/open the empty directory where you want to install TRECE.
 
 ### Step 2
 
