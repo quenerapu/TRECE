@@ -1,4 +1,4 @@
-![TRECE](https://trece.boa.gal/img/og/download_TRECE_0-15-10.jpg "TRECE")
+![TRECE](https://trece.boa.gal/img/og/trece-github.jpg "TRECE")
 
 # TRECE 0.16.00 - Chaguazoso is out!
 TRECE is a content management system for the brave. Because what could go wrong?
