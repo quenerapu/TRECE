@@ -25,7 +25,7 @@ Create/Open the empty directory where you want to install TRECE.
 
 ### Step 2
 
-Create/upload there a file named 'trece.php' with this content:
+Create/upload there a file named `trece.php` with this content:
 
 ```php
 <?php
