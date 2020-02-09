@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //UHIERARCHY
 

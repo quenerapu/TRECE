@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //EDIT PROFILE
 
@@ -365,8 +365,8 @@
   $trece->gotNeutralPic   = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"]."0.jpg") ? true : false;
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
-//$lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["pagetitle"] = $lCustom["edit"][LANG];
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
 //$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
 //$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
@@ -407,7 +407,7 @@ EOD;
           <div class="pull-right"><p>
             <?=btn($lCommon["change-password"][LANG],"^".REALPATHLANG.$conf["file"]["forgot-pass"]."?m=".$trece->email,"","fa-key");?>
           </p></div>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->
@@ -625,5 +625,5 @@ EOD;
   <?php endif; ?>
 
 
-
+  
 <?php require_once($conf["dir"]["includes"]."footer.php"); ?>

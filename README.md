@@ -1,13 +1,13 @@
 ![TRECE](https://trece.boa.gal/img/og/trece-github.jpg "TRECE")
 
-# TRECE 0.16.00 - Chaguazoso is out!
+# TRECE 0.16.00-Chaguazoso is out!
 TRECE is a content management system for the brave. Because what could go wrong?
 
 With TRECE you can manage a blog, a page-based website or any other data. Includes a user management system.
  
 From **TRECE 0.16.00** onwards, each new version will be assigned the name of a village in Galicia.
 
-  - TRECE 0.16.00 - Chaguazoso https://gl.wikipedia.org/wiki/Chaguazoso,_Vilariño_de_Conso
+  - TRECE 0.16.00-Chaguazoso https://gl.wikipedia.org/wiki/Chaguazoso,_Vilariño_de_Conso
 
 ## Prerequisites
 

@@ -21,7 +21,9 @@ endif;
   define("THE_NAME_OF_THE_CORE_DIR"             , "trece");         # CHANGE THIS and name the real folder accordingly
   define("THE_NAME_OF_THE_CONFIGURATION_FILE"   , "conf");          # CHANGE THIS and name the real file accordingly
   define("NPE"                                  , false);           # Shows or not the Non-Production Environment flag
-  define("DEBUG"                                , false);           # Debuggable or not
+  define("DEBUG"                                , true);           # Debuggable or not
+  $begin_comment = "/*";
+  $end_comment   = "/*";
 
 
 
@@ -80,36 +82,59 @@ endif;
 # -----------------------------------------------------------------------------------
 
 
+/* minTRECE-ONLY stuff
+  if (!file_exists($conf["dir"]["images"])    &&  !is_dir($conf["dir"]["images"]))    :   mkdir($conf["dir"]["images"]);      endif;
+  if (!file_exists($conf["dir"]["scripts"])   &&  !is_dir($conf["dir"]["scripts"]))   :   mkdir($conf["dir"]["scripts"]);     endif;
+  if (!file_exists($conf["dir"]["styles"])    &&  !is_dir($conf["dir"]["styles"]))    :   mkdir($conf["dir"]["styles"]);      endif;
+  if (!file_exists($conf["dir"]["includes"])  &&  !is_dir($conf["dir"]["includes"]))  :   mkdir($conf["dir"]["includes"]);    endif;
 
-  if ($conf["table"]["entropy"]=="inconceivable") : # This is inconceivable
-
-    if (file_exists("firsttime.php")) :
-
-      if (!file_exists($conf["dir"]["includes"].$conf["site"]["homepage"].".php")) :
-
-        $script = fopen($conf["dir"]["includes"].$conf["site"]["homepage"].".php","w") or die();
-        fwrite($script,"<?php /* md\n\n# TRECE ".$conf["trece"]["version"]."<br>**".$conf["trece"]["motto"]."**.\n\n*/");
-        fclose($script);
-
-      endif;
-
-      require("firsttime.php"); die();
-
-    else :
-
-      echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>".THE_NAME_OF_THE_CORE_DIR."/".THE_NAME_OF_THE_CONFIGURATION_FILE."</code> line 91. Bye.</h3>"; die();
-
-    endif;
-
-  else :
-
-    if (file_exists("firsttime.php")) :
-
-      unlink("firsttime.php");
-
-    endif;
-
+  if (!file_exists($conf["dir"]["styles"].$conf["file"]["style"].".css"))  :
+    $style = fopen($conf["dir"]["styles"].$conf["file"]["style"].".css","w") or die();
+    fwrite($style,$begin_comment." Thank you Håkon Wium Lie (@wiumlie) for inventing CSS. ".$end_comment."\n\n");
+    fclose($style);
   endif;
+
+  if (!file_exists($conf["dir"]["scripts"].$conf["file"]["script"].".js"))  :
+    $script = fopen($conf["dir"]["scripts"].$conf["file"]["script"].".js","w") or die();
+    fwrite($script,$begin_comment." Thank you Brendan Eich (@BrendanEich) for inventing JavaScript. ".$end_comment."\n\n");
+    fclose($script);
+  endif;
+
+  if (!file_exists($conf["dir"]["includes"].$conf["site"]["homepage"].".php"))  :
+    $home = fopen($conf["dir"]["includes"].$conf["site"]["homepage"].".php","w") or die();
+    fwrite($home,"<?ph"."p ".$begin_comment." html\n".$end_comment." ?>\n<h1>Hello World.</h1>\n");
+    fclose($home);
+  endif;
+
+  if (!file_exists($conf["dir"]["includes"].$conf["file"]["header"].".php"))  :
+    $header = fopen($conf["dir"]["includes"].$conf["file"]["header"].".php","w") or die();
+    fwrite($header,"[HEADER]\n<hr>\n");
+    fclose($header);
+  endif;
+
+  if (!file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php"))  :
+    $footer = fopen($conf["dir"]["includes"].$conf["file"]["footer"].".php","w") or die();
+    fwrite($footer,"<hr>\n[FOOTER]");
+    fclose($footer);
+  endif;
+*/
+
+/* TRECE-ONLY stuff */
+  if ($conf["table"]["entropy"]=="inconceivable") : # THIS IS INCONCEIVABLE!
+    if (file_exists("firsttime.php")) :
+      if (!file_exists($conf["dir"]["includes"].$conf["site"]["homepage"].".php")) :
+        $script = fopen($conf["dir"]["includes"].$conf["site"]["homepage"].".php","w") or die();
+        fwrite($script,"<?ph"."p ".$begin_comment." md\n\n# TRECE ".$conf["trece"]["version"]."<br>**".$conf["trece"]["motto"]."**\n\n");
+        fclose($script);
+      endif;
+      require("firsttime.php"); die();
+    else :
+      echo "<h3>'inconceivable' is a forbidden word for your database prefix. Change it right now at <code>".THE_NAME_OF_THE_CORE_DIR."/".THE_NAME_OF_THE_CONFIGURATION_FILE."</code> line 129. Bye.</h3>"; die();
+    endif;
+  else :
+    if (file_exists("firsttime.php")) : unlink("firsttime.php"); endif;
+  endif;
+/* */
 
 
 
@@ -140,7 +165,7 @@ endif;
 
 # TRECE: A multilingual boilerplate framework for the brave.
 # BECAUSE WHAT COULD GO WRONG?
-# Version ".$conf["trece"]["version"]." '".$conf["trece"]["motto"]."' https://trece.boa.gal
+# Version ".$conf["trece"]["version"].$conf["trece"]["flavour"]." '".$conf["trece"]["motto"]."' ".$conf["trece"]["showroom"]."
 # Created by Iñaki Quenerapú (@quenerapu)
 # MIT License https://choosealicense.com/licenses/mit/
 
@@ -304,7 +329,7 @@ endif;
   define("REALPATHLANG",  $conf["site"]["realpathLang"]);   # example: REALPATHLANG."/es/user"
   define("LANG",          $conf["site"]["lang"]);           # example: es
   define("QUERYQ",        $conf["site"]["queryq"]);         # example: First with ?, next with &
-  define("ENTROPY",       $conf["table"]["entropy"]);
+  define("ENTROPY",       $conf["table"]["entropy"]);       # TRECE-ONLY stuff
 
 
 
@@ -320,7 +345,7 @@ endif;
 
       if(!file_exists($conf["dir"]["libraries"].$conf["markdown"]["lib"]."/".$lib)) : # Markdown libraries are required
 
-        echo "<h3>Markdown is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR set markdown to <code>\"false\"</code> in <code>trece/conf.php</code>, line 127.</p>"; die();
+        echo "<h3>Markdown is set to true but Parsedown library was not found. Bye.</h3><p>Install the Parsedown library OR set markdown to <code>\"false\"</code> in <code>trece/conf.php</code>, line ".($conf["trece"]["flavour"]==""?"153":"71")."</p>"; die();
 
       endif;
 
@@ -332,6 +357,7 @@ endif;
 
 
 
+/* TRECE-ONLY stuff */
 # -----------------------------------------------------------------------------------
 
 
@@ -466,20 +492,16 @@ endif;
 
 
 
+/* */
 # -----------------------------------------------------------------------------------
 
 
 
   if (
-      defined("MULTILANG") && (
-      is_null(LANG) ||
-      !in_array(LANG,array_keys($conf["site"]["langs"]))
-      )
+      defined("MULTILANG")
+      && (is_null(LANG) || !in_array(LANG,array_keys($conf["site"]["langs"])))
      ) : # Stop the presses! It's a MULTILANG site but no language found @ the URL. Reload using $conf["site"]["main_lang"] instead.
-
-      header("location:".REALPATH.$conf["site"]["main_lang"]
-//      QUERYQ
-        );
+      header("location:".REALPATH.$conf["site"]["main_lang"]);
       die();
 
   endif;
@@ -488,10 +510,7 @@ endif;
       $conf["site"]["homepage_redirect"] != ""
       && (!isset($conf["site"]["virtualpathArray"][0]))
      ) : # Stop the presses! $conf["site"]["homepage_redirect"] is set, but naked address found @ the URL. Redirecting to $conf["site"]["homepage_redirect"]
-
-      header("location:".REALPATHLANG.$conf["site"]["homepage_redirect"]
-//      QUERYQ
-      );
+      header("location:".REALPATHLANG.$conf["site"]["homepage_redirect"]);
       die();
 
   endif;
@@ -512,7 +531,7 @@ endif;
 
 
   $page = false;
-  $noComments = false;
+  $noComments = false; # WTF! Can't remember why I wrote this here.
 
   if(!isset($conf["site"]["action"])) :
 
@@ -534,7 +553,7 @@ endif;
     if(!$page && file_exists($conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php")) :
 
       $page = $conf["dir"]["includes"].implode("-",$conf["site"]["virtualpathArray"]).".php";
-
+  
     endif;
 
     if(!$page && file_exists($conf["dir"]["includes"].implode("/",$conf["site"]["virtualpathArray"]).".php")) :
@@ -547,7 +566,25 @@ endif;
 
       define("ISHOMEPAGE", true);
       $page = $conf["dir"]["includes"].$conf["site"]["homepage"].".php";
-      $noComments = true;
+      $conf["site"]["virtualpathArray"][0] = "";
+      $noComments = true; # WTF! Can't remember why I wrote this here.
+
+    endif;
+
+/* TRECE-ONLY stuff */
+
+    if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["site"]["virtualpathArray"][0].".php") && (
+      in_array($conf["site"]["virtualpathArray"][0],array(
+        $conf["file"]["admin"],
+        $conf["file"]["forgot-pass"],
+        $conf["file"]["change-pass"],
+        $conf["file"]["signin"],
+        $conf["file"]["contact"],
+        $conf["file"]["me"],
+        ))
+      )) :
+
+      $page = $conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["site"]["virtualpathArray"][0].".php";
 
     endif;
 
@@ -575,13 +612,6 @@ endif;
 
     endif;
 
-    if(!$page && file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
-
-      $page = $conf["dir"]["includes"].$conf["file"]["the404"].".php";
-      $noComments = true;
-
-    endif;
-
   endif;
 
 
@@ -589,7 +619,7 @@ endif;
   if(file_exists($page)):
 
     $syntax = array_slice(file($page),0,1);
-    $syntax = explode("<?php /* ",$syntax[0]);
+    $syntax = explode("<?ph"."p ".$begin_comment." ",$syntax[0]);
     $syntax = isset($syntax[1])?trim($syntax[1]):"php";
     $public = true; #$page is set to public
     $metadt = false; #$page does not contain metadata
@@ -660,11 +690,54 @@ endif;
 
       endif;
 
-      if($public || (!$public && $app->getUserSignInStatus())) :
+      if($public || (isset($app) && !$public && $app->getUserSignInStatus())) :
 
-        if(file_exists($conf["dir"]["includes"].$conf["file"]["header"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["header"].".php"); endif;
+        $isThereAThemeFolder  = false;
+        $isThereAHeader       = false;
+        $isThereACSS          = false;
+        $isThereAJS           = false;
+        $isThereANav          = false;
+        $isThereAFooter       = false;
 
-        if(file_exists($conf["dir"]["includes"].$conf["file"]["nav"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["nav"].".php"); endif;
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]) && is_dir($conf["dir"]["themes"].$conf["trece"]["theme"])):
+          $isThereAThemeFolder= true;
+        endif;
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["styles"].".php")):
+          $isThereACSS = "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"".REALPATH.$conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["styles"].".php?pt=".$conf["css"]["paddingtop_h"]."&sf=".$conf["css"]["stickyfooter_h"]."&".time()."\">\n";
+        endif;
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["scripts"].".php")):
+          $isThereAJS = "<script src=\"".REALPATH.$conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["scripts"].".php?".time()."\"></script>\n";
+        endif;
+
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["header"].".php")):
+          require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["header"].".php");
+          $isThereAHeader = true;
+        else :
+          echo "<!DOCTYPE html>\n<head>\n";
+          echo $isThereACSS ? $isThereACSS : "" ;
+          echo $isThereAJS ? $isThereAJS : "" ;
+          echo "</head>\n<body>\n";
+          echo "<pre>";
+          echo "<h3 style=\"margin:0;color:red;\">No".(!$isThereAThemeFolder ? " theme folder" : " header" )."!</h3>";
+          echo !$isThereAThemeFolder ? " ↳ The theme assigned to this site at <strong>".$conf["dir"]["core"].$conf["file"]["conf"].".php</strong> (line 12) is <strong>".$conf["trece"]["theme"]."</strong>,\n   but the directory <strong>".$conf["trece"]["theme"]."</strong> is not present into the <strong>".$conf["dir"]["themes"]."</strong> directory.\n ↳ Create or copy the directory <strong>".$conf["trece"]["theme"]."</strong> into the <strong>".$conf["dir"]["themes"]."</strong> directory\n   or assign a different existing theme.\n" : "" ;
+          echo !$isThereACSS ? " ↳ Create or copy a <a href=\"https://gist.github.com/quenerapu/e8d55b83723e9c03438e692e00b0f371\"><strong>".$conf["file"]["styles"].".php</strong></a> file into <strong>".$conf["dir"]["themes"].$conf["trece"]["theme"]."/</strong>.\n" : "" ;
+          echo !$isThereAJS ? " ↳ Create or copy a <a href=\"https://gist.github.com/quenerapu/77b021a73978f4d3afdd7b45054d6b4f\"><strong>".$conf["file"]["scripts"].".php</strong></a> file into <strong>".$conf["dir"]["themes"].$conf["trece"]["theme"]."/</strong>.\n" : "" ;
+          echo " ↳ Create or copy a <a href=\"https://gist.github.com/quenerapu/23b814781948ce1e391a789a06ccac5d\"><strong>".$conf["file"]["header"].".php</strong></a> file into <strong>".$conf["dir"]["themes"].$conf["trece"]["theme"]."/</strong>\n   containing a reference to <strong>".$conf["file"]["styles"].".php</strong> and <strong>".$conf["file"]["scripts"].".php</strong>.";
+          echo "\n-----------------------------------------------------------------------------------";
+        endif;
+
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["nav"].".php")):
+          require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["nav"].".php");
+          $isThereANav = true;
+        else:
+          echo $isThereAHeader ? "<pre>" : "" ;
+          echo "<h3 style=\"margin:0;color:red;\">No navbar!</h3>";
+          echo " ↳ Create or copy a <strong>".$conf["file"]["nav"].".php</strong> file into <strong>".$conf["dir"]["themes"].$conf["trece"]["theme"]."/</strong>\n   containing the navbar (or nothing if you just don't need a navbar).";
+          echo "\n-----------------------------------------------------------------------------------";
+        endif;
+        echo !$isThereAHeader || !$isThereANav ? "</pre>" : "" ;
+
+        echo "\n\n\n\n\n";
 
         if($syntax == "md" && MARKDOWN) :
 
@@ -693,7 +766,7 @@ endif;
           $markdownStuff->table_class = "table table-bordered table-condensed short";
           $markdownStuff = $markdownStuff->text($page);
 
-          if(file_exists($conf["dir"]["includes"].$conf["file"]["md-container"].".php")): require_once($conf["dir"]["includes"].$conf["file"]["md-container"].".php"); else : echo $markdownStuff; endif;
+          if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["md-container"].".php")): require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["md-container"].".php"); else : echo $markdownStuff; endif;
 
         else :
 
@@ -701,16 +774,22 @@ endif;
 
         endif;
 
-        if(file_exists($conf["dir"]["includes"].$conf["file"]["footer"].".php")):
-          require_once($conf["dir"]["includes"].$conf["file"]["footer"].".php");
+        echo "\n\n\n\n\n";
+
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["elements"].".php")):
+          require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["elements"].".php");
+        endif;
+
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["footer"].".php")):
+          require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["footer"].".php");
+          $isThereAFooter = true;
         else :
-          echo "\n<pre>\n----\n
-+-------------+\n
-| FAKE FOOTER |\n
-+-------------+\n\n
- ↳ Build a real one in ".$conf["dir"]["includes"].$conf["file"]["footer"].".php\n
- ↳ Build a css file in ".$conf["dir"]["includes"].$conf["file"]["css"].".php\n
- \n</pre>".BEGRATEFUL."\n</body>\n</html>";
+          echo "<pre>\n";
+          echo "-----------------------------------------------------------------------------------\n";
+          echo "<h3 style=\"margin:0;color:red;\">No footer!</h3>";
+          echo " ↳ Create or copy a <a href=\"https://gist.github.com/quenerapu/23b814781948ce1e391a789a06ccac5d\"><strong>".$conf["file"]["footer"].".php</strong></a> file into <strong>".$conf["dir"]["themes"].$conf["trece"]["theme"]."/</strong>.\n";
+          echo "</pre>";
+          echo BEGRATEFUL."\n</body>\n</html>";
         endif;
 
       else :
@@ -748,6 +827,7 @@ function str_replace_plus($fl,$search,$replace,$subject) { # Replaces FIRST or L
 
 
 
+/* TRECE-ONLY stuff */
 # -----------------------------------------------------------------------------------
 
 
@@ -806,6 +886,7 @@ function getUrlFriendlyString($str,$space="-") { # Generates a SEO friendly URL 
     return trim($_str,"-");
 
   }
+/* */
 
 
 

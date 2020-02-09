@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //SIGN IN
 
@@ -26,7 +26,7 @@
 
 //Logged? Get out of here!
 
-  if ( $app->getUserSignInStatus() ) :
+  if ($app->getUserSignInStatus()) :
 
     header("location:".REALPATHLANG.$conf["file"]["admin"].QUERYQ);
     die();
@@ -38,12 +38,14 @@
 //OK. Let's talk.
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCommon["signin"][LANG];
-//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-//$lCustom["metakeywords"] = "key word keyword";
-//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  $lCustom["pagetitle"] = $lCommon["signin"][LANG];
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
   $msg = false;
+  $msgType = "";
+  $msgText = "";
 
 
 
@@ -60,8 +62,11 @@
   if($_POST) :
 
     $msg = true;
-    $msgType = "danger";
-    $msgText = $lCommon["signin_fail"][LANG];
+
+    $msgType = $app->wrongCaptchaResponse || $app->wrongEmailUsernameOrPassword ? "danger" : "success";
+    $msgText = ($app->wrongCaptchaResponse ? $lCommon["wrong_captcha_response"][LANG] :
+               ($app->wrongEmailUsernameOrPassword ? $lCommon["signin_fail"][LANG] :
+               ""));
 
   endif;
 
@@ -102,7 +107,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"];?></strong></h1>
         </div>
       </div>
 
@@ -118,8 +123,16 @@ EOD;
           <div class="form-group has-feedback">
             <label for="password" class="col-sm-6 control-label"><?=$lCommon["password"][LANG];?>:</label>
             <div class="col-sm-6">
-              <input type="password" name="password" id="password" autocomplete="off" class="form-control" placeholder="" required>
+              <input type="password" name="password" id="password" autocomplete="off" class="form-control" style="margin-bottom:.5em" placeholder="" required>
               <span class="showhide glyphicon glyphicon-eye-close form-control-feedback" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mathcaptcha" class="col-sm-6 control-label"><?=$lCommon["so_you_are_a_human_hmm"][LANG];?></label>
+            <div class="col-sm-6">
+              <img src="<?=REALPATH.$conf["dir"]["images"]."mathcaptcha.php";?>" id="mathcaptcha" alt="Mathcaptcha image" style="float:left;">
+              <input type="text" name="mathcaptchaAnswer" id="mathcaptchaAnswer" class="form-control" style="max-width:20%;" required>
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //ORGANIZATIONS
 
@@ -757,13 +757,13 @@ class Organizations{
         $mail->Password = $this->mail_password;
         $mail->SMTPSecure = $this->mail_tls_or_ssl;
         $mail->Port = $this->mail_port;
-        $mail->setFrom($this->mail_from,$this->conf["meta"]["name"][$this->conf["site"]["lang"]]);
+        $mail->setFrom($this->mail_from,html_entity_decode($this->conf["meta"]["name"][LANG],ENT_QUOTES | ENT_XML1,"UTF-8"));
         $mail->addAddress($this->mail_to);
-        $mail->addReplyTo($this->mail_from,$this->conf["meta"]["name"][$this->conf["site"]["lang"]]);
+        $mail->addReplyTo($this->mail_from,html_entity_decode($this->conf["meta"]["name"][LANG],ENT_QUOTES | ENT_XML1,"UTF-8"));
         $mail->isHTML(true);
-        $mail->Subject = $this->mail_subject;
-        $mail->Body = $this->mail_message;
-        $mail->AltBody = strip_tags(str_replace(array("<br>","<br/>","<br />"),"\r\n",$this->mail_message));
+        $mail->Subject = html_entity_decode($this->mail_subject, ENT_QUOTES | ENT_XML1,"UTF-8");
+        $mail->Body = html_entity_decode($this->mail_message, ENT_QUOTES | ENT_XML1,"UTF-8");
+        $mail->AltBody = strip_tags(str_replace(array("<br>","<br/>","<br />"),"\r\n",html_entity_decode($this->mail_message, ENT_QUOTES | ENT_XML1,"UTF-8")));
         $mail->send();
         return true;
         } catch (Exception $e) { echo "Message could not be sent. Mailer Error: " . $mail->ErrorInfo; }

@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //UHIERARCHY
 
@@ -189,10 +189,10 @@
   $name             = $dupeName > 0 ? $name : $trece->name;
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG];
-//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-//$lCustom["metakeywords"] = "key word keyword";
-//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  $lCustom["pagetitle"] = $lCustom["edit"][LANG];
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 
@@ -232,7 +232,7 @@ EOD;
           <div class="pull-right"><p>
             <?=btn($lCommon["admin_list"][LANG],"!".$action."/".$conf["file"]["adminlist"],"","fa-list");?>
           </p></div>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"];?></strong></h1>
         </div>
       </div>
     </div><!-- row -->

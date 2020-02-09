@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //USERS
 
@@ -32,10 +32,15 @@
 
   $cconf    = require($conf["file"]["conf"].".php");
   $lCustom  = require($conf["file"]["i18n"].".php");
+  $theme    = "";
 
   if(!isset($action))   :   $action   =  isset($conf["site"]["virtualpathArray"][0])?$conf["site"]["virtualpathArray"][0]:null; endif;
   if(!isset($crudlpx))  :   $crudlpx  =  isset($conf["site"]["virtualpathArray"][1])?$conf["site"]["virtualpathArray"][1]:null; endif;
   if(!isset($what))     :   $what     =  isset($conf["site"]["virtualpathArray"][2])?$conf["site"]["virtualpathArray"][2]:null; endif;
+
+  if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$action."/".$crudlpx.".php")) :
+    $theme = $conf["dir"]["themes"].$conf["trece"]["theme"]."/".$action."/";
+  endif;
 
 
 
@@ -83,7 +88,17 @@
 
       # Case 1, 2 or 3? Go on!
 
-        require($crudlpx.".php");
+        if(!in_array($crudlpx,array(
+            $conf["file"]["publiclist"],
+            $conf["file"]["adminlist"],
+            $conf["file"]["read"],
+          ))) : 
+
+          $theme = "";
+
+        endif;
+
+        require($theme.$crudlpx.".php");
         die();
 
   else :
@@ -104,7 +119,13 @@
 
       if($rowcount_page > 0) :
 
-        require_once($crudlpx.".php");
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$action."/".$crudlpx.".php")) :
+
+          $theme = $conf["dir"]["themes"].$conf["trece"]["theme"]."/".$action."/";
+
+        endif;
+
+        require_once($theme.$crudlpx.".php");
         die();
 
       else:
@@ -132,7 +153,18 @@
 //No $crudlpx at all?
 //Well, show them the list, page 1
 
-header("location:".REALPATHLANG.$conf["site"]["virtualpathArray"][0]."/".$conf["file"]["adminlist"]."/1".QUERYQ);
+  if (
+      !$app->getUserSignInStatus() # Must be logged in
+      || $app->getUserHierarchy() != 1 # Must be admin
+     ) :
+
+    header("location:".REALPATHLANG.$action."/".$conf["file"]["publiclist"].QUERYQ);
+    die();
+
+  endif;
+
+
+header("location:".REALPATHLANG.$action."/".$conf["file"]["adminlist"]."/1".QUERYQ);
 die();
 
 ?>

@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //404
 
@@ -40,30 +40,26 @@ EOD;
 
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = strip_tags($lCommon["error_404"][LANG]);
+  $lCustom["pagetitle"] = strip_tags($lCommon["error_404"][LANG]);
 //$lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
 //$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
 //$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
-  require_once($conf["dir"]["includes"]."header.php");
-  require_once($conf["dir"]["includes"]."nav.php");
+  require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."header.php");
+  require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."nav.php");
+
+  $markdownStuff = <<<MD
+
+  <h1>
+    <strong>
+      {$lCustom["pagetitle"]}
+    </strong>
+  </h1>
+
+MD;
+
+  require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."md-container.php");
+
+  require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."footer.php");
 
 ?>
-
-
-
-  <div class="container main-container">
-
-    <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-        <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
-        </div>
-      </div>
-    </div><!-- row -->
-
-  </div>
-
-
-
-<?php require_once($conf["dir"]["includes"]."footer.php"); ?>

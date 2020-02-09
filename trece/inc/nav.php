@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 
       <div style="top:0;position:fixed;background-color:#000;height:25px;width:100%;z-index:1000;padding-top:1px;">
         <div class="container">
@@ -39,14 +39,14 @@
               <?php endif; ?>
                 <small style="margin-left:1em;">
                 <?php if ($app->getUserSignInStatus()) : ?>
-                  <i class="fas fa-user-alt"></i> <a href="<?=REALPATHLANG."admin_home";?>" style="color:white;"><?=$_SESSION["name"];?></a> |
-                  <a href="<?=REALPATHLANG.$conf["file"]["me"];?>" style="color:white;"><?=$lCommon["edit_profile"][LANG];?></a> |
-                  <i class="fas fa-sign-out-alt"></i> <a href="<?=REALPATHLANG."?signout";?>" style="color:white;"><?=$lCommon["signout"][LANG];?></a>
+                  <i class="fas fa-user-alt"></i> <?=nav($app->getUserName(),$conf["file"]["admin"]);?> |
+                  <?=nav($lCommon["edit_profile"][LANG],$conf["file"]["me"]);?> |
+                  <i class="fas fa-sign-out-alt"></i> <?=nav($lCommon["signout"][LANG],"!)?signout");?>
                 <?php else : ?>
 <?php /*
-                  <a href="<?=REALPATHLANG;?>new" style="color:white;"><?=$lCommon["create_account"][LANG];?></a> |
+                  <?=nav($lCommon["create_account"][LANG],$conf["file"]["new"]);?> |
 */ ?>
-                  <a href="<?=REALPATHLANG.$conf["file"]["signin"];?>" style="color:white;"><?=$lCommon["signin"][LANG];?></a>
+                  <?=nav($lCommon["signin"][LANG],$conf["file"]["signin"]);?>
                 <?php endif; ?>
                 </small>
               </p>

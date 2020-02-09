@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //ORGANIZATIONS
 
@@ -172,10 +172,12 @@ EOD;
 
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = strip_tags(${"trece"}->{"title_".LANG});
-  $lCustom["metadescription"][LANG] = strip_tags(${"trece"}->{"intro_".LANG});
-  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
-  $lCustom["og_image"] = file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?REALPATH.$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg":(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Blog post");
+  $lCustom["pagetitle"] = strip_tags(${"trece"}->{"title_".LANG});
+  $lCustom["metadescription"] = strip_tags(${"trece"}->{"intro_".LANG});
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+  $lCustom["og_image"] = file_exists($conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg")?REALPATH.$conf["dir"]["images"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg":(file_exists($conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg")?REALPATH.$conf["dir"]["includes"].$action."/".$cconf["img"]["prefix"]."0.jpg":"https://fakeimg.pl/".$cconf["img"]["img_w"]."x".$cconf["img"]["img_h"]."/?text=Organization");
+
+
 
   require_once($conf["dir"]["includes"]."header.php");
   require_once($conf["dir"]["includes"]."nav.php");

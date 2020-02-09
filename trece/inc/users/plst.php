@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //USERS
 
@@ -15,8 +15,6 @@
 // http://patorjk.com/software/taag/#p=display&f=Banner4&t=%20TRECE%20
 // http://patorjk.com/software/taag/#p=display&f=Bright&t=Deprecated
 // https://stackoverflow.com/questions/8154158/mysql-how-do-i-use-delimiters-in-triggers
-
-
 
 
 
@@ -42,9 +40,9 @@
 //Not logged? Not admin? Get out of here!
 
   if(
-//  1+1==3 # Public for everyone
-    !$app->getUserSignInStatus() # Must be logged in
-    || $app->getUserHierarchy() != 1 # Must be admin
+    1+1==3 # Public for everyone
+//  !$app->getUserSignInStatus() # Must be logged in
+//  || $app->getUserHierarchy() != 1 # Must be admin
     ) :
 
     header("location:".REALPATHLANG.QUERYQ);
@@ -68,10 +66,10 @@
 //Still here? OK, let's talk.
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
-//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-//$lCustom["metakeywords"] = "key word keyword";
-//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  $lCustom["pagetitle"] = $lCustom["list"][LANG];
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -159,7 +157,7 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["pagetitle"][LANG];?></a></strong></h1>
+          <h1><strong><a href="<?=REALPATHLANG.$action."/".$conf["file"]["publiclist"];?>"><?=$lCustom["pagetitle"];?></a></strong></h1>
         </div>
       </div>
     </div><!-- End row -->

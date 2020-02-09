@@ -193,3 +193,17 @@ function shapeSpace_add_var($url, $key, $value) {
 
 
 
+function checkValidColorHex($colorCode) {
+
+  $colorCode = ltrim($colorCode,"#"); # If user accidentally passed along the # sign, strip it off
+  if(ctype_xdigit($colorCode)&&(strlen($colorCode)==6||strlen($colorCode)==3)) : return true;
+  else : return false;
+  endif;
+  }
+
+
+
+# -----------------------------------------------------------------------------------
+
+
+

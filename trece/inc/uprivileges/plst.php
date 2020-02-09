@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //UPRIVILEGES
 
@@ -76,10 +76,10 @@ $intimacy = 2;
 //Still here? OK, let's talk.
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["list"][LANG];
-//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-//$lCustom["metakeywords"] = "key word keyword";
-//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  $lCustom["pagetitle"] = $lCustom["list"][LANG];
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
   $searchTarget = false;
   $searchWhat   = "";
@@ -175,7 +175,7 @@ EOD;
           </p>
           </div>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"];?></strong></h1>
         </div>
       </div>
     </div><!-- End row -->

@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php /* IMPORTANT: at line 7, replace 0.0.0.0 with your public IPv4. You can get it here, for instance: https://whatismyip.com. */ ?>
 <?php define("YOUR_IP","0.0.0.0"); ?>
 <?php if($_SERVER["REMOTE_ADDR"]==YOUR_IP): ?>

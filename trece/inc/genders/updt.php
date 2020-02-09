@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //GENDERS
 
@@ -252,10 +252,10 @@
   $trece->gotPic    = file_exists($conf["dir"]["images"].$conf["css"]["icon_prefix"].$cconf["img"]["prefix"].$trece->{$cconf["img"]["ref"]}.".jpg") ? true : false;
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCustom["edit"][LANG].": ".$trece->name;
-//$lCustom["metadescription"][LANG] = "La metadescription"; # 160 char text
-//$lCustom["metakeywords"] = "key word keyword";
-//$lCustom["og_image"] = "https://ddfsdf.com"; # 1200x630 px image
+  $lCustom["pagetitle"] = $lCustom["edit"][LANG].": ".$trece->name;
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 

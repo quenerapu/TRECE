@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //CHANGE PASSWORD
 
@@ -46,8 +46,8 @@
 //Still here? OK, let's talk.
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = strip_tags($lCommon["change-password"][LANG]);
-//$lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
+  $lCustom["pagetitle"] = strip_tags($lCommon["change-password"][LANG]);
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
 //$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
 //$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
@@ -67,7 +67,7 @@
     $trece->g_recaptcha_response    = $_POST["g-recaptcha-response"];
 
 
-    if ( $trece->changePass2() ) :
+    if ($trece->changePass2()) :
 
       $msgType = $trece->wrongCaptchaResponse || $trece->wrongeMailorUsername || $trece->wrongPasswordStrength ? "danger" : "success";
       $msgText = ($trece->wrongCaptchaResponse ? $lCommon["wrong_captcha_response"][LANG] :
@@ -107,8 +107,10 @@ EOD;
 
 
 
-  require_once($conf["dir"]["includes"]."header.php");
-  require_once($conf["dir"]["includes"]."nav.php");
+//require_once($conf["dir"]["includes"]."header.php");
+//require_once($conf["dir"]["includes"]."nav.php");
+  require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."header.php");
+  require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."nav.php");
 
 ?>
 
@@ -116,7 +118,7 @@ EOD;
 
   <div class="container main-container">
 
-    <?php if ( $msg ): ?>
+    <?php if ($msg): ?>
 
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -129,7 +131,7 @@ EOD;
 
     <?php endif; ?>
 
-  <?php if ( $trece->done ) : ?>
+  <?php if ($trece->done) : ?>
 
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
@@ -144,7 +146,7 @@ EOD;
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="page-header">
-          <h1><strong><?=$lCustom["pagetitle"][LANG]?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"]?></strong></h1>
         </div>
       </div>
 
@@ -268,4 +270,4 @@ EOD;
 
 
 
-<?php require_once($conf["dir"]["includes"]."footer.php"); ?>
+<?php require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/"."footer.php"); ?>

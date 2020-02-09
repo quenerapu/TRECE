@@ -149,7 +149,14 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
 
   private function checkSignInFormDataNotEmpty() {
 
+    $this->wrongCaptchaResponse = false;
+
     if (!empty($_POST["email_or_username"]) && !empty($_POST["password"])) :
+      if(($_POST["mathcaptchaAnswer"])!=$_SESSION["mathcaptchaAnswer"]):
+        $this->wrongCaptchaResponse = true; return true;
+        die();
+      endif;
+      unset($_SESSION["mathcaptchaAnswer"]);
       $this->email_or_username = htmlspecialchars(strtolower(preg_replace("/\s/","",$_POST["email_or_username"])));
       $this->password = $_POST["password"];
       return true;
@@ -187,6 +194,8 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
 
   private function checkPasswordCorrectnessAndSignIn() {
 
+    $this->wrongEmailUsernameOrPassword = false;
+
     $query = "SELECT " .
              $this->tableletter.".`id`, " .
              $this->tableletter.".`ref`, " .
@@ -207,35 +216,36 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
     $stmt->execute();
     $num = $stmt->rowCount();
 
-    if($num>0) :
+    if($num==0) :
 
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      $this->wrongEmailUsernameOrPassword = true; return true;
+      die();
 
-      if(isset($row["hash_pass"]) && password_verify($this->password,$row["hash_pass"])) :
+    endif;
 
-        $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".$this->tableletter.".`signed_in` = 1 WHERE ".$this->tableletter.".`id` = ".($row["id"])."";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        $query = "INSERT INTO `".$this->log_tablename."` (`id_user`,`action`,`date`,`ip`) VALUES (:id_user,'sign in',now(),:ip)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id_user", $row["id"]);
-        $stmt->bindParam(":ip", $_SERVER["REMOTE_ADDR"]);
-        $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $_SESSION["signed_in"]      =   1; $this->signed_in = true;
-        $_SESSION["id"]             =   $row["id"];
-        $_SESSION["ref"]            =   $row["ref"];
-        $_SESSION["name"]           =   $row["name"];
-        $_SESSION["username"]       =   $row["username"];
-        $_SESSION["ugender"]        =   $row["ugender"];
-        $_SESSION["uhierarchy"]     =   $row["uhierarchy"];
-        $_SESSION["uprivileges"]    =   $row["uprivileges"];
+    if(isset($row["hash_pass"]) && password_verify($this->password,$row["hash_pass"])) :
 
-        return true;
+      $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".$this->tableletter.".`signed_in` = 1 WHERE ".$this->tableletter.".`id` = ".($row["id"])."";
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+      $query = "INSERT INTO `".$this->log_tablename."` (`id_user`,`action`,`date`,`ip`) VALUES (:id_user,'sign in',now(),:ip)";
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(":id_user", $row["id"]);
+      $stmt->bindParam(":ip", $_SERVER["REMOTE_ADDR"]);
+      $stmt->execute();
 
-      endif;
+      $_SESSION["signed_in"]      =   1; $this->signed_in = true;
+      $_SESSION["id"]             =   $row["id"];
+      $_SESSION["ref"]            =   $row["ref"];
+      $_SESSION["name"]           =   $row["name"];
+      $_SESSION["username"]       =   $row["username"];
+      $_SESSION["ugender"]        =   $row["ugender"];
+      $_SESSION["uhierarchy"]     =   $row["uhierarchy"];
+      $_SESSION["uprivileges"]    =   $row["uprivileges"];
 
-      return false;
+      return true;
 
     endif;
 
@@ -262,12 +272,10 @@ class SignIn { # Ref: http://codereview.stackexchange.com/questions/58609/php-oo
     $stmt->bindParam(":ip", $_SERVER["REMOTE_ADDR"]);
     $stmt->execute();
 
-    $url = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
-    $url = preg_replace("/\?.*/","",$url);
     $_SESSION = array();
     session_destroy();
     $this->signed_in = false;
-    header("refresh:0;url=".$url);
+    header("location:./");
     die();
 
     }

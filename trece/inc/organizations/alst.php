@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //ORGANIZATIONS
 
@@ -276,10 +276,10 @@
 
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = strip_tags($lCustom["admin_list"][LANG]);
-  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
-  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
-  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+  $lCustom["pagetitle"] = strip_tags($lCustom["admin_list"][LANG]);
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 

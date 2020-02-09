@@ -1,13 +1,13 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <!doctype html>
 
   <!-- TRECE <?=$conf["trece"]["version"];?> -->
 <?php
 
-  if(!isset($lCustom["pagetitle"][LANG])) :
-            $lCustom["pagetitle"][LANG] =             strip_tags($conf["meta"]["title"][LANG]); endif;
-  if(!isset($lCustom["metadescription"][LANG])) :
-            $lCustom["metadescription"][LANG] =       strip_tags($conf["meta"]["description"][LANG]); endif;
+  if(!isset($lCustom["pagetitle"])) :
+            $lCustom["pagetitle"] =                   strip_tags($conf["meta"]["title"][LANG]); endif;
+  if(!isset($lCustom["metadescription"])) :
+            $lCustom["metadescription"] =             strip_tags($conf["meta"]["description"][LANG]); endif;
   if(!isset($lCustom["metakeywords"])) :
             $lCustom["metakeywords"] =                $conf["meta"]["keywords"]; endif;
   if(!isset($lCustom["charset"])) :
@@ -23,19 +23,19 @@
   if(!isset($lCustom["og_type"])) :
             $lCustom["og_type"] =                     $conf["site"]["homepage"] == $conf["site"]["action"]?"website":"article"; endif;
   if(!isset($lCustom["og_title"][LANG])) :
-            $lCustom["og_title"][LANG] =              $lCustom["pagetitle"][LANG]; endif;
+            $lCustom["og_title"][LANG] =              $lCustom["pagetitle"]; endif;
   if(!isset($lCustom["og_description"][LANG])) :
-            $lCustom["og_description"][LANG] =        $lCustom["metadescription"][LANG]; endif;
+            $lCustom["og_description"][LANG] =        $lCustom["metadescription"]; endif;
   if(!isset($lCustom["og_image"])) :
             $lCustom["og_image"] =                    isset($conf["meta"]["image"]["file"])? $conf["meta"]["image"]["file"] : REALPATH.$conf["dir"]["images"]."og/".(file_exists($conf["dir"]["images"]."og/".$conf["site"]["action"].".jpg")?$conf["site"]["action"].".jpg":"trece.jpg"); endif;
   if(!isset($lCustom["og_image_alt"][LANG])) :
-            $lCustom["og_image_alt"][LANG] =          $lCustom["metadescription"][LANG]; endif;
+            $lCustom["og_image_alt"][LANG] =          $lCustom["metadescription"]; endif;
   if(!isset($lCustom["og_site_name"][LANG])) :
             $lCustom["og_site_name"][LANG] =          $conf["meta"]["name"][LANG]; endif;
   if(!isset($lCustom["twitter_title"][LANG])) :
-            $lCustom["twitter_title"][LANG] =         $lCustom["pagetitle"][LANG]; endif;
+            $lCustom["twitter_title"][LANG] =         $lCustom["pagetitle"]; endif;
   if(!isset($lCustom["twitter_image_alt"][LANG])) :
-            $lCustom["twitter_image_alt"][LANG] =     $lCustom["metadescription"][LANG]; endif;
+            $lCustom["twitter_image_alt"][LANG] =     $lCustom["metadescription"]; endif;
   if(!isset($lCustom["twitter_site"])) :
             $lCustom["twitter_site"] =                $conf["contact"]["twitter"]; endif;
   if(!isset($lCustom["geo"]["region"])) :
@@ -65,7 +65,7 @@
     Any other head element should come *after* these tags.
     https://htmlhead.dev
   -->
-  <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"][LANG];?></title>
+  <title><?=$conf["meta"]["name"][LANG]." | ".$lCustom["pagetitle"];?></title>
   <link rel="canonical" href="<?=REALPATH.$conf["site"]["virtualpath"];?>" />
   <base href="<?=REALPATH;?>" target="_self" />
   <!-- https://metatags.io/ -->
@@ -73,7 +73,7 @@
   <meta name="lang" content="<?=$conf["site"]["langs"][LANG]["culture-name1"];?>" />
   <meta name="generator" content="<?=$lCustom["generator"];?>" /><!-- https://stackoverflow.com/a/3632220 -->
   <meta name="robots" content="<?=$lCustom["robots"];?>" /><!-- https://developers.google.com/search/reference/robots_meta_tag -->
-  <meta name="description" content="<?=htmlspecialchars($lCustom["metadescription"][LANG]);?>" /><!-- https://blog.spotibo.com/meta-description-length/ -->
+  <meta name="description" content="<?=htmlspecialchars($lCustom["metadescription"]);?>" /><!-- https://blog.spotibo.com/meta-description-length/ -->
   <meta name="keywords" content="<?=htmlspecialchars($lCustom["metakeywords"]);?>" /><!-- https://www.sistrix.es/blog/la-meta-keywords-un-bulo-con-19-anos-de-antiguedad/ -->
 
 <?php if((NPE) || (DEBUG)) : ?>
@@ -181,7 +181,7 @@
   <![endif]-->
 
 <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=REALPATH.$conf["dir"]["styles"].$conf["file"]["style"];?>.php?pt=<?=$conf["css"]["paddingtop_h"]."&sf=".$conf["css"]["stickyfooter_h"]."&".time();?>">
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=REALPATH.$conf["dir"]["styles"].$conf["file"]["styles"];?>.php?pt=<?=$conf["css"]["paddingtop_h"]."&sf=".$conf["css"]["stickyfooter_h"]."&".time();?>">
   <?=isset($customCSS)?$customCSS:"";?>
 
 <!-- Custom JS -->

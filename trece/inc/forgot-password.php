@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //FORGOT PASSWORD
 
@@ -36,10 +36,10 @@
 
 
 //metastuff
-  $lCustom["pagetitle"][LANG] = $lCommon["forgot_password"][LANG];
-  $lCustom["metadescription"][LANG] = strip_tags("Custom metadescription goes here"); # 160 char text
-  $lCustom["metakeywords"] = strip_tags("Custom keywords go here");
-  $lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
+  $lCustom["pagetitle"] = $lCommon["forgot_password"][LANG];
+//$lCustom["metadescription"] = strip_tags("Custom metadescription goes here"); # 160 char text
+//$lCustom["metakeywords"] = strip_tags("Custom keywords go here");
+//$lCustom["og_image"] = "https://custom.url/image-goes-here"; # 1200x630 px image
 
 
 
@@ -50,7 +50,7 @@
     $trece = new $users($db,$conf,null,$lCommon);
     $trece->email_or_username = htmlspecialchars(strtolower(preg_replace("/\s/","",$_POST["email_or_username"])));
 
-    if ( $trece->changePassRequest() ) :
+    if ($trece->changePassRequest()) :
 
       $msgType = "success";
       $msgText = sprintf($lCommon["we_have_just_sent_an_email_to"][LANG],$trece->email_or_username);
@@ -123,7 +123,7 @@ EOD;
           </p></div>
           <?php endif; ?>
           <?php endif; ?>
-          <h1><strong><?=$lCustom["pagetitle"][LANG];?></strong></h1>
+          <h1><strong><?=$lCustom["pagetitle"];?></strong></h1>
         </div>
       </div>
 
@@ -135,6 +135,14 @@ EOD;
             <label for="email_or_username" class="col-sm-6 control-label"><?=$lCommon["email_or_username"][LANG];?>:</label>
             <div class="col-sm-6">
               <input type="text" class="form-control" name="email_or_username" id="email_or_username" placeholder="<?=$lCommon["email_or_username"][LANG];?>" autocomplete="off" value="<?=isset($email)?$email:(isset($_SESSION["username"])?$_SESSION["username"]:"");?>" style="margin-bottom:.5em" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mathcaptcha" class="col-sm-6 control-label"><?=$lCommon["so_you_are_a_human_hmm"][LANG];?></label>
+            <div class="col-sm-6">
+              <img src="<?=REALPATH.$conf["dir"]["images"]."mathcaptcha.php";?>" id="mathcaptcha" alt="Mathcaptcha image" style="float:left;">
+              <input type="text" name="mathcaptchaAnswer" id="mathcaptchaAnswer" class="form-control" style="max-width:20%;" required>
             </div>
           </div>
 
@@ -166,4 +174,4 @@ EOD;
 
 
 
-<?php require($conf["dir"]["includes"]."footer.php"); ?>
+<?php require_once($conf["dir"]["includes"]."footer.php"); ?>

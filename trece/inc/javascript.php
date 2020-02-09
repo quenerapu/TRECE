@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 
   <!-- Add and select -->
   <script>
@@ -15,9 +15,10 @@
       else{
     <?php endif; ?>
       $.confirm({
+        boxWidth:"300px",
         onOpen:function(){
           $("#bulkAdd").show();
-          $(".number").css({"position":"fixed","min-width":"50%","margin-right":"25px","padding-right":"30px",});
+          $(".number").css({"position":"fixed","width":"266px","margin-right":"0","padding-right":"30px",});
           <?php if(isset($parental)): ?>$(".parental").css({"position":"fixed","top":"60px","min-width":"50%","margin-right":"25px","padding-right":"30px",});<?php endif; ?>
           <?php if(isset($extras)): ?>$(".extras").css({"position":"fixed","top":"<?=isset($parental)?"100":"60";?>px","min-width":"50%","margin-right":"25px","padding-right":"30px",});<?php endif; ?>
           $(".jconfirm-content").css({"display":"block","height":"<?=isset($parental)&&isset($extras)?"110":(isset($parental)||isset($extras)?"60":"30");?>px"});
@@ -34,6 +35,9 @@
           $("#bulkAdd").hide();
           },
         buttons:{
+          cancel:{
+            text:"<?=$lCommon["cancel"][LANG];?>",
+            },
           confirm:{
             text:"<?=$lCommon["add"][LANG];?>",
             action:function(){
@@ -50,10 +54,7 @@
                 }
               add<?=isset($parental)?"AndSelect":"";?>Them(howMany,parental<?=isset($extras)?",extras":""?>);
               },
-              },
-            cancel:{
-              text:"<?=$lCommon["cancel"][LANG];?>",
-              },
+            },
             },
           });
     <?php if(!isset($parental)) : ?>
@@ -65,7 +66,7 @@
 
 
   <div id="bulkAdd" style="display:none;">
-    <input type="text" placeholder="<?=sprintf($lCommon["how_many_do_you_want"][LANG],$cconf["default"]["max_new_items"]);?>" class="number" style="box-sizing: border-box; line-height: 20px;">
+    <input type="text" placeholder="<?=sprintf($lCommon["how_many_do_you_want"][LANG],$cconf["default"]["max_new_items"]);?>" class="number" style="box-sizing:border-box;line-height:20px;">
 <?php if(isset($parental)) : ?>
     <select name="parental" class="parental" data-style="btn-info">
       <?php $parental=explode("|",$parental); ?>
@@ -152,5 +153,5 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/<?=$conf["version"]["jquery_confirm"];?>/jquery-confirm.min.js"></script>
   <script>
-    jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,columnClass:"col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1",boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!0,offsetTop:40,offsetBottom:40,bootstrapClasses:{container:"container",containerFluid:"container-fluid",row:"row",},onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
+    jconfirm.defaults={title:"",titleClass:"",type:"default",typeAnimated:!0,draggable:!0,dragWindowGap:30,dragWindowBorder:!0,animateFromElement:!1,smoothContent:!0,content:"",buttons:{},defaultButtons:{ok:{action:function(){}},close:{action:function(){}},},contentLoaded:function(data,status,xhr){},icon:"",lazyOpen:!1,bgOpacity:null,theme:"bootstrap",animation:"bottom",closeAnimation:"bottom",animationBounce:2,animationSpeed:400,rtl:!1,container:"body",containerFluid:!1,backgroundDismiss:!1,backgroundDismissAnimation:"shake",autoClose:!1,closeIcon:!0,closeIconClass:"fa fa-close",watchInterval:100,boxWidth:"50%",scrollToPreviousElement:!0,scrollToPreviousElementAnimate:!0,useBootstrap:!1,offsetTop:40,offsetBottom:40,onContentReady:function(){},onOpenBefore:function(){},onOpen:function(){},onClose:function(){},onDestroy:function(){},onAction:function(){},}
   </script>

@@ -589,6 +589,11 @@ return [
     "gal" => "Imaxe",
     "en" => "Image",
     ],
+  "important" => [
+    "es" => "Importante",
+    "gal" => "Importante",
+    "en" => "Important",
+    ],
   "inactive" => [
     "es" => "Inactivo",
     "gal" => "Inactivo",
@@ -603,6 +608,11 @@ return [
     "es" => "Contraseña insegura",
     "gal" => "Contrasinal inseguro",
     "en" => "Insecure password",
+    ],
+  "installing_new_modules" => [
+    "es" => "Instalando nuevos módulos",
+    "gal" => "Instalando novos módulos",
+    "en" => "Installing new modules",
     ],
   "instructor" => [
     "es" => "Ponente",
@@ -954,6 +964,16 @@ return [
     "gal" => "Orde",
     "en"  => "Order",
     ],
+  "organizations" => [
+    "es"  => "Organizaciones",
+    "gal" => "Organizacións",
+    "en"  => "Organizations",
+    ],
+  "outdated_version_of_trece" => [
+    "es"  => "Estás usando una versión antigua de TRECE",
+    "gal" => "Estás usando unHa versión antiga de TRECE",
+    "en"  => "You're running an outdated version of TRECE",
+    ],
 
 
 
@@ -977,6 +997,11 @@ return [
     "gal" => "Páxinas",
     "en"  => "Pages",
     ],
+  "panel_of" => [
+    "es"  => "Panel de %s",
+    "gal" => "Panel de %s",
+    "en"  => "%s's panel",
+    ],
   "parent" => [
     "es"  => "Padre",
     "gal" => "Pai",
@@ -993,9 +1018,9 @@ return [
     "en"  => "Password must match",
     ],
   "password_successfully_changed" => [
-    "es"  => "La contraseña fue cambiada con éxito.",
-    "gal" => "O contrasinal foi cambiado con éxito.",
-    "en"  => "Password successfully changed.",
+    "es"  => "La contraseña fue cambiada con éxito.<br><small>Redirigiendo <a href=\"%s\">a la página de inicio de sesión</a> en <span id=\"countdown\">5</span>.</small>",
+    "gal" => "O contrasinal foi cambiado con éxito.<br><small>Redirixindo <a href=\"%s\">á páxina de inicio de sesión</a> en <span id=\"countdown\">5</span>.</small>",
+    "en"  => "Password successfully changed.<br><small>Redirecting <a href=\"%s\">to sign in page</a> in <span id=\"countdown\">5</span>.</small>",
     ],
   "password_tip" => [
     "es"  => "Mínimo 8 caracteres y al menos una mayúscula, una minúscula, un número y un signo. %s genera contraseñas de calidad y %s muestra/oculta el texto de la contraseña. Cuando la barra se pone de color verde indica que tienes una buena contraseña y puedes continuar.",
@@ -1041,6 +1066,21 @@ return [
     "es"  => "Por favor, elige",
     "gal" => "Por favor, elixe",
     "en"  => "Please select",
+    ],
+  "please_update_trece_quiet_today" => [
+    "es"  => "Casualmente hoy se lanza una nueva versión. Por favor actualiza a %s.",
+    "gal" => "Casualmente hoxe lánzase unha nova versión de TRECE. Por favor actualiza a %s.",
+    "en"  => "Coincidentally a new version is being released today. Please update to %s.",
+    ],
+  "please_update_trece_quiet_week" => [
+    "es"  => "Hace poco se lanzó una nueva versión. Por favor actualiza a %s.",
+    "gal" => "Hai pouco lanzouse unha nova versión. Por favor actualiza a %s.",
+    "en"  => "Recently a new version was released. Please update to %s.",
+    ],
+  "please_update_trece_urgent" => [
+    "es"  => "Por favor actualiza a %s lo antes posible.",
+    "gal" => "Por favor update to %s o antes posible.",
+    "en"  => "Please update to %s as soon as possible.",
     ],
   "post" => [
     "es"  => "Publicación",
@@ -1252,6 +1292,11 @@ return [
     "gal" => "Administración de sedes",
     "en"  => "Site list",
     ],
+  "so_you_are_a_human_hmm" => [
+    "es"  => "Así que eres humano/a, ¿hmm?",
+    "gal" => "Así que eres humano/a, hmm?",
+    "en"  => "So you're a human, hmm?",
+    ],
   "start_time" => [
     "es"  => "Hora de inicio",
     "gal" => "Hora de inicio",
@@ -1309,6 +1354,11 @@ return [
     "es"  => "Tipo",
     "gal" => "Tipo",
     "en"  => "Type",
+  ],
+  "type_your_search" => [
+    "es"  => "Teclea tu búsqueda",
+    "gal" => "Teclea a túa busca",
+    "en"  => "Type your search",
   ],
 
 
@@ -1453,6 +1503,11 @@ return [
     "es"  => "s",
     "gal" => "s",
     "en"  => "s",
+    ],
+  "you_are_running_the_latest_version_of_trece" => [
+    "es"  => "Estás usando la última versión de TRECE ",
+    "gal" => "Estás usando a última versión de TRECE ",
+    "en"  => "You're running the latest version of TRECE ",
     ],
   "you_can_now_sign_in" => [
     "es"  => "Ya puedes iniciar tu sesión en",

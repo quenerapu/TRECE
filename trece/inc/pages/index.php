@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //PAGES
 
@@ -111,12 +111,18 @@
       endif;
 
       if(isset($direct) && $direct) :
-        if(file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
+
+        if(file_exists($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["the404"].".php")) :
+          require_once($conf["dir"]["themes"].$conf["trece"]["theme"]."/".$conf["file"]["the404"].".php");
+          die();
+        elseif(file_exists($conf["dir"]["includes"].$conf["file"]["the404"].".php")) :
           require_once($conf["dir"]["includes"].$conf["file"]["the404"].".php");
           die();
+        else:
+          echo "<h1>404</h1>";
+          die();
         endif;
-        echo "<h1>404</h1>";
-        die();
+
       endif;
 
   endif;

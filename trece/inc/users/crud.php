@@ -1,4 +1,4 @@
-<?php if(!defined("TRECE")):header("location:/");die();endif; ?>
+<?php if(!defined("TRECE")):header("location:./");die();endif; ?>
 <?php
 //USERS
 
@@ -627,23 +627,28 @@ class Users {
       $query2.= !in_array($x,$this->xx_notinsearch) ? $this->tableletter.".`".$x."`, " : "";
     endforeach;
 
-    $query1.= "CONCAT((SELECT CONCAT(".$this->uhierarchy_tableletter.".`name`,'|',".$this->uhierarchy_tableletter.".`color`) FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
+    $hierarchy = "CONCAT((SELECT CONCAT(".$this->uhierarchy_tableletter.".`name`,'|',".$this->uhierarchy_tableletter.".`color`) FROM `".$this->uhierarchy_tablename."` ".$this->uhierarchy_tableletter." WHERE ".$this->uhierarchy_tableletter.".`id` = ".$this->tableletter.".`uhierarchy`)) AS hierarchy, ";
 
-    $query1.= "CONCAT((SELECT ".$this->organizations_tableletter.".`name` FROM `".$this->organizations_tablename."` ".$this->organizations_tableletter." WHERE ".$this->organizations_tableletter.".`id` = ".$this->tableletter.".`id_organization`)) AS organization_name, ";
+    $query1.= $hierarchy;
 
-    $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " HAVING " : " ") .
-    (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?"AND ":" ") : " ") .
+    $organization_name = "CONCAT((SELECT ".$this->organizations_tableletter.".`name` FROM `".$this->organizations_tablename."` ".$this->organizations_tableletter." WHERE ".$this->organizations_tableletter.".`id` = ".$this->tableletter.".`id_organization`)) AS organization_name, ";
+
+    $query1.= $organization_name;
+
+    $qwhere = ((isset($this->intimacy) && $this->intimacy > 1 || $where) ? " GROUP BY ".$query2.$this->tableletter.".`id_status`, organization_name HAVING " : " ") .
+    (isset($this->intimacy) && $this->intimacy > 1  ? $this->tableletter.".`id_status` = 1 ".($where?" AND ":" ") : " ") .
     ($where ? "CONCAT(".$query2."organization_name) LIKE '%".$where."%' " : " ");
 
-    $query = "SELECT ".$this->tableletter.".`id` "."FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
+    $query = "SELECT ".$this->tableletter.".`id`, ".$organization_name." FROM `".$this->tablename."` ".$this->tableletter.$qwhere;
 
     $query = $this->queryBeautifier($query);
 
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
+
     $this->rowcount_absolute = $stmt->rowCount();
 
-    $query = "SELECT ".$query1."FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
+    $query = "SELECT ".$query1." FROM `".$this->tablename."` ".$this->tableletter.$qwhere.
              "ORDER BY ". $this->tableletter.".`id_status` ASC, CASE WHEN ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci LIKE '".$this->cconf["default"]["name"]."%' THEN 1 ELSE 2 END, ".$this->tableletter.".`name` COLLATE utf8mb4_unicode_ci ASC " .
              "LIMIT {$from_record_num}, {$records_per_page}";
 
@@ -676,6 +681,13 @@ class Users {
   function changePassRequest() {
 
     $this->done = false;
+    $this->wrongCaptchaResponse   = false;
+    $this->unknownEmailOrUsername = false;
+
+    if(($_POST["mathcaptchaAnswer"])!=$_SESSION["mathcaptchaAnswer"]):
+      $this->wrongCaptchaResponse = true; return true;
+      die();
+    endif;
 
     $query = "SELECT ".
               $this->tableletter.".`name`, " .
@@ -697,48 +709,47 @@ class Users {
     $stmt->execute();
     $num = $stmt->rowCount();
 
-    if($num>0) :
-
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      $this->name = $row["name"];
-      $this->surname = $row["surname"];
-      $this->email = $row["email"];
-
-      $this->randomizer("password_change_hash",40);
-
-      $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".
-                $this->tableletter.".`password_change_hash` = :password_change_hash, " .
-                $this->tableletter.".`ip_upd`= :ip_upd, " .
-               "WHERE ".$this->tableletter.".`id_status` = 1 " .
-               "AND ".$this->tableletter.".`email` = :email";
-
-      $query = $this->queryBeautifier($query);
-
-      $stmt = $this->conn->prepare($query);
-      $stmt->bindParam(":password_change_hash", $this->password_change_hash);
-      $stmt->bindParam(":email", $this->email);
-      $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
-      $stmt->execute();
-
-      $this->done = true;
-
-      $to = $this->email;
-//    $from = $this->conf["mail"]["from"];
-      $subject = $this->conf["meta"]["name"][LANG].": ".$this->lCommon["messages"][LANG]["forgot_password"]["title"];
-      $emessage = sprintf(
-        $this->lCommon["messages"][LANG]["forgot_password"]["body"],
-        $this->name,
-        $this->conf["meta"]["name"][LANG],
-        "<a href=\"".$this->conf["site"]["realpathLang"].$this->conf["file"]["change-pass"]."/".$this->password_change_hash."\">".$this->conf["site"]["realpathLang"].$this->conf["file"]["change-pass"]."/".$this->password_change_hash."</a>"
-        );
-
-      $this->send_email($to,$subject,$emessage);
-
-      return true;
-
+    if($num==0) :
+      $this->unknownEmailOrUsername = true; return true;
+      die();
     endif;
 
-    return false;
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $this->name = $row["name"];
+    $this->surname = $row["surname"];
+    $this->email = $row["email"];
+
+    $this->randomizer("password_change_hash",40);
+
+    $query = "UPDATE `".$this->tablename."` ".$this->tableletter." SET ".
+              $this->tableletter.".`password_change_hash` = :password_change_hash, " .
+              $this->tableletter.".`ip_upd`= :ip_upd, " .
+             "WHERE ".$this->tableletter.".`id_status` = 1 " .
+             "AND ".$this->tableletter.".`email` = :email";
+
+    $query = $this->queryBeautifier($query);
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":password_change_hash", $this->password_change_hash);
+    $stmt->bindParam(":email", $this->email);
+    $stmt->bindParam(":ip_upd", $_SERVER["REMOTE_ADDR"]);
+    $stmt->execute();
+
+    $this->done = true;
+
+    $to = $this->email;
+//    $from = $this->conf["mail"]["from"];
+    $subject = $this->conf["meta"]["name"][LANG].": ".$this->lCommon["messages"][LANG]["forgot_password"]["title"];
+    $emessage = sprintf(
+      $this->lCommon["messages"][LANG]["forgot_password"]["body"],
+      $this->name,
+      $this->conf["meta"]["name"][LANG],
+      "<a href=\"".$this->conf["site"]["realpathLang"].$this->conf["file"]["change-pass"]."/".$this->password_change_hash."\">".$this->conf["site"]["realpathLang"].$this->conf["file"]["change-pass"]."/".$this->password_change_hash."</a>"
+      );
+
+    $this->send_email($to,$subject,$emessage);
+
+    return true;
 
     }
 
@@ -790,9 +801,20 @@ class Users {
 
   function changePass2() {
 
-    $this->wrongeMailorUsername  = false;
-    $this->wrongPasswordStrength = false;
-    $this->wrongCaptchaResponse  = false;
+    $this->done = false;
+    $this->wrongCaptchaResponse   = false;
+    $this->unknownEmailOrUsername = false;
+    $this->wrongPasswordStrength  = false;
+
+    if(($_POST["mathcaptchaAnswer"])!=$_SESSION["mathcaptchaAnswer"]):
+      $this->wrongCaptchaResponse = true; return true;
+      die();
+    endif;
+
+
+
+
+/*
 
     # ..................................................................
     # ..#####..######..####...####..#####..######..####..##..##..####...
@@ -839,6 +861,12 @@ class Users {
 
     # .. END reCAPTCHA
     # ..................................................................
+*/
+
+
+
+
+
 
     if(isset($this->password_strength) && $this->password_strength < 4) :
 
@@ -866,7 +894,7 @@ class Users {
 
     if($num == 0) :
 
-      $this->wrongeMailorUsername = true; return true;
+      $this->unknownEmailOrUsername = true; return true;
 
     else :
 
@@ -945,7 +973,7 @@ class Users {
 
   private function queryBeautifier($q) {
     $q = preg_replace(array("/\s{2,}/","/[\t\n]/")," ",$q);   # removes double spaces and newlines
-    $q = preg_replace("/,+( \)| FROM| WHERE| AND)/",'$1',$q); # removes last comma before closing parenthesis, FROM, WHERE, AND and so on...
+    $q = preg_replace("/,+( \)| FROM| WHERE| HAVING| AND)/",'$1',$q); # removes last comma before closing parenthesis, FROM, WHERE, AND and so on...
     return $q;
     }
 
@@ -1074,13 +1102,13 @@ class Users {
         $mail->Password = $this->mail_password;
         $mail->SMTPSecure = $this->mail_tls_or_ssl;
         $mail->Port = $this->mail_port;
-        $mail->setFrom($this->mail_from,$this->conf["meta"]["name"][LANG]);
+        $mail->setFrom($this->mail_from,html_entity_decode($this->conf["meta"]["name"][LANG],ENT_QUOTES | ENT_XML1,"UTF-8"));
         $mail->addAddress($this->mail_to);
-        $mail->addReplyTo($this->mail_from,$this->conf["meta"]["name"][LANG]);
+        $mail->addReplyTo($this->mail_from,html_entity_decode($this->conf["meta"]["name"][LANG],ENT_QUOTES | ENT_XML1,"UTF-8"));
         $mail->isHTML(true);
-        $mail->Subject = $this->mail_subject;
-        $mail->Body = $this->mail_message;
-        $mail->AltBody = strip_tags(str_replace(array("<br>","<br/>","<br />"),"\r\n",$this->mail_message));
+        $mail->Subject = html_entity_decode($this->mail_subject, ENT_QUOTES | ENT_XML1,"UTF-8");
+        $mail->Body = html_entity_decode($this->mail_message, ENT_QUOTES | ENT_XML1,"UTF-8");
+        $mail->AltBody = strip_tags(str_replace(array("<br>","<br/>","<br />"),"\r\n",html_entity_decode($this->mail_message, ENT_QUOTES | ENT_XML1,"UTF-8")));
         $mail->send();
         return true;
         } catch (Exception $e) { echo "Message could not be sent. Mailer Error: " . $mail->ErrorInfo; }
