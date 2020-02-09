@@ -37,7 +37,8 @@
     $email_port         = filter_var($_POST["email_port"],FILTER_SANITIZE_NUMBER_INT);
     $admin_name         = trim($_POST["admin_name"]);
     $admin_surname      = trim($_POST["admin_surname"]);
-    $admin_username     = trim($_POST["admin_username"]);
+    $admin_username     = html_entity_decode($_POST["admin_username"],ENT_QUOTES | ENT_XML1,"UTF-8");
+    $admin_username     = getUrlFriendlyString($admin_username);
     $admin_email        = filter_var($_POST["admin_email"],FILTER_SANITIZE_EMAIL);
 
 
@@ -187,7 +188,10 @@
 <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="<?=$conf["dir"]["themes"].$conf["trece"]["theme"];?>/<?=$conf["dir"]["styles"].$conf["file"]["styles"];?>.php?c=<?=$conf["trece"]["theme-color"];?>">
   <style>
-    .error-message{border:6px solid yellow;padding:1rem;margin-top:1rem;font-weight:bold;line-height:2rem;}
+    .trece{border:1px solid #ccc;border-radius:1rem;margin:2rem;padding:2rem !important;}
+    button[name=install]{margin-top:2rem;}
+    .error{border:3px solid #dc3545;padding:1rem;margin-top:1rem;line-height:2rem;}
+    .notice{border:3px solid #28a745;padding:1rem;margin-top:1rem;line-height:2rem;}
   </style>
 
 </head>
@@ -210,7 +214,7 @@
 
     <div class="row">
 
-      <div class="column" style="border:1px solid #ccc;border-radius:1rem;margin:2rem;margin-left:1rem;padding:2rem;">
+      <div class="column trece" style="margin-left:1rem;">
 
         <h3>Database stuff</h3>
 
@@ -222,7 +226,8 @@
                      id="database_host"
                      placeholder=""
                      <?=$zaska?"style=\"background:yellow;\"":"";?>
-                     value="<?=$zaska?$database_host:"";?>">
+                     value="<?=$zaska?$database_host:"";?>"
+                     required>
             </p>
           </div>
           <div class="column column-50">
@@ -232,7 +237,8 @@
                      id="database_name"
                      placeholder=""
                      <?=$zaska?"style=\"background:yellow;\"":"";?>
-                     value="<?=$zaska?$database_name:"";?>">
+                     value="<?=$zaska?$database_name:"";?>"
+                     required>
             </p>
           </div>
         </div>
@@ -245,7 +251,8 @@
                      id="database_username"
                      placeholder=""
                      <?=$zaska?"style=\"background:yellow;\"":"";?>
-                     value="<?=$zaska?$database_username:"";?>">
+                     value="<?=$zaska?$database_username:"";?>"
+                     required>
             </p>
           </div>
           <div class="column column-50">
@@ -255,7 +262,8 @@
                      id="database_password"
                      placeholder=""
                      <?=$zaska?"style=\"background:yellow;\"":"";?>
-                     value="<?=$zaska?$database_password:"";?>">
+                     value="<?=$zaska?$database_password:"";?>"
+                     required>
             </p>
           </div>
         </div>
@@ -268,26 +276,28 @@
                  pattern="^(?!inconceivable$)(.*)"
                  maxlength="20"
                  style="margin-bottom:0;"
-                 value="<?=$zaska?$database_entropy:"";?>"><br>
+                 value="<?=$zaska?$database_entropy:"";?>"
+                 required><br>
           <small>* Type here a word DIFFERENT to <strong>inconceivable</strong>.</small>
         </p>
 
-        <?=$zaska?"<p class=\"error-message\">⚠️ There's something wrong with one of the fields marked in yellow.</p>":"";?>
+        <?=$zaska?"<p class=\"error\">⚠️ There's something wrong with one of the fields marked in yellow.</p>":"";?>
 
       </div>
 
-      <div class="column" style="border:1px solid #ccc;border-radius:1rem;margin:2rem;padding:2rem;">
+      <div class="column trece">
 
-        <h3>Notification stuff</h3>
+        <h3>Notifications stuff</h3>
 
         <div class="row">
           <div class="column column-50">
             <p>eMail Address<br>
-              <input type="text"
+              <input type="email"
                      name="email_address"
                      id="email_address"
-                     placeholder=""
-                     value="<?=$zaska?$email_address:"";?>">
+                     placeholder="noreply@blah.blah"
+                     value="<?=$zaska?$email_address:"";?>"
+                     required>
             </p>
           </div>
           <div class="column column-50">
@@ -296,7 +306,8 @@
                      name="email_password"
                      id="email_password"
                      placeholder=""
-                     value="<?=$zaska?$email_password:"";?>">
+                     value="<?=$zaska?$email_password:"";?>"
+                     required>
             </p>
           </div>
         </div>
@@ -306,7 +317,8 @@
                  name="email_host"
                  id="email_host"
                  placeholder=""
-                 value="<?=$zaska?$email_host:"";?>">
+                 value="<?=$zaska?$email_host:"";?>"
+                 required>
         </p>
 
         <div class="row">
@@ -316,7 +328,10 @@
                      name="email_tlsssl"
                      id="email_tlsssl"
                      placeholder=""
-                     value="<?=$zaska?$email_tlsssl:"";?>">
+                     pattern="^(tls|ssl)$"
+                     maxlength="3"
+                     value="<?=$zaska?$email_tlsssl:"";?>"
+                     required>
             </p>
           </div>
           <div class="column column-40">
@@ -325,14 +340,17 @@
                      name="email_port"
                      id="email_port"
                      placeholder=""
-                     value="<?=$zaska?$email_port:"";?>">
+                     value="<?=$zaska?$email_port:"";?>"
+                     required>
             </p>
           </div>
         </div>
 
+        <p class="notice">📌 This is the address from which all the notifications (forgot password, etc) will be sent.</p>
+
       </div>
 
-      <div class="column" style="border:1px solid #ccc;border-radius:1rem;margin:2rem;margin-right:1rem;padding:2rem;">
+      <div class="column trece" style="margin-right:1rem;">
 
         <h3>Site stuff</h3>
 
@@ -343,7 +361,8 @@
                      name="site_title"
                      id="site_title"
                      placeholder="My new website"
-                     value="<?=$zaska?$site_title:"";?>">
+                     value="<?=$zaska?$site_title:"";?>"
+                     required>
             </p>
           </div>
           <div class="column column-20">
@@ -373,7 +392,8 @@
                      name="admin_name"
                      id="admin_name"
                      placeholder=""
-                     value="<?=$zaska?$admin_name:"";?>">
+                     value="<?=$zaska?$admin_name:"";?>"
+                     required>
             </p>
           </div>
           <div class="column column-60">
@@ -392,14 +412,16 @@
                  name="admin_username"
                  id="admin_username"
                  placeholder=""
-                 value="<?=$zaska?$admin_username:"";?>">
+                 value="<?=$zaska?$admin_username:"";?>"
+                 required>
         </p>
 
         <p>Admin's eMail address<br>
-          <input type="text"
+          <input type="email"
                  name="admin_email"
                  id="admin_email"
-                 value="<?=$zaska?$admin_email:"";?>">
+                 value="<?=$zaska?$admin_email:"";?>"
+                 required>
         </p>
 
       </div>
@@ -413,4 +435,3 @@
 
 </body>
 </html>
-<?php // endif; ?>
