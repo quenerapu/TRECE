@@ -878,7 +878,7 @@ function getUrlFriendlyString($str,$space="-") { # Generates a SEO friendly URL 
     "ý"=>"y", "ÿ"=>"y",
     "Ž"=>"Z", "ž"=>"z",
     "/"=>"-", "¿"=>"",  "?"=>"",  "¡"=>"",  "!"=>"",
-    "'"="", '"'="",
+    "'"=>"", '"'=>"",
     ];
 
     $str = trim($str);
