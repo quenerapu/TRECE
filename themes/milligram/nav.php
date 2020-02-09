@@ -148,12 +148,10 @@
 
       <div class="column">
 
-          <a href="<?=REALPATHLANG;?>2020-actividades" class="active">Aberteo 2020</a>
-<?php /*
-        | <a href="<?=REALPATHLANG;?>ficha" class="active">Exemplo ficha</a>
-        | <a href="#">Option 3</a>
-        | <a href="#">Option 4</a>
-*/ ?>
+          <a href="<?=REALPATHLANG;?>whatever" class="active">Whatever</a>
+        | <a href="<?=REALPATHLANG;?>whatever2">Whatever 2</a>
+        | <a href="#">Whatever 3</a>
+        | <a href="#">Whatever 4</a>
       </div>
 
     </div>
