@@ -38,7 +38,7 @@
     $admin_name         = trim($_POST["admin_name"]);
     $admin_surname      = trim($_POST["admin_surname"]);
     $admin_username     = html_entity_decode($_POST["admin_username"],ENT_QUOTES | ENT_XML1,"UTF-8");
-    $admin_username     = getUrlFriendlyString($admin_username);
+    $admin_username     = getUrlFriendlyString($admin_username,"");
     $admin_email        = filter_var($_POST["admin_email"],FILTER_SANITIZE_EMAIL);
 
 
