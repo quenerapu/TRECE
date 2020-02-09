@@ -1020,7 +1020,7 @@ return [
   "password_successfully_changed" => [
     "es"  => "La contraseña fue cambiada con éxito.<br><small>Redirigiendo <a href=\"%s\">a la página de inicio de sesión</a> en <span id=\"countdown\">5</span>.</small>",
     "gal" => "O contrasinal foi cambiado con éxito.<br><small>Redirixindo <a href=\"%s\">á páxina de inicio de sesión</a> en <span id=\"countdown\">5</span>.</small>",
-    "en"  => "Password successfully changed.<br><small>Redirecting <a href=\"%s\">to sign in page</a> in <span id=\"countdown\">5</span>.</small>",
+    "en"  => "Password successfully changed.<br><small>Redirecting <a href=\"%s\">to the sign in page</a> in <span id=\"countdown\">5</span>.</small>",
     ],
   "password_tip" => [
     "es"  => "Mínimo 8 caracteres y al menos una mayúscula, una minúscula, un número y un signo. %s genera contraseñas de calidad y %s muestra/oculta el texto de la contraseña. Cuando la barra se pone de color verde indica que tienes una buena contraseña y puedes continuar.",
