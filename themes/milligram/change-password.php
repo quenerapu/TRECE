@@ -146,8 +146,8 @@ EOD;
     #{$msgType}-alert{position:absolute;z-index:1000;margin:-6rem 0 0 0;width:100%;}
     #{$msgType}-alert .container{padding:1em;color:black;text-align:center;}
     .password{position:relative;}
-    .password .eye{position:absolute;right:1.5rem !important;top:.2rem;display:flex;}
-    .password .redo{position:absolute;right:4rem !important;top:.2rem;display:flex;}
+    .password .eye{position:absolute;right:1.5rem !important;top:.2rem;display:flex;cursor:pointer;}
+    .password .redo{position:absolute;right:4rem !important;top:.2rem;display:flex;cursor:pointer;}
     input:focus~.form-control-feedback{z-index:3;}
     #password-progress{height:1rem; width:100%; margin:.5rem 0 1rem 0;}
     #password-progress-bar{width:0%; height:100%; transition:width 500ms linear;}
