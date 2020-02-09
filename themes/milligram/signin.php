@@ -63,7 +63,7 @@ EOD;
     #{$msgType}-alert{position:absolute;z-index:1000;margin:-6rem 0 0 0;width:100%;}
     #{$msgType}-alert .container{padding:1em;color:black;text-align:center;}
     .password{position:relative;}
-    .password .eye{position:absolute;right:1.5rem !important;top:.2rem;display:flex;}
+    .password .eye{position:absolute;right:1.5rem !important;top:.2rem;display:flex;cursor:pointer;}
 
     /* Mediaqueries */
 
