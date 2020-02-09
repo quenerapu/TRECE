@@ -20,7 +20,8 @@
       endif;
       }
 
-    $database_entropy   = getUrlFriendlyString($_POST["database_entropy"],"");
+    $database_entropy   = html_entity_decode($_POST["database_entropy"],ENT_QUOTES | ENT_XML1,"UTF-8");
+    $database_entropy   = getUrlFriendlyString($database_entropy,"");
     $database_entropy   = in_array($database_entropy,["","inconceivable"]) ? chr(rand(97,122)).substr(str_shuffle(MD5(microtime())),0,9) : $database_entropy;
     $database_host      = trim($_POST["database_host"]);
     $database_name      = trim($_POST["database_name"]);
